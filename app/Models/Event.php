@@ -17,11 +17,10 @@ class Event extends Model
      */
     protected $fillable = [
         'name',
-        'enrolment_from',
-        'enrolment_to',
-        'c_fields',
         'template',
         'description',
+        'status',
+        'type',
     ];
 
     public function blacklist(): BelongsTo
@@ -37,5 +36,10 @@ class Event extends Model
     public function dates(): HasMany
     {
         return $this->hasMany(Date::class);
+    }
+
+    public function enrollments(): HasMany
+    {
+        return $this->hasMany(Enrollment::class);
     }
 }

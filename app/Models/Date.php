@@ -19,6 +19,9 @@ class Date extends Model
         'capacity',
         'date_start',
         'date_end',
+        'enrolment_from',
+        'enrolment_to',
+        'withdraw_to',
     ];
 
     public function enrollments(): HasMany

@@ -19,6 +19,9 @@ class CreateTermsTable extends Migration
             $table->string('location');
             $table->dateTime('date_start');
             $table->dateTime('date_end');
+            $table->dateTime('enrollment_from');
+            $table->dateTime('enrollment_to');
+            $table->dateTime('withdraw_to');
             $table->integer('capacity');
             $table->timestamps();
         });

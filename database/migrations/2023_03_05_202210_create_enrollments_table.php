@@ -16,8 +16,9 @@ class CreateEnrollmentsTable extends Migration
         Schema::create('enrollments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('term_id')->constrained()->cascadeOnDelete();
-            $table->boolean('substitute');
+            $table->foreignId('date_id')->constrained()->cascadeOnDelete();
+            $table->integer('state');
+            $table->json('c_fields')->nullable();
             $table->timestamps();
         });
     }

@@ -14,7 +14,8 @@ class Enrollment extends Model
      * @var array
      */
     protected $fillable = [
-        'substitute'
+        'state',
+        'c_fields',
     ];
 
     public function user(): BelongsTo
@@ -25,5 +26,10 @@ class Enrollment extends Model
     public function date(): BelongsTo
     {
         return $this->belongsTo(Date::class);
+    }
+
+    public function event(): BelongsTo
+    {
+        return $this->belongsTo(Event::class);
     }
 }

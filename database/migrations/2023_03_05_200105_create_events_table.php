@@ -17,11 +17,10 @@ class CreateEventsTable extends Migration
             $table->id();
             $table->foreignId('blacklist_id')->constrained()->cascadeOnDelete();
             $table->string('name');
+            $table->integer('type');
             $table->string('description')->nullable();
-            $table->dateTime('enrollment_from');
-            $table->dateTime('enrollment_to');
-            $table->text('c_fields')->nullable();
             $table->string('template')->nullable();
+            $table->integer('status')->nullable();
             $table->timestamps();
         });
     }
