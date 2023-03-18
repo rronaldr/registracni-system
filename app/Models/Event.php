@@ -34,8 +34,8 @@ class Event extends Model
         return $this->belongsToMany(Tag::class);
     }
 
-    public function Terms(): HasMany
+    public function dates(): HasMany
     {
-        return $this->hasMany(Term::class);
+        return $this->hasMany(Date::class);
     }
 }

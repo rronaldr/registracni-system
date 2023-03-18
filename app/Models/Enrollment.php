@@ -22,8 +22,8 @@ class Enrollment extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function term(): BelongsTo
+    public function date(): BelongsTo
     {
-        return $this->belongsTo(Term::class);
+        return $this->belongsTo(Date::class);
     }
 }
