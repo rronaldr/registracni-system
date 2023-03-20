@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::namespace('Admin')
+    ->prefix('admin')
+    ->group(__DIR__. '/admin.php');
+
 Route::get('/', function () {
     return view('welcome');
 });
