@@ -18,5 +18,5 @@ Route::namespace('Admin')
     ->group(__DIR__. '/admin.php');
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('admin.events');
 });
