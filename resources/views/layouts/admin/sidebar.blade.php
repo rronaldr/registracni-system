@@ -5,7 +5,7 @@
     </div>
     <ul class="list-unstyled components text-secondary">
         <li>
-            <a href="dashboard.html"><i class="fas fa-home"></i>Události</a>
+            <a href="{{ route('admin.events') }}"><i class="fas fa-home"></i>Události</a>
         </li>
         <li>
             <a href="forms.html"><i class="fas fa-calendar"></i>Kalendář</a>
@@ -26,7 +26,7 @@
                     <a href="users.html"><i class="fas fa-user-friends"></i>Uživatelé</a>
                 </li>
                 <li>
-                    <a href="settings.html"><i class="fas fa-user-shield"></i>Oprávnění</a>
+                    <a href="{{ route('admin.roles') }}"><i class="fas fa-user-shield"></i>Oprávnění</a>
                 </li>
             </ul>
         </li>
