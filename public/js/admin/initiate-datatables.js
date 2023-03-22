@@ -7,6 +7,7 @@
         pageLength: 20,
         lengthChange: false,
         searching: true,
-        ordering: true
+        ordering: true,
+        paging: false,
     });
 })();

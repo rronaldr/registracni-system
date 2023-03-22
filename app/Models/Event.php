@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\Event\EventStatusEnum;
+use App\Enums\Event\EventTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,9 +14,6 @@ class Event extends Model
 {
     use HasFactory;
 
-    /**
-     * @var array
-     */
     protected $fillable = [
         'name',
         'template',
@@ -22,6 +21,11 @@ class Event extends Model
         'status',
         'type',
         'c_fields',
+        'blacklist_id',
+    ];
+
+    protected $casts = [
+        'type' => 'integer'
     ];
 
     public function blacklist(): BelongsTo
