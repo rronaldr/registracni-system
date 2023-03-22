@@ -21,6 +21,7 @@ class CreateEventsTable extends Migration
             $table->string('description')->nullable();
             $table->string('template')->nullable();
             $table->integer('status')->nullable();
+            $table->json('c_fields')->nullable();
             $table->timestamps();
         });
     }

@@ -21,6 +21,7 @@ class Event extends Model
         'description',
         'status',
         'type',
+        'c_fields',
     ];
 
     public function blacklist(): BelongsTo
