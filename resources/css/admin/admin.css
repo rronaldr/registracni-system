@@ -465,3 +465,10 @@ table.dataTable>tbody>tr.child ul.dtr-details {
         flex-direction: row;
     }
 }
+
+/*------------------------------------------------------------------
+[12. Custom properties]
+*/
+.datepickers-container{
+    z-index: 2000;
+}

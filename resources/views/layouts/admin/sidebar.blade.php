@@ -5,7 +5,7 @@
     </div>
     <ul class="list-unstyled components text-secondary">
         <li>
-            <a href="{{ route('admin.events') }}"><i class="fas fa-home"></i>Události</a>
+            <a href="{{ route('admin.events.index') }}"><i class="fas fa-home"></i>Události</a>
         </li>
         <li>
             <a href="forms.html"><i class="fas fa-calendar"></i>Kalendář</a>
