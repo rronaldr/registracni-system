@@ -1,4 +1,4 @@
-@extends('layouts.admin.main', ['title' => 'Vytvoření události'])
+@extends('layouts.admin.main', ['title' => 'Editace události'])
 
 @section('content')
     <div class="card mt-3">
@@ -107,6 +107,33 @@
                             </div>
                         </div>
                         <!-- Custom blacklist modal end -->
+
+                        <div class="line"></div><br>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="template-select" class="form-label">Popis události</label>
+                                <select class="form-control" name="template">
+                                    <option value="" selected disabled hidden>Vyberte šablonu</option>
+                                    @foreach($templates as $template)
+                                        <option value="{{ $template->id }}">{{ $template->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('template-select')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3" id="blacklist-textarea">
+                            <div class="col">
+                                <label for="template-content" class="form-label">Obsah šablony</label>
+                                <textarea class="form-control wysiwyg" name="template-content" rows="8"></textarea>
+                                @error('template-content')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
 
                         <div class="line"></div><br>
 

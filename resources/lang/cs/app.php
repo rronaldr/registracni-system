@@ -36,5 +36,9 @@ return [
         'type' => 'Typ',
         'required' => 'Povinné',
         'default' => 'Výchozí hodnota',
+    ],
+    'templates' => [
+        'approved' => 'Schválená',
+        'not_approved' => 'Ke schválení',
     ]
 ];

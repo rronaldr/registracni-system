@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Date;
 use App\Models\Event;
+use App\Models\Template;
 use App\Services\EventFacade;
+use App\Services\TemplateFacade;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -27,9 +29,15 @@ class EventController extends Controller
         ]);
     }
 
-    public function create(): View
+    public function create(TemplateFacade $templateFacade): View
     {
-        return view('admin.event-create');
+        $templates = $templates = Template::query()
+            ->where('approved', 1)
+            ->get();
+
+        return view('admin.event-create', [
+            'templates' => $templates,
+        ]);
     }
     public function store(Request $request, EventFacade $eventFacade): RedirectResponse
     {
@@ -55,11 +63,16 @@ class EventController extends Controller
         return view('admin.event-detail');
     }
 
-    public function edit(string $id, EventFacade $eventFacade): View
+    public function edit(string $id, EventFacade $eventFacade, TemplateFacade $templateFacade): View
     {
         $event = $eventFacade->getEventById((int) $id);
+        $templates = Template::query()
+            ->where('approved', 1)
+            ->get();
+
         return view('admin.event-edit', [
             'event' => $event,
+            'templates' => $templates,
         ]);
     }
 

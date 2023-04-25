@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Auth\RegisterController;
 use App\Http\Controllers\Admin\BlacklistController;
 use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\Admin\TemplateController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
@@ -32,6 +33,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/blacklist/store', [BlacklistController::class, 'store'])->name('admin.blacklist.store');
     Route::put('/blacklist/{blacklist_id}', [BlacklistController::class, 'update'])->name('admin.blacklist.update');
     Route::delete('/blacklist/{blacklist_id}/{email}', [BlacklistController::class, 'destroy'])->name('admin.blacklist.destroy');
+
+    // Template routes
+    Route::get('/templates', [TemplateController::class, 'index'])->name('admin.templates');
+    Route::get('/templates/create', [TemplateController::class, 'create'])->name('admin.templates.create');
+    Route::post('/templates/store', [TemplateController::class, 'store'])->name('admin.templates.store');
+    Route::get('/templates/{id}/edit', [TemplateController::class, 'edit'])->name('admin.templates.edit');
+    Route::delete('/templates/{id}', [TemplateController::class, 'destroy'])->name('admin.templates.destroy');
 
     Route::post('logout', [LoginController::class, 'logout'])->name('admin.logout');
 });

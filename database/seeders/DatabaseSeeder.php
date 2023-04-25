@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Services\BlacklistFacade;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,6 +19,8 @@ class DatabaseSeeder extends Seeder
             DateSeeder::class,
             UserSeeder::class,
             EnrollmentSeeder::class,
+            TemplateSeeder::class,
+            BlacklistSeeder::class,
         ]);
     }
 }
