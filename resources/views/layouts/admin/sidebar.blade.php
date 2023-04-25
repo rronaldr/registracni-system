@@ -11,7 +11,7 @@
             <a href="{{ route('admin.blacklist') }}"><i class="fas fa-list"></i>Blacklist</a>
         </li>
         <li>
-            <a href="icons.html"><i class="fas fa-envelope"></i>Šablony</a>
+            <a href="{{ route('admin.templates') }}"><i class="fas fa-envelope"></i>Šablony</a>
         </li>
         <li>
             <a href="https://kalendar.vse.cz/" target="_blank">
