@@ -19,6 +19,16 @@
 
                         <div class="row mb-3">
                             <div class="col">
+                                <label for="subtitle" class="form-label">Podtitul události</label>
+                                <input type="text" class="form-control" name="subtitle" value="{{ old('subtitle') }}">
+                                @error('subtitle')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col">
                                 <label for="description" class="form-label">Popis události</label>
                                 <textarea class="form-control wysiwyg" name="description">
                                     {{ old('description') }}

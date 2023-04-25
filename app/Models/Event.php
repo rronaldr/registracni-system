@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Event extends Model
 {
@@ -43,8 +44,13 @@ class Event extends Model
         return $this->hasMany(Date::class);
     }
 
-    public function enrollments(): HasMany
+    public function enrollments(): HasManyThrough
     {
-        return $this->hasMany(Enrollment::class);
+        return $this->hasManyThrough(Enrollment::class, Date::class);
+    }
+
+    public function users(): HasManyThrough
+    {
+        return $this->hasManyThrough(User::class, Enrollment::class);
     }
 }

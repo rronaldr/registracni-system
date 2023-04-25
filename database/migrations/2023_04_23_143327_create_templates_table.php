@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterUserTable extends Migration
+class CreateTemplatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class AlterUserTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('last_name');
+        Schema::create('templates', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->longText('html');
+            $table->boolean('approved');
+            $table->timestamps();
         });
-
     }
 
     /**
@@ -26,8 +29,6 @@ class AlterUserTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('last_name');
-        });
+        Schema::dropIfExists('templates');
     }
 }

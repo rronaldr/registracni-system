@@ -3,12 +3,19 @@
     tinymce.init({
         selector: '.wysiwyg',
         language: 'cs',
-        plugins: 'powerpaste advcode table lists checklist',
-        toolbar: 'undo redo | blocks| bold italic | bullist numlist checklist | code | table',
         height: 400,
-        relative_urls : false,
-        remove_script_host : false,
-        convert_urls : true,
+        branding: false,
+        menubar: false,
+        plugins: 'searchreplace autolink visualchars fullscreen image link media codesample table charmap hr nonbreaking anchor insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern code paste',
+        toolbar: 'insert | undo redo |  formatselect | bold italic strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link unlink removeformat code',
+        image_advtab: true,
+        //paste_as_text: true
+        paste_auto_cleanup_on_paste: true,
+        paste_word_valid_elements: "b,strong,i,em,h1,h2,a",
+        paste_remove_spans: true,
+        paste_remove_styles: true,
+        paste_retain_style_properties: "color font-size",
+        paste_strip_class_attributes: 'all'
     });
 
 </script>

@@ -22,43 +22,27 @@
                     <tr>
                         <th>Název události</th>
                         <th>Stav</th>
-                        <th>Počet termínů</th>
                         <th>Termíny</th>
+                        <th>Od - Do</th>
                         <th>Účastníci</th>
                         <th></th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr>
-                        <td><a href="#" class="link-primary">Událost 1</a></td>
-                        <td><span class="fa fa-circle text-success"></span> Publikováno</td>
-                        <td class="text-start">5</td>
-                        <td>
-                            21.8.2023 9:00-13:00
-                            <p>
-                                21.8.2023 9:00-13:00 RB101
-                            </p>
-                        </td>
-                        <td><a href="#" class="link-primary">Zobrazit seznam (20)</a></td>
-                        <td class="text-end">
-                            <a href="{{ route('admin.events.create') }}" class="btn btn-outline-primary btn-rounded" title="Editovat"><i class="fas fa-pen"></i></a>
-                            <a href="" class="btn btn-outline-info btn-rounded" title="Duplikovat"><i class="fas fa-copy"></i></a>
-                            <a href="" class="btn btn-outline-danger btn-rounded" title="Smazat"><i class="fas fa-trash"></i></a>
-                        </td>
-                    </tr>
                     @foreach($events as $event)
                         <tr>
                             <td><a href="#" class="link-primary">{{ $event->name }}</a></td>
                             <td><span class="fa fa-circle text-secondary"></span> {{ __('app.event.status.'.$event->status) }}</td>
-                            <td class="text-start">5</td>
+                            <td><a href="#" class="link-primary" data-bs-toggle="modal" data-bs-target="#datesModal" onClick="getDates({{$event->id}})">
+                                    Zobrazit termíny ({{ $event->dates_count }})
+                                </a></td>
                             <td>
-                                21.8.2023 9:00-13:00
-                                <p>
-                                    21.8.2023 9:00-13:00 RB101
-                                </p>
+                                {{ $event->dates_cache }}
                             </td>
-                            <td><a href="#" class="link-primary">Zobrazit seznam (20)</a></td>
+                            <td><a href="#" class="link-primary" data-bs-toggle="modal" data-bs-target="#usersModal" onClick="getUsers({{$event->id}})">
+                                    Zobrazit účastníky ({{ $event->enrollments_count }})
+                                </a></td>
                             <td class="text-end">
                                 <a href="{{ route('admin.events.create') }}" class="btn btn-outline-primary btn-rounded" title="Editovat"><i class="fas fa-pen"></i></a>
                                 <form class="d-inline" action="{{ route('admin.events.duplicate', ['event' => $event]) }}" method="post">
@@ -76,6 +60,63 @@
                 </tbody>
             </table>
 
+            <!-- Custom dates modal start -->
+            <div class="modal fade" id="datesModal" role="dialog" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{ __('app.date.list') }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-start">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">{{ __('app.date.date_start') }}</th>
+                                        <th scope="col">{{ __('app.date.date_end') }}</th>
+                                        <th scope="col">{{ __('app.date.name') }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="datesBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Custom dates modal end -->
+
+            <!-- Custom dates modal start -->
+            <div class="modal fade" id="usersModal" role="dialog" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{ __('app.enrollment.list') }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-start">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">{{ __('app.user.name') }}</th>
+                                    <th scope="col">{{ __('app.user.email') }}</th>
+                                    <th scope="col">{{ __('app.enrollment.enrolled') }}</th>
+                                    <th scope="col">{{ __('app.enrollment.c_fields') }}</th>
+                                </tr>
+                                </thead>
+                                <tbody id="usersBody">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <a type="button" class="btn btn-secondary" href="{{ route('admin.events.users.export', ['event_id' => $event->id]) }}"><i class="fas fa-file-export"></i> Exportovat</a>
+                            <a type="button" class="btn btn-secondary" href="{{ route('admin.events.users.export.email', ['event_id' => $event->id]) }}"><i class="fas fa-envelope"></i> Exportovat emaily</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Custom dates modal end -->
+
             <div class="row justify-content-end">
                 <div class="float-right">
                     {!! $events->appends(\Request::except('page'))->render() !!}
@@ -88,4 +129,54 @@
 
 @section('scripts')
     <script src="{{ asset('js/admin/initiate-datatables.js') }}"></script>
+    <script>
+        function getUsers(eventId) {
+            let rows = $('#usersBody')
+            rows.empty()
+            $.get('events/'+eventId+'/users', function (data) {
+                $.each(data, function (key, val) {
+                    let tag = []
+                    $.each(val.c_fields, function (name, field) {
+                        tag.push(name.toUpperCase() +": "+ field.value +' ')
+                    })
+
+                    console.log(tag.toString())
+                    rows.append('<tr scope="row">')
+                    rows.append('<td>'+ val.name +'</td>')
+                    rows.append('<td>'+ val.email +'</td>')
+                    rows.append('<td>'+ formatDate(val.enrolled) +'</td>')
+                    rows.append('<td>'+ tag.toString() +'</td>')
+                    rows.append('</tr>')
+                })
+            })
+        }
+
+        function getDates(eventId) {
+            let rows = $('#datesBody')
+            rows.empty()
+            $.get('events/'+eventId+'/dates', function (data) {
+                $.each(data, function (key, val) {
+                    let name = val.name ?? '-'
+                    rows.append('<tr scope="row">')
+                    rows.append('<td>'+ formatDate(val.date_start) +'</td> - ')
+                    rows.append('<td>'+ formatDate(val.date_end)+'</td>')
+                    rows.append('<td>'+ name +'</td>')
+                    rows.append('</tr>')
+                })
+
+            })
+        }
+
+        function exportUsers(eventId) {
+            $.get('events/'+eventId+'/users/export', function (data) {
+
+            })
+        }
+
+        function formatDate(date) {
+            var formattedDate = new Date(date);
+            return ''+ formattedDate.getDate() +'.'+ formattedDate.getMonth() +'.'+ formattedDate.getFullYear() +' '
+                + formattedDate.getHours() +':' + formattedDate.getMinutes()
+        }
+    </script>
 @endsection

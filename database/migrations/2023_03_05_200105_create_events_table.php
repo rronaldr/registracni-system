@@ -15,16 +15,19 @@ class CreateEventsTable extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('blacklist_id')
-                ->nullable()
-                ->constrained()
-                ->cascadeOnDelete();
+            $table->foreignId('blacklist_id')->nullable();
+            $table->foreignId('template_id')->nullable();
             $table->string('name');
+            $table->string('subtitle')->nullable();
             $table->integer('type');
             $table->string('description')->nullable();
-            $table->string('template')->nullable();
             $table->string('status')->nullable();
             $table->json('c_fields')->nullable();
+            $table->string('thumbnail')->nullable();
+            $table->boolean('hidden')->default(false);
+            $table->dateTime('hidden_at')->nullable();
+            $table->longText('template_content')->nullable();
+            $table->text('dates_cache')->nullable();
             $table->timestamps();
         });
     }

@@ -3,18 +3,24 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Date;
 use App\Models\Event;
-use App\Services\Event\EventFacade;
+use App\Services\EventFacade;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class EventController extends Controller
 {
-    public function index(): View
+    public function index(EventFacade $eventFacade): View
     {
-        $events = Event::paginate(10);
+        $events = Event::query()
+            ->withCount(['dates', 'enrollments'])
+            ->paginate(10);
 
         return view('admin.events', [
             'events' => $events,
@@ -34,19 +40,19 @@ class EventController extends Controller
         ]);
 
         try {
-            $eventFacade->createEventFromRequest($request);
+            $eventFacade->createEvent($request);
         } catch (\Exception $e) {
             dump($e);
         }
 
-        Session::flash('message', 'Událost byla uložena');
+        Session::flash('message', trans('event.saved'));
 
         return redirect()->route('admin.events.index');
     }
 
     public function show(string $id): View
     {
-        return view('admin.event-form');
+        return view('admin.event-detail');
     }
 
     public function edit(string $id): View
@@ -67,22 +73,80 @@ class EventController extends Controller
             dump($e);
         }
 
-        Session::flash('message', 'Událost smazaná');
+        Session::flash('message', trans('event.deleted'));
 
         return redirect()->route('admin.events.index');
     }
 
     public function duplicate(Event $event, EventFacade $eventFacade): RedirectResponse
     {
+        /** @todo Add dates to event duplication */
         try {
             $eventFacade->duplicateEvent($event);
         } catch (\Exception $e){
             dump($e);
         }
 
-        Session::flash('message', 'Událost zduplikovaná');
+        Session::flash('message', trans('event.duplicated'));
 
         return redirect()->route('admin.events.index');
+    }
+
+    public function getEventDates(string $eventId, EventFacade $eventFacade): JsonResponse
+    {
+        try {
+            $dates = $eventFacade->getEventDates((int) $eventId);
+            return response()->json($dates);
+        } catch (ModelNotFoundException $exception) {
+            return response()->json(['error' => trans('An error occurred.')]);
+        }
+    }
+
+    public function getEventEnrollmentsUsers(string $eventId, EventFacade $eventFacade): JsonResponse
+    {
+        try {
+            $users = $eventFacade->getEventEnrollmentsAndUsers((int) $eventId);
+            return response()->json($users);
+        } catch (ModelNotFoundException $exception) {
+            return response()->json(['error' => trans('An error occurred.')]);
+        }
+    }
+
+    public function exportEventUsers(string $eventId, EventFacade $eventFacade): BinaryFileResponse
+    {
+        /** @todo rewrite into ExportFacade */
+        $data = $eventFacade->getEventEnrollmentsAndUsers($eventId);
+
+        $filename = public_path('seznam_ucastniku.csv');
+
+        $csvHandle = fopen($filename, 'w');
+        $data->each(function ($row) use ($csvHandle)
+        {
+            $row['c_fields'] = json_encode($row['c_fields']);
+            fputcsv($csvHandle, $row);
+        });
+
+        fclose($csvHandle);
+
+        return response()->download($filename, 'seznam_ucastniku.csv', ['Content-Type' => 'text/csv']);
+    }
+
+    public function exportEventUsersEmails(string $eventId, EventFacade $eventFacade): BinaryFileResponse
+    {
+        /** @todo rewrite into ExportFacade */
+        $data = $eventFacade->getEventUsersEmail($eventId);
+
+        $filename = public_path('seznam_ucastniku_email.csv');
+
+        $csvHandle = fopen($filename, 'w');
+        $data->each(function ($row) use ($csvHandle)
+        {
+            fputcsv($csvHandle, $row);
+        });
+
+        fclose($csvHandle);
+
+        return response()->download($filename, 'seznam_ucastniku_email.csv', ['Content-Type' => 'text/csv']);
     }
 
 }

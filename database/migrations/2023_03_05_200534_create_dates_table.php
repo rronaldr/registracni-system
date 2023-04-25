@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTermsTable extends Migration
+class CreateDatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class CreateTermsTable extends Migration
     {
         Schema::create('dates', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('event_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('event_id');
             $table->string('location');
             $table->dateTime('date_start');
             $table->dateTime('date_end');
@@ -23,6 +23,8 @@ class CreateTermsTable extends Migration
             $table->dateTime('enrollment_to');
             $table->dateTime('withdraw_to');
             $table->integer('capacity');
+            $table->string('name')->nullable();
+            $table->boolean('substitute');
             $table->timestamps();
         });
     }

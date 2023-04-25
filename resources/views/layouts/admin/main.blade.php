@@ -1,8 +1,10 @@
 @include('layouts.admin.header')
 
 <body>
-<div class="wrapper">
+<div class="wrapper" id="app">
+    @auth
     @include('layouts.admin.sidebar')
+    @endauth
     <div id="body" class="active">
         @include('layouts.admin.navbar')
         <div class="content">

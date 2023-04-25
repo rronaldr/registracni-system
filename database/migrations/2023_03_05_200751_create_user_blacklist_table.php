@@ -15,8 +15,8 @@ class CreateUserBlacklistTable extends Migration
     {
         Schema::create('user_blacklist', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('blacklist_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id');
+            $table->foreignId('blacklist_id');
             $table->timestamps();
         });
     }
