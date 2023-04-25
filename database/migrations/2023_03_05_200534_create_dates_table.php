@@ -19,12 +19,12 @@ class CreateDatesTable extends Migration
             $table->string('location');
             $table->dateTime('date_start');
             $table->dateTime('date_end');
-            $table->dateTime('enrollment_from');
-            $table->dateTime('enrollment_to');
-            $table->dateTime('withdraw_to');
+            $table->dateTime('enrollment_start');
+            $table->dateTime('enrollment_end');
+            $table->dateTime('withdraw_end');
             $table->integer('capacity');
             $table->string('name')->nullable();
-            $table->boolean('substitute');
+            $table->boolean('substitute', false);
             $table->timestamps();
         });
     }

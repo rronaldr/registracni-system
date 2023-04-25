@@ -1,11 +1,11 @@
-@extends('layouts.admin.main')
+@extends('layouts.admin.main', ['title' => __('app.auth.login')])
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('app.login') }}</div>
+                <div class="card-header">{{ __('app.auth.login') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('admin.login') }}">
@@ -18,6 +18,7 @@
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                                 @error('email')
+                                    @dd('test')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

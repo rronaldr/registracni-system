@@ -5,16 +5,18 @@
     </div>
     <ul class="list-unstyled components text-secondary">
         <li>
-            <a href="{{ route('admin.events.index') }}"><i class="fas fa-home"></i>Události</a>
+            <a href="{{ route('admin.events') }}"><i class="fas fa-home"></i>Události</a>
         </li>
         <li>
-            <a href="forms.html"><i class="fas fa-calendar"></i>Kalendář</a>
-        </li>
-        <li>
-            <a href="charts.html"><i class="fas fa-list"></i>Blacklist</a>
+            <a href="{{ route('admin.blacklist') }}"><i class="fas fa-list"></i>Blacklist</a>
         </li>
         <li>
             <a href="icons.html"><i class="fas fa-envelope"></i>Šablony</a>
+        </li>
+        <li>
+            <a href="https://kalendar.vse.cz/" target="_blank">
+                <i class="fas fa-external-link-alt"></i>Kalendář
+            </a>
         </li>
 
     </ul>

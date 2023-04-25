@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Enums\Event\EventStatusEnum;
 use App\Models\Event;
 use App\Repositories\EventRepository;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
@@ -89,5 +90,10 @@ class EventFacade
     public function getEventDates(int $eventId): Collection
     {
         return $this->dateFacade->getEventDates($eventId);
+    }
+
+    public function getEventById(int $eventId): Model
+    {
+        return $this->eventRepository->getEventById($eventId);
     }
 }

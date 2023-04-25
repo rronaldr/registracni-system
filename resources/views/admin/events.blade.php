@@ -32,7 +32,7 @@
                 <tbody>
                     @foreach($events as $event)
                         <tr>
-                            <td><a href="#" class="link-primary">{{ $event->name }}</a></td>
+                            <td><a href="{{ route('admin.events.edit', ['id' => $event->id]) }}" class="link-primary">{{ $event->name }}</a></td>
                             <td><span class="fa fa-circle text-secondary"></span> {{ __('app.event.status.'.$event->status) }}</td>
                             <td><a href="#" class="link-primary" data-bs-toggle="modal" data-bs-target="#datesModal" onClick="getDates({{$event->id}})">
                                     Zobrazit termíny ({{ $event->dates_count }})
@@ -44,7 +44,7 @@
                                     Zobrazit účastníky ({{ $event->enrollments_count }})
                                 </a></td>
                             <td class="text-end">
-                                <a href="{{ route('admin.events.create') }}" class="btn btn-outline-primary btn-rounded" title="Editovat"><i class="fas fa-pen"></i></a>
+                                <a href="{{ route('admin.events.edit', ['id' => $event->id]) }}" class="btn btn-outline-primary btn-rounded" title="Editovat"><i class="fas fa-pen"></i></a>
                                 <form class="d-inline" action="{{ route('admin.events.duplicate', ['event' => $event]) }}" method="post">
                                     @csrf
                                     <button type="submit" title="Odstranit" class="btn btn-outline-info btn-rounded"> <i class="fas fa-copy"></i></button>

@@ -50,9 +50,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Enrollment::class);
     }
-
-    public function blacklists(): BelongsToMany
-    {
-        return $this->belongsToMany(Blacklist::class)->withTimestamps();
-    }
 }

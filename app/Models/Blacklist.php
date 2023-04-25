@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Blacklist extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'data',
+    ];
+
+    protected $casts = [
+        'data' => 'json'
+    ];
 }

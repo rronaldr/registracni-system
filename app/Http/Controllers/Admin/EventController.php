@@ -29,7 +29,7 @@ class EventController extends Controller
 
     public function create(): View
     {
-        return view('admin.event-form');
+        return view('admin.event-create');
     }
     public function store(Request $request, EventFacade $eventFacade): RedirectResponse
     {
@@ -47,7 +47,7 @@ class EventController extends Controller
 
         Session::flash('message', trans('event.saved'));
 
-        return redirect()->route('admin.events.index');
+        return redirect()->route('admin.events');
     }
 
     public function show(string $id): View
@@ -55,9 +55,12 @@ class EventController extends Controller
         return view('admin.event-detail');
     }
 
-    public function edit(string $id): View
+    public function edit(string $id, EventFacade $eventFacade): View
     {
-        return view('admin.event-form');
+        $event = $eventFacade->getEventById((int) $id);
+        return view('admin.event-edit', [
+            'event' => $event,
+        ]);
     }
 
     public function update(string $id, Request $request): View
@@ -75,7 +78,7 @@ class EventController extends Controller
 
         Session::flash('message', trans('event.deleted'));
 
-        return redirect()->route('admin.events.index');
+        return redirect()->route('admin.events');
     }
 
     public function duplicate(Event $event, EventFacade $eventFacade): RedirectResponse
@@ -89,7 +92,7 @@ class EventController extends Controller
 
         Session::flash('message', trans('event.duplicated'));
 
-        return redirect()->route('admin.events.index');
+        return redirect()->route('admin.events');
     }
 
     public function getEventDates(string $eventId, EventFacade $eventFacade): JsonResponse

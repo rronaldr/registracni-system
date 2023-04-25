@@ -24,4 +24,15 @@ class EventRepository
             ->firstOrFail();
     }
 
+    public function getEventById(int $eventId): Model
+    {
+        return Event::query()
+            ->where('id', $eventId)
+            ->with('dates', function ($q) {
+                $q->orderBy('date_start');
+            })
+            ->with('enrollments.user')
+            ->firstOrFail();
+    }
+
 }

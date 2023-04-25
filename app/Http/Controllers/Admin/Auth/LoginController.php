@@ -22,11 +22,13 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
 
-        if(!auth()->attempt($request->only('email', 'password'), $request->remember)){
-            return back()->with('status', 'Invalid login credentials');
+        if(auth()->attempt($request->only('email', 'password'), $request->remember)){
+            $request->session()->regenerate();
+
+            return redirect()->route('admin.events');
         }
 
-        return redirect()->route('admin');
+        return back()->withErrors('email', 'Invalid login credentials.');
     }
 
     public function logout(): RedirectResponse

@@ -15,9 +15,7 @@ class CreateBlacklistsTable extends Migration
     {
         Schema::create('blacklists', function (Blueprint $table) {
             $table->id();
-            $table->string('blocked_email');
-            $table->dateTime('blocked_until');
-            $table->text('reason')->nullable();
+            $table->json('data');
             $table->timestamps();
         });
     }
