@@ -5,18 +5,21 @@ declare(strict_types = 1);
 namespace App\Repositories;
 
 use App\Models\Event;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Mockery\ExpectationDirector;
 
 class EventRepository
 {
 
-    public function getEventsForOverviewPaginated()
+    public function getEventsForOverviewPaginated(): Collection
     {
-        Event::paginate(10);
+        return Event::query()
+            ->withCount(['dates', 'enrollments'])
+            ->paginate(10);
     }
 
-    public function getEventEnrollmentsAndUsers(int $eventId): Model
+    /** @return \App\Models\Event */
+    public function getEventEnrollmentsAndUsers(int $eventId): ?Event
     {
         return Event::query()
             ->where('id', $eventId)

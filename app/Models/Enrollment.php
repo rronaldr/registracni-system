@@ -10,9 +10,7 @@ class Enrollment extends Model
 {
     use HasFactory;
 
-    /**
-     * @var array
-     */
+    /** @var array $fillable */
     protected $fillable = [
         'state',
         'c_fields',

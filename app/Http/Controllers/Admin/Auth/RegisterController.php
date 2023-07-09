@@ -19,13 +19,15 @@ class RegisterController extends Controller
     public function register(Request $request): RedirectResponse
     {
         $this->validate($request, [
-            'name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users|max:255',
             'password' => 'required|confirmed'
         ]);
 
         User::create([
-            'name' => $request->name,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);

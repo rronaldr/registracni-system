@@ -1,10 +1,6 @@
 <?php
 
 return [
-    'auth' => [
-        'login' => 'Přihlásit se',
-        'register' => 'Registrovat se',
-    ],
     'event' => [
         'status' => [
             'published' => 'Publikováno',
@@ -13,7 +9,8 @@ return [
         ]
     ],
     'user' => [
-        'name' => 'Jméno',
+        'first_name' => 'Jméno',
+        'last_name' => 'Příjmení',
         'email' => 'Email'
     ],
     'date' => [

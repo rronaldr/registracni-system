@@ -44,15 +44,15 @@
                                     Zobrazit účastníky ({{ $event->enrollments_count }})
                                 </a></td>
                             <td class="text-end">
-                                <a href="{{ route('admin.events.edit', ['id' => $event->id]) }}" class="btn btn-outline-primary btn-rounded" title="Editovat"><i class="fas fa-pen"></i></a>
+                                <a href="{{ route('admin.events.edit', ['id' => $event->id]) }}" class="btn btn-outline-primary btn-rounded" title="{{__('app.actions.edit')}}"><i class="fas fa-pen"></i></a>
                                 <form class="d-inline" action="{{ route('admin.events.duplicate', ['event' => $event]) }}" method="post">
                                     @csrf
-                                    <button type="submit" title="Odstranit" class="btn btn-outline-info btn-rounded"> <i class="fas fa-copy"></i></button>
+                                    <button type="submit" title="{{__('app.actions.duplicate')}}" class="btn btn-outline-info btn-rounded"> <i class="fas fa-copy"></i></button>
                                 </form>
                                 <form class="d-inline" action="{{ route('admin.events.destroy', ['event' => $event]) }}" method="post">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" title="Odstranit" class="btn btn-outline-danger btn-rounded"> <i class="fas fa-trash"></i></button>
+                                    <button type="submit" title="{{__('app.actions.delete')}}" class="btn btn-outline-danger btn-rounded"> <i class="fas fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>
@@ -108,10 +108,12 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="modal-footer">
-                            <a type="button" class="btn btn-secondary" href="{{ route('admin.events.users.export', ['event_id' => $event->id]) }}"><i class="fas fa-file-export"></i> Exportovat</a>
-                            <a type="button" class="btn btn-secondary" href="{{ route('admin.events.users.export.email', ['event_id' => $event->id]) }}"><i class="fas fa-envelope"></i> Exportovat emaily</a>
-                        </div>
+                        @if(count($events) > 0)
+                            <div class="modal-footer">
+                                <a type="button" class="btn btn-secondary" href="{{ route('admin.events.users.export', ['event_id' => $event->id]) }}"><i class="fas fa-file-export"></i> Exportovat</a>
+                                <a type="button" class="btn btn-secondary" href="{{ route('admin.events.users.export.email', ['event_id' => $event->id]) }}"><i class="fas fa-envelope"></i> Exportovat emaily</a>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -122,8 +124,8 @@
                     {!! $events->appends(\Request::except('page'))->render() !!}
                 </div>
             </div>
-
         </div>
+
     </div>
 @endsection
 

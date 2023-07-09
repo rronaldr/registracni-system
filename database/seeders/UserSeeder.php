@@ -16,58 +16,20 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $i = 0;
         DB::table('users')->insert([
-            'name' => 'Ronald Rebernigg',
+            'first_name' => 'Ronald',
+            'last_name' => 'Rebernigg',
             'email' => 'ronald.rebernigg@gmail.com',
             'password' => Hash::make('testtest'),
         ]);
 
-        DB::table('users')->insert([
-            'name' => sprintf('John Doe %d', $i++),
-            'email' => Str::random(10).'@gmail.com',
-            'password' => Hash::make('password'),
-        ]);
-        DB::table('users')->insert([
-            'name' => sprintf('John Doe %d', $i++),
-            'email' => Str::random(10).'@gmail.com',
-            'password' => Hash::make('password'),
-        ]);
-        DB::table('users')->insert([
-            'name' => sprintf('John Doe %d', $i++),
-            'email' => Str::random(10).'@gmail.com',
-            'password' => Hash::make('password'),
-        ]);
-        DB::table('users')->insert([
-            'name' => sprintf('John Doe %d', $i++),
-            'email' => Str::random(10).'@gmail.com',
-            'password' => Hash::make('password'),
-        ]);
-        DB::table('users')->insert([
-            'name' => sprintf('John Doe %d', $i++),
-            'email' => Str::random(10).'@gmail.com',
-            'password' => Hash::make('password'),
-        ]);
-        DB::table('users')->insert([
-            'name' => sprintf('John Doe %d', $i++),
-            'email' => Str::random(10).'@gmail.com',
-            'password' => Hash::make('password'),
-        ]);
-        DB::table('users')->insert([
-            'name' => sprintf('John Doe %d', $i++),
-            'email' => Str::random(10).'@gmail.com',
-            'password' => Hash::make('password'),
-        ]);
-        DB::table('users')->insert([
-            'name' => sprintf('John Doe %d', $i++),
-            'email' => Str::random(10).'@gmail.com',
-            'password' => Hash::make('password'),
-        ]);
-        DB::table('users')->insert([
-            'name' => sprintf('John Doe %d', $i++),
-            'email' => Str::random(10).'@gmail.com',
-            'password' => Hash::make('password'),
-        ]);
-
+        for ($i = 0; $i < 5; $i++) {
+            DB::table('users')->insert([
+                'first_name' => 'John',
+                'last_name' => sprintf('Doe %d', $i++),
+                'email' => Str::random(10).'@gmail.com',
+                'password' => Hash::make('password'),
+            ]);
+        }
     }
 }
