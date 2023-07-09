@@ -20,7 +20,7 @@ class BlacklistController extends Controller
         $blacklist = $blacklistFacade->getGlobalBlacklist();
 
         return view('admin.blacklist', [
-            'blacklist' => $blacklist,
+            'blacklist' => $blacklist ?? null,
         ]);
     }
 

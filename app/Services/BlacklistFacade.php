@@ -18,9 +18,13 @@ class BlacklistFacade
         $this->blacklistRepository = $blacklistRepository;
     }
 
-    public function getGlobalBlacklist(): Collection
+    public function getGlobalBlacklist(): ?Collection
     {
-        $blacklist = $this->blacklistRepository->getGlobalBlacklist();
+        $blacklist = $this->blacklistRepository->getGlobalBlacklist() ?? null;
+
+        if ($blacklist === null) {
+            return null;
+        }
 
         return collect(json_decode($blacklist->data));
     }
