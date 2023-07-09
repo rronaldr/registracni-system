@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Date;
 use App\Models\Event;
 use App\Models\Template;
 use App\Services\EventFacade;
@@ -96,11 +95,14 @@ class EventController extends Controller
 
     public function duplicate(Event $event, EventFacade $eventFacade): RedirectResponse
     {
-        /** @todo Add dates to event duplication */
         try {
-            $eventFacade->duplicateEvent($event);
+            $newEvent = $eventFacade->duplicateEvent($event);
+
+            return redirect()->route('admin.events.edit', [
+                'id' => $newEvent->id,
+            ]);
         } catch (\Exception $e){
-            dump($e);
+            Session::flash('error', trans('event.duplication_error'));
         }
 
         Session::flash('message', trans('event.duplicated'));

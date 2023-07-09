@@ -36,7 +36,7 @@ class EventFacade
 
     }
 
-    public function getEventsForOverviewPaginated()
+    public function getEventsForOverviewPaginated(): Collection
     {
         return $this->eventRepository->getEventsForOverviewPaginated();
     }
@@ -46,14 +46,25 @@ class EventFacade
         $event->deleteOrFail();
     }
 
-    public function duplicateEvent(Event $event): void
+    public function duplicateEvent(Event $event): Event
     {
-        $newEvent = $event->replicate();
-        $newEvent->name = $newEvent->name.' (copy)';
-        $newEvent->save();
+        /** @var \App\Models\Event $duplicate */
+        $duplicate = $event->replicate();
+        $duplicate->name = $duplicate->name.' (copy)';
+        $duplicate->push();
+
+        $event->load('dates');
+
+        foreach ($event->getRelation('dates') as $date) {
+            unset($date->id);
+            unset($date->event_id);
+            $duplicate->dates()->create($date->toArray());
+        }
+
+        return $duplicate;
     }
 
-    public function getEventEnrollmentsAndUsers(int $eventId): Collection
+    public function getEventEnrollmentsAndUsers(int $eventId): ?Collection
     {
         /** @var App\Models\Event $event */
         $event = $this->eventRepository->getEventEnrollmentsAndUsers($eventId);
