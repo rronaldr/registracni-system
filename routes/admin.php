@@ -40,6 +40,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/templates/store', [TemplateController::class, 'store'])->name('admin.templates.store');
     Route::get('/templates/{id}/edit', [TemplateController::class, 'edit'])->name('admin.templates.edit');
     Route::delete('/templates/{id}', [TemplateController::class, 'destroy'])->name('admin.templates.destroy');
+    Route::get('templates/send', [TemplateController::class, 'send'])->name('admin.templates.send');
 
     Route::post('logout', [LoginController::class, 'logout'])->name('admin.logout');
 });

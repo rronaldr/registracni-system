@@ -36,7 +36,7 @@
                         @endif
 
                         <td class="text-end">
-                            <a href="{ route('admin.templates.edit', ['id' => $template->id]) }}" class="btn btn-outline-primary btn-rounded" title="Editovat"><i class="fas fa-pen"></i></a>
+                            <a href="{{ route('admin.templates.edit', ['id' => $template->id]) }}" class="btn btn-outline-primary btn-rounded" title="Editovat"><i class="fas fa-pen"></i></a>
                             <form class="d-inline" action="{{ route('admin.templates.destroy', ['id' => $template->id]) }}" method="post">
                                 @csrf
                                 @method('DELETE')
@@ -48,6 +48,8 @@
                 </tbody>
             </table>
 
+            <a href="{{ route('admin.templates.send') }}" class="link-primary">Odeslat testovací email</a>
+
             <div class="row justify-content-end">
                 <div class="float-right">
                     {!! $templates->appends(\Request::except('page'))->render() !!}
@@ -56,6 +58,7 @@
 
         </div>
     </div>
+
 @endsection
 
 @section('scripts')

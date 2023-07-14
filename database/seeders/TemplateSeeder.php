@@ -16,7 +16,9 @@ class TemplateSeeder extends Seeder
     {
         DB::table('templates')->insert([
             'name' => 'Seeder template',
+            'subject' => 'Custom subject',
             'approved' => 1,
+            'params' => '["name", "faculty"]',
             'html' => '<!DOCTYPE html>
                         <html lang="cs">
                           <head>
@@ -26,12 +28,13 @@ class TemplateSeeder extends Seeder
                             <title>HTML 5 Boilerplate</title>
                           </head>
                           <body>
-                            <div id="customContent"></div>
+                            <div id="customContent">I am {{ $name }} from {{ $faculty }} with email {{ $user->email }}</div>
                           </body>
                         </html>',
         ]);
         DB::table('templates')->insert([
             'name' => 'Seeder template not approved',
+            'subject' => 'Custom subject',
             'approved' => 0,
             'html' => '<!DOCTYPE html>
                         <html lang="cs">

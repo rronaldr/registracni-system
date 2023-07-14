@@ -20,9 +20,7 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label for="html" class="form-label">HTML kód</label>
-                                <textarea class="form-control" rows="8" name="html">
-                                    {{ old('html') }}
-                                </textarea>
+                                <textarea class="form-control" rows="8" name="html"></textarea>
                                 @error('description')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
