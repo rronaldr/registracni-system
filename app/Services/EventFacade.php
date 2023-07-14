@@ -73,7 +73,7 @@ class EventFacade
         foreach ($event->enrollments as $enrollment) {
             $eventUsersList->push([
                 'id'=> $enrollment->user->id,
-                'name' => $enrollment->user->name,
+                'name' => $enrollment->user->first_name,
                 'email' => $enrollment->user->email,
                 'c_fields' => json_decode($enrollment->c_fields),
                 'enrolled' => $enrollment->created_at,
