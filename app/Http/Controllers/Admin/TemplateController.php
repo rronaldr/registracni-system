@@ -20,14 +20,8 @@ class TemplateController extends Controller
     {
         $templates = $templateFacade->getApprovedTemplates();
 
-        $user = User::find(1);
-
-        $tags['test'] = 'ahoj';
-        $finalHtml = $templateFacade->getTemplateHtml(2, $user);
-
         return view('admin.templates', [
             'templates' => $templates,
-            'html' => $finalHtml,
         ]);
     }
 
