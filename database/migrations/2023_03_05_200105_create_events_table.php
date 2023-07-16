@@ -28,6 +28,7 @@ class CreateEventsTable extends Migration
             $table->dateTime('hidden_at')->nullable();
             $table->longText('template_content')->nullable();
             $table->text('dates_cache')->nullable();
+            $table->string('subject')->nullable();
             $table->timestamps();
         });
     }
