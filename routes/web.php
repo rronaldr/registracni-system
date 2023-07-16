@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,9 +19,7 @@ Route::namespace('Admin')
     ->group(__DIR__. '/admin.php');
 
 Route::get('/', function () {
-    return view('admin.events');
+    return redirect()->route('admin.events');
 });
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
