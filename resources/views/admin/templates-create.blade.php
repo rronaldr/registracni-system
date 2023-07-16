@@ -5,7 +5,7 @@
         <div class="card-body">
             <div class="row justify-content-center">
                 <div class="col-8">
-                    <form action="{{ route('admin.events.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('admin.templates.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row mb-3">
                             <div class="col">
@@ -21,7 +21,7 @@
                             <div class="col">
                                 <label for="html" class="form-label">HTML kód</label>
                                 <textarea class="form-control" rows="8" name="html"></textarea>
-                                @error('description')
+                                @error('html')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>

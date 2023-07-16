@@ -16,7 +16,6 @@ class TemplateSeeder extends Seeder
     {
         DB::table('templates')->insert([
             'name' => 'Seeder template',
-            'subject' => 'Custom subject',
             'approved' => 1,
             'params' => '["name", "faculty"]',
             'html' => '<!DOCTYPE html>
@@ -34,7 +33,6 @@ class TemplateSeeder extends Seeder
         ]);
         DB::table('templates')->insert([
             'name' => 'Seeder template not approved',
-            'subject' => 'Custom subject',
             'approved' => 0,
             'html' => '<!DOCTYPE html>
                         <html lang="cs">

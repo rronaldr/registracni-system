@@ -13,6 +13,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
+        "mews/purifier": "^3.4",
         "razorbacks/laravel-shibboleth": "^0.5.6"
     },
     "require-dev": {

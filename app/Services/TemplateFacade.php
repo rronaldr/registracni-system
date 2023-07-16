@@ -4,9 +4,11 @@ declare(strict_types = 1);
 
 namespace App\Services;
 use App\Mail\DefaultMail;
+use App\Models\Template;
 use App\Models\User;
 use App\Repositories\TemplateRepository;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Blade;
 
@@ -26,7 +28,16 @@ class TemplateFacade
         return $this->templateRepository->getApprovedTemplates();
     }
 
-    public function getTemplateHtml(int $id, User $user): ?string
+    public function createTemplate(Request $request): void
+    {
+        $template = new Template();
+        $template->name = $request->name;
+        $cleanedHtml = $this->cleanHtmlBody($request->html);
+        $template->html = $cleanedHtml;
+        $template->save();
+    }
+
+    public function getTemplateHtmlWithParams(int $id, User $user): ?string
     {
         $template = $this->templateRepository->getById($id);
 
@@ -35,5 +46,16 @@ class TemplateFacade
         }
 
         return Blade::render($template->html, ['user' => $user, 'params' => $template->getParamsAsArray()]);
+    }
+
+    private function cleanHtmlBody(string $html): string
+    {
+        preg_match("/<body[^>]*>(.*?)<\/body>/is", $html, $bodyContent);
+        preg_match("/<body[^>]*>(.*?)/si", $html, $bodyTag);
+
+        $purifiedBodyHtml = sprintf("%s%s</body>",$bodyTag[0], clean($bodyContent[0]));
+        $cleanedHtml = preg_replace("/<body[^>]*>(.*?)<\/body>/is", $purifiedBodyHtml, $html);
+
+        return $cleanedHtml;
     }
 }

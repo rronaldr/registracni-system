@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
 class TemplateController extends Controller
@@ -30,9 +31,22 @@ class TemplateController extends Controller
         return view('admin.templates-create');
     }
 
-    public function store(): RedirectResponse
+    public function store(Request $request, TemplateFacade $templateFacade): RedirectResponse
     {
+        try {
+            $this->validate($request, [
+                'name' => 'required|string',
+                'html' => 'required'
+            ]);
 
+            $templateFacade->createTemplate($request);
+        } catch (\Exception $e) {
+            Session::flash('error', trans('template.error'));
+            dump($e);
+        }
+        Session::flash('message', trans('template.saved'));
+
+        return redirect()->route('admin.templates');
     }
 
     public function send(TemplateFacade $templateFacade): RedirectResponse
@@ -41,10 +55,10 @@ class TemplateController extends Controller
 
         $template = Template::find(2);
         $tags['test'] = 'ahoj';
-        $finalHtml = $templateFacade->getTemplateHtml(1, $user);
+        $finalHtml = $templateFacade->getTemplateHtmlWithParams(5, $user);
 
         Mail::to(['test@ronald.sk'])
-            ->send(new CustomHtmlMail($template->subject, $user, $finalHtml));
+            ->send(new CustomHtmlMail($user, $finalHtml));
 
         return redirect()->route('admin.templates');
     }

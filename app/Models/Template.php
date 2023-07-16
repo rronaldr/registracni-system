@@ -11,7 +11,6 @@ class Template extends Model
 
     protected $fillable = [
         'name',
-        'subject',
         'html',
         'params',
         'approved'

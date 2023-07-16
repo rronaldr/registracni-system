@@ -40,13 +40,13 @@ class EventController extends Controller
     }
     public function store(Request $request, EventFacade $eventFacade): RedirectResponse
     {
-        $this->validate($request, [
-            'name' => 'required|string',
-            'description' => 'nullable|string',
-            'type' => 'required|numeric',
-        ]);
-
         try {
+            $this->validate($request, [
+                'name' => 'required|string',
+                'description' => 'nullable|string',
+                'type' => 'required|numeric',
+            ]);
+
             $eventFacade->createEvent($request);
         } catch (\Exception $e) {
             dump($e);
