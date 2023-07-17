@@ -41,12 +41,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function events(): HasMany
+    {
+        return $this->hasMany(Event::class);
+    }
+
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(UserRole::class)->withTimestamps();
     }
 
-    public function enrolments(): HasMany
+    public function enrollments(): HasMany
     {
         return $this->hasMany(Enrollment::class);
     }

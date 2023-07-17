@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Template;
+use App\Models\User;
 use App\Services\EventFacade;
 use App\Services\TemplateFacade;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -19,9 +20,7 @@ class EventController extends Controller
 {
     public function index(EventFacade $eventFacade): View
     {
-        $events = Event::query()
-            ->withCount(['dates', 'enrollments'])
-            ->paginate(10);
+        $events = $eventFacade->getEventsForOverviewPaginated();
 
         return view('admin.events', [
             'events' => $events,

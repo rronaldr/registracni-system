@@ -16,7 +16,8 @@ class CreateEventsTable extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->foreignId('blacklist_id')->nullable();
-            $table->foreignId('template_id')->nullable();
+            $table->foreignId('template_id');
+            $table->foreignId('user_id');
             $table->string('name');
             $table->string('subtitle')->nullable();
             $table->integer('type');

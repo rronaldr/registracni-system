@@ -9,6 +9,7 @@ use App\Models\Event;
 use App\Repositories\EventRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
 class EventFacade
@@ -36,7 +37,7 @@ class EventFacade
 
     }
 
-    public function getEventsForOverviewPaginated(): Collection
+    public function getEventsForOverviewPaginated(): LengthAwarePaginator
     {
         return $this->eventRepository->getEventsForOverviewPaginated();
     }

@@ -7,11 +7,12 @@ namespace App\Repositories;
 use App\Models\Event;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class EventRepository
 {
 
-    public function getEventsForOverviewPaginated(): Collection
+    public function getEventsForOverviewPaginated(): LengthAwarePaginator
     {
         return Event::query()
             ->withCount(['dates', 'enrollments'])
