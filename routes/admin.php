@@ -41,6 +41,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/templates/{id}/edit', [TemplateController::class, 'edit'])->name('admin.templates.edit');
     Route::delete('/templates/{id}', [TemplateController::class, 'destroy'])->name('admin.templates.destroy');
     Route::get('templates/send', [TemplateController::class, 'send'])->name('admin.templates.send');
+    Route::get('templates/approvals', [TemplateController::class, 'approvals'])->name('admin.templates.approvals');
+    Route::post('templates/{id}/approve', [TemplateController::class, 'approve'])->name('admin.templates.approve');
+    Route::get('templates/{user}/show', [TemplateController::class, 'userTemplates'])->name('admin.templates.author');
 
     Route::post('logout', [LoginController::class, 'logout'])->name('admin.logout');
 });

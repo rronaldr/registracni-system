@@ -1,19 +1,7 @@
-@extends('layouts.admin.main', ['title' => __('app.templates.templates')])
+@extends('layouts.admin.main', ['title' => __('app.templates.waiting-approval')])
 
 @section('content')
-    <div class="row justify-content-end align-content-end">
-        <div class="col-12 my-2 ">
-            <a href="{{ route('admin.templates.approvals') }}" class="btn btn-primary m-2 float-end">{{ __('templates.for.approval') }}</a>
-            <a href="{{ route('admin.templates.author', ['user' => Auth::user()->id]) }}" class="btn btn-primary m-2 float-end">{{ __('templates.my-templates') }}</a>
-        </div>
-    </div>
     <div class="box box-primary">
-        <div class="row justify-content-center my-3 mx-1">
-            <div class="col-12">
-                <a href="{{ route('admin.templates.create') }}" class="btn btn-success float-end mx-1"><span class="fas fa-plus"></span> Vytvořit šablonu</a>
-            </div>
-        </div>
-
         @if(Illuminate\Support\Facades\Session::has('message'))
             <div id="messageAlert" class="alert alert-success m-2">
                 {{ Illuminate\Support\Facades\Session::get('message') }}
@@ -43,25 +31,16 @@
                         @endif
 
                         <td class="text-end">
-                            <a href="{{ route('admin.templates.edit', ['id' => $template->id]) }}" class="btn btn-outline-primary btn-rounded" title="Editovat"><i class="fas fa-pen"></i></a>
-                            <form class="d-inline" action="{{ route('admin.templates.destroy', ['id' => $template->id]) }}" method="post">
+                            <a href="{{ route('admin.templates.edit', ['id' => $template->id]) }}" class="btn btn-outline-primary btn-rounded" title="{{ __('app.templates.send-note') }}"><i class="fas fa-envelope"></i></a>
+                            <form class="d-inline" action="{{ route('admin.templates.approve', ['id' => $template->id]) }}" method="post">
                                 @csrf
-                                @method('DELETE')
-                                <button type="submit" title="Odstranit" class="btn btn-outline-danger btn-rounded"> <i class="fas fa-trash"></i></button>
+                                <button type="submit" title="{{ __('app.templates.approve-template') }}" class="btn btn-outline-success btn-rounded"> <i class="fas fa-check-circle"></i></button>
                             </form>
                         </td>
                     </tr>
                 @endforeach
                 </tbody>
             </table>
-
-            <a href="{{ route('admin.templates.send') }}" class="link-primary">Odeslat testovací email</a>
-
-            <div class="row justify-content-end">
-                <div class="float-right">
-                    {!! $templates->appends(\Request::except('page'))->render() !!}
-                </div>
-            </div>
 
         </div>
     </div>

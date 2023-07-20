@@ -24,6 +24,23 @@ class TemplateRepository
     {
         return Template::query()
             ->where('approved', true)
+            ->with('author')
             ->paginate(10);
+    }
+
+    public function getUnapprovedTemplates(): LengthAwarePaginator
+    {
+        return Template::query()
+            ->where('approved', false)
+            ->with('author')
+            ->paginate(10);
+    }
+
+    public function getTemplatesByUser(int $id): Collection
+    {
+        return Template::query()
+            ->where('user_id', $id)
+            ->with('author')
+            ->get();
     }
 }

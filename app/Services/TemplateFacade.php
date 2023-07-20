@@ -28,6 +28,16 @@ class TemplateFacade
         return $this->templateRepository->getApprovedTemplates();
     }
 
+    public function getTemplatesForApproval(): LengthAwarePaginator
+    {
+        return $this->templateRepository->getUnapprovedTemplates();
+    }
+
+    public function getUsersTemplates(int $userId): Collection
+    {
+        return $this->templateRepository->getTemplatesByUser($userId);
+    }
+
     public function createTemplate(Request $request): void
     {
         $template = new Template();
@@ -46,6 +56,13 @@ class TemplateFacade
         }
 
         return Blade::render($template->html, ['user' => $user, 'params' => $template->getParamsAsArray()]);
+    }
+
+    public function approveTemplate(int $id): void
+    {
+        $template = $this->templateRepository->getById($id);
+        $template->approved = true;
+        $template->save();
     }
 
     private function cleanHtmlBody(string $html): string

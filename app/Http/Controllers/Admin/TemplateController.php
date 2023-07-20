@@ -7,6 +7,7 @@ use App\Mail\CustomHtmlMail;
 use App\Mail\DefaultMail;
 use App\Models\Template;
 use App\Models\User;
+use App\Repositories\TemplateRepository;
 use App\Services\TemplateFacade;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -61,5 +62,21 @@ class TemplateController extends Controller
             ->send(new CustomHtmlMail($user, $finalHtml));
 
         return redirect()->route('admin.templates');
+    }
+
+    public function approvals(TemplateFacade $templateFacade): view
+    {
+        $templates = $templateFacade->getTemplatesForApproval();
+
+        return view('admin.templates-approval', [
+            'templates' => $templates,
+        ]);
+    }
+
+    public function approve(int $id, TemplateFacade $templateFacade): RedirectResponse
+    {
+        $templateFacade->approveTemplate($id);
+
+        return redirect()->back()->with('message', __('app.templates.approved'));
     }
 }

@@ -41,9 +41,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function getFullname(): string
+    {
+        return sprintf("%s %s", $this->first_name, $this->last_name);
+    }
+
     public function events(): HasMany
     {
         return $this->hasMany(Event::class);
+    }
+
+    public function templates(): HasMany
+    {
+        return $this->hasMany(Template::class);
     }
 
     public function roles(): BelongsToMany

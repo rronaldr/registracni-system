@@ -15,6 +15,7 @@ class TemplateSeeder extends Seeder
     public function run(): void
     {
         DB::table('templates')->insert([
+            'user_id' => 2,
             'name' => 'Seeder template',
             'approved' => 1,
             'params' => '["name", "faculty"]',
@@ -32,6 +33,7 @@ class TemplateSeeder extends Seeder
                         </html>',
         ]);
         DB::table('templates')->insert([
+            'user_id' => 1,
             'name' => 'Seeder template not approved',
             'approved' => 0,
             'html' => '<!DOCTYPE html>
