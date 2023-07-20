@@ -33,11 +33,6 @@ class TemplateFacade
         return $this->templateRepository->getUnapprovedTemplates();
     }
 
-    public function getUsersTemplates(int $userId): Collection
-    {
-        return $this->templateRepository->getTemplatesByUser($userId);
-    }
-
     public function createTemplate(Request $request): void
     {
         $template = new Template();
@@ -63,6 +58,11 @@ class TemplateFacade
         $template = $this->templateRepository->getById($id);
         $template->approved = true;
         $template->save();
+    }
+
+    public function getTemplatesByUser(int $userId): LengthAwarePaginator
+    {
+        return $this->templateRepository->getTemplatesByUser($userId);
     }
 
     private function cleanHtmlBody(string $html): string

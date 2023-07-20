@@ -36,11 +36,11 @@ class TemplateRepository
             ->paginate(10);
     }
 
-    public function getTemplatesByUser(int $id): Collection
+    public function getTemplatesByUser(int $id): LengthAwarePaginator
     {
         return Template::query()
             ->where('user_id', $id)
             ->with('author')
-            ->get();
+            ->paginate(10);
     }
 }

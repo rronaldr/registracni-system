@@ -43,7 +43,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('templates/send', [TemplateController::class, 'send'])->name('admin.templates.send');
     Route::get('templates/approvals', [TemplateController::class, 'approvals'])->name('admin.templates.approvals');
     Route::post('templates/{id}/approve', [TemplateController::class, 'approve'])->name('admin.templates.approve');
-    Route::get('templates/{user}/show', [TemplateController::class, 'userTemplates'])->name('admin.templates.author');
+    Route::get('templates/{user}/show', [TemplateController::class, 'showAuthorTemplates'])->name('admin.templates.author');
 
     Route::post('logout', [LoginController::class, 'logout'])->name('admin.logout');
 });

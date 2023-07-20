@@ -79,4 +79,13 @@ class TemplateController extends Controller
 
         return redirect()->back()->with('message', __('app.templates.approved'));
     }
+
+    public function showAuthorTemplates(int $userId, TemplateFacade $templateFacade): view
+    {
+        $templates = $templateFacade->getTemplatesByUser($userId);
+
+        return view('admin.templates', [
+            'templates' => $templates,
+        ]);
+    }
 }
