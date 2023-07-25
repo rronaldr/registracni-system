@@ -50,7 +50,7 @@ class TemplateFacade
             return $template->html;
         }
 
-        return Blade::render($template->html, ['user' => $user, 'params' => $template->getParamsAsArray()]);
+        return Blade::render($template->html, ['user' => $user, 'params' => $template->getParams()->toArray()]);
     }
 
     public function approveTemplate(int $id): void
@@ -63,6 +63,11 @@ class TemplateFacade
     public function getTemplatesByUser(int $userId): LengthAwarePaginator
     {
         return $this->templateRepository->getTemplatesByUser($userId);
+    }
+
+    public function getTemplateById(int $id): Template
+    {
+        return $this->templateRepository->getById($id);
     }
 
     private function cleanHtmlBody(string $html): string

@@ -16,7 +16,7 @@ class DateSeeder extends Seeder
     public function run(): void
     {
         DB::table('dates')->insert([
-            'event_id' => 25,
+            'event_id' => 1,
             'location' => 'Seeder místnost SB112',
             'date_start' => Carbon::now()->addDays(10),
             'date_end' => Carbon::now()->addDays(10)->addHours(3),
@@ -28,7 +28,7 @@ class DateSeeder extends Seeder
         ]);
 
         DB::table('dates')->insert([
-            'event_id' => 25,
+            'event_id' => 1,
             'location' => 'Seeder místnost RB101',
             'date_start' => Carbon::now()->addDays(20),
             'date_end' => Carbon::now()->addDays(20)->addHours(3),
@@ -40,7 +40,7 @@ class DateSeeder extends Seeder
         ]);
 
         DB::table('dates')->insert([
-            'event_id' => 25,
+            'event_id' => 1,
             'location' => 'Seeder místnost RB210',
             'date_start' => Carbon::now()->addDays(15),
             'date_end' => Carbon::now()->addDays(15)->addHours(3),

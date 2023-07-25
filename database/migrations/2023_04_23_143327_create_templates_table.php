@@ -17,6 +17,7 @@ class CreateTemplatesTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->string('name');
+            $table->string('type');
             $table->longText('html');
             $table->json('params')->nullable();
             $table->boolean('approved')->default(false);

@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
 
-    /** @todo refactor id params just to 'id' */
     // Event routes
     Route::get('/', function () {
         return redirect()->route('admin.events');
@@ -40,10 +39,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/templates/store', [TemplateController::class, 'store'])->name('admin.templates.store');
     Route::get('/templates/{id}/edit', [TemplateController::class, 'edit'])->name('admin.templates.edit');
     Route::delete('/templates/{id}', [TemplateController::class, 'destroy'])->name('admin.templates.destroy');
-    Route::get('templates/send', [TemplateController::class, 'send'])->name('admin.templates.send');
+    Route::post('templates/send-test', [TemplateController::class, 'sendTest'])->name('admin.templates.send-test');
     Route::get('templates/approvals', [TemplateController::class, 'approvals'])->name('admin.templates.approvals');
     Route::post('templates/{id}/approve', [TemplateController::class, 'approve'])->name('admin.templates.approve');
-    Route::get('templates/{user}/show', [TemplateController::class, 'showAuthorTemplates'])->name('admin.templates.author');
+    Route::get('templates/{id}/show', [TemplateController::class, 'show'])->name('admin.templates.show');
+    Route::get('templates/{user}/show-user', [TemplateController::class, 'showAuthorTemplates'])->name('admin.templates.author');
 
     Route::post('logout', [LoginController::class, 'logout'])->name('admin.logout');
 });

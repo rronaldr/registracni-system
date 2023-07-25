@@ -19,8 +19,25 @@
 
                         <div class="row mb-3">
                             <div class="col">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" @click="increment()">
+                                    <label class="form-check-label" for="flexRadioDefault1">
+                                        Výchozí šablona
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                    <label class="form-check-label" for="flexRadioDefault2">
+                                        Vlastní šablona
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col">
                                 <label for="html" class="form-label">HTML kód</label>
-                                <textarea class="form-control" rows="8" name="html"></textarea>
+                                <textarea class="form-control wysiwyg" rows="8" name="html"></textarea>
                                 @error('html')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror

@@ -17,6 +17,7 @@ class TemplateSeeder extends Seeder
         DB::table('templates')->insert([
             'user_id' => 2,
             'name' => 'Seeder template',
+            'type' => 'custom',
             'approved' => 1,
             'params' => '["name", "faculty"]',
             'html' => '<!DOCTYPE html>
@@ -35,6 +36,7 @@ class TemplateSeeder extends Seeder
         DB::table('templates')->insert([
             'user_id' => 1,
             'name' => 'Seeder template not approved',
+            'type' => 'default',
             'approved' => 0,
             'html' => '<!DOCTYPE html>
                         <html lang="cs">

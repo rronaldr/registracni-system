@@ -18,10 +18,11 @@ class UserFacade
         $this->userRepository = $userRepository;
     }
 
-    public function getCurrentUser(): ?Authenticatable
+    public function getCurrentUser(): ?User
     {
         if (auth()->check()){
-            return auth()->user();
+            $user = $this->userRepository->getUserById(auth()->user()->id);
+            return $user;
         } else {
             return null;
         }
@@ -40,6 +41,11 @@ class UserFacade
         $user->save();
 
         return $user;
+    }
+
+    public function getUserForEmail(int $id): User
+    {
+        return $this->userRepository->getUserForEmail($id);
     }
 
 }

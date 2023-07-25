@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 
 class Template extends Model
 {
@@ -23,7 +24,7 @@ class Template extends Model
     {
         return isset($this->params) || !empty(json_decode($this->params, true));
     }
-    public function getParamsAsArray(): ?array
+    public function getParams(): ?Collection
     {
         $params = collect(json_decode($this->params, true));
 
@@ -31,7 +32,7 @@ class Template extends Model
             return null;
         }
 
-        return $params->toArray();
+        return $params;
     }
 
     public function events(): HasMany

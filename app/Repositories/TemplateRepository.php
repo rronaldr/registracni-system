@@ -15,6 +15,7 @@ class TemplateRepository
         /** @var \App\Models\Template $template */
         $template = Template::query()
             ->where('id', $id)
+            ->with(['author'])
             ->first();
 
         return $template;

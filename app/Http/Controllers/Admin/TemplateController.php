@@ -9,6 +9,7 @@ use App\Models\Template;
 use App\Models\User;
 use App\Repositories\TemplateRepository;
 use App\Services\TemplateFacade;
+use App\Services\UserFacade;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
@@ -50,16 +51,27 @@ class TemplateController extends Controller
         return redirect()->route('admin.templates');
     }
 
-    public function send(TemplateFacade $templateFacade): RedirectResponse
+    public function show(int $id, TemplateFacade $templateFacade): view
     {
-        $user = User::find(1);
+        $template = $templateFacade->getTemplateById($id);
 
-        $template = Template::find(2);
-        $tags['test'] = 'ahoj';
-        $finalHtml = $templateFacade->getTemplateHtmlWithParams(5, $user);
+        return view('admin.templates-detail', [
+            'template' => $template,
+        ]);
+    }
 
-        Mail::to(['test@ronald.sk'])
-            ->send(new CustomHtmlMail($user, $finalHtml));
+    public function sendTest(Request $request, TemplateFacade $templateFacade, UserFacade  $userFacade): RedirectResponse
+    {
+        $this->validate($request, [
+            'id' => 'required|numeric',
+            'email' => 'required|email',
+        ]);
+
+        $currentUser = $userFacade->getCurrentUser();
+        $finalHtml = $templateFacade->getTemplateHtmlWithParams($request->id, $currentUser);
+
+        Mail::to([$request->email])
+            ->send(new CustomHtmlMail($currentUser, $finalHtml));
 
         return redirect()->route('admin.templates');
     }

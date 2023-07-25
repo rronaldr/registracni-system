@@ -34,7 +34,7 @@
                 <tbody>
                 @foreach($templates as $template)
                     <tr>
-                        <td><a href="{{ route('admin.templates.edit', ['id' => $template->id]) }}" class="link-primary">{{ $template->name }}</a></td>
+                        <td><a href="{{ route('admin.templates.show', ['id' => $template->id]) }}" class="link-primary">{{ $template->name }}</a></td>
                         <td>{{ $template->author->getFullname() }}</td>
                         @if($template->approved)
                             <td><span class="fa fa-circle text-success"></span> {{ __('app.templates.approved') }}</td>
@@ -54,8 +54,6 @@
                 @endforeach
                 </tbody>
             </table>
-
-            <a href="{{ route('admin.templates.send') }}" class="link-primary">Odeslat testovací email</a>
 
             <div class="row justify-content-end">
                 <div class="float-right">
