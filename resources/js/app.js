@@ -1,13 +1,13 @@
-import './bootstrap';
+require('./bootstrap');
 
 import { createApp } from "vue/dist/vue.esm-bundler.js";
 
 // Components
-import ExampleComponent from "./components/ExampleComponent.vue";
+import TinyEditor from "./components/TinyEditor.vue";
 
 const app = createApp({
     components: {
-        ExampleComponent,
+        TinyEditor,
     }
 });
 

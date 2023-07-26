@@ -8,6 +8,7 @@ use App\Mail\DefaultMail;
 use App\Models\Template;
 use App\Models\User;
 use App\Repositories\TemplateRepository;
+use App\Services\EventFacade;
 use App\Services\TemplateFacade;
 use App\Services\UserFacade;
 use Illuminate\Http\RedirectResponse;
@@ -15,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class TemplateController extends Controller
@@ -38,17 +40,18 @@ class TemplateController extends Controller
         try {
             $this->validate($request, [
                 'name' => 'required|string',
-                'html' => 'required'
+                'html' => 'required_without:text',
+                'text' => 'required_without:html',
             ]);
 
             $templateFacade->createTemplate($request);
-        } catch (\Exception $e) {
-            Session::flash('error', trans('template.error'));
-            dump($e);
-        }
-        Session::flash('message', trans('template.saved'));
 
-        return redirect()->route('admin.templates');
+            Session::flash('message', trans('app.templates.saved-approval'));
+
+            return redirect()->route('admin.templates');
+        } catch (ValidationException $e) {
+            return back()->withErrors($e->errors())->withInput();
+        }
     }
 
     public function show(int $id, TemplateFacade $templateFacade): view
@@ -60,18 +63,50 @@ class TemplateController extends Controller
         ]);
     }
 
-    public function sendTest(Request $request, TemplateFacade $templateFacade, UserFacade  $userFacade): RedirectResponse
+    public function edit(int $id, TemplateFacade $templateFacade): View
     {
-        $this->validate($request, [
-            'id' => 'required|numeric',
-            'email' => 'required|email',
+        $template = $templateFacade->getTemplateById($id);
+
+        return view('admin.templates-edit', [
+            'template' => $template,
         ]);
+    }
 
-        $currentUser = $userFacade->getCurrentUser();
-        $finalHtml = $templateFacade->getTemplateHtmlWithParams($request->id, $currentUser);
+    public function update(int $id, Request $request, TemplateFacade $templateFacade): RedirectResponse
+    {
+        try {
+            $this->validate($request, [
+                'name' => 'required|string',
+                'html' => 'required_without:text',
+                'text' => 'required_without:html',
+            ]);
 
-        Mail::to([$request->email])
-            ->send(new CustomHtmlMail($currentUser, $finalHtml));
+            $templateFacade->updateTemplate($id, $request);
+
+            Session::flash('message', trans('app.templates.updated'));
+            return redirect()->back();
+
+        } catch (ValidationException $e) {
+            return back()->withErrors($e->errors());
+        }
+    }
+
+    public function destroy(int $id, TemplateFacade $templateFacade): RedirectResponse
+    {
+        $templateFacade->deleteTemplate($id);
+
+        Session::flash('message', trans('app.templates.deleted'));
+
+        return back();
+    }
+
+    public function sendTest(int $id, TemplateFacade $templateFacade, UserFacade $userFacade): RedirectResponse
+    {
+        $currentUser = $userFacade->getUserForEmail($userFacade->getCurrentUser()->id);
+        $template = $templateFacade->getTemplateById($id);
+
+        Mail::to([$currentUser->email])
+            ->send(new CustomHtmlMail($currentUser, $template->html));
 
         return redirect()->route('admin.templates');
     }

@@ -19,7 +19,6 @@ class CreateTemplatesTable extends Migration
             $table->string('name');
             $table->string('type');
             $table->longText('html');
-            $table->json('params')->nullable();
             $table->boolean('approved')->default(false);
             $table->timestamps();
         });

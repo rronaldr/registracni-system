@@ -1,12 +1,22 @@
 <?php
 
 return [
+    'save' => 'Uložit',
+    'cancel' => 'Zrušit',
+    'back' => 'Zpět',
+    'author' => 'Autor',
+    'merge-tags' => 'Merge tagy',
+
     'event' => [
         'status' => [
             'published' => 'Publikováno',
             'draft' => 'Koncept',
             'deleted' => 'Smazána',
         ]
+    ],
+    'email' => [
+        'your-email' => 'Váš email',
+        'send-test' => 'Poslat testovací email',
     ],
     'user' => [
         'first_name' => 'Jméno',
@@ -35,7 +45,23 @@ return [
         'default' => 'Výchozí hodnota',
     ],
     'templates' => [
+        'templates' => 'Šablony',
+        'name' => 'Název šablony',
         'approved' => 'Schválená',
         'not_approved' => 'Ke schválení',
+        'html' => 'HTML kód',
+        'default-template' => 'Výchozí šablona',
+        'custom-template' => 'Vlastní šablona',
+        'content' => 'Obsah',
+        'content-placeholder' => 'Zde zadejte vlastní text',
+        'template-hint' => 'Každá šablona musí obsahovat tag pro <code>[content]</code> vložení obsahu definovaného v události',
+        'custom-template-hint' => 'Zde vložte validní HTML šablonu. Šablona by měla obsahovat validní HTML a CSS kód.',
+        'content-missing' => 'Povinné vložení tagu <code>[content]</code> nebylo nalezeno v šabloně.',
+        'saved-approval' => 'Šablona byla uložena. Bude dostupná, jakmile bude schválena správcem.',
+        'deleted' => 'Šablona byla odstraněna.',
+        'my-templates' => 'Moje šablony',
+        'for-approval' => 'Šablony čekající na schválení',
+        'updated' => 'Šablona byla úspěšně změněna.',
+        'show-content' => 'Zobrazit obsah šablony',
     ]
 ];

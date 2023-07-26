@@ -3,14 +3,20 @@
 @section('content')
     <div class="card mt-3">
         <div class="card-body">
+            @if(Illuminate\Support\Facades\Session::has('message'))
+                <div id="messageAlert" class="alert alert-success m-2">
+                    {{ Illuminate\Support\Facades\Session::get('message') }}
+                </div>
+            @endif
             <div class="row justify-content-center">
                 <div class="col-8">
-                    <form action="{{ route('admin.templates.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('admin.templates.update', ['id' => $template->id]) }}" method="post" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <div class="row mb-3">
                             <div class="col">
                                 <label for="name" class="form-label">{{ __('app.templates.name') }}</label>
-                                <input type="text" class="form-control" name="name" value="{{ old('name') }}">
+                                <input type="text" class="form-control" name="name" value="{{ $template->name}}">
                                 @error('name')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -21,8 +27,7 @@
                             <div class="col">
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="htmlRadio" value="default"
-                                           @if(!old('htmlRadio') !== null) checked @endif
-                                           {{ old('htmlRadio') === 'default' ? 'checked' : '' }}>
+                                        {{ $template->type === 'default' ? 'checked' : '' }}>
                                     <label class="form-check-label" for="flexRadioDefault1">
                                         {{ __('app.templates.default-template') }}
                                     </label>
@@ -30,7 +35,7 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="htmlRadio" id="customRadio"
                                            value="custom"
-                                           {{ old('htmlRadio') === 'custom' ? 'checked' : '' }}>
+                                        {{ $template->type === 'custom' ? 'checked' : '' }}>
                                     <label class="form-check-label" for="flexRadioDefault2">
                                         {{ __('app.templates.custom-template') }}
                                     </label>
@@ -49,7 +54,7 @@
                         <div class="row mb-3" id="editorDiv">
                             <div class="col">
                                 <label for="text" class="form-label">{{ __('app.templates.content') }}</label>
-                                <textarea class="form-control wysiwyg mb-3" rows="8" name="text">{{ old('text') }}</textarea>
+                                <textarea class="form-control wysiwyg mb-3" rows="8" name="text">{{ $template->html }}</textarea>
                                 @error('text')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -59,7 +64,7 @@
                         <div class="row mb-3" id="contentDiv">
                             <div class="col">
                                 <label for="html" class="form-label">{{ __('app.templates.html') }}</label>
-                                <textarea class="form-control" rows="8" name="html">{{ old('html') }}</textarea>
+                                <textarea class="form-control" rows="8" name="html">{{ $template->html }}</textarea>
                                 @error('html')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror

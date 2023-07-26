@@ -3,8 +3,8 @@
 @section('content')
     <div class="row justify-content-end align-content-end">
         <div class="col-12 my-2 ">
-            <a href="{{ route('admin.templates.approvals') }}" class="btn btn-primary m-2 float-end">{{ __('templates.for.approval') }}</a>
-            <a href="{{ route('admin.templates.author', ['user' => Auth::user()->id]) }}" class="btn btn-primary m-2 float-end">{{ __('templates.my-templates') }}</a>
+            <a href="{{ route('admin.templates.approvals') }}" class="btn btn-primary m-2 float-end">{{ __('app.templates.for-approval') }}</a>
+            <a href="{{ route('admin.templates.author', ['user' => Auth::user()->id]) }}" class="btn btn-primary m-2 float-end">{{ __('app.templates.my-templates') }}</a>
         </div>
     </div>
     <div class="box box-primary">
@@ -34,7 +34,7 @@
                 <tbody>
                 @foreach($templates as $template)
                     <tr>
-                        <td><a href="{{ route('admin.templates.show', ['id' => $template->id]) }}" class="link-primary">{{ $template->name }}</a></td>
+                        <td><a href="{{ route('admin.templates.edit', ['id' => $template->id]) }}" class="link-primary">{{ $template->name }}</a></td>
                         <td>{{ $template->author->getFullname() }}</td>
                         @if($template->approved)
                             <td><span class="fa fa-circle text-success"></span> {{ __('app.templates.approved') }}</td>
@@ -44,6 +44,10 @@
 
                         <td class="text-end">
                             <a href="{{ route('admin.templates.edit', ['id' => $template->id]) }}" class="btn btn-outline-primary btn-rounded" title="Editovat"><i class="fas fa-pen"></i></a>
+                            <form class="d-inline" action="{{ route('admin.templates.send-test', ['id' => $template->id]) }}" method="post">
+                                @csrf
+                                <button type="submit" title="{{ __('app.email.send-test') }}" class="btn btn-outline-info btn-rounded"> <i class="fas fa-envelope"></i></button>
+                            </form>
                             <form class="d-inline" action="{{ route('admin.templates.destroy', ['id' => $template->id]) }}" method="post">
                                 @csrf
                                 @method('DELETE')

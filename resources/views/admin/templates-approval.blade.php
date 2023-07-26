@@ -31,7 +31,10 @@
                         @endif
 
                         <td class="text-end">
-                            <a href="{{ route('admin.templates.edit', ['id' => $template->id]) }}" class="btn btn-outline-primary btn-rounded" title="{{ __('app.templates.send-note') }}"><i class="fas fa-envelope"></i></a>
+                            <form class="d-inline" action="{{ route('admin.templates.send-test', ['id' => $template->id]) }}" method="post">
+                                @csrf
+                                <button type="submit" title="{{ __('app.email.send-test') }}" class="btn btn-outline-info btn-rounded"> <i class="fas fa-envelope"></i></button>
+                            </form>
                             <form class="d-inline" action="{{ route('admin.templates.approve', ['id' => $template->id]) }}" method="post">
                                 @csrf
                                 <button type="submit" title="{{ __('app.templates.approve-template') }}" class="btn btn-outline-success btn-rounded"> <i class="fas fa-check-circle"></i></button>

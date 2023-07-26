@@ -11,16 +11,20 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 
 class TemplateFacade
 {
 
     private TemplateRepository $templateRepository;
+    private UserFacade $userFacade;
 
-    public function __construct(TemplateRepository $templateRepository)
+    public function __construct(TemplateRepository $templateRepository, UserFacade $userFacade)
     {
         $this->templateRepository = $templateRepository;
+        $this->userFacade = $userFacade;
     }
 
     public function getApprovedTemplates(): LengthAwarePaginator
@@ -33,13 +37,41 @@ class TemplateFacade
         return $this->templateRepository->getUnapprovedTemplates();
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function createTemplate(Request $request): void
     {
         $template = new Template();
-        $template->name = $request->name;
-        $cleanedHtml = $this->cleanHtmlBody($request->html);
-        $template->html = $cleanedHtml;
+        $this->setTemplateAttributes($request, $template);
+        $template->user_id = $this->userFacade->getCurrentUser()->id;
         $template->save();
+    }
+
+    /**
+     * @throws ValidationException
+     */
+    public function updateTemplate(int $id, Request $request): void
+    {
+        $template = $this->templateRepository->getById($id);
+        $this->setTemplateAttributes($request, $template);
+        $template->save();
+
+    }
+
+    public function deleteTemplate(int $id): void
+    {
+        $template = $this->templateRepository->getById($id);
+        $template->deleteOrFail();
+    }
+
+    public function checkTemplateContainsContent(string $content): bool
+    {
+        if (preg_match('/\[content]/', $content)) {
+            return true;
+        }
+
+        return false;
     }
 
     public function getTemplateHtmlWithParams(int $id, User $user): ?string
@@ -68,6 +100,23 @@ class TemplateFacade
     public function getTemplateById(int $id): Template
     {
         return $this->templateRepository->getById($id);
+    }
+
+    private function setTemplateAttributes(Request $request, Template $template): Template
+    {
+        $template->name = $request->name;
+        $html = $request->type === 'default'
+            ? $request->text
+            : $this->cleanHtmlBody($request->html);
+
+        if (!$this->checkTemplateContainsContent($html)) {
+            throw ValidationException::withMessages(['content' => __('app.templates.content-missing')]);
+        }
+
+        $template->html = $html;
+        $template->type = $request->type;
+
+        return $template;
     }
 
     private function cleanHtmlBody(string $html): string

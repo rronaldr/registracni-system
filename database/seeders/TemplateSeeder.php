@@ -19,7 +19,6 @@ class TemplateSeeder extends Seeder
             'name' => 'Seeder template',
             'type' => 'custom',
             'approved' => 1,
-            'params' => '["name", "faculty"]',
             'html' => '<!DOCTYPE html>
                         <html lang="cs">
                           <head>
