@@ -17,6 +17,8 @@ class CreateBlacklistsUsersTable extends Migration
             $table->id();
             $table->foreignId('blacklist_id');
             $table->foreignId('user_id');
+            $table->string('block_reason')->nullable();
+            $table->dateTime('blocked_until')->nullable();
             $table->timestamps();
         });
     }
