@@ -75,6 +75,8 @@
                             </div>
                         </div>
 
+                        <blacklist-form></blacklist-form>
+
                         <!-- Custom blacklist modal start -->
                         <div class="modal fade" id="infoModal" role="dialog" tabindex="-1">
                             <div class="modal-dialog">

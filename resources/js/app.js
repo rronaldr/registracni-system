@@ -9,6 +9,7 @@ import en from "./locales/en.json";
 
 // Components
 import TinyEditor from "./components/TinyEditor.vue";
+import BlacklistForm from "./components/Blacklist/BlacklistForm.vue";
 
 const i18n = createI18n({
     locale: 'cs',
@@ -19,6 +20,7 @@ const i18n = createI18n({
 const app = createApp({
     components: {
         TinyEditor,
+        BlacklistForm,
     }
 });
 

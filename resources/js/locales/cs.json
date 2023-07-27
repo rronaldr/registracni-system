@@ -1,0 +1,11 @@
+{
+    "app": {
+        "back": "Zpět",
+        "save": "Uložit",
+        "submit": "Odeslat"
+    },
+    "blacklist": {
+        "block_until": "Blokace do",
+        "block_reason": "Důvod blokace"
+    }
+}
