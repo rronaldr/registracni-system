@@ -7,8 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Blacklist;
 use App\Services\BlacklistFacade;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -21,18 +23,13 @@ class BlacklistController extends Controller
         $blacklist = $blacklistFacade->getGlobalBlacklist();
 
         return view('admin.blacklist', [
-            'blacklist' => $blacklist ?? null,
+            'blacklist' => $blacklist,
         ]);
     }
 
     /** @todo add validation */
     public function store(Request $request, BlacklistFacade $blacklistFacade): RedirectResponse
     {
-        /**
-         * jan.novak@vse.cz;1.5.2030 9:15;Váš důvod,
-         berg@gmail.com;10.12.2030 22:50;reason,
-         */
-
         $blacklistData = $blacklistFacade
             ->getBlacklistJsonFromResponse($request->blacklist)
             ->toJson();
@@ -45,30 +42,33 @@ class BlacklistController extends Controller
         return redirect()->route('admin.blacklist');
     }
 
-    public function update(string $blacklistId, Request $request, BlacklistFacade $blacklistFacade): RedirectResponse
+    public function update(int $id, Request $request, BlacklistFacade $blacklistFacade)
     {
-        /**
-         * jan.jiri@vse.cz,
-        test@gmail.com;10.12.2050 22:50,
-         */
-        $blacklist = Blacklist::query()
-            ->where('id', $blacklistId)
-            ->first();
+        try {
+            $blacklistFacade->addUsersToBlacklist($id, $request->blacklist);
 
-        $existingBlacklist = json_decode($blacklist->data, true);
-        $newData = $blacklistFacade->getBlacklistJsonFromResponse($request->blacklist)->toArray();
-        $mergedBlacklist = array_merge($existingBlacklist, $newData);
-
-        $blacklist->data = json_encode($mergedBlacklist);
-        $blacklist->save();
-
-        return redirect()->route('admin.blacklist');
+            return response()->noContent();
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
     }
 
-    public function destroy(string $blacklistId, string $email): RedirectResponse
+    public function getBlacklistUsers(int $id, BlacklistFacade $blacklistFacade): JsonResponse
     {
-        $x =$blacklistId;
+        $blacklist = $blacklistFacade->getBlacklistById($id);
 
-        return redirect()->route('admin.blacklist');
+        return response()->json(['users' => $blacklist->users()->get()]);
+    }
+
+    public function destroy(int $id, int $user, BlacklistFacade $blacklistFacade)
+    {
+        try {
+            $blacklistFacade->removeUserFromBlacklist($id, $user);
+
+            return response()->noContent();
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e]);
+        }
+
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -15,7 +16,9 @@ class BlacklistSeeder extends Seeder
     public function run()
     {
         DB::table('blacklists')->insert([
-            'data' => '"{}"',
+            'id' => 1,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
         ]);
     }
 }

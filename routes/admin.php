@@ -30,8 +30,9 @@ Route::middleware(['auth'])->group(function () {
     // Blacklist routes
     Route::get('/blacklist', [BlacklistController::class, 'index'])->name('admin.blacklist');
     Route::post('/blacklist/store', [BlacklistController::class, 'store'])->name('admin.blacklist.store');
-    Route::put('/blacklist/{blacklist_id}', [BlacklistController::class, 'update'])->name('admin.blacklist.update');
-    Route::delete('/blacklist/{blacklist_id}/{email}', [BlacklistController::class, 'destroy'])->name('admin.blacklist.destroy');
+    Route::get('/blacklist/{id}/users', [BlacklistController::class, 'getBlacklistUsers'])->name('admin.blacklist.users');
+    Route::put('/blacklist/{id}', [BlacklistController::class, 'update'])->name('admin.blacklist.update');
+    Route::delete('/blacklist/{id}/{user}', [BlacklistController::class, 'destroy'])->name('admin.blacklist.destroy');
 
     // Template routes
     Route::get('/templates', [TemplateController::class, 'index'])->name('admin.templates');

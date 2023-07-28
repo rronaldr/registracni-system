@@ -1,6 +1,6 @@
 require('./bootstrap');
 
-import { createApp } from "vue/dist/vue.esm-bundler.js";
+import { createApp } from 'vue';
 import { createI18n } from 'vue-i18n';
 
 // Translations
@@ -9,7 +9,8 @@ import en from "./locales/en.json";
 
 // Components
 import TinyEditor from "./components/TinyEditor.vue";
-import BlacklistForm from "./components/Blacklist/BlacklistForm.vue";
+import BlacklistPage from "./components/Blacklist/BlacklistPage.vue";
+import FormButtons from "./components/Form/FormButtons.vue";
 
 const i18n = createI18n({
     locale: 'cs',
@@ -20,9 +21,13 @@ const i18n = createI18n({
 const app = createApp({
     components: {
         TinyEditor,
-        BlacklistForm,
+        BlacklistPage,
+        FormButtons,
     }
 });
+
+app.provide('ADMIN_URL', 'http://localhost/admin')
+app.provide('APP_URL', 'http://localhost')
 
 app.use(i18n)
 app.mount("#vueApp");

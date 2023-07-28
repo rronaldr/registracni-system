@@ -4,56 +4,76 @@ declare(strict_types = 1);
 
 namespace App\Services;
 
+use App\Models\Blacklist;
 use App\Repositories\BlacklistRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
+use function trim;
+
 class BlacklistFacade
 {
     private BlacklistRepository $blacklistRepository;
+    private UserFacade $userFacade;
 
-    public function __construct(BlacklistRepository $blacklistRepository)
+    public function __construct(BlacklistRepository $blacklistRepository, UserFacade $userFacade)
     {
         $this->blacklistRepository = $blacklistRepository;
+        $this->userFacade = $userFacade;
     }
 
-    public function getGlobalBlacklist(): ?Collection
+    public function getGlobalBlacklist(): Blacklist
     {
-        $blacklist = $this->blacklistRepository->getGlobalBlacklist() ?? null;
+        $blacklist = $this->blacklistRepository->getGlobalBlacklist();
 
-        if ($blacklist === null) {
-            return null;
+        return $blacklist;
+    }
+
+    public function getBlacklistById(int $id): Blacklist
+    {
+        return $this->blacklistRepository->getBlacklistById($id);
+    }
+
+    public function checkUserOnBlacklist(Blacklist $blacklist, int $userId): bool
+    {
+        return $this->blacklistRepository->checkUserOnBlacklist($blacklist, $userId);
+    }
+
+    public function addUsersToBlacklist(int $blacklistId, array $data): void
+    {
+        $blacklist = $this->getBlacklistById($blacklistId);
+        $dataCollection = collect($data);
+
+        if (empty($dataCollection->get('users'))) {
+            throw new \Exception('No xname values provided');
         }
 
-        return collect(json_decode($blacklist->data));
+        $users = collect(explode(',', $dataCollection->get('users')));
+
+        $users->each( function (string $xname) use ($blacklist, $dataCollection): void  {
+            $user = $this->userFacade->getOrCreateUserByXname(trim($xname));
+
+            if (!$this->checkUserOnBlacklist($blacklist, $user->id)) {
+                $blacklist->users()->attach($user->id, [
+                    'block_reason' => $dataCollection->get('block_reason'),
+                    'blocked_until' => Carbon::parse($dataCollection->get('blocked_until'))
+                ]);
+            }
+
+        });
     }
 
-    public function getBlacklistJsonFromResponse(string $data): Collection
+    public function removeUserFromBlacklist(int $id, int $userId): void
     {
-        $values = Str::of($data)->explode(',');
+        $blacklist = $this->getBlacklistById($id);
+        $user = $this->userFacade->getUserById($userId);
 
-        $blacklistData = collect($values)
-            ->filter(fn($block) => $block !== '')
-            ->map(function(string $block): Collection
-            {
-                $stringSanitized = str_replace(["\r", "\n"], '', $block);
-                $blacklistData = Str::of($stringSanitized)->explode(';');
-                $blacklistCollection = collect(['email' => $blacklistData[0]]);
+        if (!isset($user)) {
+            throw new \Exception('User not found');
+        }
 
-                if(isset($blacklistData[1])){
-                    $date = Carbon::create($blacklistData[1])->toDateTimeString();
-                    $blacklistCollection->put('blocked_until', $date);
-                }
-
-                if (isset($blacklistData[2]))
-                {
-                    $blacklistCollection->put('blocked_reason', $blacklistData[2]);
-                }
-
-                return $blacklistCollection;
-            });
-        return $blacklistData;
+        $blacklist->users()->detach($user->id);
     }
 
 }

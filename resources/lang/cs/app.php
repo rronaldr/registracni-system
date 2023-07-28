@@ -7,21 +7,11 @@ return [
     'author' => 'Autor',
     'merge-tags' => 'Merge tagy',
 
-    'event' => [
-        'status' => [
-            'published' => 'Publikováno',
-            'draft' => 'Koncept',
-            'deleted' => 'Smazána',
-        ]
-    ],
-    'email' => [
-        'your-email' => 'Váš email',
-        'send-test' => 'Poslat testovací email',
-    ],
-    'user' => [
-        'first_name' => 'Jméno',
-        'last_name' => 'Příjmení',
-        'email' => 'Email'
+    'blacklist' => [
+        'user-hint' => 'Vkládejte xname jednotlivých uživatelů oddělených čárkou.<br> Například: <br><b>xname00, xname01, xname02, ...</b>',
+        'block_reason' => 'Důvod blokace',
+        'blocked_until' => 'Blokace do',
+        'global-blacklist' => 'Globální blacklist',
     ],
     'date' => [
         'list' => 'Seznam termínů',
@@ -33,6 +23,18 @@ return [
         'withdraw_end' => 'Odhlašování do',
         'capacity' => 'Kapacita',
     ],
+    'event' => [
+        'status' => [
+            'published' => 'Publikováno',
+            'draft' => 'Koncept',
+            'deleted' => 'Smazána',
+        ]
+    ],
+    'email' => [
+        'email' => 'Email',
+        'your-email' => 'Váš email',
+        'send-test' => 'Poslat testovací email',
+    ],
     'enrollment' => [
         'list' => 'Seznam účastníků',
         'enrolled' => 'Přihlášen',
@@ -43,6 +45,11 @@ return [
         'type' => 'Typ',
         'required' => 'Povinné',
         'default' => 'Výchozí hodnota',
+    ],
+    'user' => [
+        'first_name' => 'Jméno',
+        'last_name' => 'Příjmení',
+        'email' => 'Email'
     ],
     'templates' => [
         'templates' => 'Šablony',

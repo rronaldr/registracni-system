@@ -2,10 +2,20 @@
     "app": {
         "back": "Zpět",
         "save": "Uložit",
-        "submit": "Odeslat"
+        "submit": "Odeslat",
+        "cancel": "Zrušit",
+        "delete": "Odstranit",
+        "show-hint": "Zobrazit nápovědu"
+    },
+    "email": {
+        "email": "Email"
     },
     "blacklist": {
-        "block_until": "Blokace do",
-        "block_reason": "Důvod blokace"
+        "blocked_until": "Blokace do",
+        "block_reason": "Důvod blokace",
+        "users": "Xname uživatelů"
+    },
+    "user": {
+        "xname": "Xname"
     }
 }

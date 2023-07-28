@@ -66,8 +66,8 @@ class User extends Authenticatable
         return $this->hasMany(Enrollment::class);
     }
 
-    public function blacklists(): HasMany
+    public function blacklists(): BelongsToMany
     {
-        return $this->hasMany(Blacklist::class);
+        return $this->belongsToMany(Blacklist::class)->withTimestamps()->withPivot(['block_reason', 'blocked_until']);
     }
 }
