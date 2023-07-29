@@ -110,10 +110,10 @@ class EventController extends Controller
         return redirect()->route('admin.events');
     }
 
-    public function getEventDates(string $eventId, EventFacade $eventFacade): JsonResponse
+    public function getEventDates(int $id, EventFacade $eventFacade): JsonResponse
     {
         try {
-            $dates = $eventFacade->getEventDates((int) $eventId);
+            $dates = $eventFacade->getEventDates((int) $id);
             return response()->json($dates);
         } catch (ModelNotFoundException $exception) {
             return response()->json(['error' => trans('An error occurred.')]);
@@ -130,10 +130,10 @@ class EventController extends Controller
         }
     }
 
-    public function exportEventUsers(string $eventId, EventFacade $eventFacade): BinaryFileResponse
+    public function exportEventUsers(int $id, EventFacade $eventFacade): BinaryFileResponse
     {
-        /** @todo rewrite into ExportFacade */
-        $data = $eventFacade->getEventEnrollmentsAndUsers($eventId);
+        /** @todo rewrite into ExportFacade and Excel */
+        $data = $eventFacade->getEventEnrollmentsAndUsers($id);
 
         $filename = public_path('seznam_ucastniku.csv');
 
@@ -149,10 +149,10 @@ class EventController extends Controller
         return response()->download($filename, 'seznam_ucastniku.csv', ['Content-Type' => 'text/csv']);
     }
 
-    public function exportEventUsersEmails(string $eventId, EventFacade $eventFacade): BinaryFileResponse
+    public function exportEventUsersEmails(int $id, EventFacade $eventFacade): BinaryFileResponse
     {
-        /** @todo rewrite into ExportFacade */
-        $data = $eventFacade->getEventUsersEmail($eventId);
+        /** @todo rewrite into ExportFacade and Excel */
+        $data = $eventFacade->getEventUsersEmail($id);
 
         $filename = public_path('seznam_ucastniku_email.csv');
 

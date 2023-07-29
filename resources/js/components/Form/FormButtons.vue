@@ -1,10 +1,10 @@
 <template>
     <div class="mb-3 row">
         <div class="col">
-            <BackButton route="route" />
+            <BackButton :route="route" />
         </div>
         <div class="col text-end">
-            <SubmitButton :route="route"/>
+            <SubmitButton/>
         </div>
     </div>
 </template>

@@ -65,10 +65,10 @@ class EventFacade
         return $duplicate;
     }
 
-    public function getEventEnrollmentsAndUsers(int $eventId): ?Collection
+    public function getEventEnrollmentsAndUsers(int $id): ?Collection
     {
         /** @var App\Models\Event $event */
-        $event = $this->eventRepository->getEventEnrollmentsAndUsers($eventId);
+        $event = $this->eventRepository->getEventEnrollmentsAndUsers($id);
 
         $eventUsersList = collect();
         foreach ($event->enrollments as $enrollment) {

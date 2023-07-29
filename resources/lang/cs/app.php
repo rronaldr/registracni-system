@@ -49,7 +49,8 @@ return [
     'user' => [
         'first_name' => 'Jméno',
         'last_name' => 'Příjmení',
-        'email' => 'Email'
+        'email' => 'Email',
+        'xname' => 'Xname',
     ],
     'templates' => [
         'templates' => 'Šablony',

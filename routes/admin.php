@@ -22,10 +22,10 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/events/{id}', [EventController::class, 'update'])->name('admin.events.update');
     Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('admin.events.destroy');
     Route::post('/events/{event}/duplicate', [EventController::class, 'duplicate'])->name('admin.events.duplicate');
-    Route::get('/events/{event_id}/dates', [EventController::class, 'getEventDates'])->name('admin.events.dates');
-    Route::get('/events/{event_id}/users', [EventController::class, 'getEventEnrollmentsUsers'])->name('admin.events.users');
-    Route::get('/events/{event_id}/users/export', [EventController::class, 'exportEventUsers'])->name('admin.events.users.export');
-    Route::get('/events/{event_id}/users/export-email', [EventController::class, 'exportEventUsersEmails'])->name('admin.events.users.export.email');
+    Route::get('/events/{id}/dates', [EventController::class, 'getEventDates'])->name('admin.events.dates');
+    Route::get('/events/{id}/users', [EventController::class, 'getEventEnrollmentsUsers'])->name('admin.events.users');
+    Route::get('/events/{id}/users/export', [EventController::class, 'exportEventUsers'])->name('admin.events.users.export');
+    Route::get('/events/{id}/users/export-email', [EventController::class, 'exportEventUsersEmails'])->name('admin.events.users.export.email');
 
     // Blacklist routes
     Route::get('/blacklist', [BlacklistController::class, 'index'])->name('admin.blacklist');

@@ -25,20 +25,17 @@
 </template>
 
 <script setup>
-import {onMounted, onUnmounted, onUpdated, ref} from "vue";
-import BlacklistForm from "./BlacklistForm.vue";
-import BlacklistUsers from "./BlacklistUsers.vue";
+    import {onMounted, onUnmounted, onUpdated, ref} from "vue";
+    import BlacklistForm from "./BlacklistForm.vue";
+    import BlacklistUsers from "./BlacklistUsers.vue";
 
-const props = defineProps({
-    blacklistId: {type: Number, required: true}
-})
+    const props = defineProps({
+        blacklistId: {type: Number, required: true}
+    })
 
-const listRef = ref(null)
-// refreshUsers()
+    const listRef = ref(null)
 
-function refreshUsers() {
-    listRef.value.getUsers()
-}
-
-
+    function refreshUsers() {
+        listRef.value.getUsers()
+    }
 </script>

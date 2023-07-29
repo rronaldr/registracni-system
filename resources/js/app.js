@@ -11,6 +11,7 @@ import en from "./locales/en.json";
 import TinyEditor from "./components/TinyEditor.vue";
 import BlacklistPage from "./components/Blacklist/BlacklistPage.vue";
 import FormButtons from "./components/Form/FormButtons.vue";
+import EventCreateForm from "./components/Events/EventCreateForm.vue";
 
 const i18n = createI18n({
     locale: 'cs',
@@ -23,6 +24,7 @@ const app = createApp({
         TinyEditor,
         BlacklistPage,
         FormButtons,
+        EventCreateForm
     }
 });
 

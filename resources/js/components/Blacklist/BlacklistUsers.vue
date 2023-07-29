@@ -31,8 +31,6 @@
                     />
                 </tbody>
             </table>
-<!--            <p v-if="!users" class="card-text" >Zatím nejsou žádní uživatelé na blacklistu</p>-->
-
         </div>
     </div>
 </template>

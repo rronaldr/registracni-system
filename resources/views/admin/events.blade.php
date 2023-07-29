@@ -40,7 +40,7 @@
                             <td>
                                 {{ $event->dates_cache }}
                             </td>
-                            <td><a href="#" class="link-primary" data-bs-toggle="modal" data-bs-target="#usersModal" onClick="getUsers({{$event->id}})">
+                            <td><a href="#" class="link-primary" data-bs-toggle="modal" data-bs-target="#usersModal" onClick="getUsers({{ $event->id }})">
                                     Zobrazit účastníky ({{ $event->enrollments_count }})
                                 </a></td>
                             <td class="text-end">
@@ -98,7 +98,7 @@
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th scope="col">{{ __('app.user.name') }}</th>
+                                    <th scope="col">{{ __('app.user.xname') }}</th>
                                     <th scope="col">{{ __('app.user.email') }}</th>
                                     <th scope="col">{{ __('app.enrollment.enrolled') }}</th>
                                     <th scope="col">{{ __('app.enrollment.c_fields') }}</th>
@@ -110,8 +110,8 @@
                         </div>
                         @if(count($events) > 0)
                             <div class="modal-footer">
-                                <a type="button" class="btn btn-secondary" href="{{ route('admin.events.users.export', ['event_id' => $event->id]) }}"><i class="fas fa-file-export"></i> Exportovat</a>
-                                <a type="button" class="btn btn-secondary" href="{{ route('admin.events.users.export.email', ['event_id' => $event->id]) }}"><i class="fas fa-envelope"></i> Exportovat emaily</a>
+                                <a type="button" class="btn btn-secondary" href="{{ route('admin.events.users.export', ['id' => $event->id]) }}"><i class="fas fa-file-export"></i> Exportovat</a>
+                                <a type="button" class="btn btn-secondary" href="{{ route('admin.events.users.export.email', ['id' => $event->id]) }}"><i class="fas fa-envelope"></i> Exportovat emaily</a>
                             </div>
                         @endif
                     </div>
@@ -135,7 +135,7 @@
         function getUsers(eventId) {
             let rows = $('#usersBody')
             rows.empty()
-            $.get('events/'+eventId+'/users', function (data) {
+            $.get('events/'+parseInt(eventId)+'/users', function (data) {
                 $.each(data, function (key, val) {
                     let tag = []
                     $.each(val.c_fields, function (name, field) {
@@ -144,7 +144,7 @@
 
                     console.log(tag.toString())
                     rows.append('<tr scope="row">')
-                    rows.append('<td>'+ val.name +'</td>')
+                    rows.append('<td>'+ val.xname +'</td>')
                     rows.append('<td>'+ val.email +'</td>')
                     rows.append('<td>'+ formatDate(val.enrolled) +'</td>')
                     rows.append('<td>'+ tag.toString() +'</td>')
@@ -156,7 +156,7 @@
         function getDates(eventId) {
             let rows = $('#datesBody')
             rows.empty()
-            $.get('events/'+eventId+'/dates', function (data) {
+            $.get('events/'+parseInt(eventId)+'/dates', function (data) {
                 $.each(data, function (key, val) {
                     let name = val.name ?? '-'
                     rows.append('<tr scope="row">')
@@ -170,7 +170,7 @@
         }
 
         function exportUsers(eventId) {
-            $.get('events/'+eventId+'/users/export', function (data) {
+            $.get('events/'+parseInt(eventId)+'/users/export', function (data) {
 
             })
         }
