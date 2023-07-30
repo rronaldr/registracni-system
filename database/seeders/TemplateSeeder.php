@@ -17,7 +17,7 @@ class TemplateSeeder extends Seeder
         DB::table('templates')->insert([
             'user_id' => 2,
             'name' => 'Seeder template not approved',
-            'type' => 'custom',
+            'type' => 'default',
             'approved' => 0,
             'html' => '<!DOCTYPE html>
                         <html lang="cs">
@@ -35,7 +35,7 @@ class TemplateSeeder extends Seeder
         DB::table('templates')->insert([
             'user_id' => 1,
             'name' => 'Responsive email template',
-            'type' => 'default',
+            'type' => 'custom',
             'approved' => 1,
             'html' => '<!doctype html>
 <html>

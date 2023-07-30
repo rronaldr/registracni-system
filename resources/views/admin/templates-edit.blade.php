@@ -64,6 +64,7 @@
                             </div>
                         </div>
 
+                        @if($template->type === 'default')
                         <div class="row mb-3" id="editorDiv">
                             <div class="col">
                                 <label for="text" class="form-label">{{ __('app.templates.content') }}</label>
@@ -73,6 +74,7 @@
                                 @enderror
                             </div>
                         </div>
+                        @elseif($template->type === 'custom')
 
                         <div class="row mb-3" id="contentDiv">
                             <div class="col">
@@ -87,6 +89,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
 
                         <input type="hidden" name="type" value="default" id="type"/>
 
