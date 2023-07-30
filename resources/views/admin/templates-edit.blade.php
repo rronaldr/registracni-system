@@ -51,6 +51,19 @@
                         <span class="text-danger">{!! $message !!}</span>
                         @enderror
 
+                        <div class="row mb-3">
+                            <div class="col">
+                                <p>Přednastavené hodnoty</p>
+                                <button class="btn btn-light mx-2">Jméno</button>
+                                <button class="btn btn-light mx-2">Přijmeni</button>
+                                <button class="btn btn-light mx-2">Xname</button>
+                                <button class="btn btn-light mx-2">Email</button>
+                                <button class="btn btn-light mx-2">Název události</button>
+                                <button class="btn btn-light mx-2">Datum termínu</button>
+                                <button class="btn btn-light mx-2">Datum registrace</button>
+                            </div>
+                        </div>
+
                         <div class="row mb-3" id="editorDiv">
                             <div class="col">
                                 <label for="text" class="form-label">{{ __('app.templates.content') }}</label>
