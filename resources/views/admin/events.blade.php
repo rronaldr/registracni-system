@@ -41,7 +41,7 @@
                                 {{ $event->dates_cache }}
                             </td>
                             <td><a href="#" class="link-primary" data-bs-toggle="modal" data-bs-target="#usersModal" onClick="getUsers({{ $event->id }})">
-                                    Zobrazit účastníky ({{ $event->enrollments_count }})
+                                    Zobrazit všechny účastníky
                                 </a></td>
                             <td class="text-end">
                                 <a href="{{ route('admin.events.edit', ['id' => $event->id]) }}" class="btn btn-outline-primary btn-rounded" title="{{__('app.actions.edit')}}"><i class="fas fa-pen"></i></a>
@@ -138,11 +138,11 @@
             $.get('events/'+parseInt(eventId)+'/users', function (data) {
                 $.each(data, function (key, val) {
                     let tag = []
-                    $.each(val.c_fields, function (name, field) {
-                        tag.push(name.toUpperCase() +": "+ field.value +' ')
+                    $.each(val.c_fields, function (k, v) {
+                        tag.push(k +": "+ v)
                     })
 
-                    console.log(tag.toString())
+                    console.log(tag)
                     rows.append('<tr scope="row">')
                     rows.append('<td>'+ val.xname +'</td>')
                     rows.append('<td>'+ val.email +'</td>')

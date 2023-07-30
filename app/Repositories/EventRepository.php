@@ -15,12 +15,12 @@ class EventRepository
     public function getEventsForOverviewPaginated(): LengthAwarePaginator
     {
         return Event::query()
-            ->withCount(['dates', 'enrollments'])
+            ->withCount(['dates'])
             ->paginate(10);
     }
 
     /** @return \App\Models\Event */
-    public function getEventEnrollmentsAndUsers(int $eventId): ?Event
+    public function getEventWithEnrollmentsAndUsers(int $eventId): ?Event
     {
         return Event::query()
             ->where('id', $eventId)

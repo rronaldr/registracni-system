@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Services;
 
 use App\Enums\Event\EventStatusEnum;
+use App\Models\Enrollment;
 use App\Models\Event;
 use App\Repositories\EventRepository;
 use Illuminate\Database\Eloquent\Model;
@@ -68,26 +69,27 @@ class EventFacade
     public function getEventEnrollmentsAndUsers(int $id): ?Collection
     {
         /** @var App\Models\Event $event */
-        $event = $this->eventRepository->getEventEnrollmentsAndUsers($id);
+        $event = $this->eventRepository->getEventWithEnrollmentsAndUsers($id);
+        $customFieldsLabels = json_decode($event->c_fields, true);
 
         $eventUsersList = collect();
         foreach ($event->enrollments as $enrollment) {
             $eventUsersList->push([
                 'id'=> $enrollment->user->id,
-                'name' => $enrollment->user->first_name,
+                'xname' => $enrollment->user->xname,
                 'email' => $enrollment->user->email,
-                'c_fields' => json_decode($enrollment->c_fields),
+                'c_fields' => $this->getCustomFieldsValueWithLabel($customFieldsLabels, $enrollment),
                 'enrolled' => $enrollment->created_at,
             ]);
         }
 
-        return $eventUsersList->unique('name');
+        return $eventUsersList->unique('xname');
     }
 
     public function getEventUsersEmail(int $eventId): Collection
     {
         /** @var App\Models\Event $event */
-        $event = $this->eventRepository->getEventEnrollmentsAndUsers($eventId);
+        $event = $this->eventRepository->getEventWithEnrollmentsAndUsers($eventId);
 
         $eventUsersList = collect();
         foreach ($event->enrollments as $enrollment) {
@@ -107,5 +109,14 @@ class EventFacade
     public function getEventById(int $eventId): Model
     {
         return $this->eventRepository->getEventById($eventId);
+    }
+
+    private function getCustomFieldsValueWithLabel(array $labels, Enrollment $enrollment): Collection
+    {
+        $data = collect(json_decode($enrollment->c_fields, true));
+        return $data->mapWithKeys(function ($value, $key) use ($labels): array
+        {
+            return [$labels[$key]['label'] => $value];
+        });
     }
 }

@@ -7,6 +7,9 @@ return [
     'author' => 'Autor',
     'merge-tags' => 'Merge tagy',
 
+    'auth' => [
+        'login' => 'Přihlášení',
+    ],
     'blacklist' => [
         'user-hint' => 'Vkládejte xname jednotlivých uživatelů oddělených čárkou.<br> Například: <br><b>xname00, xname01, xname02, ...</b>',
         'block_reason' => 'Důvod blokace',
