@@ -8,10 +8,10 @@ import cs from "./locales/cs.json";
 import en from "./locales/en.json";
 
 // Components
-import TinyEditor from "./components/TinyEditor.vue";
-import BlacklistPage from "./components/Blacklist/BlacklistPage.vue";
-import FormButtons from "./components/Form/FormButtons.vue";
-import EventCreateForm from "./components/Events/EventCreateForm.vue";
+import TinyEditor from "./components/Admin/TinyEditor.vue";
+import FormButtons from "./components/Admin/Form/FormButtons.vue";
+import BlacklistPage from "./components/Admin/Blacklist/BlacklistPage.vue";
+import EventCreateForm from "./components/Admin/Events/EventCreateForm.vue";
 
 const i18n = createI18n({
     locale: 'cs',
