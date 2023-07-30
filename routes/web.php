@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\DateController;
+use App\Http\Controllers\LanguageController;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -18,8 +21,14 @@ Route::namespace('Admin')
     ->prefix('admin')
     ->group(__DIR__. '/admin.php');
 
-Route::get('/', function () {
-    return redirect()->route('admin.events');
-});
+// Date routes
+Route::get('/', [DateController::class, 'index'])->name('events');
 
-Auth::routes();
+// Event routes
+
+// Form routes
+
+// Auth routes
+
+// Locale routes
+Route::get('/{locale}', [LanguageController::class, 'setLocale'])->name('locale');

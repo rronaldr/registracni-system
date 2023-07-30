@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->json('roles')->nullable();
+            $table->string('locale')->default('cs');
             $table->rememberToken();
             $table->timestamps();
         });

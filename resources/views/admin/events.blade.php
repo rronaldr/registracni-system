@@ -130,7 +130,6 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/admin/initiate-datatables.js') }}"></script>
     <script>
         function getUsers(eventId) {
             let rows = $('#usersBody')
@@ -141,8 +140,6 @@
                     $.each(val.c_fields, function (k, v) {
                         tag.push(k +": "+ v)
                     })
-
-                    console.log(tag)
                     rows.append('<tr scope="row">')
                     rows.append('<td>'+ val.xname +'</td>')
                     rows.append('<td>'+ val.email +'</td>')
