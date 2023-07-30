@@ -20,6 +20,7 @@ class CreateEnrollmentsTable extends Migration
             $table->integer('state');
             $table->json('c_fields')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

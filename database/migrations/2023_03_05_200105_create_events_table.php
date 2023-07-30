@@ -20,17 +20,17 @@ class CreateEventsTable extends Migration
             $table->foreignId('user_id');
             $table->string('name');
             $table->string('subtitle')->nullable();
+            $table->string('thumbnail')->nullable();
             $table->integer('type');
             $table->string('description')->nullable();
             $table->string('status')->nullable();
             $table->json('c_fields')->nullable();
-            $table->string('thumbnail')->nullable();
-            $table->boolean('hidden')->default(false);
-            $table->dateTime('hidden_at')->nullable();
+            $table->string('template_subject')->nullable();
             $table->longText('template_content')->nullable();
-            $table->text('dates_cache')->nullable();
-            $table->string('subject')->nullable();
+            $table->dateTime('date_start_cache')->nullable();
+            $table->dateTime('date_end_cache')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

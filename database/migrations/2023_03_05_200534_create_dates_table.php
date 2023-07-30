@@ -24,8 +24,9 @@ class CreateDatesTable extends Migration
             $table->dateTime('withdraw_end');
             $table->integer('capacity');
             $table->string('name')->nullable();
-            $table->boolean('substitute', false);
+            $table->boolean('substitute')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -16,6 +16,7 @@ class CreateBlacklistsTable extends Migration
         Schema::create('blacklists', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
