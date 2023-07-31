@@ -14,7 +14,7 @@
             <a href="{{ route('admin.templates') }}"><i class="fas fa-envelope"></i>Šablony</a>
         </li>
         <li>
-            <a href="https://kalendar.vse.cz/" target="_blank">
+            <a href="{{ route('events.index') }}" target="_blank">
                 <i class="fas fa-external-link-alt"></i>Kalendář
             </a>
         </li>

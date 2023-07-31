@@ -11,42 +11,52 @@
             </div>
         </div>
 
-        <div class="form-container bg-white rounded shadow mt-4 py-4 px-4"
-            v-for="field in customFields">
-            <BaseInput
-                v-if="field.type === 'text'"
-                :label="field.label"
-                :required="field.required"
-            />
-            <BaseSelect
-                v-if="field.type === 'select'"
-                :label="field.label"
-                :options="field.options"
-                :required="field.required"
-            />
-        </div>
+        <form @submit.prevent="submitEnrollment">
+            <div class="bg-white rounded shadow mt-4 py-4 px-4"
+                 v-for="field in customFields">
+                <BaseInput
+                    v-if="field.type === 'text'"
+                    :label="field.label"
+                    :required="field.required"
+                />
+                <BaseSelect
+                    v-if="field.type === 'select'"
+                    :label="field.label"
+                    :options="field.options"
+                    :required="field.required"
+                />
+            </div>
 
-        <div class="form-container bg-white rounded shadow mt-4 py-2 px-4">
-            <div class="row p-2">
-                <div class="col-12">
+            <div class="bg-white rounded shadow mt-4 py-2 px-4">
+                <div class="row p-2">
+                    <div class="col-12">
 
-                    <p><input type="checkbox"> Souhlasím s <a class="link-primary" href="#">GDPR</a> ....</p>
-                    <button class="btn btn-primary" type="submit">Odeslat</button>
+                        <p><input type="checkbox"> Souhlasím s <a class="link-primary" href="#">GDPR</a> ....</p>
+                        <button class="btn btn-primary" type="submit">Odeslat</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </template>
 
 <script setup>
     import BaseInput from "./Admin/Form/BaseInput.vue";
     import BaseSelect from "./Admin/Form/BaseSelect.vue";
+    import axios from "axios";
+    import {inject} from "vue";
 
     const props = defineProps({
         fields: {type: String, required: true},
     })
-
+    const APP_URL = inject('APP_URL')
     let customFields = JSON.parse(props.fields)
-    console.log(customFields)
 
+    function submitEnrollment () {
+        axios.post(APP_URL +'/enrollment/' + 1,
+            {
+                enrollment: {name: "Ronald", gender: "Muž"}
+            }
+        )
+    }
 </script>

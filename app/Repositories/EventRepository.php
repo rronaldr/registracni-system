@@ -55,11 +55,11 @@ class EventRepository
         return $event;
     }
 
-    public function getEventCustomFields(int $id): Event
+    public function getEventCustomFields(int $dateId): Event
     {
         /** @var \App\Models\Event $event */
         $event = Event::query()
-            ->where('id', $id)
+            ->with(['dates' => fn($q) => $q->where('id', $dateId)])
             ->select(['id', 'c_fields'])
             ->first();
 

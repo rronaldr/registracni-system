@@ -21,4 +21,9 @@ class DateFacade
     {
         return $this->dateRepository->getEventWithStartAndEndDates($eventId);
     }
+
+    public function getDateById(int $id): Date
+    {
+        return $this->dateRepository->getDateById($id);
+    }
 }

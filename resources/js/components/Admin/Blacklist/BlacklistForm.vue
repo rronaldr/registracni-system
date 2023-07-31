@@ -45,7 +45,10 @@
 
     function addToBlacklist(){
         let csrf = document.getElementsByName('_token')[0].value
-        let data = { blacklist: blacklist, _token: csrf}
+        let data = {
+            blacklist: blacklist,
+            _token: csrf
+        }
 
         axios.put(
             ADMIN_URL+'/blacklist/'+ props.blacklistId,

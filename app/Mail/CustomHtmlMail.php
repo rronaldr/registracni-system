@@ -20,10 +20,11 @@ class CustomHtmlMail extends Mailable
      *
      * @return void
      */
-    public function __construct(User $user, string $html)
+    public function __construct(string $subject, string $html, User $user)
     {
-        $this->user = $user;
+        $this->subject = $subject;
         $this->html = $html;
+        $this->user = $user;
     }
 
     /**

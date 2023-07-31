@@ -16,4 +16,15 @@ class DateRepository
             ->orderBy('date_start')
             ->get(['date_start', 'date_end']);
     }
+
+    public function getDateById(int $id): Date
+    {
+        /** @var \App\Models\Date $date */
+        $date = Date::query()
+            ->where('id', $id)
+            ->with('event.template')
+            ->first();
+
+        return $date;
+    }
 }

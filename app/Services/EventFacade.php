@@ -116,9 +116,9 @@ class EventFacade
         return $this->eventRepository->getEventById($id);
     }
 
-    public function getEventCustomFields(int $id): Event
+    public function getEventCustomFields(int $dateId): Event
     {
-        return $this->eventRepository->getEventCustomFields($id);
+        return $this->eventRepository->getEventCustomFields($dateId);
     }
 
     public function getEventByIdForDetailPage(int $id): Event

@@ -19,22 +19,6 @@ class Template extends Model
         'approved'
     ];
 
-
-    public function hasParams(): bool
-    {
-        return isset($this->params) || !empty(json_decode($this->params, true));
-    }
-    public function getParams(): ?Collection
-    {
-        $params = collect(json_decode($this->params, true));
-
-        if (!isset($params)) {
-            return null;
-        }
-
-        return $params;
-    }
-
     public function events(): HasMany
     {
         return $this->hasMany(Event::class);

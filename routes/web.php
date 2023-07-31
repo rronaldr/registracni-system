@@ -27,7 +27,8 @@ Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show'
 // Event routes
 
 // Form routes
-Route::get('/enrollment/{id}', [EnrollmentController::class, 'show'])->name('enrollment.show');
+Route::get('/enrollment/{date_id}', [EnrollmentController::class, 'show'])->name('enrollment.show');
+Route::post('/enrollment/{date_id}', [EnrollmentController::class, 'store'])->name('enrollment.store');
 
 // Auth routes
 

@@ -19,13 +19,16 @@ class Event extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        'template_id',
+        'blacklist_id',
         'name',
         'template',
         'description',
         'status',
         'type',
         'c_fields',
-        'blacklist_id',
+        'template_subject',
+        'template_content',
     ];
 
     protected $casts = [
