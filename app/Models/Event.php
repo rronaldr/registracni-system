@@ -29,7 +29,7 @@ class Event extends Model
     ];
 
     protected $casts = [
-        'type' => 'integer'
+        'type' => 'integer',
     ];
 
     public function blacklist(): BelongsTo

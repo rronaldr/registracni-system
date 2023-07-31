@@ -64,6 +64,7 @@ class EventController extends Controller
 
     public function edit(string $id, EventFacade $eventFacade, TemplateFacade $templateFacade): View
     {
+        /** @todo rework templateFacade */
         $event = $eventFacade->getEventById((int) $id);
         $templates = Template::query()
             ->where('approved', 1)
@@ -93,6 +94,7 @@ class EventController extends Controller
         return redirect()->route('admin.events');
     }
 
+    /* @todo REDO this with VUE and json response */
     public function duplicate(Event $event, EventFacade $eventFacade): RedirectResponse
     {
         try {
@@ -113,7 +115,7 @@ class EventController extends Controller
     public function getEventDates(int $id, EventFacade $eventFacade): JsonResponse
     {
         try {
-            $dates = $eventFacade->getEventDates((int) $id);
+            $dates = $eventFacade->getEventWithStartAndEndDates($id);
             return response()->json($dates);
         } catch (ModelNotFoundException $exception) {
             return response()->json(['error' => trans('An error occurred.')]);

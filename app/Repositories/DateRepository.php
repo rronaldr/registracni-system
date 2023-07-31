@@ -9,17 +9,7 @@ use Illuminate\Support\Collection;
 
 class DateRepository
 {
-
-    public function getFirstAndLastDateOfEvent(int $eventId): Collection
-    {
-        return Date::query()
-            ->where('event_id', $eventId)
-            ->orderBy('date_start')
-            ->pluck('date_start')
-            ->last();
-    }
-
-    public function getEventDates(int $eventId): Collection
+    public function getEventWithStartAndEndDates(int $eventId): Collection
     {
         return Date::query()
             ->where('event_id', $eventId)

@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "@tinymce/tinymce-vue": "^5.1.0",
+        "moment": "^2.29.4",
         "vue-i18n": "^9.2.2"
     }
 }

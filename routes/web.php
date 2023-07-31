@@ -1,9 +1,8 @@
 <?php
 
-use App\Http\Controllers\DateController;
+use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\LanguageController;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,11 +21,13 @@ Route::namespace('Admin')
     ->group(__DIR__. '/admin.php');
 
 // Date routes
-Route::get('/', [DateController::class, 'index'])->name('events');
+Route::get('/', [EventController::class, 'index'])->name('events.index');
+Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show');
 
 // Event routes
 
 // Form routes
+Route::get('/enrollment/{id}', [EnrollmentController::class, 'show'])->name('enrollment.show');
 
 // Auth routes
 

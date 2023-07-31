@@ -22,11 +22,11 @@ class CreateEventsTable extends Migration
             $table->string('subtitle')->nullable();
             $table->string('thumbnail')->nullable();
             $table->integer('type');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->string('status')->nullable();
             $table->json('c_fields')->nullable();
             $table->string('template_subject')->nullable();
-            $table->longText('template_content')->nullable();
+            $table->text('template_content')->nullable();
             $table->dateTime('date_start_cache')->nullable();
             $table->dateTime('date_end_cache')->nullable();
             $table->timestamps();

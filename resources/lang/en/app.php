@@ -6,6 +6,7 @@ return [
     'back' => 'Zpět',
     'author' => 'Autor',
     'merge-tags' => 'Merge tagy',
+    'app-title' => 'Event on VŠE',
     'cs' => 'CZ',
     'en' => 'EN',
 

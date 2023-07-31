@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Repositories;
 
 use App\Models\Event;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -19,24 +20,65 @@ class EventRepository
             ->paginate(10);
     }
 
-    /** @return \App\Models\Event */
     public function getEventWithEnrollmentsAndUsers(int $eventId): ?Event
     {
-        return Event::query()
+        /** @var \App\Models\Event $event */
+        $event = Event::query()
             ->where('id', $eventId)
             ->with('enrollments.user')
             ->firstOrFail();
+
+        return $event;
     }
 
-    public function getEventById(int $eventId): Model
+    public function getEventById(int $id): Event
     {
-        return Event::query()
-            ->where('id', $eventId)
-            ->with('dates', function ($q) {
-                $q->orderBy('date_start');
-            })
-            ->with('enrollments.user')
+        /** @var \App\Models\Event $event */
+        $event = Event::query()
+            ->where('id', $id)
             ->firstOrFail();
+
+        return $event;
+    }
+
+    public function getEventByIdForDetailPage(int $id)
+    {
+        /** @var \App\Models\Event $event */
+        $event = Event::query()
+            ->where('id', $id)
+            ->with([
+                'dates' => fn($q) => $q->withCount('enrollments'),
+                'author:id,first_name,last_name,email'
+            ])
+            ->firstOrFail();
+
+        return $event;
+    }
+
+    public function getEventCustomFields(int $id): Event
+    {
+        /** @var \App\Models\Event $event */
+        $event = Event::query()
+            ->where('id', $id)
+            ->select(['id', 'c_fields'])
+            ->first();
+
+        return $event;
+    }
+
+    public function getEventsWithDatesInMonth(Carbon $month): Collection
+    {
+        /** @var \App\Models\Event $event **/
+        $events = Event::query()
+            ->with('dates', fn ($q) =>
+                $q->whereBetween('date_start', [
+                    $month->startOfMonth()->toDateString(),
+                    $month->endOfMonth()->toDateString()
+                ])
+            )
+            ->get();
+
+        return $events;
     }
 
 }

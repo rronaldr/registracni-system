@@ -18,7 +18,7 @@ class CreateTemplatesTable extends Migration
             $table->foreignId('user_id');
             $table->string('name');
             $table->string('type');
-            $table->longText('html');
+            $table->text('html');
             $table->boolean('approved')->default(false);
             $table->timestamps();
         });

@@ -8,6 +8,7 @@ use App\Enums\Event\EventStatusEnum;
 use App\Models\Enrollment;
 use App\Models\Event;
 use App\Repositories\EventRepository;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -27,7 +28,7 @@ class EventFacade
 
     public function createEvent(Request $request): void
     {
-        $event = Event::create([
+        Event::create([
             'name' => $request->get('name'),
             'description' => $request->get('description'),
             'type' => $request->get('type'),
@@ -35,7 +36,6 @@ class EventFacade
             'blacklist_id' => null,
             'hidden' => 0,
         ]);
-
     }
 
     public function getEventsForOverviewPaginated(): LengthAwarePaginator
@@ -68,7 +68,7 @@ class EventFacade
 
     public function getEventEnrollmentsAndUsers(int $id): ?Collection
     {
-        /** @var App\Models\Event $event */
+        /** @var \App\Models\Event $event */
         $event = $this->eventRepository->getEventWithEnrollmentsAndUsers($id);
         $customFieldsLabels = json_decode($event->c_fields, true);
 
@@ -88,7 +88,7 @@ class EventFacade
 
     public function getEventUsersEmail(int $eventId): Collection
     {
-        /** @var App\Models\Event $event */
+        /** @var \App\Models\Event $event */
         $event = $this->eventRepository->getEventWithEnrollmentsAndUsers($eventId);
 
         $eventUsersList = collect();
@@ -101,14 +101,29 @@ class EventFacade
         return $eventUsersList->unique('email');
     }
 
-    public function getEventDates(int $eventId): Collection
+    public function getEventWithStartAndEndDates(int $eventId): Collection
     {
-        return $this->dateFacade->getEventDates($eventId);
+        return $this->dateFacade->getEventWithStartAndEndDates($eventId);
     }
 
-    public function getEventById(int $eventId): Model
+    public function getEventsWithDatesInMonth(Carbon $month): Collection
     {
-        return $this->eventRepository->getEventById($eventId);
+        return $this->eventRepository->getEventsWithDatesInMonth($month);
+    }
+
+    public function getEventById(int $id): Event
+    {
+        return $this->eventRepository->getEventById($id);
+    }
+
+    public function getEventCustomFields(int $id): Event
+    {
+        return $this->eventRepository->getEventCustomFields($id);
+    }
+
+    public function getEventByIdForDetailPage(int $id): Event
+    {
+        return $this->eventRepository->getEventByIdForDetailPage($id);
     }
 
     private function getCustomFieldsValueWithLabel(array $labels, Enrollment $enrollment): Collection
