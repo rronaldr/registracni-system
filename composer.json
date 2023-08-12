@@ -15,7 +15,7 @@
         "laravel/ui": "^3.4",
         "maatwebsite/excel": "^3.1",
         "mews/purifier": "^3.4",
-        "razorbacks/laravel-shibboleth": "^0.5.6"
+        "uabookstores/laravel-shibboleth": "^3.4"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
