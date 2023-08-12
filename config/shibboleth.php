@@ -11,8 +11,8 @@ return [
     |
  */
 
-    'idp_login' => '/Shibboleth.sso/Login',
-    'idp_logout' => '/Shibboleth.sso/Logout',
+    'idp_login' => sprintf("/Shibboleth.sso/Login?target=%s", urlencode(env('APP_URL'))),
+    'idp_logout' => sprintf("/Shibboleth.sso/Logout?return=%s", urlencode(env('APP_URL'))),
     'authenticated' => '/',
 
 
@@ -69,11 +69,14 @@ return [
 
     'user' => [
         // fillable user model attribute => server variable
-        'name' => 'Shib-cn',
-        'first_name' => 'Shib-givenName',
-        'last_name' => 'Shib-sn',
-        'email' => 'Shib-mail',
+        'shibboleth_id' => 'unstructuredName',
+        'first_name' => 'givenName',
+        'last_name' => 'sn',
+        'email' => 'mail',
+        'xname' => 'uid',
         'emplid' => 'Shib-emplId',
+        'display_name' => 'displayName',
+        'roles' => 'eduPersonAffiliation',
     ],
 
     //The user model field (from the user array above) that should be used for authentication
