@@ -5,12 +5,10 @@ import { createI18n } from 'vue-i18n';
 
 // Translations
 import cs from "./locales/cs.json";
-
 import en from "./locales/en.json";
 // Admin Components
 import FormButtons from "./components/Admin/Form/FormButtons.vue";
 import BlacklistPage from "./components/Admin/Blacklist/BlacklistPage.vue";
-
 import EventCreateForm from "./components/Admin/Events/EventCreateForm.vue";
 // Components
 import EventList from "./components/Event/EventList";

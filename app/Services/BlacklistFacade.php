@@ -49,7 +49,10 @@ class BlacklistFacade
             throw new \Exception('No xname values provided');
         }
 
-        $users = collect(explode(',', $dataCollection->get('users')));
+        $delimiters = [",",";","\n"];
+        $parsedData = str_replace($delimiters, $delimiters[0], $dataCollection->get('users'));
+
+        $users = collect(explode(',', $parsedData));
 
         $users->each( function (string $xname) use ($blacklist, $dataCollection): void  {
             $user = $this->userFacade->getOrCreateUserByXname(trim($xname));

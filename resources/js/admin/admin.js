@@ -26,7 +26,7 @@
 (function() {
     'use strict';
 
-    $('#dataTables-example').DataTable({
+    $('#dataTables').DataTable({
         responsive: true,
         pageLength: 20,
         lengthChange: false,

@@ -17,7 +17,7 @@
         @endif
 
         <div class="box-body">
-            <table width="100%" class="table table-hover" id="dataTables-example">
+            <table width="100%" class="table table-hover" id="dataTables">
                 <thead>
                     <tr>
                         <th>Název události</th>

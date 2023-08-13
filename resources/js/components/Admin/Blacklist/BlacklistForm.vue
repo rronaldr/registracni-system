@@ -7,6 +7,7 @@
             v-model="blacklist.users"
             :label="$t('blacklist.users')"
             class="mb-3"
+            rows="3"
             required
         />
         <BaseInput

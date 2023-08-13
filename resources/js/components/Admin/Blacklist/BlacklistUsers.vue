@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="card-body">
-            <table class="table table table-striped" >
+            <table class="table table table-striped">
                 <thead>
                 <tr>
                     <td>{{ $t('user.xname') }}</td>
@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-import {inject, ref} from "vue";
+import {inject, nextTick, ref} from "vue";
     import BlacklistUser from "./BlacklistUser.vue";
 
     const props = defineProps({
@@ -44,6 +44,7 @@ import {inject, ref} from "vue";
     })
     const ADMIN_URL = inject('ADMIN_URL')
     let users = ref(null)
+
     getUsers()
 
     async function getUsers() {
@@ -58,3 +59,13 @@ import {inject, ref} from "vue";
         users
     })
 </script>
+
+<style scoped>
+.page-item.active .page-link {
+    background-color: lightgrey !important;
+    border: 1px solid black;
+}
+.page-link {
+    color: black !important;
+}
+</style>
