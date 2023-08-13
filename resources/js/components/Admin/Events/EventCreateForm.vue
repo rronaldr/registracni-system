@@ -16,14 +16,32 @@
             </div>
         </div>
 
+        <div class="line"></div><br>
+
+
         <div class="row mb-3">
-            <div class="col">
-                <label for="description" class="form-label">Popis události</label>
-                <textarea class="form-control wysiwyg" name="description"></textarea>
+            <label class="col-sm-2">Nastavení události</label>
+            <div class="col-sm-10">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" name="substitutes" type="checkbox">
+                    <label class="form-check-label" for="single">
+                        Povolit náhradníky na termín
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" name="external" type="checkbox">
+                    <label class="form-check-label" for="series">
+                        Povolit přihlášení externistům
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" name="notifications" type="checkbox">
+                    <label class="form-check-label" for="series">
+                        Zasílat notifikace o události
+                    </label>
+                </div>
             </div>
         </div>
-
-        <div class="line"></div><br>
 
         <div class="row mb-3">
             <label class="col-sm-2">Typ události</label>
