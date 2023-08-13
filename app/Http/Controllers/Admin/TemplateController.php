@@ -12,6 +12,7 @@ use App\Repositories\TemplateRepository;
 use App\Services\EventFacade;
 use App\Services\TemplateFacade;
 use App\Services\UserFacade;
+use ErrorException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
@@ -42,7 +43,6 @@ class TemplateController extends Controller
             $this->validate($request, [
                 'name' => 'required|string',
                 'html' => 'required_without:text',
-                'text' => 'required_without:html',
             ]);
 
             $templateFacade->createTemplate($request);
@@ -52,6 +52,9 @@ class TemplateController extends Controller
             return redirect()->route('admin.templates');
         } catch (ValidationException $e) {
             return back()->withErrors($e->errors())->withInput();
+        } catch (ErrorException $e) {
+            Session::flash('message', trans('Missing body'));
+            return back()->withErrors(['html' => trans('app.templates.invalid-html')])->withInput();
         }
     }
 

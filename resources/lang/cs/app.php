@@ -68,14 +68,15 @@ return [
         'custom-template' => 'Vlastní šablona',
         'content' => 'Obsah',
         'content-placeholder' => 'Zde zadejte vlastní text',
-        'template-hint' => 'Každá šablona musí obsahovat tag pro <code>[content]</code> vložení obsahu definovaného v události',
+        'template-hint' => 'Každá šablona musí obsahovat tag pro <code>[message]</code> vložení obsahu definovaného v události',
         'custom-template-hint' => 'Zde vložte validní HTML šablonu. Šablona by měla obsahovat validní HTML a CSS kód.',
-        'content-missing' => 'Povinné vložení tagu <code>[content]</code> nebylo nalezeno v šabloně.',
+        'content-missing' => 'Povinné vložení tagu <code>[message]</code> nebylo nalezeno v šabloně.',
         'saved-approval' => 'Šablona byla uložena. Bude dostupná, jakmile bude schválena správcem.',
         'deleted' => 'Šablona byla odstraněna.',
         'my-templates' => 'Moje šablony',
         'for-approval' => 'Šablony čekající na schválení',
         'updated' => 'Šablona byla úspěšně změněna.',
         'show-content' => 'Zobrazit obsah šablony',
+        'invalid-html' => 'HTML kód není validní. Chybí <body> tag.'
     ]
 ];

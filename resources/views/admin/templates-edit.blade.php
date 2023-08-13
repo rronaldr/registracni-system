@@ -23,26 +23,6 @@
                             </div>
                         </div>
 
-                        <div class="row mb-3">
-                            <div class="col">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="htmlRadio" value="default"
-                                        {{ $template->type === 'default' ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="flexRadioDefault1">
-                                        {{ __('app.templates.default-template') }}
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="htmlRadio" id="customRadio"
-                                           value="custom"
-                                        {{ $template->type === 'custom' ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="flexRadioDefault2">
-                                        {{ __('app.templates.custom-template') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="alert alert-info mb-3">
                             {!! __('app.templates.template-hint') !!}
                         </div>
@@ -50,31 +30,6 @@
                         @error('content')
                         <span class="text-danger">{!! $message !!}</span>
                         @enderror
-
-                        <div class="row mb-3">
-                            <div class="col">
-                                <p>Přednastavené hodnoty</p>
-                                <button class="btn btn-light mx-2">Jméno</button>
-                                <button class="btn btn-light mx-2">Přijmeni</button>
-                                <button class="btn btn-light mx-2">Xname</button>
-                                <button class="btn btn-light mx-2">Email</button>
-                                <button class="btn btn-light mx-2">Název události</button>
-                                <button class="btn btn-light mx-2">Datum termínu</button>
-                                <button class="btn btn-light mx-2">Datum registrace</button>
-                            </div>
-                        </div>
-
-                        @if($template->type === 'default')
-                        <div class="row mb-3" id="editorDiv">
-                            <div class="col">
-                                <label for="text" class="form-label">{{ __('app.templates.content') }}</label>
-                                <textarea class="form-control wysiwyg mb-3" rows="8" name="text">{{ $template->html }}</textarea>
-                                @error('text')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                        @elseif($template->type === 'custom')
 
                         <div class="row mb-3" id="contentDiv">
                             <div class="col">
@@ -84,12 +39,8 @@
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
 
-                                <div class="alert alert-info mt-3">
-                                    {!! __('app.templates.custom-template-hint') !!}
-                                </div>
                             </div>
                         </div>
-                        @endif
 
                         <input type="hidden" name="type" value="default" id="type"/>
 

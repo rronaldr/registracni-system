@@ -17,27 +17,6 @@
                             </div>
                         </div>
 
-                        <div class="row mb-3">
-                            <div class="col">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="htmlRadio" value="default"
-                                           @if(!old('htmlRadio') !== null) checked @endif
-                                           {{ old('htmlRadio') === 'default' ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="flexRadioDefault1">
-                                        {{ __('app.templates.default-template') }}
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="htmlRadio" id="customRadio"
-                                           value="custom"
-                                           {{ old('htmlRadio') === 'custom' ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="flexRadioDefault2">
-                                        {{ __('app.templates.custom-template') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="alert alert-info mb-3">
                             {!! __('app.templates.template-hint') !!}
                         </div>
@@ -45,29 +24,6 @@
                         @error('content')
                         <span class="text-danger">{!! $message !!}</span>
                         @enderror
-
-                        <div class="row mb-3">
-                            <div class="col">
-                                <p>Přednastavené hodnoty</p>
-                                <button class="btn btn-light mx-2">Jméno</button>
-                                <button class="btn btn-light mx-2">Přijmeni</button>
-                                <button class="btn btn-light mx-2">Xname</button>
-                                <button class="btn btn-light mx-2">Email</button>
-                                <button class="btn btn-light mx-2">Název události</button>
-                                <button class="btn btn-light mx-2">Datum termínu</button>
-                                <button class="btn btn-light mx-2">Datum registrace</button>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3" id="editorDiv">
-                            <div class="col">
-                                <label for="text" class="form-label">{{ __('app.templates.content') }}</label>
-                                <textarea class="form-control wysiwyg mb-3" rows="8" name="text">{{ old('text') }}</textarea>
-                                @error('text')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
 
                         <div class="row mb-3" id="contentDiv">
                             <div class="col">
@@ -77,9 +33,6 @@
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
 
-                                <div class="alert alert-info mt-3">
-                                    {!! __('app.templates.custom-template-hint') !!}
-                                </div>
                             </div>
                         </div>
 
@@ -102,41 +55,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('scripts')
-    <x-wysiwyg></x-wysiwyg>
-    <script type="text/javascript">
-        getRadioValue()
-
-        $('input[name="htmlRadio"]').on("click", function () {
-            getRadioValue()
-        })
-
-        function displayEditor(showEditor) {
-            let editorDiv = $('#editorDiv')
-            let editor = $('#editorDiv textarea')
-            let contentDiv = $('#contentDiv')
-            let content = $('#contentDiv textarea')
-
-            if (showEditor) {
-                editorDiv.show()
-                editor.prop('disabled', false);
-                contentDiv.hide()
-                content.prop('disabled', true);
-            } else {
-                editorDiv.hide()
-                editor.prop('disabled', true);
-                contentDiv.show()
-                content.prop('disabled', false);
-            }
-        }
-
-        function getRadioValue() {
-            let radioValue = $('input[name = "htmlRadio"]:checked').val();
-            $('#type').val(radioValue);
-            let showEditor = radioValue === 'default' ? true : false;
-            displayEditor(showEditor)
-        }
-    </script>
 @endsection

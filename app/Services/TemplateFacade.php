@@ -7,6 +7,7 @@ use App\Mail\DefaultMail;
 use App\Models\Template;
 use App\Models\User;
 use App\Repositories\TemplateRepository;
+use ErrorException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -67,7 +68,7 @@ class TemplateFacade
 
     public function checkTemplateContainsContent(string $content): bool
     {
-        if (preg_match('/\[content]/', $content)) {
+        if (preg_match('/\[message]/', $content)) {
             return true;
         }
 
@@ -105,9 +106,7 @@ class TemplateFacade
     private function setTemplateAttributes(Request $request, Template $template): Template
     {
         $template->name = $request->name;
-        $html = $request->type === 'default'
-            ? $request->text
-            : $this->cleanHtmlBody($request->html);
+        $html = $this->cleanHtmlBody($request->html);
 
         if (!$this->checkTemplateContainsContent($html)) {
             throw ValidationException::withMessages(['content' => __('app.templates.content-missing')]);

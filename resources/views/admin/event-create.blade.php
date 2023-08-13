@@ -10,6 +10,20 @@
                             {{ csrf_field() }}
                         </template>
                     </event-create-form>
+
+
+                    <div class="row mb-3">
+                        <div class="col">
+                            <p>Přednastavené hodnoty</p>
+                            <button class="btn btn-light mx-2">Jméno</button>
+                            <button class="btn btn-light mx-2">Přijmeni</button>
+                            <button class="btn btn-light mx-2">Xname</button>
+                            <button class="btn btn-light mx-2">Email</button>
+                            <button class="btn btn-light mx-2">Název události</button>
+                            <button class="btn btn-light mx-2">Datum termínu</button>
+                            <button class="btn btn-light mx-2">Datum registrace</button>
+                        </div>
+                    </div>
 {{--                    <form action="{{ route('admin.events.store') }}" method="post" enctype="multipart/form-data">--}}
 {{--                        @csrf--}}
 {{--                        <div class="row mb-3">--}}
