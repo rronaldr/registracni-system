@@ -37,7 +37,7 @@ class EnrollmentFacade
         $template = $this->templateFacade->getTemplateById($event->template_id);
         $enrollmentData = collect($request->get('enrollment'));
 
-        $templateWithContent = str_replace('[content]', $event->template_content, $template->html);
+        $templateWithContent = str_replace('[message]', $event->template_content, $template->html);
 
         $finalHtml = Blade::render($templateWithContent, ['user' => $userData, 'params' => $enrollmentData->toArray()]);
 

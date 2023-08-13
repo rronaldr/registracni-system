@@ -128,6 +128,7 @@ class EventFacade
 
     private function getCustomFieldsValueWithLabel(array $labels, Enrollment $enrollment): Collection
     {
+        /** @todo refactor custom field label is taken from event */
         $data = collect(json_decode($enrollment->c_fields, true));
         return $data->mapWithKeys(function ($value, $key) use ($labels): array
         {
