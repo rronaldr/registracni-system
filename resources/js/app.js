@@ -2,22 +2,21 @@ require('./bootstrap');
 
 import { createApp } from 'vue';
 import { createI18n } from 'vue-i18n';
-import moment from "moment";
 
 // Translations
 import cs from "./locales/cs.json";
-import en from "./locales/en.json";
 
+import en from "./locales/en.json";
 // Admin Components
-import TinyEditor from "./components/Admin/TinyEditor.vue";
 import FormButtons from "./components/Admin/Form/FormButtons.vue";
 import BlacklistPage from "./components/Admin/Blacklist/BlacklistPage.vue";
-import EventCreateForm from "./components/Admin/Events/EventCreateForm.vue";
 
+import EventCreateForm from "./components/Admin/Events/EventCreateForm.vue";
 // Components
-import EventList from "./components/Event/EventList.vue";
-import EventDetail from "./components/Event/EventDetail.vue";
-import Enrollment from "./components/Enrollment.vue";
+import EventList from "./components/Event/EventList";
+import EventDetail from "./components/Event/EventDetail";
+import Enrollment from "./components/Enrollment";
+import TinyEditor from './components/TinyEditor.vue'
 
 const i18n = createI18n({
     locale: 'cs',
