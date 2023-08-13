@@ -78,16 +78,11 @@
 </template>
 
 <script setup>
-    import moment from "moment/moment";
+    import {formatDate} from "../../utils/DateFormat"
     import DateList from "../Date/DateList.vue";
 
     const props = defineProps({
         event: {type: Object, required: true}
     })
-    const formatDate = function (date) {
-        if (date) {
-            return moment(String(date)).format('DD.MM.YYYY HH:mm')
-        }
-    }
 
 </script>

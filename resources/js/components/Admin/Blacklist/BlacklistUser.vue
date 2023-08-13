@@ -1,8 +1,8 @@
 <template>
     <tr>
         <td>{{ user.xname ?? '-'}}</td>
-        <td>{{ user.pivot.blocked_until ?? '-' }}</td>
-        <td>{{ user.pivot.block_reason ?? '-'}}</td>
+        <td>{{ formatDate(user.pivot.blocked_until) ?? '-' }}</td>
+        <td>{{ formatDate(user.pivot.block_reason) ?? '-'}}</td>
         <td>
             <button @click="removeUserFromBlacklist" title="{{ $t('app.delete') }}" class="btn btn-outline-danger btn-rounded"> <i class="fas fa-trash"></i></button>
         </td>
@@ -11,6 +11,7 @@
 
 <script setup>
     import {inject} from "vue";
+    import {formatDate} from "../../../utils/DateFormat";
 
     const props = defineProps({
         user: {type: Object, required: true},

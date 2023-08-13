@@ -31,7 +31,7 @@ const app = createApp({
         EventList,
         EventDetail,
         Enrollment,
-    }
+    },
 });
 
 app.provide('ADMIN_URL', 'http://localhost/admin')
