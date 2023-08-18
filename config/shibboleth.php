@@ -11,50 +11,10 @@ return [
     |
  */
 
-    'idp_login' => sprintf("/Shibboleth.sso/Login?target=%s", urlencode(env('APP_URL'))),
-    'idp_logout' => sprintf("/Shibboleth.sso/Logout?return=%s", urlencode(env('APP_URL'))),
+    'idp_login' => '/Shibboleth.sso/Login',
+    'idp_logout' => '/Shibboleth.sso/Logout?return=/',
     'authenticated' => '/',
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | Emulate an IdP
-    |--------------------------------------------------------------------------
-    |
-    | In case you do not have access to your Shibboleth environment on
-    | homestead or your own Vagrant box, you can emulate a Shibboleth
-    | environment with the help of Shibalike.
-    |
-    | The password is the same as the username.
-    |
-    | Do not use this in production for literally any reason.
-    |
-     */
-
-    'emulate_idp' => env('EMULATE_IDP', false),
-    'emulate_idp_users' => [
-        'admin' => [
-            'Shib-cn' => 'Admin User',
-            'Shib-mail' => 'admin@email.arizona.edu',
-            'Shib-givenName' => 'Admin',
-            'Shib-sn' => 'User',
-            'Shib-emplId' => 'admin',
-        ],
-        'staff' => [
-            'Shib-cn' => 'Staff User',
-            'Shib-mail' => 'staff@email.arizona.edu',
-            'Shib-givenName' => 'Staff',
-            'Shib-sn' => 'User',
-            'Shib-emplId' => 'staff',
-        ],
-        'user' => [
-            'Shib-cn' => 'User User',
-            'Shib-mail' => 'user@email.arizona.edu',
-            'Shib-givenName' => 'User',
-            'Shib-sn' => 'User',
-            'Shib-emplId' => 'user',
-        ],
-    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -65,7 +25,7 @@ return [
     |
      */
 
-    'entitlement' => 'Shib-isMemberOf',
+    'entitlement' => 'memberOf',
 
     'user' => [
         // fillable user model attribute => server variable

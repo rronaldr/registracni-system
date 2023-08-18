@@ -3,6 +3,7 @@
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +32,8 @@ Route::get('/enrollment/{date_id}', [EnrollmentController::class, 'show'])->name
 Route::post('/enrollment/{date_id}', [EnrollmentController::class, 'store'])->name('enrollment.store');
 
 // Auth routes
+Route::get('/login', [LoginController::class, 'shibbolethLogin'])->name('login');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Locale routes
 Route::get('/{locale}', [LanguageController::class, 'setLocale'])->name('locale');

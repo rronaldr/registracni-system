@@ -11,10 +11,10 @@
                     <a href="{{ route('locale', ['locale' => 'en']) }}" class="dropdown-item @if(app()->getLocale() === 'en') active @endif">{{ __('app.en') }}</a>
                 </div>
             </li>
-            @guest
-                @if (Route::has('admin.login'))
+            @if (Auth::guest())
+                @if (Route::has('login'))
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.login') }}">{{ __('Login') }}</a>
+                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                     </li>
                 @endif
             @else
@@ -27,15 +27,7 @@
                         <a class="dropdown-item" href="#">
                             Moje přihlášky
                         </a>
-                        <a class="dropdown-item" href="{{ route('admin.logout') }}"
-                           onclick="event.preventDefault();
-                                     document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
-                        </a>
-
-                        <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
+                        <a class="dropdown-item" href="{{ route('logout') }}">{{ __('Logout') }}</a>
                     </div>
                 </li>
             @endguest
