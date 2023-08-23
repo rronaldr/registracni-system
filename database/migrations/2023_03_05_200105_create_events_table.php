@@ -20,10 +20,11 @@ class CreateEventsTable extends Migration
             $table->foreignId('user_id');
             $table->string('name');
             $table->string('subtitle')->nullable();
-            $table->string('thumbnail')->nullable();
+            $table->integer('calendar_id')->nullable();
+            $table->string('contact_person');
+            $table->string('contact_email');
             $table->integer('type');
-            $table->text('description')->nullable();
-            $table->string('status')->nullable();
+            $table->string('status');
             $table->json('c_fields')->nullable();
             $table->string('template_subject')->nullable();
             $table->text('template_content')->nullable();

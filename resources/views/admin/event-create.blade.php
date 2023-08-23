@@ -5,7 +5,7 @@
         <div class="card-body">
             <div class="row justify-content-center">
                 <div class="col-8">
-                    <event-create-form>
+                    <event-create-form :user="{{ auth()->user() }}">
                         <template v-slot:csrf>
                             {{ csrf_field() }}
                         </template>

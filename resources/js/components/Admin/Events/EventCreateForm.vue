@@ -12,12 +12,37 @@
             <div class="col">
                 <label for="subtitle" class="form-label">Podtitul události</label>
                 <input type="text" class="form-control" name="subtitle">
+            </div>
+        </div>
 
+        <div class="row mb-3">
+            <div class="col">
+                <label for="subtitle" class="form-label">Odkaz na událost v kalendáři</label>
+                <input type="text" class="form-control" name="event-link">
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-5">
+                <label for="contact-person" class="form-label">Kontaktní osoba</label>
+                <input v-model="event.contact.person" type="text" class="form-control" name="contact-person">
+            </div>
+            <div class="col-5">
+                <label for="contact-email" class="form-label">Kontaktní email</label>
+                <input v-model="event.contact.email" type="text" class="form-control" name="contact-email">
+            </div>
+
+            <div class="col-2 d-flex">
+                <button
+                    @click="fillContactWithCurrentUser"
+                    v-show="(event.contact.person === null || event.contact.person === '') || (event.contact.email === null || event.contact.email === '')"
+                    type="button"
+                    class="btn btn-primary form-control align-self-end"
+                    name="event-link">Vyplnit moje údaje</button>
             </div>
         </div>
 
         <div class="line"></div><br>
-
 
         <div class="row mb-3">
             <label class="col-sm-2">Nastavení události</label>
@@ -68,7 +93,7 @@
                     <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
                     <label class="col-sm-2 d-inline">Zapnout systémový
                         <a class="link-primary"
-                           href="{{ ADMIN_URL+'/blacklist' }}" target="_blank">blacklist</a>
+                           :href="ADMIN_URL +'/blacklist'" target="_blank">blacklist</a>
                     </label>
                 </div>
             </div>
@@ -289,16 +314,78 @@
         </div>
 
         <div class="line"></div><br>
+
+        <div class="row mb-3">
+            <div class="col">
+                <label for="name" class="form-label">Select šablony</label>
+                <input type="text" class="form-control" name="name">
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col">
+                <label for="subtitle" class="form-label">Textarea šablony content</label>
+                <input type="text" class="form-control" name="subtitle">
+
+            </div>
+        </div>
+
         <FormButtons :route="ADMIN_URL +'/events'" />
     </form>
 </template>
 
 <script setup>
-    import {inject} from "vue";
+import {inject, reactive, ref} from "vue";
     import FormButtons from "../Form/FormButtons.vue";
+    import axios from "axios";
 
-    const emit = defineEmits(['refreshUsers'])
-    const props = defineProps()
     const ADMIN_URL = inject('ADMIN_URL')
-    let formData = new FormData()
+    const emit = defineEmits(['refreshUsers'])
+    const props = defineProps({
+        user: {type: Object, required: true}
+    })
+
+    let event = reactive({
+        name: null,
+        subtitle: null,
+        calendar_id: null,
+        contact: {
+            person: null,
+            email: null
+        },
+        substitutes: false,
+        external_login: false,
+        notifications: false,
+        type: 1,
+        global_blacklist: true,
+        blacklist_users: null,
+        template: {
+            id: null,
+            content: null,
+        }
+    })
+
+    function submitEvent() {
+        let csrf = document.getElementsByName('_token')[0].value
+        let data = {
+            _token: csrf
+        }
+
+        axios.post(
+            ADMIN_URL+'/event/',
+            data
+        ).then( (response) => {
+            emit('refreshUsers')
+            clearBlacklist()
+        }).catch(error => {
+            console.log(error)
+        })
+    }
+
+    function fillContactWithCurrentUser() {
+        event.contact.person = props.user.display_name !== null
+            ? props.user.display_name
+            : props.user.first_name+' '+ props.user.last_name
+        event.contact.email = props.user.email
+    }
 </script>
