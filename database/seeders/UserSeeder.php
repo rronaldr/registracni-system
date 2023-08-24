@@ -24,6 +24,13 @@ class UserSeeder extends Seeder
             'password' => Hash::make('testtest'),
         ]);
 
+        DB::table('users')->insert([
+            'xname' => 'xvojs03',
+            'first_name' => 'Stanislav',
+            'last_name' => 'Vojíř',
+            'email' => 'stanislav.vojir@vse.cz',
+        ]);
+
         for ($i = 0; $i < 5; $i++) {
             DB::table('users')->insert([
                 'xname' => sprintf('johd0%d',$i),

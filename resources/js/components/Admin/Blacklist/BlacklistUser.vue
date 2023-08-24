@@ -2,7 +2,7 @@
     <tr>
         <td>{{ user.xname ?? '-'}}</td>
         <td>{{ formatDate(user.pivot.blocked_until) ?? '-' }}</td>
-        <td>{{ formatDate(user.pivot.block_reason) ?? '-'}}</td>
+        <td>{{ user.pivot.block_reason ?? '-'}}</td>
         <td>
             <button @click="removeUserFromBlacklist" title="{{ $t('app.delete') }}" class="btn btn-outline-danger btn-rounded"> <i class="fas fa-trash"></i></button>
         </td>

@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             EnrollmentSeeder::class,
             TemplateSeeder::class,
             BlacklistSeeder::class,
+            PermissionsSeeder::class,
         ]);
     }
 }
