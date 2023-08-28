@@ -1,12 +1,15 @@
 <template>
-    <input
-        type="radio"
-        :checked="modelValue === value"
-        :value="value"
-        @change="$emit('update:modelValue', value)"
-        v-bind="$attrs"
-    />
-    <label v-if="label">{{ label }}</label>
+    <div class="form-check form-check-inline">
+        <input
+            type="radio"
+            :checked="modelValue === value"
+            :value="value"
+            @change="$emit('update:modelValue', value)"
+            v-bind="$attrs"
+            class="form-check-input"
+        />
+        <label v-if="label" class="form-check-label">{{ label }}</label>
+    </div>
 </template>
 
 <script setup>

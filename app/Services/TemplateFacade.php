@@ -33,6 +33,11 @@ class TemplateFacade
         return $this->templateRepository->getApprovedTemplates();
     }
 
+    public function getApprovedTemplatesEventForm(): Collection
+    {
+        return $this->templateRepository->getApprovedTemplatesForEventFrom();
+    }
+
     public function getTemplatesForApproval(): LengthAwarePaginator
     {
         return $this->templateRepository->getUnapprovedTemplates();

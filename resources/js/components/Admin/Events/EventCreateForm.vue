@@ -91,19 +91,10 @@
         <div class="row mb-3">
             <label class="col-sm-2">Typ události</label>
             <div class="col-sm-10">
-                <BaseRadioGroup :model-value="event.type" v-model="event.type" name="Test" :options="['test1', 'test2']"/>
-<!--                <div class="form-check form-check-inline">-->
-<!--                    <input class="form-check-input" name="type" type="radio" id="single" value="1">-->
-<!--                    <label class="form-check-label" for="single">-->
-<!--                        Opakovaná událost či části, kterých se lze zůčastnit samostatně-->
-<!--                    </label>-->
-<!--                </div>-->
-<!--                <div class="form-check form-check-inline">-->
-<!--                    <input class="form-check-input" name="type" type="radio" id="series" value="3">-->
-<!--                    <label class="form-check-label" for="series">-->
-<!--                        Navazující část jedné události-->
-<!--                    </label>-->
-<!--                </div>-->
+                <BaseRadioGroup
+                    v-model="event.type"
+                    name="Test"
+                    :options="dateTypeOptions"/>
             </div>
         </div>
 
@@ -111,7 +102,7 @@
             <label class="col-sm-2">Blacklist pro událost<br></label>
             <div class="col-sm-10">
                 <div class="form-check form-switch mb-3">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                    <input v-model="event.global_blacklist" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
                     <label class="col-sm-2 d-inline">Zapnout systémový
                         <a class="link-primary"
                            :href="ADMIN_URL +'/blacklist'" target="_blank">blacklist</a>
@@ -120,14 +111,14 @@
             </div>
         </div>
 
-        <div class="row mb-3">
+        <div v-show="!event.global_blacklist" class="row mb-3">
             <div class="col">
                 <a class="link-secondary float-end" data-bs-toggle="modal" data-bs-target="#infoModal">
                     <i class="fas fa-info-circle"></i> {{ $t('app.show-hint') }}
                 </a>
                 <BaseTextarea
                 v-model="event.blacklist_users"
-                label="Xname"
+                label="Xname uživatelů, které chcete zablokovat"
                 />
             </div>
         </div>
@@ -340,18 +331,25 @@
 
         <div class="row mb-3">
             <div class="col">
-                <BaseSelect v-model="templates"
-                            :options="['tesr','xd']"
-                            label="Template select"
+                <BaseSelect
+                    v-model="event.template.id"
+                    :options="templates"
+                    :label="$t('template.select')"
+                    :placeholder="true"
+                    :placeholder-text="$t('template.select')"
                 />
             </div>
         </div>
 
+        <TemplateTags
+            :tags="tags"
+        />
         <div class="row mb-3">
             <div class="col">
                 <label for="subtitle" class="form-label">Textarea šablony content</label>
-                <TinyEditor />
-
+                <TinyEditor
+                    v-model="event.template.content"
+                />
             </div>
         </div>
 
@@ -360,7 +358,7 @@
 </template>
 
 <script setup>
-import {inject, reactive, ref} from "vue";
+import {inject, onMounted, reactive, ref} from "vue";
 import FormButtons from "../Form/FormButtons.vue";
 import axios from "axios";
 import BaseInput from "../Form/BaseInput.vue";
@@ -368,54 +366,74 @@ import BaseCheckbox from "../Form/BaseCheckbox.vue";
 import BaseTextarea from "../Form/BaseTextarea.vue";
 import BaseRadioGroup from "../Form/BaseRadioGroup.vue";
 import BaseSelect from "../Form/BaseSelect.vue";
+import {useI18n} from "vue-i18n";
+import TinyEditor from "../../TinyEditor.vue";
+import TemplateTags from "../TemplateTags/TemplateTags.vue";
 
-    const ADMIN_URL = inject('ADMIN_URL')
-    const emit = defineEmits(['refreshUsers'])
-    const props = defineProps({
-        user: {type: Object, required: true}
-    })
+const ADMIN_URL = inject('ADMIN_URL')
+const emit = defineEmits(['refreshUsers'])
+const props = defineProps({
+    user: {type: Object, required: true}
+})
 
-    let event = reactive({
-        name: null,
-        subtitle: null,
-        calendar_id: null,
-        contact: {
-            person: null,
-            email: null
-        },
-        substitutes: false,
-        external_login: false,
-        notifications: false,
-        type: 1,
-        global_blacklist: true,
-        blacklist_users: null,
-        template: {
-            id: null,
-            content: null,
-        }
-    })
+const {t} = useI18n({})
+const dateTypeOptions = [
+    {label: t('date.1'), value: 1},
+    {label: t('date.2'), value: 2}
+]
 
-    function submitEvent() {
-        let csrf = document.getElementsByName('_token')[0].value
-        let data = {
-            _token: csrf
-        }
+let event = reactive({
+    name: null,
+    subtitle: null,
+    calendar_id: null,
+    contact: {
+        person: null,
+        email: null
+    },
+    substitutes: false,
+    external_login: false,
+    notifications: false,
+    type: 1,
+    global_blacklist: true,
+    blacklist_users: null,
+    template: {
+        id: null,
+        content: null,
+    }
+})
+let tags = null
+let dates = null
+let templates = ref(null)
 
-        axios.post(
-            ADMIN_URL+'/event/',
-            data
-        ).then( (response) => {
-            emit('refreshUsers')
-            clearBlacklist()
-        }).catch(error => {
-            console.log(error)
-        })
+getApprovedTemplates()
+console.log(templates)
+
+function submitEvent() {
+    let csrf = document.getElementsByName('_token')[0].value
+    let data = {
+        _token: csrf
     }
 
-    function fillContactWithCurrentUser() {
-        event.contact.person = props.user.display_name !== null
-            ? props.user.display_name
-            : props.user.first_name+' '+ props.user.last_name
-        event.contact.email = props.user.email
-    }
+    axios.post(
+        ADMIN_URL+'/event/',
+        data
+    ).then( (response) => {
+        emit('refreshUsers')
+        clearBlacklist()
+    }).catch(error => {
+        console.log(error)
+    })
+}
+
+function fillContactWithCurrentUser() {
+    event.contact.person = props.user.display_name !== null
+        ? props.user.display_name
+        : props.user.first_name+' '+ props.user.last_name
+    event.contact.email = props.user.email
+}
+
+async function getApprovedTemplates() {
+    let response = await axios.get(ADMIN_URL+'/templates/approved')
+    templates.value = response.data.templates
+}
 </script>

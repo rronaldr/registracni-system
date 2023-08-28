@@ -13,6 +13,7 @@ use App\Services\EventFacade;
 use App\Services\TemplateFacade;
 use App\Services\UserFacade;
 use ErrorException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
@@ -115,7 +116,7 @@ class TemplateController extends Controller
         return redirect()->route('admin.templates');
     }
 
-    public function approvals(TemplateFacade $templateFacade): view
+    public function showApprovals(TemplateFacade $templateFacade): view
     {
         $templates = $templateFacade->getTemplatesForApproval();
 
@@ -137,6 +138,15 @@ class TemplateController extends Controller
 
         return view('admin.templates', [
             'templates' => $templates,
+        ]);
+    }
+
+    public function getApprovedTemplates(TemplateFacade $templateFacade): JsonResponse
+    {
+        $templates = $templateFacade->getApprovedTemplatesEventForm();
+
+        return response()->json([
+            'templates' => $templates
         ]);
     }
 }

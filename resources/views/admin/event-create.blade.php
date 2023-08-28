@@ -15,7 +15,3 @@
         </div>
     </div>
 @endsection
-
-@section('scripts')
-    <x-wysiwyg></x-wysiwyg>
-@endsection

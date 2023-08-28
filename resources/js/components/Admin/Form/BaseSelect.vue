@@ -8,12 +8,13 @@
             onChange: ($event) => {$emit('update:modelValue', $event.target.value)}
         }"
     >
+        <option v-if="placeholder" value="" disabled selected hidden>{{ placeholderText }}</option>
         <option
             v-for="option in options"
-            :value="option"
-            :key="option"
-            :selected="option === modelValue"
-        >{{ option }}</option>
+            :value="option.id"
+            :key="option.id"
+            :selected="option.id === modelValue"
+        >{{ option.name }}</option>
     </select>
 </template>
 
@@ -21,6 +22,8 @@
     const props = defineProps({
         label: {type: String, default: ''},
         modelValue: {type: [String, Number], default: ''},
-        options: {type: Array, required: true}
+        options: {type: Array, required: true},
+        placeholder: {type: Boolean, required: false},
+        placeholderText: {type: String, required: false}
     })
 </script>

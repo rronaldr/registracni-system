@@ -22,9 +22,7 @@
 <script setup>
 import Editor from '@tinymce/tinymce-vue'
 
-let content = ''
-
-function setContent() {
-    tinymce.activeEditor.execCommand('mceInsertContent', false, 'your content');
-}
+const props = defineProps({
+    content: {type: String, required: false}
+})
 </script>

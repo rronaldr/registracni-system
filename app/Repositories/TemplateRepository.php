@@ -29,6 +29,14 @@ class TemplateRepository
             ->paginate(10);
     }
 
+    public function getApprovedTemplatesForEventFrom(): Collection
+    {
+        return Template::query()
+            ->where('approved', true)
+            ->select(['id','name'])
+            ->get();
+    }
+
     public function getUnapprovedTemplates(): LengthAwarePaginator
     {
         return Template::query()

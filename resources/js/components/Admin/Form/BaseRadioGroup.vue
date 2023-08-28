@@ -18,7 +18,4 @@ const props = defineProps({
     name: {type: String, required: true},
     modelValue: {type: [String, Number], required: true},
 })
-
-const radioOptions = [ ]
-
 </script>

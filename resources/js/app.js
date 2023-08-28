@@ -14,17 +14,16 @@ import EventCreateForm from "./components/Admin/Events/EventCreateForm.vue";
 import EventList from "./components/Event/EventList";
 import EventDetail from "./components/Event/EventDetail";
 import Enrollment from "./components/Enrollment";
-import TinyEditor from './components/TinyEditor.vue'
 
 const i18n = createI18n({
     locale: 'cs',
     fallbackLocale: 'en',
-    messages: {cs, en}
+    messages: {cs, en},
+    legacy: false
 })
 
 const app = createApp({
     components: {
-        TinyEditor,
         BlacklistPage,
         FormButtons,
         EventCreateForm,
