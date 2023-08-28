@@ -3,33 +3,53 @@
         <slot name="csrf"></slot>
         <div class="row mb-3">
             <div class="col">
-                <label for="name" class="form-label">Název události</label>
-                <input type="text" class="form-control" name="name">
+                <BaseInput
+                    v-model="event.name"
+                    :label="$t('event.name')"
+                    type="text"
+                    class="mb-3"
+                />
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col">
-                <label for="subtitle" class="form-label">Podtitul události</label>
-                <input type="text" class="form-control" name="subtitle">
+                <BaseInput
+                    v-model="event.subtitle"
+                    :label="$t('event.subtitle')"
+                    type="text"
+                    class="mb-3"
+                />
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col">
-                <label for="subtitle" class="form-label">Odkaz na událost v kalendáři</label>
-                <input type="text" class="form-control" name="event-link">
+                <BaseInput
+                    v-model="event.calendar_id"
+                    :label="$t('event.calendar')"
+                    type="text"
+                    class="mb-3"
+                />
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col-5">
-                <label for="contact-person" class="form-label">Kontaktní osoba</label>
-                <input v-model="event.contact.person" type="text" class="form-control" name="contact-person">
+                <BaseInput
+                    v-model="event.contact.person"
+                    :label="$t('event.contact_person')"
+                    type="text"
+                    class="mb-3"
+                />
             </div>
             <div class="col-5">
-                <label for="contact-email" class="form-label">Kontaktní email</label>
-                <input v-model="event.contact.email" type="text" class="form-control" name="contact-email">
+                <BaseInput
+                    v-model="event.contact.email"
+                    :label="$t('event.contact_email')"
+                    type="text"
+                    class="mb-3"
+                />
             </div>
 
             <div class="col-2 d-flex">
@@ -48,22 +68,22 @@
             <label class="col-sm-2">Nastavení události</label>
             <div class="col-sm-10">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="substitutes" type="checkbox">
-                    <label class="form-check-label" for="single">
-                        Povolit náhradníky na termín
-                    </label>
+                    <BaseCheckbox
+                        :label="$t('event.substitutes')"
+                        v-model="event.substitutes"
+                    />
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="external" type="checkbox">
-                    <label class="form-check-label" for="series">
-                        Povolit přihlášení externistům
-                    </label>
+                    <BaseCheckbox
+                        :label="$t('event.external_login')"
+                        v-model="event.external_login"
+                    />
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="notifications" type="checkbox">
-                    <label class="form-check-label" for="series">
-                        Zasílat notifikace o události
-                    </label>
+                    <BaseCheckbox
+                        :label="$t('event.notifications')"
+                        v-model="event.notifications"
+                    />
                 </div>
             </div>
         </div>
@@ -71,18 +91,19 @@
         <div class="row mb-3">
             <label class="col-sm-2">Typ události</label>
             <div class="col-sm-10">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="type" type="radio" id="single" value="1">
-                    <label class="form-check-label" for="single">
-                        Opakovaná událost či části, kterých se lze zůčastnit samostatně
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="type" type="radio" id="series" value="3">
-                    <label class="form-check-label" for="series">
-                        Navazující část jedné události
-                    </label>
-                </div>
+                <BaseRadioGroup :model-value="event.type" v-model="event.type" name="Test" :options="['test1', 'test2']"/>
+<!--                <div class="form-check form-check-inline">-->
+<!--                    <input class="form-check-input" name="type" type="radio" id="single" value="1">-->
+<!--                    <label class="form-check-label" for="single">-->
+<!--                        Opakovaná událost či části, kterých se lze zůčastnit samostatně-->
+<!--                    </label>-->
+<!--                </div>-->
+<!--                <div class="form-check form-check-inline">-->
+<!--                    <input class="form-check-input" name="type" type="radio" id="series" value="3">-->
+<!--                    <label class="form-check-label" for="series">-->
+<!--                        Navazující část jedné události-->
+<!--                    </label>-->
+<!--                </div>-->
             </div>
         </div>
 
@@ -101,11 +122,13 @@
 
         <div class="row mb-3">
             <div class="col">
-                <label for="blacklist" class="form-label">Přidat uživatele na blacklist</label>
                 <a class="link-secondary float-end" data-bs-toggle="modal" data-bs-target="#infoModal">
-                    <i class="fas fa-info-circle"></i> Zobrazit nápovědu
+                    <i class="fas fa-info-circle"></i> {{ $t('app.show-hint') }}
                 </a>
-                <textarea class="form-control" name="blacklist" rows="2"></textarea>
+                <BaseTextarea
+                v-model="event.blacklist_users"
+                label="Xname"
+                />
             </div>
         </div>
 
@@ -317,15 +340,17 @@
 
         <div class="row mb-3">
             <div class="col">
-                <label for="name" class="form-label">Select šablony</label>
-                <input type="text" class="form-control" name="name">
+                <BaseSelect v-model="templates"
+                            :options="['tesr','xd']"
+                            label="Template select"
+                />
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col">
                 <label for="subtitle" class="form-label">Textarea šablony content</label>
-                <input type="text" class="form-control" name="subtitle">
+                <TinyEditor />
 
             </div>
         </div>
@@ -336,8 +361,13 @@
 
 <script setup>
 import {inject, reactive, ref} from "vue";
-    import FormButtons from "../Form/FormButtons.vue";
-    import axios from "axios";
+import FormButtons from "../Form/FormButtons.vue";
+import axios from "axios";
+import BaseInput from "../Form/BaseInput.vue";
+import BaseCheckbox from "../Form/BaseCheckbox.vue";
+import BaseTextarea from "../Form/BaseTextarea.vue";
+import BaseRadioGroup from "../Form/BaseRadioGroup.vue";
+import BaseSelect from "../Form/BaseSelect.vue";
 
     const ADMIN_URL = inject('ADMIN_URL')
     const emit = defineEmits(['refreshUsers'])
