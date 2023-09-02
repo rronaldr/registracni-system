@@ -1,5 +1,5 @@
 <template>
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" @submit.prevent="submitEvent">
         <slot name="csrf"></slot>
         <div class="row mb-3">
             <div class="col">
@@ -35,7 +35,7 @@
         </div>
 
         <div class="row mb-3">
-            <div class="col-5">
+            <div class="col-lg-5 col-sm-6">
                 <BaseInput
                     v-model="event.contact.person"
                     :label="$t('event.contact_person')"
@@ -43,7 +43,7 @@
                     class="mb-3"
                 />
             </div>
-            <div class="col-5">
+            <div class="col-lg-5 col-sm-6">
                 <BaseInput
                     v-model="event.contact.email"
                     :label="$t('event.contact_email')"
@@ -52,7 +52,7 @@
                 />
             </div>
 
-            <div class="col-2 d-flex">
+            <div class="col-lg-2 col-sm-12">
                 <button
                     @click="fillContactWithCurrentUser"
                     v-show="(event.contact.person === null || event.contact.person === '') || (event.contact.email === null || event.contact.email === '')"
@@ -69,18 +69,14 @@
             <div class="col-sm-10">
                 <div class="form-check form-check-inline">
                     <BaseCheckbox
-                        :label="$t('event.substitutes')"
-                        v-model="event.substitutes"
-                    />
-                </div>
-                <div class="form-check form-check-inline">
-                    <BaseCheckbox
+                        id="external_login"
                         :label="$t('event.external_login')"
                         v-model="event.external_login"
                     />
                 </div>
                 <div class="form-check form-check-inline">
                     <BaseCheckbox
+                        id="notifications"
                         :label="$t('event.notifications')"
                         v-model="event.notifications"
                     />
@@ -117,8 +113,8 @@
                     <i class="fas fa-info-circle"></i> {{ $t('app.show-hint') }}
                 </a>
                 <BaseTextarea
-                v-model="event.blacklist_users"
-                label="Xname uživatelů, které chcete zablokovat"
+                    v-model="event.blacklist_users"
+                    label="Xname uživatelů, které chcete zablokovat"
                 />
             </div>
         </div>
@@ -133,6 +129,7 @@
                     </div>
                     <div class="modal-body text-start">
                         <p>
+                            {{ $t('event.blacklist_hint') }}
                             Pro každého uživatele přidejte hodnoty <br>ve formátu <b>email:datum:"důvod",</b>
                             <br>každý záznam ukončete pomocí čárky.
                             <br> Například: <br><b>jan.novak@vse.cz:1.5.2030 9:15:"Váš důvod",</b>
@@ -145,114 +142,12 @@
 
         <div class="line"></div><br>
 
-        <div class="row mb-3">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col">
-                                <h5>
-                                    Termíny <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Zde vytvořte termíny pro událost"></i>
-                                </h5>
-                            </div>
-                            <div class="col">
-                                <a class="btn btn-sm btn-primary float-end" data-bs-toggle="modal" data-bs-target="#datesModal">
-                                    <i class="fas fa-plus"></i> Přidat termín
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">Zatím nemáte vytvořené žádné termíny k akci</p>
-                    </div>
-                </div>
+        <DatesForm
+            @create-date="createDate"
+            :dates="dates"
+        />
 
-                <!-- Custom dates modal start -->
-                <div class="modal fade" id="datesModal" role="dialog" tabindex="-1">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Přidat nový termín</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body text-start">
-                                <div class="row g-2 mb-3">
-                                    <div class="col">
-                                        <label for="name" class="form-label">Název</label>
-                                        <input type="text" name="name" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="row g-2 mb-3">
-                                    <div class="col-6">
-                                        <label for="room" class="form-label">Místnost</label>
-                                        <input type="text" name="room" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="row g-2 mb-3">
-                                    <div class="col-4">
-                                        <label for="capacity" class="form-label">Kapacita</label>
-                                        <input type="number" name="capacity" class="form-control">
-                                    </div>
-                                    <div class="col-4 text-center">
-                                        <label for="limited_capacity" class="form-label">Neomezená kapacita</label>
-                                        <input type="checkbox" name="limited_capacity" class="form-check-input">
-                                    </div>
-                                    <div class="col-4 text-center">
-                                        <label for="substitutes" class="form-label">Povolit náhradníky</label>
-                                        <input type="checkbox" name="substitutes" class="form-check-input">
-                                    </div>
-                                </div>
-                                <div class="row g-2 mb-3">
-                                    <div class="col-8">
-                                        <label for="od" class="form-label">Začátek</label>
-                                        <input type="date" name="date_from" class="form-control datepicker-here"
-                                               data-language="cs" aria-describedby="datepicker">
-                                    </div>
-                                    <div class="col-4">
-                                        <label for="do" class="form-label">Čas žačátku</label>
-                                        <input type="time" name="time_from" class="form-control datepicker-here"
-                                               data-language="cs" aria-describedby="datepicker">
-                                    </div>
-                                </div>
-                                <div class="row g-2 mb-3">
-                                    <div class="col-8">
-                                        <label for="od" class="form-label">Konec</label>
-                                        <input type="date" name="date_to" class="form-control "
-                                               data-language="cs">
-                                    </div>
-                                    <div class="col-4">
-                                        <label for="do" class="form-label">Čas konce</label>
-                                        <input type="time" name="time_to" class="form-control "
-                                               data-language="cs">
-                                    </div>
-                                </div>
-                                <div class="row g-2 mb-3">
-                                    <div class="col">
-                                        <label for="od" class="form-label">Přihlašování od</label>
-                                        <input type="datetime-local" name="od" class="form-control"
-                                               data-language="cs" placeholder="Vyberte datum">
-                                    </div>
-                                    <div class="col">
-                                        <label for="do" class="form-label">Přihlašování do</label>
-                                        <input type="datetime-local" name="do" class="form-control"
-                                               data-language="cs" placeholder="Vyberte datum">
-                                    </div>
-                                    <div class="col">
-                                        <label for="do" class="form-label">Odhlašování do</label>
-                                        <input type="datetime-local" name="do" class="form-control"
-                                               data-language="cs" placeholder="Vyberte datum">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Uložit</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Custom dates modal end -->
-            </div>
-        </div>
+        <div class="line"></div><br>
 
         <div class="row mb-3">
             <div class="col-md-12">
@@ -369,9 +264,10 @@ import BaseSelect from "../Form/BaseSelect.vue";
 import {useI18n} from "vue-i18n";
 import TinyEditor from "../../TinyEditor.vue";
 import TemplateTags from "../TemplateTags/TemplateTags.vue";
+import DatesForm from "../Dates/DatesForm.vue";
 
 const ADMIN_URL = inject('ADMIN_URL')
-const emit = defineEmits(['refreshUsers'])
+const emit = defineEmits(['createDate','createTag'])
 const props = defineProps({
     user: {type: Object, required: true}
 })
@@ -401,28 +297,26 @@ let event = reactive({
         content: null,
     }
 })
-let tags = null
-let dates = null
+let tags = ref([])
+let dates = ref([])
 let templates = ref(null)
 
 getApprovedTemplates()
-console.log(templates)
 
 function submitEvent() {
     let csrf = document.getElementsByName('_token')[0].value
     let data = {
+        event: event,
         _token: csrf
     }
 
-    axios.post(
-        ADMIN_URL+'/event/',
-        data
-    ).then( (response) => {
-        emit('refreshUsers')
-        clearBlacklist()
-    }).catch(error => {
-        console.log(error)
-    })
+    console.log('test',data)
+    // axios.post(
+    //     ADMIN_URL+'/event',
+    //     data
+    // ).catch(error => {
+    //     console.log(error)
+    // })
 }
 
 function fillContactWithCurrentUser() {
@@ -430,6 +324,14 @@ function fillContactWithCurrentUser() {
         ? props.user.display_name
         : props.user.first_name+' '+ props.user.last_name
     event.contact.email = props.user.email
+}
+
+function createTag(tag) {
+    tags.value.push(tag)
+}
+function createDate(date) {
+    console.log('create',date)
+    dates.value.push(date)
 }
 
 async function getApprovedTemplates() {

@@ -10,6 +10,22 @@
     "email": {
         "email": "Email"
     },
+    "date": {
+        "add_date": "Přidat termín",
+        "empty": "Zatím nejsou vytvořeny žádné termíny",
+        "name": "Název",
+        "room": "Místnost",
+        "capacity": "Kapacita",
+        "unlimited_capacity": "Neomezená kapacita",
+        "substitute": "Povolit náhradníky",
+        "date_from": "Začátek termínu",
+        "time_from": "Čas začátku",
+        "date_to": "Konec termínu",
+        "time_to": "Čas konce",
+        "enrollment_from": "Přihlašování od",
+        "enrollment_to": "Přihlašování do",
+        "signoff_to": "Odhlašování do"
+    },
     "blacklist": {
         "blocked_until": "Blokace do",
         "block_reason": "Důvod blokace",
