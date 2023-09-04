@@ -21,7 +21,12 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <p v-if="dates.length > 0">test</p>
+                    <DateList
+                        v-if="dates.length > 0"
+                        :dates="dates"
+                        @edit-date="editDate"
+                        @remove-date="removeDate"
+                    />
                     <p v-else class="card-text">{{ $t('date.empty' )}}</p>
                 </div>
             </div>
@@ -148,20 +153,22 @@
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {reactive, ref} from "vue";
 import SubmitButton from "../Form/SubmitButton.vue";
 import BaseInput from "../Form/BaseInput.vue";
 import BaseCheckbox from "../Form/BaseCheckbox.vue";
 import moment from "moment/moment";
+import DateList from "./DateList.vue";
 
 const emit = defineEmits(['createDate'])
 const props = defineProps({
-    id: {type: String, required: false},
     dates: {type: Array, required: false}
 })
 
-let showDateForm = ref(true)
-let date = ref({
+let showDateForm = ref(false)
+let edit = false
+let date = reactive({
+    id: null,
     name: null,
     room: null,
     capacity: null,
@@ -176,34 +183,59 @@ let date = ref({
     signoff_to: null
 })
 
+setLastDates()
+
 function addDate() {
-    emit('createDate', date.value)
+    if (props.dates.length === 0) {
+        date.id = 1
+    }
+
+    if (edit) {
+        edit = false
+        removeDate(date.id)
+    }
+
+    props.dates.push({...date})
+    showDateForm.value = false
+
     clearDateObject()
 }
 
-setLastDates()
+function editDate(id) {
+    showDateForm.value = true
+    edit = true
+    date = {...props.dates.find(date => date.id === id)}
+}
+
+function removeDate(id) {
+    const index = props.dates.findIndex(date => date.id === id)
+    if (index !== -1) {
+        props.dates.splice(index, 1)
+    }
+}
 
 function clearDateObject() {
-    Object.keys(date.value).forEach((i) => date[i] = null)
+    Object.keys(date).forEach((i) => date[i] = null)
     setLastDates()
 }
 
 function updateDateTo() {
-    if (date.value.date_from !== null && date.value.date_to === null){
-        date.value.date_to = date.value.date_from
+    if (date.date_from !== null && date.date_to === null){
+        date.date_to = date.date_from
     }
 }
 function updateTimeTo() {
-    if (date.value.time_from !== null && date.value.time_to === null){
-        let [hour, minute] = date.value.time_from.split(":")
+    if (date.time_from !== null && date.time_to === null){
+        let [hour, minute] = date.time_from.split(":")
         let fromTime = moment().hour(parseInt(hour)).minute(parseInt(minute))
-        date.value.time_to = fromTime.add(1, 'h').add(30,'m').format('HH:mm')
+        date.time_to = fromTime.add(1, 'h').add(30,'m').format('HH:mm')
     }
 }
 
 function setLastDates() {
     if (props.dates.length > 0) {
-        let lastDate = props.dates.slice(-1)
+        let lastDate = props.dates[props.dates.length - 1]
+        date.id = lastDate.id + 1
         date.date_from = lastDate.date_from
         date.time_from = lastDate.time_from
         date.date_to = lastDate.date_to

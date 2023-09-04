@@ -5,6 +5,7 @@
         "submit": "Odeslat",
         "cancel": "Zrušit",
         "delete": "Odstranit",
+        "edit": "Upravit",
         "show-hint": "Zobrazit nápovědu"
     },
     "email": {

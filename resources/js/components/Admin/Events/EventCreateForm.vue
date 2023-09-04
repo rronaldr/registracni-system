@@ -142,9 +142,9 @@
 
         <div class="line"></div><br>
 
-        <DatesForm
-            @create-date="createDate"
+        <DateForm
             :dates="dates"
+            ref="dateForm"
         />
 
         <div class="line"></div><br>
@@ -253,7 +253,7 @@
 </template>
 
 <script setup>
-import {inject, onMounted, reactive, ref} from "vue";
+import {inject, reactive, ref} from "vue";
 import FormButtons from "../Form/FormButtons.vue";
 import axios from "axios";
 import BaseInput from "../Form/BaseInput.vue";
@@ -264,7 +264,7 @@ import BaseSelect from "../Form/BaseSelect.vue";
 import {useI18n} from "vue-i18n";
 import TinyEditor from "../../TinyEditor.vue";
 import TemplateTags from "../TemplateTags/TemplateTags.vue";
-import DatesForm from "../Dates/DatesForm.vue";
+import DateForm from "../Dates/DateForm.vue";
 
 const ADMIN_URL = inject('ADMIN_URL')
 const emit = defineEmits(['createDate','createTag'])
@@ -328,10 +328,6 @@ function fillContactWithCurrentUser() {
 
 function createTag(tag) {
     tags.value.push(tag)
-}
-function createDate(date) {
-    console.log('create',date)
-    dates.value.push(date)
 }
 
 async function getApprovedTemplates() {
