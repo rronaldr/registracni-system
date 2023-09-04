@@ -160,7 +160,6 @@ import BaseCheckbox from "../Form/BaseCheckbox.vue";
 import moment from "moment/moment";
 import DateList from "./DateList.vue";
 
-const emit = defineEmits(['createDate'])
 const props = defineProps({
     dates: {type: Array, required: false}
 })

@@ -144,83 +144,13 @@
 
         <DateForm
             :dates="dates"
-            ref="dateForm"
         />
 
         <div class="line"></div><br>
 
-        <div class="row mb-3">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col">
-                                <h5>
-                                    Vlastní pole  <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Zde můžete přidat vlastní pole, které účastník vyplní v příhlášce na událost"></i>
-                                </h5>
-                            </div>
-                            <div class="col">
-                                <a class="btn btn-sm btn-primary float-end" data-bs-toggle="modal" data-bs-target="#fieldsModal">
-                                    <span class="fas fa-plus"></span> Přidat pole
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text"></p>
-                    </div>
-                </div>
-                <!-- Custom fields modal start -->
-                <div class="modal fade" id="fieldsModal" role="dialog" tabindex="-1">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Přidat nové pole</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body text-start">
-                                <div class="mb-3">
-                                    <label for="tag" class="form-label">Název pole</label>
-                                    <input type="text" name="tag" class="form-control">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="checkbox" class="form-label">Povinné</label>
-                                    <input class="form-check-input" type="checkbox" value="" id="check2">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="input" class="form-label">Typ pole</label>
-                                    <select name="input" class="form-select">
-                                        <option value="text">Text</option>
-                                        <option value="number">Číslo</option>
-                                        <option value="checkbox">Checkbox</option>
-                                        <option value="select">Select</option>
-                                        <option value="file">Soubor</option>
-                                        <option value="email">Email</option>
-                                        <option value="tel">Telefon</option>
-                                        <option value="date">Datum</option>
-                                        <option value="url">URL</option>
-                                        <option value="textarea">Textarea</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="input" class="form-label">Hodnoty</label>
-                                    <br><small class="form-text">Jednotlivé hodnoty oddělte pomocí znaku <code>,</code></small>
-                                    <textarea name="value" class="form-control"></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="default_value" class="form-label">Výchozí hodnota</label>
-                                    <input type="text" name="default_value" class="form-control">
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Uložit</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Custom fields modal end -->
-            </div>
-        </div>
+        <TagForm
+            :tags="tags"
+        />
 
         <div class="line"></div><br>
 
@@ -265,9 +195,9 @@ import {useI18n} from "vue-i18n";
 import TinyEditor from "../../TinyEditor.vue";
 import TemplateTags from "../TemplateTags/TemplateTags.vue";
 import DateForm from "../Dates/DateForm.vue";
+import TagForm from "../Tags/TagForm.vue";
 
 const ADMIN_URL = inject('ADMIN_URL')
-const emit = defineEmits(['createDate','createTag'])
 const props = defineProps({
     user: {type: Object, required: true}
 })

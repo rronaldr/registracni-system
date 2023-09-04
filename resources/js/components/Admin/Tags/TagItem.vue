@@ -1,0 +1,43 @@
+<template>
+    <tr>
+        <td>{{ tag.label }}</td>
+        <td>{{ tag.value }}</td>
+        <td>{{ tag.type }}</td>
+        <td>{{ tag.options }}</td>
+        <td>{{ tag.required ? 'Ano' : 'Ne' }}</td>
+        <td>{{ tag.default }}</td>
+        <td>
+            <button
+                @click="editItem"
+                :title="$t('app.edit')"
+                type="button"
+                class="btn btn-outline-info btn-rounded mx-1"
+            >
+                <i class="fas fa-edit"></i>
+            </button>
+            <button
+                @click="removeItem"
+                :title="$t('app.delete')"
+                type="button"
+                class="btn btn-outline-danger btn-rounded"
+            >
+                <i class="fas fa-trash"></i>
+            </button>
+        </td>
+    </tr>
+</template>
+
+<script setup>
+const emit = defineEmits(['editTag', 'removeTag'])
+const props = defineProps({
+    tag: {type: Object, required: true},
+})
+
+function editItem() {
+    emit('editTag', props.tag.id)
+}
+
+function removeItem() {
+    emit('removeTag', props.tag.id)
+}
+</script>
