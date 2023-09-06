@@ -58,14 +58,14 @@
                     v-show="(event.contact.person === null || event.contact.person === '') || (event.contact.email === null || event.contact.email === '')"
                     type="button"
                     class="btn btn-primary form-control align-self-end"
-                    name="event-link">Vyplnit moje údaje</button>
+                    name="event-link">{{ $t('event.fill_user_contact') }}</button>
             </div>
         </div>
 
         <div class="line"></div><br>
 
         <div class="row mb-3">
-            <label class="col-sm-2">Nastavení události</label>
+            <label class="col-sm-2">{{ $t('event.settings') }}</label>
             <div class="col-sm-10">
                 <div class="form-check form-check-inline">
                     <BaseCheckbox
@@ -85,7 +85,7 @@
         </div>
 
         <div class="row mb-3">
-            <label class="col-sm-2">Typ události</label>
+            <label class="col-sm-2">{{ $t('event.type') }}</label>
             <div class="col-sm-10">
                 <BaseRadioGroup
                     v-model="event.type"
@@ -204,8 +204,8 @@ const props = defineProps({
 
 const {t} = useI18n({})
 const dateTypeOptions = [
-    {label: t('date.1'), value: 1},
-    {label: t('date.2'), value: 2}
+    {label: t('event.type_1'), value: 1},
+    {label: t('event.type_2'), value: 2}
 ]
 
 let event = reactive({
