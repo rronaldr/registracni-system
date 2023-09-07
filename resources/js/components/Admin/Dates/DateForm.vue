@@ -213,27 +213,6 @@ let date = reactive({
     signoff_time: null
 })
 
-let x = {
-    id: 1,
-    name: null,
-    room: null,
-    capacity: 20,
-    unlimited_capacity: false,
-    substitute: false,
-    date_from: '2023-09-08',
-    time_from: '14:00',
-    date_to: '2023-09-08',
-    time_to: '16:00',
-    enrollment_from: null,
-    enrollment_from_time: null,
-    enrollment_to: null,
-    enrollment_to_time: null,
-    signoff_date: null,
-    signoff_time: null,
-}
-
-props.dates.push({...x})
-
 setLastDates()
 
 function addDate() {

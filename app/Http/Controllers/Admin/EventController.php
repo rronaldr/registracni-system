@@ -34,7 +34,6 @@ class EventController extends Controller
     }
     public function store(Request $request, EventFacade $eventFacade): RedirectResponse
     {
-        dd($request);
         try {
             $this->validate($request, [
                 'name' => 'required|string',

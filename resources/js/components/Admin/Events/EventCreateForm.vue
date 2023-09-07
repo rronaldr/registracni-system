@@ -208,32 +208,13 @@ const dateTypeOptions = [
     {label: t('event.type_2'), value: 2}
 ]
 
-// let event = reactive({
-//     name: null,
-//     subtitle: null,
-//     calendar_id: null,
-//     contact: {
-//         person: null,
-//         email: null
-//     },
-//     external_login: false,
-//     notifications: false,
-//     type: 1,
-//     global_blacklist: true,
-//     blacklist_users: null,
-//     template: {
-//         id: null,
-//         content: null,
-//     }
-// })
-
 let event = reactive({
-    name: 'name',
-    subtitle: 'subtitle',
-    calendar_id: 'calendar_id',
+    name: null,
+    subtitle: null,
+    calendar_id: null,
     contact: {
-        person: 'person',
-        email: 'person@emai.cz'
+        person: null,
+        email: null
     },
     external_login: false,
     notifications: false,
@@ -241,10 +222,11 @@ let event = reactive({
     global_blacklist: true,
     blacklist_users: null,
     template: {
-        id: '2',
-        content: '[test]',
+        id: null,
+        content: null,
     }
 })
+
 let tags = ref([])
 let dates = ref([])
 let templates = ref(null)
