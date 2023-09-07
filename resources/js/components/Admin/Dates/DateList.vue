@@ -2,7 +2,7 @@
     <table class="table table table-striped">
         <thead>
         <tr>
-            <td>{{ $t('date.datetime') }}</td>
+            <td>{{ $t('date.duration') }}</td>
             <td>{{ $t('date.room') }}</td>
             <td>{{ $t('date.capacity') }}</td>
             <td>{{ $t('date.unlimited_capacity') }}</td>

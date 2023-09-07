@@ -2,10 +2,9 @@
     <tr>
         <td>{{ tag.label }}</td>
         <td>{{ tag.value }}</td>
-        <td>{{ tag.type }}</td>
-        <td>{{ tag.options }}</td>
+        <td>{{ $t(`tag.${tag.type}`) }}</td>
         <td>{{ tag.required ? 'Ano' : 'Ne' }}</td>
-        <td>{{ tag.default }}</td>
+        <td>{{ tag.default ?? $t('tag.default_not_set') }}</td>
         <td>
             <button
                 @click="editItem"

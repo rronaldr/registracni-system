@@ -1,6 +1,6 @@
 <template>
     <tr>
-        <td>{{ date.date_from}}</td>
+        <td>{{ dateDuration }}</td>
         <td>{{ date.room }}</td>
         <td>{{ date.capacity }}</td>
         <td>{{ date.unlimited_capacity ? 'Ano' : 'Ne' }}</td>
@@ -27,10 +27,16 @@
 </template>
 
 <script setup>
+import moment from "moment";
+
 const emit = defineEmits(['editDate', 'removeDate'])
 const props = defineProps({
     date: {type: Object, required: true},
 })
+
+let durationFrom = moment(`${props.date.date_from} ${props.date.time_from}`).format('D.M.YYYY HH:mm')
+let durationTo = moment(`${props.date.date_to} ${props.date.time_to}`).format('D.M.YYYY HH:mm')
+let dateDuration = `${durationFrom} - ${durationTo}`
 
 function editItem() {
     emit('editDate', props.date.id)

@@ -5,7 +5,6 @@
             <td>{{ $t('tag.label') }}</td>
             <td>{{ $t('tag.value') }}</td>
             <td>{{ $t('tag.type') }}</td>
-            <td>{{ $t('tag.options') }}</td>
             <td>{{ $t('tag.required') }}</td>
             <td>{{ $t('tag.default') }}</td>
             <td></td>

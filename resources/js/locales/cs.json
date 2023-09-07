@@ -12,6 +12,9 @@
         "email": "Email"
     },
     "date": {
+        "dates": "Termíny",
+        "duration": "Trvání termínu",
+        "date_box_hint": "Zde vytvořte termíny pro událost",
         "add_date": "Přidat termín",
         "empty": "Zatím nejsou vytvořeny žádné termíny",
         "name": "Název",
@@ -19,15 +22,20 @@
         "capacity": "Kapacita",
         "unlimited_capacity": "Neomezená kapacita",
         "substitute": "Povolit náhradníky",
-        "date_from": "Začátek termínu",
+        "date_from": "Datum začátku",
         "time_from": "Čas začátku",
-        "date_to": "Konec termínu",
+        "date_to": "Datum konce",
         "time_to": "Čas konce",
-        "enrollment_from": "Přihlašování od",
-        "enrollment_to": "Přihlašování do",
-        "signoff_to": "Odhlašování do"
+        "enrollment_from": "Datum přihlašování od",
+        "enrollment_from_time": "Čas přihlašování od",
+        "enrollment_to": "Datum přihlašování do",
+        "enrollment_to_time": "Čas přihlašování do",
+        "signoff_date": "Datum odhlašování do",
+        "signoff_time": "Čas odhlašování do"
     },
     "tag": {
+        "tag": "Vlastní pole",
+        "tag_box_hint": "Zde vytvořte vlastní pole",
         "add_tag": "Přidat pole",
         "label": "Popisek",
         "value": "Hodnota",
@@ -36,11 +44,13 @@
         "options_tip": "<small class=\"form-text\">Jednotlivé hodnoty oddělte pomocí znaku <code>,</code></small>",
         "required": "Povinné pole",
         "default": "Výchozí hodnota",
+        "default_not_set": "Nenastavena",
         "empty": "Zatím nejsou vytvořeny žádné vlastní pole",
         "type_select": "Vyberte typ pole",
         "text": "Text",
         "number": "Číslo",
         "checkbox": "Zaškrtávací pole",
+        "radio": "Přepínač (radio)",
         "select": "Výběr z možností (select)",
         "email": "Email",
         "tel": "Telefon",
@@ -71,7 +81,10 @@
         "settings": "Nastavení události",
         "type": "Typ události",
         "type_1": "Opakovaná událost či části události, kterých se lze zúčastnit samostatně",
-        "type_2": "Navazující části jedné události (např. části jednoho kurzu)"
+        "type_2": "Navazující části jedné události (např. části jednoho kurzu)",
+        "blacklist": "Blacklist pro událost",
+        "blacklist_modal_title": "Jak přidat uživatele na blacklist?",
+        "blacklist_modal_text": "Jednotlivé xname uživatelů oddělete čárkou, středníkem nebo novým řádkem."
     },
     "blacklist": {
         "blocked_until": "Blokace do",

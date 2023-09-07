@@ -6,7 +6,7 @@
                     <div class="row">
                         <div class="col">
                             <h5>
-                                Termíny <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Zde vytvořte termíny pro událost"></i>
+                                {{ $t('date.dates') }} <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" :title="$t('date.date_box_hint')"></i>
                             </h5>
                         </div>
                         <div class="col">
@@ -41,7 +41,7 @@
                     <button
                         type="button"
                         class="btn-close"
-                        @click="showDateForm = false"></button>
+                        @click="closeForm()"></button>
                 </div>
                 <div class="text-start">
                     <div class="row g-2 mb-3">
@@ -63,9 +63,11 @@
                         </div>
                         <div class="col-6">
                             <BaseInput
+                                v-if="!date.unlimited_capacity"
                                 v-model="date.capacity"
                                 :label="$t('date.capacity')"
                                 type="number"
+                                :required="true"
                             />
                         </div>
                     </div>
@@ -88,36 +90,39 @@
                         </div>
                     </div>
                     <div class="row g-2 mb-3">
-                        <div class="col-8">
+                        <div class="col-3">
                             <BaseInput
                                 v-model="date.date_from"
                                 :label="$t('date.date_from')"
                                 type="date"
                                 @change="updateDateTo"
+                                :required="true"
                             />
                         </div>
-                        <div class="col-4">
+                        <div class="col-3">
                             <BaseInput
                                 v-model="date.time_from"
                                 :label="$t('date.time_from')"
                                 type="time"
                                 @change="updateTimeTo"
+                                :required="true"
                             />
                         </div>
-                    </div>
-                    <div class="row g-2 mb-3">
-                        <div class="col-8">
+
+                        <div class="col-3">
                             <BaseInput
                                 v-model="date.date_to"
                                 :label="$t('date.date_to')"
                                 type="date"
+                                :required="true"
                             />
                         </div>
-                        <div class="col-4">
+                        <div class="col-3">
                             <BaseInput
                                 v-model="date.time_to"
                                 :label="$t('date.time_to')"
                                 type="time"
+                                :required="true"
                             />
                         </div>
                     </div>
@@ -131,6 +136,13 @@
                         </div>
                         <div class="col">
                             <BaseInput
+                                v-model="date.enrollment_from_time"
+                                :label="$t('date.enrollment_from')"
+                                type="time"
+                            />
+                        </div>
+                        <div class="col">
+                            <BaseInput
                                 v-model="date.enrollment_to"
                                 :label="$t('date.enrollment_to')"
                                 type="date"
@@ -138,9 +150,25 @@
                         </div>
                         <div class="col">
                             <BaseInput
-                                v-model="date.signoff_to"
-                                :label="$t('date.signoff_to')"
+                                v-model="date.enrollment_to_time"
+                                :label="$t('date.enrollment_to_time')"
+                                type="time"
+                            />
+                        </div>
+                    </div>
+                    <div class="row g-2 mb-3">
+                        <div class="col">
+                            <BaseInput
+                                v-model="date.signoff_date"
+                                :label="$t('date.signoff_date')"
                                 type="date"
+                            />
+                        </div>
+                        <div class="col">
+                            <BaseInput
+                                v-model="date.signoff_time"
+                                :label="$t('date.signoff_time')"
+                                type="time"
                             />
                         </div>
                     </div>
@@ -178,9 +206,33 @@ let date = reactive({
     date_to: null,
     time_to: null,
     enrollment_from: null,
+    enrollment_from_time: null,
     enrollment_to: null,
-    signoff_to: null
+    enrollment_to_time: null,
+    signoff_date: null,
+    signoff_time: null
 })
+
+let x = {
+    id: 1,
+    name: null,
+    room: null,
+    capacity: 20,
+    unlimited_capacity: false,
+    substitute: false,
+    date_from: '2023-09-08',
+    time_from: '14:00',
+    date_to: '2023-09-08',
+    time_to: '16:00',
+    enrollment_from: null,
+    enrollment_from_time: null,
+    enrollment_to: null,
+    enrollment_to_time: null,
+    signoff_date: null,
+    signoff_time: null,
+}
+
+props.dates.push({...x})
 
 setLastDates()
 
@@ -201,8 +253,10 @@ function addDate() {
 }
 
 function editDate(id) {
+    clearDateObject()
     showDateForm.value = true
     edit = true
+
     date = {...props.dates.find(date => date.id === id)}
 }
 
@@ -231,6 +285,11 @@ function updateTimeTo() {
     }
 }
 
+function closeForm() {
+    showDateForm.value = false
+    clearDateObject()
+}
+
 function setLastDates() {
     if (props.dates.length > 0) {
         let lastDate = props.dates[props.dates.length - 1]
@@ -240,8 +299,11 @@ function setLastDates() {
         date.date_to = lastDate.date_to
         date.time_to = lastDate.time_to
         date.enrollment_from = lastDate.enrollment_from
+        date.enrollment_from_time = lastDate.enrollment_from_time
         date.enrollment_to = lastDate.enrollment_to
-        date.signoff_to = lastDate.signoff_to
+        date.enrollment_to_time = lastDate.enrollment_to_time
+        date.signoff_date = lastDate.signoff_date
+        date.signoff_time = lastDate.signoff_time
     }
 }
 </script>

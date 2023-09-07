@@ -8,6 +8,7 @@
                     :label="$t('event.name')"
                     type="text"
                     class="mb-3"
+                    :required="true"
                 />
             </div>
         </div>
@@ -41,6 +42,7 @@
                     :label="$t('event.contact_person')"
                     type="text"
                     class="mb-3"
+                    :required="true"
                 />
             </div>
             <div class="col-lg-5 col-sm-6">
@@ -49,6 +51,7 @@
                     :label="$t('event.contact_email')"
                     type="text"
                     class="mb-3"
+                    :required="true"
                 />
             </div>
 
@@ -89,13 +92,12 @@
             <div class="col-sm-10">
                 <BaseRadioGroup
                     v-model="event.type"
-                    name="Test"
                     :options="dateTypeOptions"/>
             </div>
         </div>
 
         <div class="row mb-3">
-            <label class="col-sm-2">Blacklist pro událost<br></label>
+            <label class="col-sm-2">{{ $t('event.blacklist') }}<br></label>
             <div class="col-sm-10">
                 <div class="form-check form-switch mb-3">
                     <input v-model="event.global_blacklist" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
@@ -107,7 +109,7 @@
             </div>
         </div>
 
-        <div v-show="!event.global_blacklist" class="row mb-3">
+        <div v-if="!event.global_blacklist" class="row mb-3">
             <div class="col">
                 <a class="link-secondary float-end" data-bs-toggle="modal" data-bs-target="#infoModal">
                     <i class="fas fa-info-circle"></i> {{ $t('app.show-hint') }}
@@ -115,6 +117,7 @@
                 <BaseTextarea
                     v-model="event.blacklist_users"
                     label="Xname uživatelů, které chcete zablokovat"
+                    :required="true"
                 />
             </div>
         </div>
@@ -124,15 +127,12 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Jak přidat uživatele na blacklist?</h5>
+                        <h5 class="modal-title">{{ $t('event.blacklist_modal_title') }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body text-start">
                         <p>
-                            {{ $t('event.blacklist_hint') }}
-                            Pro každého uživatele přidejte hodnoty <br>ve formátu <b>email:datum:"důvod",</b>
-                            <br>každý záznam ukončete pomocí čárky.
-                            <br> Například: <br><b>jan.novak@vse.cz:1.5.2030 9:15:"Váš důvod",</b>
+                            {{ $t('event.blacklist_modal_text') }}
                         </p>
                     </div>
                 </div>
@@ -237,16 +237,18 @@ function submitEvent() {
     let csrf = document.getElementsByName('_token')[0].value
     let data = {
         event: event,
+        dates: dates.value,
+        tags: tags.value,
         _token: csrf
     }
 
     console.log('test',data)
-    // axios.post(
-    //     ADMIN_URL+'/event',
-    //     data
-    // ).catch(error => {
-    //     console.log(error)
-    // })
+    axios.post(
+        ADMIN_URL+'/event',
+        data
+    ).catch(error => {
+        console.log(error)
+    })
 }
 
 function fillContactWithCurrentUser() {
@@ -254,10 +256,6 @@ function fillContactWithCurrentUser() {
         ? props.user.display_name
         : props.user.first_name+' '+ props.user.last_name
     event.contact.email = props.user.email
-}
-
-function createTag(tag) {
-    tags.value.push(tag)
 }
 
 async function getApprovedTemplates() {

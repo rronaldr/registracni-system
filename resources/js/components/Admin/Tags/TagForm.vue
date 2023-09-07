@@ -6,7 +6,7 @@
                     <div class="row">
                         <div class="col">
                             <h5>
-                                Vlastní pole <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Zde vytvořte vlastní pole"></i>
+                                {{ $t('tag.tag') }} <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" :title="$t('tag.tag_box_hint')"></i>
                             </h5>
                         </div>
                         <div class="col">
@@ -41,7 +41,7 @@
                     <button
                         type="button"
                         class="btn-close"
-                        @click="showTagForm = false"></button>
+                        @click="closeForm()"></button>
                 </div>
                 <div class="text-start">
                     <div class="row mb-3">
@@ -50,6 +50,7 @@
                                 v-model="tag.label"
                                 :label="$t('tag.label')"
                                 type="text"
+                                :required="true"
                             />
                         </div>
                     </div>
@@ -59,6 +60,7 @@
                                 v-model="tag.value"
                                 :label="$t('tag.value')"
                                 type="text"
+                                :required="true"
                             />
                         </div>
                     </div>
@@ -74,9 +76,9 @@
                     <div class="row g-2 mb-3">
                         <div class="col">
                             <BaseSelect
+                                v-model="tag.type"
                                 :label="$t('tag.type')"
                                 :options="typeOptions"
-                                v-model="tag.type"
                                 :required="true"
                                 :placeholder="true"
                                 :placeholder-text="$t('tag.type_select')"
@@ -84,11 +86,13 @@
                         </div>
                     </div>
                     <div class="row g-2 mb-3">
-                        <div class="col">
+                        <div class="col"
+                             v-if="showOptions"
+                        >
                             <BaseTextarea
                                 v-model="tag.options"
                                 :label="$t('tag.options')"
-                                required="required"
+                                :required="true"
                             />
                             <small class="form-text">Jednotlivé hodnoty oddělte pomocí znaku <code>,</code></small><br>
                         </div>
@@ -111,7 +115,7 @@
 </template>
 
 <script setup>
-import {reactive, ref} from "vue";
+import {reactive, ref, watch} from "vue";
 import SubmitButton from "../Form/SubmitButton.vue";
 import BaseInput from "../Form/BaseInput.vue";
 import BaseCheckbox from "../Form/BaseCheckbox.vue";
@@ -126,6 +130,7 @@ const props = defineProps({
 const {t} = useI18n({})
 
 let showTagForm = ref(false)
+let showOptions = ref(false)
 let edit = false
 let tag = reactive({
     id: null,
@@ -137,10 +142,24 @@ let tag = reactive({
     default: null
 })
 
+let x = {
+    id: 1,
+    label: 'Pohlaví',
+    value: '[pohlavi]',
+    required: false,
+    type: 'radio',
+    // options: [{label: 'Muž', value: 'muz'},{label: 'Žena', value: 'zena'}],
+    options: 'test,best',
+    default: null
+}
+
+props.tags.push({...x})
+
 let typeOptions = [
     {name: t('tag.text'), id: 'text'},
     {name: t('tag.number'), id: 'number'},
     {name: t('tag.checkbox'), id: 'checkbox'},
+    {name: t('tag.radio'), id: 'radio'},
     {name: t('tag.select'), id: 'select'},
     {name: t('tag.email'), id: 'email'},
     {name: t('tag.tel'), id: 'tel'},
@@ -155,20 +174,25 @@ function addDate() {
     }
 
     if (edit) {
-        edit = false
         removeTag(tag.id)
+        edit = false
     }
+
+    wrapTagValue()
 
     props.tags.push({...tag})
     showTagForm.value = false
 
-    clearDateObject()
+    clearTagObject()
 }
 
 function editTag(id) {
+    clearTagObject()
     showTagForm.value = true
     edit = true
-    tag = {...props.tags.find(date => date.id === id)}
+
+    let tagToEdit = props.tags.find(date => date.id === id)
+    assignEditValue(tagToEdit)
 }
 
 function removeTag(id) {
@@ -178,8 +202,41 @@ function removeTag(id) {
     }
 }
 
-function clearDateObject() {
+function closeForm() {
+    showTagForm.value = false
+    clearTagObject()
+}
+
+function clearTagObject() {
     Object.keys(tag).forEach((i) => tag[i] = null)
 }
+
+function wrapTagValue() {
+    let regex = /[\[\]]/
+    tag.value = regex.test(tag.value) ? tag.value : `[${tag.value}]`
+}
+
+function assignEditValue(tagToEdit) {
+    tag.id = tagToEdit.id
+    tag.label = tagToEdit.label
+    tag.value = tagToEdit.value
+    tag.required = tagToEdit.required
+    tag.type = tagToEdit.type
+    tag.options = tagToEdit.options
+    tag.default = tagToEdit.default
+}
+
+watch(
+    () => tag.type,
+    (type, prevType) => {
+        showOptions = tag.type !== null && (
+            tag.type === 'checkbox'
+            || tag.type === 'select'
+            || tag.type === 'radio'
+        ),
+        console.log(type, prevType)
+        console.log(showOptions)
+    }
+)
 
 </script>
