@@ -49,7 +49,7 @@
                 <BaseInput
                     v-model="event.contact.email"
                     :label="$t('event.contact_email')"
-                    type="text"
+                    type="email"
                     class="mb-3"
                     :required="true"
                 />
@@ -208,23 +208,41 @@ const dateTypeOptions = [
     {label: t('event.type_2'), value: 2}
 ]
 
+// let event = reactive({
+//     name: null,
+//     subtitle: null,
+//     calendar_id: null,
+//     contact: {
+//         person: null,
+//         email: null
+//     },
+//     external_login: false,
+//     notifications: false,
+//     type: 1,
+//     global_blacklist: true,
+//     blacklist_users: null,
+//     template: {
+//         id: null,
+//         content: null,
+//     }
+// })
+
 let event = reactive({
-    name: null,
-    subtitle: null,
-    calendar_id: null,
+    name: 'name',
+    subtitle: 'subtitle',
+    calendar_id: 'calendar_id',
     contact: {
-        person: null,
-        email: null
+        person: 'person',
+        email: 'person@emai.cz'
     },
-    substitutes: false,
     external_login: false,
     notifications: false,
     type: 1,
     global_blacklist: true,
     blacklist_users: null,
     template: {
-        id: null,
-        content: null,
+        id: '2',
+        content: '[test]',
     }
 })
 let tags = ref([])
@@ -244,7 +262,7 @@ function submitEvent() {
 
     console.log('test',data)
     axios.post(
-        ADMIN_URL+'/event',
+        ADMIN_URL+'/events/store',
         data
     ).catch(error => {
         console.log(error)

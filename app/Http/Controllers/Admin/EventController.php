@@ -28,18 +28,13 @@ class EventController extends Controller
         ]);
     }
 
-    public function create(TemplateFacade $templateFacade): View
+    public function create(): View
     {
-        $templates = $templates = Template::query()
-            ->where('approved', 1)
-            ->get();
-
-        return view('admin.event-create', [
-            'templates' => $templates,
-        ]);
+        return view('admin.event-create');
     }
     public function store(Request $request, EventFacade $eventFacade): RedirectResponse
     {
+        dd($request);
         try {
             $this->validate($request, [
                 'name' => 'required|string',
