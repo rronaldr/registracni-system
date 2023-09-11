@@ -14,6 +14,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -32,23 +33,24 @@ class EventController extends Controller
     {
         return view('admin.event-create');
     }
-    public function store(Request $request, EventFacade $eventFacade): RedirectResponse
+
+    public function store(Request $request, EventFacade $eventFacade)
     {
         try {
-            $this->validate($request, [
-                'name' => 'required|string',
-                'description' => 'nullable|string',
-                'type' => 'required|numeric',
-            ]);
+            $validator = Validator::make($request->all(), $eventFacade->getValidationRules());
+
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()]);
+            }
 
             $eventFacade->createEvent($request);
+
+            Session::flash('message', trans('event.saved'));
+
+            return response()->noContent();
         } catch (\Exception $e) {
             dump($e);
         }
-
-        Session::flash('message', trans('event.saved'));
-
-        return redirect()->route('admin.events');
     }
 
     public function show(string $id): View
@@ -56,7 +58,7 @@ class EventController extends Controller
         return view('admin.event-detail');
     }
 
-    public function edit(string $id, EventFacade $eventFacade, TemplateFacade $templateFacade): View
+    public function edit(string $id, EventFacade $eventFacade): View
     {
         /** @todo rework templateFacade */
         $event = $eventFacade->getEventById((int) $id);

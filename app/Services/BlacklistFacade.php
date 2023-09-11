@@ -67,6 +67,11 @@ class BlacklistFacade
         });
     }
 
+    public function createBlacklist(): Blacklist
+    {
+        return Blacklist::create();
+    }
+
     public function removeUserFromBlacklist(int $id, int $userId): void
     {
         $blacklist = $this->getBlacklistById($id);

@@ -17,6 +17,7 @@ class Date extends Model
      * @var array
      */
     protected $fillable = [
+        'event_id',
         'name',
         'capacity',
         'date_start',

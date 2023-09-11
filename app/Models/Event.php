@@ -21,14 +21,20 @@ class Event extends Model
     protected $fillable = [
         'template_id',
         'blacklist_id',
+        'user_id',
         'name',
+        'subtitle',
+        'calendar_id',
+        'contact_person',
+        'contact_email',
         'template',
         'description',
         'status',
         'type',
         'c_fields',
-        'template_subject',
         'template_content',
+        'date_start_cache',
+        'date_end_cache'
     ];
 
     protected $casts = [

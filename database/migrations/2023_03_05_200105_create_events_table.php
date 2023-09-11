@@ -26,7 +26,6 @@ class CreateEventsTable extends Migration
             $table->integer('type');
             $table->string('status');
             $table->json('c_fields')->nullable();
-            $table->string('template_subject')->nullable();
             $table->text('template_content')->nullable();
             $table->dateTime('date_start_cache')->nullable();
             $table->dateTime('date_end_cache')->nullable();

@@ -56,9 +56,10 @@
                     <div class="row g-2 mb-3">
                         <div class="col-6">
                             <BaseInput
-                                v-model="date.room"
-                                :label="$t('date.room')"
+                                v-model="date.location"
+                                :label="$t('date.location')"
                                 type="text"
+                                :required="true"
                             />
                         </div>
                         <div class="col-6">
@@ -159,15 +160,15 @@
                     <div class="row g-2 mb-3">
                         <div class="col">
                             <BaseInput
-                                v-model="date.signoff_date"
-                                :label="$t('date.signoff_date')"
+                                v-model="date.withdraw_date"
+                                :label="$t('date.withdraw_date')"
                                 type="date"
                             />
                         </div>
                         <div class="col">
                             <BaseInput
-                                v-model="date.signoff_time"
-                                :label="$t('date.signoff_time')"
+                                v-model="date.withdraw_time"
+                                :label="$t('date.withdraw_time')"
                                 type="time"
                             />
                         </div>
@@ -197,7 +198,7 @@ let edit = false
 let date = reactive({
     id: null,
     name: null,
-    room: null,
+    location: null,
     capacity: null,
     unlimited_capacity: false,
     substitute: false,
@@ -209,9 +210,48 @@ let date = reactive({
     enrollment_from_time: null,
     enrollment_to: null,
     enrollment_to_time: null,
-    signoff_date: null,
-    signoff_time: null
+    withdraw_date: null,
+    withdraw_time: null
 })
+
+let x = {
+    id: 1,
+    name: null,
+    location: 'RB101',
+    capacity: 20,
+    unlimited_capacity: false,
+    substitute: false,
+    date_from: '2023-08-08',
+    time_from: '14:00',
+    date_to: '2023-09-08',
+    time_to: '16:00',
+    enrollment_from: null,
+    enrollment_from_time: null,
+    enrollment_to: null,
+    enrollment_to_time: null,
+    withdraw_date: null,
+    withdraw_time: null,
+}
+let y = {
+    id: 2,
+    name: null,
+    location: 'SB203',
+    capacity: 20,
+    unlimited_capacity: false,
+    substitute: false,
+    date_from: '2023-09-08',
+    time_from: '14:00',
+    date_to: '2023-09-20',
+    time_to: '16:00',
+    enrollment_from: null,
+    enrollment_from_time: null,
+    enrollment_to: null,
+    enrollment_to_time: null,
+    withdraw_date: null,
+    withdraw_time: null,
+}
+props.dates.push({...x})
+props.dates.push({...y})
 
 setLastDates()
 
@@ -281,8 +321,8 @@ function setLastDates() {
         date.enrollment_from_time = lastDate.enrollment_from_time
         date.enrollment_to = lastDate.enrollment_to
         date.enrollment_to_time = lastDate.enrollment_to_time
-        date.signoff_date = lastDate.signoff_date
-        date.signoff_time = lastDate.signoff_time
+        date.withdraw_date = lastDate.withdraw_date
+        date.withdraw_time = lastDate.withdraw_time
     }
 }
 </script>

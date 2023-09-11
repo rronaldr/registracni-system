@@ -209,23 +209,43 @@ const dateTypeOptions = [
 ]
 
 let event = reactive({
-    name: null,
-    subtitle: null,
-    calendar_id: null,
+    name: 'name',
+    subtitle: 'subtitle',
+    calendar_id: 124,
     contact: {
-        person: null,
-        email: null
+        person: 'person',
+        email: 'person@emai.cz'
     },
     external_login: false,
     notifications: false,
     type: 1,
     global_blacklist: true,
-    blacklist_users: null,
+    blacklist_users: 'test,fest',
     template: {
-        id: null,
-        content: null,
-    }
+        id: '2',
+        content: '[test]',
+    },
+    blacklist_id: null
 })
+
+// let event = reactive({
+//     name: null,
+//     subtitle: null,
+//     calendar_id: null,
+//     contact: {
+//         person: null,
+//         email: null
+//     },
+//     external_login: false,
+//     notifications: false,
+//     type: 1,
+//     global_blacklist: true,
+//     blacklist_users: null,
+//     template: {
+//         id: null,
+//         content: null,
+//     }
+// })
 
 let tags = ref([])
 let dates = ref([])
@@ -242,12 +262,15 @@ function submitEvent() {
         _token: csrf
     }
 
-    console.log('test',data)
     axios.post(
         ADMIN_URL+'/events/store',
         data
-    ).catch(error => {
-        console.log(error)
+    )
+    // .then(
+    //     window.location.href = ADMIN_URL+'/events',
+    // )
+    .catch(error => {
+    console.log(error)
     })
 }
 

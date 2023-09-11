@@ -5,6 +5,8 @@ declare(strict_types = 1);
 namespace App\Services;
 
 use App\Enums\Event\EventStatusEnum;
+use App\Models\Blacklist;
+use App\Models\Date;
 use App\Models\Enrollment;
 use App\Models\Event;
 use App\Repositories\EventRepository;
@@ -13,29 +15,47 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class EventFacade
 {
     private EventRepository $eventRepository;
     private DateFacade  $dateFacade;
+    private BlacklistFacade $blacklistFacade;
     public function __construct(
         EventRepository $eventRepository,
-        DateFacade $dateFacade
+        DateFacade $dateFacade,
+        BlacklistFacade $blacklistFacade
     ){
         $this->eventRepository = $eventRepository;
         $this->dateFacade = $dateFacade;
+        $this->blacklistFacade = $blacklistFacade;
     }
 
     public function createEvent(Request $request): void
     {
-        Event::create([
-            'name' => $request->get('name'),
-            'description' => $request->get('description'),
-            'type' => $request->get('type'),
-            'status' => EventStatusEnum::DRAFT,
-            'blacklist_id' => null,
-            'hidden' => 0,
-        ]);
+        $data = $request->all();
+        $eventData = $data['event'];
+        $dates = $data['dates'] ?? null;
+        $tags = $data['tags'] ?? null;
+
+        $blacklist = $eventData['global_blacklist']
+            ? $this->blacklistFacade->getGlobalBlacklist()
+            : $this->blacklistFacade->createBlacklist();
+
+        $blacklistUsers = ['users' => $eventData['blacklist_users']];
+        $this->blacklistFacade->addUsersToBlacklist($blacklist->id, $blacklistUsers);
+
+        $event = $this->createEventFromRequest($eventData, $blacklist);
+
+        collect($dates)
+            ->each(function (array $date) use ($event){
+                $this->dateFacade->createDate($event->id, $date);
+            });
+
+        $this->setEventDateCache($event);
+        // @todo save event tags
     }
 
     public function getEventsForOverviewPaginated(): LengthAwarePaginator
@@ -126,6 +146,35 @@ class EventFacade
         return $this->eventRepository->getEventByIdForDetailPage($id);
     }
 
+    public function getValidationRules(): array
+    {
+        return [
+            'event.blacklist_id' => 'nullable|numeric',
+            'event.name' => 'required|string',
+            'event.type' => 'required|numeric',
+            'event.blacklist_users' => 'required_if:event.global_blacklist,==,false|sometimes:string',
+            'contact.*' => 'required',
+            'dates' => 'required|array',
+            'dates.*.location' => 'required|string',
+            'dates.*.capacity' => 'required|numeric',
+            'dates.*.date_from' => 'required|date',
+            'dates.*.time_from' => 'required|date_format:H:i',
+            'dates.*.date_to' => 'required|date',
+            'dates.*.time_to' => 'required|date_format:H:i',
+            'tags.*' => 'sometimes|required',
+            'tags.*.label' => 'required|string',
+            'tags.*.options' => 'required_if:tags.*.type,radio,checkbox,select'
+        ];
+    }
+
+    private function setEventDateCache(Event $event): void
+    {
+        $dateCache = $this->dateFacade->getFirstAndLastDateOfEvent($event->id);
+        $event->date_start_cache = Carbon::parse($dateCache->get('date_start'));
+        $event->date_end_cache = Carbon::parse($dateCache->get('date_end'));
+        $event->save();
+    }
+
     private function getCustomFieldsValueWithLabel(array $labels, Enrollment $enrollment): Collection
     {
         /** @todo refactor custom field label is taken from event */
@@ -134,5 +183,22 @@ class EventFacade
         {
             return [$labels[$key]['label'] => $value];
         });
+    }
+
+    private function createEventFromRequest(array $event, Blacklist $blacklist): Event
+    {
+        return Event::create([
+            'blacklist_id' => $blacklist->id,
+            'name' => $event['name'],
+            'subtitle' => $event['subtitle'],
+            'template_id' => $event['template']['id'],
+            'user_id' => auth()->user()->id,
+            'calendar_id' => $event['calendar_id'],
+            'contact_person' => $event['contact']['person'],
+            'contact_email' => $event['contact']['email'],
+            'type' => $event['type'],
+            'status' => EventStatusEnum::DRAFT,
+            'template_content' => $event['template']['content'],
+        ]);
     }
 }

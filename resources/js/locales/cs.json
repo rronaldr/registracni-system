@@ -18,7 +18,7 @@
         "add_date": "Přidat termín",
         "empty": "Zatím nejsou vytvořeny žádné termíny",
         "name": "Název",
-        "room": "Místnost",
+        "location": "Místnost",
         "capacity": "Kapacita",
         "unlimited_capacity": "Neomezená kapacita",
         "substitute": "Povolit náhradníky",
@@ -30,8 +30,8 @@
         "enrollment_from_time": "Čas přihlašování od",
         "enrollment_to": "Datum přihlašování do",
         "enrollment_to_time": "Čas přihlašování do",
-        "signoff_date": "Datum odhlašování do",
-        "signoff_time": "Čas odhlašování do"
+        "withdraw_date": "Datum odhlašování do",
+        "withdraw_time": "Čas odhlašování do"
     },
     "tag": {
         "tag": "Vlastní pole",

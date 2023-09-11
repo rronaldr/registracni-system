@@ -27,21 +27,6 @@ class BlacklistController extends Controller
         ]);
     }
 
-    /** @todo add validation */
-    public function store(Request $request, BlacklistFacade $blacklistFacade): RedirectResponse
-    {
-        $blacklistData = $blacklistFacade
-            ->getBlacklistJsonFromResponse($request->blacklist)
-            ->toJson();
-
-        Blacklist::create([
-            'data' => $blacklistData,
-        ]);
-
-
-        return redirect()->route('admin.blacklist');
-    }
-
     public function update(int $id, Request $request, BlacklistFacade $blacklistFacade)
     {
         try {

@@ -27,4 +27,21 @@ class DateRepository
 
         return $date;
     }
+
+    public function findFirstAndLastDateOfEvent(int $eventId): Collection
+    {
+        $start = Date::query()
+            ->where('event_id', $eventId)
+            ->orderBy('date_start', 'ASC')
+            ->select(['date_start'])
+            ->first();
+
+        $end = Date::query()
+            ->where('event_id', $eventId)
+            ->orderBy('date_end', 'DESC')
+            ->select(['date_end'])
+            ->first();
+
+        return collect(['date_start' => $start->date_start, 'date_end' => $end->date_end]);
+    }
 }
