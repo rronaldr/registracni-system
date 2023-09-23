@@ -34,7 +34,9 @@ return [
             'published' => 'Publikováno',
             'draft' => 'Koncept',
             'deleted' => 'Smazána',
-        ]
+        ],
+        'saved' => 'Událost vytvořena',
+        'deleted' => 'Událost odstraněna'
     ],
     'email' => [
         'email' => 'Email',

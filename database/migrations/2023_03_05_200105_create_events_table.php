@@ -27,6 +27,9 @@ class CreateEventsTable extends Migration
             $table->string('status');
             $table->json('c_fields')->nullable();
             $table->text('template_content')->nullable();
+            $table->boolean('global_blacklist')->default(false);
+            $table->boolean('event_blacklist')->default(false);
+            $table->integer('user_group');
             $table->dateTime('date_start_cache')->nullable();
             $table->dateTime('date_end_cache')->nullable();
             $table->timestamps();

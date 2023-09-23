@@ -33,6 +33,9 @@ class Event extends Model
         'type',
         'c_fields',
         'template_content',
+        'global_blacklist',
+        'event_blacklist',
+        'user_group',
         'date_start_cache',
         'date_end_cache'
     ];

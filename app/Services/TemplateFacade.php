@@ -68,6 +68,11 @@ class TemplateFacade
     public function deleteTemplate(int $id): void
     {
         $template = $this->templateRepository->getById($id);
+
+        if ($template->type === 'default') {
+            return;
+        }
+
         $template->deleteOrFail();
     }
 

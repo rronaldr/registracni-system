@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\Event\EventUserGroups;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Template;
@@ -45,7 +46,7 @@ class EventController extends Controller
 
             $eventFacade->createEvent($request);
 
-            Session::flash('message', trans('event.saved'));
+            Session::flash('message', __('app.event.saved'));
 
             return response()->noContent();
         } catch (\Exception $e) {
@@ -85,7 +86,7 @@ class EventController extends Controller
             dump($e);
         }
 
-        Session::flash('message', trans('event.deleted'));
+        Session::flash('message', __('app.event.deleted'));
 
         return redirect()->route('admin.events');
     }

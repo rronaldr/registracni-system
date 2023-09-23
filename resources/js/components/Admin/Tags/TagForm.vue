@@ -5,9 +5,9 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col">
-                            <h5>
+                            <span>
                                 {{ $t('tag.tag') }} <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" :title="$t('tag.tag_box_hint')"></i>
-                            </h5>
+                            </span>
                         </div>
                         <div class="col">
                             <button

@@ -152,7 +152,8 @@ class EventFacade
             'event.blacklist_id' => 'nullable|numeric',
             'event.name' => 'required|string',
             'event.type' => 'required|numeric',
-            'event.blacklist_users' => 'required_if:event.global_blacklist,==,false|sometimes:string',
+            'event.blacklist_users' => 'required_if:event.event_blacklist,==,true|sometimes:string',
+            'event.user_group' => 'required|numeric',
             'contact.*' => 'required',
             'dates' => 'required|array',
             'dates.*.location' => 'required|string',
@@ -191,6 +192,7 @@ class EventFacade
             'blacklist_id' => $blacklist->id,
             'name' => $event['name'],
             'subtitle' => $event['subtitle'],
+            'external_login' => $event['external_login'],
             'template_id' => $event['template']['id'],
             'user_id' => auth()->user()->id,
             'calendar_id' => $event['calendar_id'],
@@ -199,6 +201,7 @@ class EventFacade
             'type' => $event['type'],
             'status' => EventStatusEnum::DRAFT,
             'template_content' => $event['template']['content'],
+            'user_group' => (int) $event['user_group'],
         ]);
     }
 }
