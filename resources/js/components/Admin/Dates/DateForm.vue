@@ -214,44 +214,44 @@ let date = reactive({
     withdraw_time: null
 })
 
-let x = {
-    id: 1,
-    name: null,
-    location: 'RB101',
-    capacity: 20,
-    unlimited_capacity: false,
-    substitute: false,
-    date_from: '2023-08-08',
-    time_from: '14:00',
-    date_to: '2023-09-08',
-    time_to: '16:00',
-    enrollment_from: null,
-    enrollment_from_time: null,
-    enrollment_to: null,
-    enrollment_to_time: null,
-    withdraw_date: null,
-    withdraw_time: null,
-}
-let y = {
-    id: 2,
-    name: null,
-    location: 'SB203',
-    capacity: 20,
-    unlimited_capacity: false,
-    substitute: false,
-    date_from: '2023-09-08',
-    time_from: '14:00',
-    date_to: '2023-09-20',
-    time_to: '16:00',
-    enrollment_from: null,
-    enrollment_from_time: null,
-    enrollment_to: null,
-    enrollment_to_time: null,
-    withdraw_date: null,
-    withdraw_time: null,
-}
-props.dates.push({...x})
-props.dates.push({...y})
+// let x = {
+//     id: 1,
+//     name: null,
+//     location: 'RB101',
+//     capacity: 20,
+//     unlimited_capacity: false,
+//     substitute: false,
+//     date_from: '2023-08-08',
+//     time_from: '14:00',
+//     date_to: '2023-09-08',
+//     time_to: '16:00',
+//     enrollment_from: null,
+//     enrollment_from_time: null,
+//     enrollment_to: null,
+//     enrollment_to_time: null,
+//     withdraw_date: null,
+//     withdraw_time: null,
+// }
+// let y = {
+//     id: 2,
+//     name: null,
+//     location: 'SB203',
+//     capacity: 20,
+//     unlimited_capacity: false,
+//     substitute: false,
+//     date_from: '2023-09-08',
+//     time_from: '14:00',
+//     date_to: '2023-09-20',
+//     time_to: '16:00',
+//     enrollment_from: null,
+//     enrollment_from_time: null,
+//     enrollment_to: null,
+//     enrollment_to_time: null,
+//     withdraw_date: null,
+//     withdraw_time: null,
+// }
+// props.dates.push({...x})
+// props.dates.push({...y})
 
 setLastDates()
 

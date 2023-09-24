@@ -142,17 +142,17 @@ let tag = reactive({
     default: null
 })
 
-let x = {
-    id: 1,
-    label: 'Pohlaví',
-    value: '[pohlavi]',
-    required: false,
-    type: 'radio',
-    // options: [{label: 'Muž', value: 'muz'},{label: 'Žena', value: 'zena'}],
-    options: 'test,best',
-    default: null
-}
-props.tags.push({...x})
+// let x = {
+//     id: 1,
+//     label: 'Pohlaví',
+//     value: '[pohlavi]',
+//     required: false,
+//     type: 'radio',
+//     // options: [{label: 'Muž', value: 'muz'},{label: 'Žena', value: 'zena'}],
+//     options: 'test,best',
+//     default: null
+// }
+// props.tags.push({...x})
 
 let typeOptions = [
     {name: t('tag.text'), id: 'text'},
@@ -232,9 +232,7 @@ watch(
             tag.type === 'checkbox'
             || tag.type === 'select'
             || tag.type === 'radio'
-        ),
-        console.log(type, prevType)
-        console.log(showOptions)
+        )
     }
 )
 

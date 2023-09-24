@@ -112,18 +112,14 @@
             </div>
         </div>
 
-        <div v-if="event.event_blacklist" class="row mb-3">
-            <div class="col">
-                <a class="link-secondary float-end" data-bs-toggle="modal" data-bs-target="#infoModal">
-                    <i class="fas fa-info-circle"></i> {{ $t('app.show-hint') }}
-                </a>
-                <BaseTextarea
-                    v-model="event.blacklist_users"
-                    label="Xname uživatelů, které chcete zablokovat"
-                    :required="true"
-                />
-            </div>
-        </div>
+        <BlacklistEditPage
+            v-if="event.event_blacklist"
+            :blacklist-id="event.blacklist_id"
+        >
+          <template v-slot:csrf>
+            <slot name="csrf"></slot>
+          </template>
+        </BlacklistEditPage>
 
         <!-- Custom blacklist modal start -->
         <div class="modal fade" id="infoModal" role="dialog" tabindex="-1">
@@ -207,8 +203,6 @@ import {inject, reactive, ref} from "vue";
 import FormButtons from "../Form/FormButtons.vue";
 import axios from "axios";
 import BaseInput from "../Form/BaseInput.vue";
-import BaseCheckbox from "../Form/BaseCheckbox.vue";
-import BaseTextarea from "../Form/BaseTextarea.vue";
 import BaseRadioGroup from "../Form/BaseRadioGroup.vue";
 import BaseSelect from "../Form/BaseSelect.vue";
 import {useI18n} from "vue-i18n";
@@ -216,11 +210,12 @@ import TinyEditor from "../../TinyEditor.vue";
 import TemplateTags from "../TemplateTags/TemplateTags.vue";
 import DateForm from "../Dates/DateForm.vue";
 import TagForm from "../Tags/TagForm.vue";
+import BlacklistEditPage from "../Blacklist/Edit/BlacklistEditPage.vue";
 
 const ADMIN_URL = inject('ADMIN_URL')
 const props = defineProps({
     user: {type: Object, required: true},
-    event: {type: Object, required: true}
+    eventData: {type: Object, required: true}
 })
 
 const {t} = useI18n({})
@@ -240,6 +235,25 @@ let user_groups = [
     {id: 5, name: t('user_group.5')},
 ]
 
+let event = reactive({
+  name: props.eventData.name,
+  subtitle: props.eventData.subtitle,
+  calendar_id: props.eventData.calendar_id,
+  contact: {
+    person: props.eventData.contact_person,
+    email: props.eventData.contact_email
+  },
+  type: props.eventData.type,
+  global_blacklist: props.eventData.global_blacklist,
+  event_blacklist: props.eventData.event_blacklist,
+  template: {
+    id: props.eventData.template_id,
+    content: props.eventData.template_content,
+  },
+  blacklist_id: props.eventData.blacklist_id,
+  user_group: props.eventData.user_group
+})
+
 getApprovedTemplates()
 
 function submitEvent() {
@@ -255,12 +269,12 @@ function submitEvent() {
         ADMIN_URL+'/events/update',
         data
     )
-        .then(
-            window.location.href = ADMIN_URL+'/events',
-        )
-        .catch(error => {
-            console.log(error)
-        })
+    // .then(
+    //     window.location.href = ADMIN_URL+'/events',
+    // )
+    .catch(error => {
+        console.log(error)
+    })
 }
 
 function fillContactWithCurrentUser() {
