@@ -98,7 +98,7 @@ class EventFacade
                 'id'=> $enrollment->user->id,
                 'xname' => $enrollment->user->xname,
                 'email' => $enrollment->user->email,
-                'c_fields' => $this->getCustomFieldsValueWithLabel($customFieldsLabels, $enrollment),
+//                'c_fields' => $this->getCustomFieldsValueWithLabel($customFieldsLabels, $enrollment),
                 'enrolled' => $enrollment->created_at,
             ]);
         }

@@ -10,6 +10,7 @@ import en from "./locales/en.json";
 import FormButtons from "./components/Admin/Form/FormButtons.vue";
 import BlacklistPage from "./components/Admin/Blacklist/BlacklistPage.vue";
 import EventCreateForm from "./components/Admin/Events/EventCreateForm.vue";
+import EventEditForm from "./components/Admin/Events/EventEditForm.vue";
 // Components
 import EventList from "./components/Event/EventList";
 import EventDetail from "./components/Event/EventDetail";
@@ -27,6 +28,7 @@ const app = createApp({
         BlacklistPage,
         FormButtons,
         EventCreateForm,
+        EventEditForm,
         EventList,
         EventDetail,
         Enrollment,

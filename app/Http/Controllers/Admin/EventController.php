@@ -61,15 +61,10 @@ class EventController extends Controller
 
     public function edit(string $id, EventFacade $eventFacade): View
     {
-        /** @todo rework templateFacade */
         $event = $eventFacade->getEventById((int) $id);
-        $templates = Template::query()
-            ->where('approved', 1)
-            ->get();
 
         return view('admin.event-edit', [
             'event' => $event,
-            'templates' => $templates,
         ]);
     }
 
@@ -119,10 +114,10 @@ class EventController extends Controller
         }
     }
 
-    public function getEventEnrollmentsUsers(string $eventId, EventFacade $eventFacade): JsonResponse
+    public function getEventEnrollmentsUsers(string $id, EventFacade $eventFacade): JsonResponse
     {
         try {
-            $users = $eventFacade->getEventEnrollmentsAndUsers((int) $eventId);
+            $users = $eventFacade->getEventEnrollmentsAndUsers((int) $id);
             return response()->json($users);
         } catch (ModelNotFoundException $exception) {
             return response()->json(['error' => trans('An error occurred.')]);

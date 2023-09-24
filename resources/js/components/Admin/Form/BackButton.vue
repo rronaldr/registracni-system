@@ -1,5 +1,5 @@
 <template>
-    <a href="{{ route }}" class="btn btn-danger mb-2"><i class="fas fa-times"></i> {{ $t('app.back') }}</a>
+    <a :href="route" class="btn btn-danger mb-2"><i class="fas fa-times"></i> {{ $t('app.back') }}</a>
 </template>
 
 <script setup>
