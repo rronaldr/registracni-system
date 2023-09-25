@@ -2,14 +2,12 @@
 
 declare(strict_types = 1);
 
-namespace App\Services;
+namespace App\Services\Admin;
 
 use App\Models\Blacklist;
 use App\Repositories\BlacklistRepository;
+use App\Services\UserFacade;
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
-
 use function trim;
 
 class BlacklistFacade

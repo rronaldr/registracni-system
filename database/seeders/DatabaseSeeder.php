@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Services\BlacklistFacade;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder

@@ -2,17 +2,15 @@
 
 declare(strict_types = 1);
 
-namespace App\Services;
-use App\Mail\DefaultMail;
+namespace App\Services\Admin;
 use App\Models\Template;
 use App\Models\User;
 use App\Repositories\TemplateRepository;
-use ErrorException;
+use App\Services\UserFacade;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 

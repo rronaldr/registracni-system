@@ -3,13 +3,9 @@ declare(strict_types = 1);
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enums\Event\EventUserGroups;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
-use App\Models\Template;
-use App\Models\User;
-use App\Services\EventFacade;
-use App\Services\TemplateFacade;
+use App\Services\Admin\EventFacade;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;

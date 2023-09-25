@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Services;
+namespace App\Services\Admin;
 
 use App\Repositories\EventRepository;
-use Maatwebsite\Excel\Facades\Excel;
+use App\Services\EventFacade;
 
 class ExcelFacade
 {
