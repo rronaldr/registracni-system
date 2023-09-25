@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <DateList
+                    <EditDateList
                         v-if="dates.length > 0"
                         :dates="dates"
                         @edit-date="editDate"
@@ -182,17 +182,20 @@
 </template>
 
 <script setup>
-import {reactive, ref} from "vue";
-import SubmitButton from "../Form/SubmitButton.vue";
-import BaseInput from "../Form/BaseInput.vue";
-import BaseCheckbox from "../Form/BaseCheckbox.vue";
+import {inject, reactive, ref} from "vue";
+import SubmitButton from "../../Form/SubmitButton.vue";
+import BaseInput from "../../Form/BaseInput.vue";
+import BaseCheckbox from "../../Form/BaseCheckbox.vue";
 import moment from "moment/moment";
-import DateList from "./DateList.vue";
-import {dateObject, mapLastDateObject} from "../../../utils/DataMapper"
+import EditDateList from "./EditDateList.vue";
+import {dateObject, formatEventDates, mapLastDateObject} from "../../../../utils/DataMapper"
+import axios from "axios";
 
+const ADMIN_URL = inject('ADMIN_URL')
 const props = defineProps({
     dates: {type: Array, required: false}
 })
+const emit = defineEmits(['getDates'])
 
 let showDateForm = ref(false)
 let edit = false
@@ -200,7 +203,7 @@ let date = reactive(dateObject)
 
 setLastDates()
 
-function addDate() {
+async function addDate() {
     if (props.dates.length === 0) {
         date.id = 1
     }
@@ -216,22 +219,24 @@ function addDate() {
     clearDateObject()
 }
 
+async function removeDate(id) {
+  await axios.delete(ADMIN_URL+'/dates/'+id)
+  emit('getDates')
+}
+
 function editDate(id) {
     clearDateObject()
     showDateForm.value = true
     edit = true
 
     date = {...props.dates.find(date => date.id === id)}
+    console.log(date)
 }
 
-function removeDate(id) {
-    const index = props.dates.findIndex(date => date.id === id)
-    if (index !== -1) {
-        props.dates.splice(index, 1)
-    }
-}
+
 
 function clearDateObject() {
+    showDateForm.value = false
     Object.keys(date).forEach((i) => date[i] = null)
     setLastDates()
 }
@@ -255,9 +260,9 @@ function closeForm() {
 }
 
 function setLastDates() {
-  if (props.dates.length > 0) {
-    let lastDate = props.dates[props.dates.length - 1]
-    mapLastDateObject(date, lastDate)
-  }
+    if (props.dates.length > 0) {
+        let lastDate = props.dates[props.dates.length - 1]
+        mapLastDateObject(date, lastDate)
+    }
 }
 </script>

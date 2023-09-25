@@ -45,7 +45,7 @@ class UserFacade
         return $this->userRepository->getUserForEmail($id);
     }
 
-    public function getUserById(int $id): User
+    public function getUserById(int $id): ?User
     {
         return $this->userRepository->getUserById($id);
     }

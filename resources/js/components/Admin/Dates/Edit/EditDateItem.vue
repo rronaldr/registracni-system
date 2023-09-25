@@ -2,7 +2,7 @@
     <tr>
         <td>{{ dateDuration }}</td>
         <td>{{ date.location }}</td>
-        <td>{{ date.unlimited_capacity ? '∞' : date.capacity }}</td>
+        <td>{{ date.capacity === -1 ? '∞' : date.capacity }}</td>
         <td>{{ date.unlimited_capacity ? 'Ano' : 'Ne' }}</td>
         <td>{{ date.substitute ? 'Ano' : 'Ne' }}</td>
         <td>

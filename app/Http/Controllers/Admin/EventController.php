@@ -6,6 +6,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Services\Admin\EventFacade;
+use App\Services\Admin\TagFacade;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -37,7 +39,7 @@ class EventController extends Controller
             $validator = Validator::make($request->all(), $eventFacade->getValidationRules());
 
             if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()]);
+                return response()->json(['errors' => $validator->errors()], 400);
             }
 
             $eventFacade->createEvent($request);
@@ -50,12 +52,7 @@ class EventController extends Controller
         }
     }
 
-    public function show(string $id): View
-    {
-        return view('admin.event-detail');
-    }
-
-    public function edit(string $id, EventFacade $eventFacade): View
+    public function edit(string $id, EventFacade $eventFacade, TagFacade $tagFacade): View
     {
         $event = $eventFacade->getEventById((int) $id);
 
@@ -69,10 +66,10 @@ class EventController extends Controller
         return view('admin.event-form');
     }
 
-    public function destroy(Event $event, EventFacade $eventFacade): RedirectResponse
+    public function destroy(int $id, EventFacade $eventFacade): RedirectResponse
     {
         try {
-            $eventFacade->deleteEvent($event);
+            $eventFacade->deleteEvent($id);
         } catch (\Exception $e){
             dump($e);
         }

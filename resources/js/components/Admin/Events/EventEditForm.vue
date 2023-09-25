@@ -67,12 +67,8 @@
 
         <div class="row mb-3">
             <div class="col">
-                <BaseSelect
-                    v-model="event.user_group"
-                    :options="user_groups"
-                    :label="$t('event.user_group')"
-                    :placeholder="true"
-                    :placeholder-text="$t('event.user_group_placeholder')"
+                <UserGroupSelect
+                    :user-group="event.user_group"
                 />
             </div>
         </div>
@@ -93,10 +89,7 @@
             <div class="col-sm-10">
                 <div class="form-check form-switch mb-3">
                     <input v-model="event.global_blacklist" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="col-sm-2 d-inline">Zapnout systémový
-                        <a class="link-primary"
-                           :href="ADMIN_URL +'/blacklist'" target="_blank">blacklist</a>
-                    </label>
+                    <label class="col-sm-2 d-inline" v-html="$t('event.global_blacklist_link', {href: ADMIN_URL +'/blacklist' })"></label>
                 </div>
             </div>
         </div>
@@ -141,8 +134,9 @@
 
         <div class="line"></div><br>
 
-        <DateForm
+        <EditDateForm
             :dates="dates"
+            @get-dates="getEventDates"
         />
 
         <div class="line"></div><br>
@@ -156,7 +150,7 @@
                         </button>
                     </h2>
                     <div id="accordion-tags" class="accordion-collapse collapse mt-2" aria-labelledby="accordion-tags-header">
-                        <TagForm
+                        <EditTagForm
                             :tags="tags"
                         />
                     </div>
@@ -182,14 +176,17 @@
                         <TemplateTags
                             :tags="tags"
                         />
-                        <div class="row mb-3">
-                            <div class="col">
-                                <label for="subtitle" class="form-label">Textarea šablony content</label>
-                                <TinyEditor
-                                    v-model="event.template.content"
-                                />
-                            </div>
+                      <div
+                          v-if="event.template.id !== 1"
+                          class="row mb-3"
+                      >
+                        <div class="col">
+                          <label for="subtitle" class="form-label">{{ $t('event.template_content') }}</label>
+                          <TinyEditor
+                              v-model="event.template.content"
+                          />
                         </div>
+                      </div>
                     </div>
                 </div>
             </div>
@@ -200,22 +197,24 @@
 
 <script setup>
 import {inject, reactive, ref} from "vue";
-import FormButtons from "../Form/FormButtons.vue";
 import axios from "axios";
+import {useI18n} from "vue-i18n";
+import FormButtons from "../Form/FormButtons.vue";
 import BaseInput from "../Form/BaseInput.vue";
 import BaseRadioGroup from "../Form/BaseRadioGroup.vue";
 import BaseSelect from "../Form/BaseSelect.vue";
-import {useI18n} from "vue-i18n";
 import TinyEditor from "../../TinyEditor.vue";
 import TemplateTags from "../TemplateTags/TemplateTags.vue";
-import DateForm from "../Dates/DateForm.vue";
-import TagForm from "../Tags/TagForm.vue";
 import BlacklistEditPage from "../Blacklist/Edit/BlacklistEditPage.vue";
+import UserGroupSelect from "./UserGroupSelect.vue";
+import EditDateForm from "../Dates/Edit/EditDateForm.vue";
+import EditTagForm from "../Tags/Edit/EditTagForm.vue";
+import {formatEventDates, editEventMap} from "../../../utils/DataMapper"
 
 const ADMIN_URL = inject('ADMIN_URL')
 const props = defineProps({
     user: {type: Object, required: true},
-    eventData: {type: Object, required: true}
+    event: {type: Object, required: true}
 })
 
 const {t} = useI18n({})
@@ -227,41 +226,15 @@ const dateTypeOptions = [
 let tags = ref([])
 let dates = ref([])
 let templates = ref(null)
-let user_groups = [
-    {id: 1, name: t('user_group.1')},
-    {id: 2, name: t('user_group.2')},
-    {id: 3, name: t('user_group.3')},
-    {id: 4, name: t('user_group.4')},
-    {id: 5, name: t('user_group.5')},
-]
+let event = reactive(editEventMap(props.event))
 
-let event = reactive({
-  name: props.eventData.name,
-  subtitle: props.eventData.subtitle,
-  calendar_id: props.eventData.calendar_id,
-  contact: {
-    person: props.eventData.contact_person,
-    email: props.eventData.contact_email
-  },
-  type: props.eventData.type,
-  global_blacklist: props.eventData.global_blacklist,
-  event_blacklist: props.eventData.event_blacklist,
-  template: {
-    id: props.eventData.template_id,
-    content: props.eventData.template_content,
-  },
-  blacklist_id: props.eventData.blacklist_id,
-  user_group: props.eventData.user_group
-})
-
+getEventDates()
 getApprovedTemplates()
 
 function submitEvent() {
     let csrf = document.getElementsByName('_token')[0].value
     let data = {
         event: props.event,
-        dates: dates.value,
-        tags: tags.value,
         _token: csrf
     }
 
@@ -285,7 +258,12 @@ function fillContactWithCurrentUser() {
 }
 
 async function getApprovedTemplates() {
-    let response = await axios.get(ADMIN_URL+'/templates/approved')
-    templates.value = response.data.templates
+  let response = await axios.get(ADMIN_URL+'/templates/approved')
+  templates.value = response.data.templates
+}
+
+async function getEventDates() {
+  let response = await axios.get(ADMIN_URL+'/dates/'+props.event.id)
+  dates.value = formatEventDates(response.data.dates)
 }
 </script>

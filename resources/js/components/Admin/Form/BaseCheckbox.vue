@@ -4,7 +4,7 @@
         :checked="modelValue"
         :id="id"
         @change="$emit('update:modelValue', $event.target.checked)"
-        class="form-check-input field"
+        class="form-check-input field mr-1"
     />
     <label v-if="label" :for="id" class="form-check-label">{{ label }}</label>
 </template>

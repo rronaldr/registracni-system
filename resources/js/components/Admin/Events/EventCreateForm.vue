@@ -67,13 +67,9 @@
 
         <div class="row mb-3">
             <div class="col">
-                <BaseSelect
-                    v-model="event.user_group"
-                    :options="user_groups"
-                    :label="$t('event.user_group')"
-                    :placeholder="true"
-                    :placeholder-text="$t('event.user_group_placeholder')"
-                />
+              <UserGroupSelect
+                  v-model="event.user_group"
+              />
             </div>
         </div>
 
@@ -93,10 +89,7 @@
             <div class="col-sm-10">
                 <div class="form-check form-switch mb-3">
                     <input v-model="event.global_blacklist" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="col-sm-2 d-inline">Zapnout systémový
-                        <a class="link-primary"
-                           :href="ADMIN_URL +'/blacklist'" target="_blank">blacklist</a>
-                    </label>
+                    <label class="col-sm-2 d-inline" v-html="$t('event.global_blacklist_link', {href: ADMIN_URL +'/blacklist' })"></label>
                 </div>
             </div>
         </div>
@@ -178,6 +171,7 @@
                                     v-model="event.template.id"
                                     :options="templates"
                                     :label="$t('template.select')"
+                                    :required="true"
                                     :placeholder="true"
                                     :placeholder-text="$t('template.select')"
                                 />
@@ -186,9 +180,12 @@
                         <TemplateTags
                             :tags="tags"
                         />
-                        <div class="row mb-3">
+                        <div
+                            v-if="event.template.id !== 1"
+                            class="row mb-3"
+                        >
                             <div class="col">
-                                <label for="subtitle" class="form-label">Textarea šablony content</label>
+                                <label for="subtitle" class="form-label">{{ $t('event.template_content') }}</label>
                                 <TinyEditor
                                     v-model="event.template.content"
                                 />
@@ -207,7 +204,6 @@ import {inject, reactive, ref} from "vue";
 import FormButtons from "../Form/FormButtons.vue";
 import axios from "axios";
 import BaseInput from "../Form/BaseInput.vue";
-import BaseCheckbox from "../Form/BaseCheckbox.vue";
 import BaseTextarea from "../Form/BaseTextarea.vue";
 import BaseRadioGroup from "../Form/BaseRadioGroup.vue";
 import BaseSelect from "../Form/BaseSelect.vue";
@@ -216,6 +212,8 @@ import TinyEditor from "../../TinyEditor.vue";
 import TemplateTags from "../TemplateTags/TemplateTags.vue";
 import DateForm from "../Dates/DateForm.vue";
 import TagForm from "../Tags/TagForm.vue";
+import UserGroupSelect from "./UserGroupSelect.vue";
+import { eventCreateObject } from "../../../utils/DataMapper"
 
 const ADMIN_URL = inject('ADMIN_URL')
 const props = defineProps({
@@ -228,34 +226,11 @@ const dateTypeOptions = [
     {label: t('event.type_2'), value: 2}
 ]
 
-let event = reactive({
-    name: null,
-    subtitle: null,
-    calendar_id: null,
-    contact: {
-        person: null,
-        email: null
-    },
-    type: 1,
-    global_blacklist: false,
-    event_blacklist: false,
-    blacklist_users: null,
-    template: {
-        id: null,
-        content: null,
-    }
-})
+let event = reactive(eventCreateObject)
 
 let tags = ref([])
 let dates = ref([])
 let templates = ref(null)
-let user_groups = [
-    {id: 1, name: t('user_group.1')},
-    {id: 2, name: t('user_group.2')},
-    {id: 3, name: t('user_group.3')},
-    {id: 4, name: t('user_group.4')},
-    {id: 5, name: t('user_group.5')},
-]
 
 getApprovedTemplates()
 
@@ -272,11 +247,11 @@ function submitEvent() {
         ADMIN_URL+'/events/store',
         data
     )
-    .then(
-        window.location.href = ADMIN_URL+'/events',
-    )
+    .then(response => {
+      window.location.href = ADMIN_URL+'/events'
+    })
     .catch(error => {
-    console.log(error)
+      console.log('error',error)
     })
 }
 

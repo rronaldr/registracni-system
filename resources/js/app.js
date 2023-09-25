@@ -20,7 +20,8 @@ const i18n = createI18n({
     locale: 'cs',
     fallbackLocale: 'en',
     messages: {cs, en},
-    legacy: false
+    legacy: false,
+    warnHtmlMessage: false
 })
 
 const app = createApp({

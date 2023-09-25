@@ -8,8 +8,6 @@
     </div>
   </div>
 
-  <div class="line"></div><br>
-
   <div class="row mb-3">
     <div class="col">
       <BlacklistEditForm

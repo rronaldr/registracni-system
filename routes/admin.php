@@ -5,11 +5,23 @@ declare(strict_types=1);
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Auth\RegisterController;
 use App\Http\Controllers\Admin\BlacklistController;
+use App\Http\Controllers\Admin\DateController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\TemplateController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
+    // Blacklist routes
+    Route::get('/blacklist', [BlacklistController::class, 'index'])->name('admin.blacklist');
+    Route::post('/blacklist/store', [BlacklistController::class, 'store'])->name('admin.blacklist.store');
+    Route::get('/blacklist/{id}/users', [BlacklistController::class, 'getBlacklistUsers'])->name('admin.blacklist.users');
+    Route::put('/blacklist/{id}', [BlacklistController::class, 'update'])->name('admin.blacklist.update');
+    Route::delete('/blacklist/{id}/{user}', [BlacklistController::class, 'destroy'])->name('admin.blacklist.destroy');
+
+    // Date routes
+    Route::get('/dates/{id}', [DateController::class, 'getEventDates'])->name('admin.dates');
+    Route::put('/dates/{id}', [DateController::class, 'update'])->name('admin.dates.update');
+    Route::delete('/dates/{id}', [DateController::class, 'destroy'])->name('admin.dates.destroy');
 
     // Event routes
     Route::get('/', function () {
@@ -20,19 +32,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/events/store', [EventController::class, 'store'])->name('admin.events.store');
     Route::get('/events/{id}/edit', [EventController::class, 'edit'])->name('admin.events.edit');
     Route::put('/events/{id}', [EventController::class, 'update'])->name('admin.events.update');
-    Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('admin.events.destroy');
-    Route::post('/events/{event}/duplicate', [EventController::class, 'duplicate'])->name('admin.events.duplicate');
+    Route::delete('/events/{id}', [EventController::class, 'destroy'])->name('admin.events.destroy');
+    Route::post('/events/{id}/duplicate', [EventController::class, 'duplicate'])->name('admin.events.duplicate');
     Route::get('/events/{id}/dates', [EventController::class, 'getEventDates'])->name('admin.events.dates');
     Route::get('/events/{id}/users', [EventController::class, 'getEventEnrollmentsUsers'])->name('admin.events.users');
     Route::get('/events/{id}/users/export', [EventController::class, 'exportEventUsers'])->name('admin.events.users.export');
     Route::get('/events/{id}/users/export-email', [EventController::class, 'exportEventUsersEmails'])->name('admin.events.users.export.email');
-
-    // Blacklist routes
-    Route::get('/blacklist', [BlacklistController::class, 'index'])->name('admin.blacklist');
-    Route::post('/blacklist/store', [BlacklistController::class, 'store'])->name('admin.blacklist.store');
-    Route::get('/blacklist/{id}/users', [BlacklistController::class, 'getBlacklistUsers'])->name('admin.blacklist.users');
-    Route::put('/blacklist/{id}', [BlacklistController::class, 'update'])->name('admin.blacklist.update');
-    Route::delete('/blacklist/{id}/{user}', [BlacklistController::class, 'destroy'])->name('admin.blacklist.destroy');
 
     // Template routes
     Route::get('/templates', [TemplateController::class, 'index'])->name('admin.templates');

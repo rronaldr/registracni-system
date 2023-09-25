@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 
 use App\Services\EnrollmentFacade;
 use App\Services\EventFacade;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;

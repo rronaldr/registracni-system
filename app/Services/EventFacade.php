@@ -40,4 +40,9 @@ class EventFacade
     {
         return $this->eventRepository->getEventsWithDatesInMonth($month);
     }
+
+    public function getEventCustomFields(int $dateId): Event
+    {
+        return $this->eventRepository->getEventCustomFields($dateId);
+    }
 }

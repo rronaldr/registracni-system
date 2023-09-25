@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <TagList
+                    <EditTagList
                         v-if="tags.length > 0"
                         :tags="tags"
                         @edit-tag="editTag"
@@ -116,13 +116,13 @@
 
 <script setup>
 import {reactive, ref, watch} from "vue";
-import SubmitButton from "../Form/SubmitButton.vue";
-import BaseInput from "../Form/BaseInput.vue";
-import BaseCheckbox from "../Form/BaseCheckbox.vue";
-import BaseTextarea from "../Form/BaseTextarea.vue";
+import SubmitButton from "../../Form/SubmitButton.vue";
+import BaseInput from "../../Form/BaseInput.vue";
+import BaseCheckbox from "../../Form/BaseCheckbox.vue";
+import BaseTextarea from "../../Form/BaseTextarea.vue";
 import {useI18n} from "vue-i18n";
-import BaseSelect from "../Form/BaseSelect.vue";
-import TagList from "./TagList.vue";
+import BaseSelect from "../../Form/BaseSelect.vue";
+import EditTagList from "./EditTagList.vue";
 
 const props = defineProps({
     tags: {type: Array, required: false}
@@ -141,6 +141,28 @@ let tag = reactive({
     options: null,
     default: null
 })
+
+let x = {
+  id: 1,
+  label: 'Pohlaví',
+  value: '[pohlavi]',
+  required: false,
+  type: 'radio',
+  // options: [{label: 'Muž', value: 'muz'},{label: 'Žena', value: 'zena'}],
+  options: 'Muž,Žena',
+  default: null
+}
+
+let y = {
+  id: 2,
+  label: 'Jméno',
+  value: '[name]',
+  required: true,
+  type: 'text',
+  default: null
+}
+// props.tags.push({...x})
+// props.tags.push({...y})
 
 let typeOptions = [
     {name: t('tag.text'), id: 'text'},

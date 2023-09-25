@@ -11,45 +11,53 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Throwable;
 
 class EventFacade
 {
     private EventRepository $eventRepository;
     private DateFacade  $dateFacade;
     private BlacklistFacade $blacklistFacade;
+    private TagFacade $tagFacade;
     public function __construct(
         EventRepository $eventRepository,
         DateFacade $dateFacade,
-        BlacklistFacade $blacklistFacade
+        BlacklistFacade $blacklistFacade,
+        TagFacade $tagFacade
     ){
         $this->eventRepository = $eventRepository;
         $this->dateFacade = $dateFacade;
         $this->blacklistFacade = $blacklistFacade;
+        $this->tagFacade = $tagFacade;
     }
 
     public function createEvent(Request $request): void
     {
         $data = $request->all();
         $eventData = $data['event'];
-        $dates = $data['dates'] ?? null;
-        $tags = $data['tags'] ?? null;
+        $dates = !empty($data['dates']) ? $data['dates'] : null;
+        $tags = !empty($data['tags']) ? $data['tags'] : null;
+        $tagsDecoded = null;
+        $blacklist = $eventData['event_blacklist']
+            ? $this->blacklistFacade->createBlacklist()
+            : null;
 
-        $blacklist = $eventData['global_blacklist']
-            ? $this->blacklistFacade->getGlobalBlacklist()
-            : $this->blacklistFacade->createBlacklist();
+        if (isset($blacklist)) {
+            $blacklistUsers = ['users' => $eventData['blacklist_users']];
+            $this->blacklistFacade->addUsersToBlacklist($blacklist->id, $blacklistUsers);
+        }
 
-        $blacklistUsers = ['users' => $eventData['blacklist_users']];
-        $this->blacklistFacade->addUsersToBlacklist($blacklist->id, $blacklistUsers);
+        if (isset($tags)) {
+            $tagsDecoded = $this->tagFacade->parseTagsToJson($tags);
+        }
 
-        $event = $this->createEventFromRequest($eventData, $blacklist);
+        $event = $this->createEventFromRequest($eventData, $tagsDecoded, $blacklist);
 
-        collect($dates)
-            ->each(function (array $date) use ($event){
-                $this->dateFacade->createDate($event->id, $date);
-            });
+        if (isset($dates)) {
+            $this->dateFacade->createDatesFromEvent($dates, $event->id);
+        }
 
         $this->setEventDateCache($event);
-        // @todo save event tags
     }
 
     public function getEventsForOverviewPaginated(): LengthAwarePaginator
@@ -57,9 +65,21 @@ class EventFacade
         return $this->eventRepository->getEventsForOverviewPaginated();
     }
 
-    public function deleteEvent(Event $event): void
+    public function deleteEvent(int $id): void
     {
-        $event->deleteOrFail();
+        /** @var Event $event */
+        $event = Event::query()
+            ->where('id', $id)
+            ->with(['dates', 'blacklist'])
+            ->first();
+
+        if (!isset($event)) {
+            return;
+        }
+
+        $event->dates()->delete();
+        $event->blacklist()->delete();
+        $event->delete();
     }
 
     public function duplicateEvent(Event $event): Event
@@ -92,7 +112,7 @@ class EventFacade
                 'id'=> $enrollment->user->id,
                 'xname' => $enrollment->user->xname,
                 'email' => $enrollment->user->email,
-//                'c_fields' => $this->getCustomFieldsValueWithLabel($customFieldsLabels, $enrollment),
+//                'c_fields' => $this->tagFacade->getCustomFieldsValueWithLabel($customFieldsLabels, $enrollment),
                 'enrolled' => $enrollment->created_at,
             ]);
         }
@@ -125,11 +145,6 @@ class EventFacade
         return $this->eventRepository->getEventById($id);
     }
 
-    public function getEventCustomFields(int $dateId): Event
-    {
-        return $this->eventRepository->getEventCustomFields($dateId);
-    }
-
     public function getValidationRules(): array
     {
         return [
@@ -141,7 +156,7 @@ class EventFacade
             'contact.*' => 'required',
             'dates' => 'required|array',
             'dates.*.location' => 'required|string',
-            'dates.*.capacity' => 'required|numeric',
+            'dates.*.capacity' => 'required_if:dates.*.unlimited_capacity,==,false|sometimes:numeric',
             'dates.*.date_from' => 'required|date',
             'dates.*.time_from' => 'required|date_format:H:i',
             'dates.*.date_to' => 'required|date',
@@ -160,32 +175,30 @@ class EventFacade
         $event->save();
     }
 
-    private function getCustomFieldsValueWithLabel(array $labels, Enrollment $enrollment): Collection
-    {
-        /** @todo refactor custom field label is taken from event */
-        $data = collect(json_decode($enrollment->c_fields, true));
-        return $data->mapWithKeys(function ($value, $key) use ($labels): array
-        {
-            return [$labels[$key]['label'] => $value];
-        });
-    }
 
-    private function createEventFromRequest(array $event, Blacklist $blacklist): Event
+
+    private function createEventFromRequest(array $event, ?string $customFields, ?Blacklist $blacklist): Event
     {
-        return Event::create([
-            'blacklist_id' => $blacklist->id,
-            'name' => $event['name'],
-            'subtitle' => $event['subtitle'],
-            'external_login' => $event['external_login'],
-            'template_id' => $event['template']['id'],
-            'user_id' => auth()->user()->id,
-            'calendar_id' => $event['calendar_id'],
-            'contact_person' => $event['contact']['person'],
-            'contact_email' => $event['contact']['email'],
-            'type' => $event['type'],
-            'status' => EventStatusEnum::DRAFT,
-            'template_content' => $event['template']['content'],
-            'user_group' => (int) $event['user_group'],
-        ]);
+        try {
+            Event::create([
+                'blacklist_id' => $blacklist->id ?? null,
+                'name' => $event['name'],
+                'subtitle' => $event['subtitle'],
+                'calendar_id' => $event['calendar_id'],
+                'contact_person' => $event['contact']['person'],
+                'contact_email' => $event['contact']['email'],
+                'type' => $event['type'],
+                'global_blacklist' => $event['global_blacklist'],
+                'event_blacklist' => $event['event_blacklist'],
+                'template_id' => $event['template']['id'],
+                'template_content' => $event['template']['content'],
+                'user_group' => (int) $event['user_group'],
+                'c_fields' => $customFields,
+                'user_id' => auth()->user()->id,
+                'status' => EventStatusEnum::DRAFT,
+            ]);
+        } catch (Throwable $e) {
+            dd($e);
+        }
     }
 }

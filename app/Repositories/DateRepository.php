@@ -44,4 +44,11 @@ class DateRepository
 
         return collect(['date_start' => $start->date_start, 'date_end' => $end->date_end]);
     }
+
+    public function getEventDates(int $id): Collection
+    {
+        return Date::query()
+            ->where('event_id', $id)
+            ->get();
+    }
 }

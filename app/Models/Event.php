@@ -49,11 +49,6 @@ class Event extends Model
         return $this->belongsTo(Blacklist::class);
     }
 
-    public function tags(): BelongsToMany
-    {
-        return $this->belongsToMany(Tag::class);
-    }
-
     public function template(): BelongsTo
     {
         return $this->BelongsTo(Template::class);

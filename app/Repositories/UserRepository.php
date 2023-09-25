@@ -29,7 +29,7 @@ class UserRepository {
         return $user;
     }
 
-    public function getUserById(int $id): User
+    public function getUserById(int $id): ?User
     {
         /** @var \App\Models\User $user */
         $user = User::query()

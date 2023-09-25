@@ -33,6 +33,11 @@ class DateFacade
         return $this->dateRepository->findFirstAndLastDateOfEvent($eventId);
     }
 
+    public function getEventDates(int $id): Collection
+    {
+        return $this->dateRepository->getEventDates($id);
+    }
+
     public function createDate(int $eventId, array $date): Date
     {
         return Date::create([
@@ -47,5 +52,13 @@ class DateFacade
             'enrollment_end' => Carbon::parse(sprintf('%s %s',$date['enrollment_to'], $date['enrollment_to_time'])) ?? null,
             'withdraw_end' => Carbon::parse(sprintf('%s %s',$date['withdraw_date'], $date['withdraw_time'])) ?? null,
         ]);
+    }
+
+    public function createDatesFromEvent(array $dates, int $eventId): void
+    {
+        collect($dates)
+            ->each(function (array $date) use ($eventId){
+                $this->createDate($eventId, $date);
+            });
     }
 }

@@ -6,7 +6,7 @@ namespace App\Services\Admin;
 
 use App\Models\Blacklist;
 use App\Repositories\BlacklistRepository;
-use App\Services\UserFacade;
+use App\Services\Admin\UserFacade;
 use Carbon\Carbon;
 use function trim;
 
@@ -70,6 +70,9 @@ class BlacklistFacade
         return Blacklist::create();
     }
 
+    /**
+     * @throws \Exception
+     */
     public function removeUserFromBlacklist(int $id, int $userId): void
     {
         $blacklist = $this->getBlacklistById($id);

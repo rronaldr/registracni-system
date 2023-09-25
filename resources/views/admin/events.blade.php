@@ -38,18 +38,18 @@
                                     Zobrazit termíny ({{ $event->dates_count }})
                                 </a></td>
                             <td>
-                                {{ $event->dates_cache }}
+                                {{ \Carbon\Carbon::parse($event->date_start_cache)->format('j.n.Y') }} - {{ \Carbon\Carbon::parse($event->date_end_cache)->format('j.n.Y') }}
                             </td>
                             <td><a href="#" class="link-primary" data-bs-toggle="modal" data-bs-target="#usersModal" onClick="getUsers({{ $event->id }})">
                                     Zobrazit všechny účastníky
                                 </a></td>
                             <td class="text-end">
                                 <a href="{{ route('admin.events.edit', ['id' => $event->id]) }}" class="btn btn-outline-primary btn-rounded" title="{{__('app.actions.edit')}}"><i class="fas fa-pen"></i></a>
-                                <form class="d-inline" action="{{ route('admin.events.duplicate', ['event' => $event]) }}" method="post">
+                                <form class="d-inline" action="{{ route('admin.events.duplicate', ['id' => $event->id]) }}" method="post">
                                     @csrf
                                     <button type="submit" title="{{__('app.actions.duplicate')}}" class="btn btn-outline-info btn-rounded"> <i class="fas fa-copy"></i></button>
                                 </form>
-                                <form class="d-inline" action="{{ route('admin.events.destroy', ['event' => $event]) }}" method="post">
+                                <form class="d-inline" action="{{ route('admin.events.destroy', ['id' => $event->id]) }}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" title="{{__('app.actions.delete')}}" class="btn btn-outline-danger btn-rounded"> <i class="fas fa-trash"></i></button>
