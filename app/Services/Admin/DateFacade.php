@@ -69,7 +69,7 @@ class DateFacade
     {
         return [
             'date.location' => 'required|string',
-            'date.capacity' => 'required_if:dates.*.unlimited_capacity,==,false|sometimes:numeric',
+            'date.capacity' => 'required_if:date.unlimited_capacity,==,false|sometimes:numeric',
             'date.date_from' => 'required|date',
             'date.time_from' => 'required|date_format:H:i',
             'date.date_to' => 'required|date',

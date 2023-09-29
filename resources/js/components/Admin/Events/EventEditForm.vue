@@ -153,6 +153,8 @@
                     <div id="accordion-tags" class="accordion-collapse collapse mt-2" aria-labelledby="accordion-tags-header">
                         <EditTagForm
                             :tags="tags"
+                            :event-id="event.id"
+                            @get-tags="getEventTags"
                         />
                     </div>
                 </div>
@@ -230,6 +232,7 @@ let templates = ref(null)
 let event = reactive(editEventMap(props.event))
 
 getEventDates()
+getEventTags()
 getApprovedTemplates()
 
 function submitEvent() {
@@ -266,5 +269,10 @@ async function getApprovedTemplates() {
 async function getEventDates() {
   let response = await axios.get(ADMIN_URL+'/dates/'+props.event.id)
   dates.value = formatEventDates(response.data.dates)
+}
+
+async function getEventTags() {
+    let response = await axios.get(ADMIN_URL+'/events/'+props.event.id+'/tags')
+    tags.value = response.data.tags
 }
 </script>

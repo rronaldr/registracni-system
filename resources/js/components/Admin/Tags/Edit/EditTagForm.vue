@@ -24,7 +24,7 @@
                     <EditTagList
                         v-if="tags.length > 0"
                         :tags="tags"
-                        @edit-tag="editTag"
+                        @edit-tag="setEditForm"
                         @remove-tag="removeTag"
                     />
                     <p v-else class="card-text">{{ $t('tag.empty' )}}</p>
@@ -115,7 +115,7 @@
 </template>
 
 <script setup>
-import {reactive, ref, watch} from "vue";
+import {inject, reactive, ref, watch} from "vue";
 import SubmitButton from "../../Form/SubmitButton.vue";
 import BaseInput from "../../Form/BaseInput.vue";
 import BaseCheckbox from "../../Form/BaseCheckbox.vue";
@@ -123,11 +123,18 @@ import BaseTextarea from "../../Form/BaseTextarea.vue";
 import {useI18n} from "vue-i18n";
 import BaseSelect from "../../Form/BaseSelect.vue";
 import EditTagList from "./EditTagList.vue";
+import axios from "axios";
+import {mapLastDateObject} from "../../../../utils/DataMapper";
 
+const ADMIN_URL = inject('ADMIN_URL')
 const props = defineProps({
+    eventId: {type: Number, required: true},
     tags: {type: Array, required: false}
 })
+const emit = defineEmits(['getTags'])
 const {t} = useI18n({})
+
+console.log(props.tags)
 
 let showTagForm = ref(false)
 let showOptions = ref(false)
@@ -142,28 +149,6 @@ let tag = reactive({
     default: null
 })
 
-let x = {
-  id: 1,
-  label: 'Pohlaví',
-  value: '[pohlavi]',
-  required: false,
-  type: 'radio',
-  // options: [{label: 'Muž', value: 'muz'},{label: 'Žena', value: 'zena'}],
-  options: 'Muž,Žena',
-  default: null
-}
-
-let y = {
-  id: 2,
-  label: 'Jméno',
-  value: '[name]',
-  required: true,
-  type: 'text',
-  default: null
-}
-// props.tags.push({...x})
-// props.tags.push({...y})
-
 let typeOptions = [
     {name: t('tag.text'), id: 'text'},
     {name: t('tag.number'), id: 'number'},
@@ -177,38 +162,44 @@ let typeOptions = [
     {name: t('tag.textarea'), id: 'textarea'},
 ]
 
-function addDate() {
+async function addDate() {
     if (props.tags.length === 0) {
         tag.id = 1
     }
 
-    if (edit) {
-        removeTag(tag.id)
-        edit = false
-    }
+    edit ? await editTag() : await createTag()
 
-    wrapTagValue()
-
-    props.tags.push({...tag})
     showTagForm.value = false
-
+    emit('getTags')
     clearTagObject()
 }
 
-function editTag(id) {
+async function createTag() {
+    setTagId()
+
+    await axios.post(ADMIN_URL+'/events/'+props.eventId+'/tags/create', {
+        tag: tag
+    })
+}
+async function editTag(id) {
+    edit = false
+
+    await axios.put(ADMIN_URL+'/events/'+props.eventId+'/tags/'+id+'/update', {
+        tag: tag
+    })
+}
+
+async function removeTag(id) {
+    await axios.delete(ADMIN_URL+'/events/'+props.eventId+'/tags/'+id+'/delete')
+    emit('getTags')
+}
+
+function setEditForm(id) {
     clearTagObject()
     showTagForm.value = true
     edit = true
 
-    let tagToEdit = props.tags.find(date => date.id === id)
-    assignEditValue(tagToEdit)
-}
-
-function removeTag(id) {
-    const index = props.tags.findIndex(date => date.id === id)
-    if (index !== -1) {
-        props.tags.splice(index, 1)
-    }
+    tag = Object.assign(tag, {...props.tags.find(tag => tag.id === id)})
 }
 
 function closeForm() {
@@ -217,22 +208,14 @@ function closeForm() {
 }
 
 function clearTagObject() {
-    Object.keys(tag).forEach((i) => tag[i] = null)
+    Object.keys(tag).forEach((i) => tag[i] = i === 'required' ? tag[i] = false : tag[i] = null)
 }
 
-function wrapTagValue() {
-    let regex = /[\[\]]/
-    tag.value = regex.test(tag.value) ? tag.value : `[${tag.value}]`
-}
-
-function assignEditValue(tagToEdit) {
-    tag.id = tagToEdit.id
-    tag.label = tagToEdit.label
-    tag.value = tagToEdit.value
-    tag.required = tagToEdit.required
-    tag.type = tagToEdit.type
-    tag.options = tagToEdit.options
-    tag.default = tagToEdit.default
+function setTagId() {
+    if (props.tags.length > 0) {
+        let lastTag = props.tags[props.tags.length - 1]
+        tag.id = lastTag.id + 1
+    }
 }
 
 watch(

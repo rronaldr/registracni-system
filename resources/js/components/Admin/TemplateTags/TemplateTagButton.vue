@@ -1,5 +1,5 @@
 <template>
-    <button @click="$emit('setContent', value)"
+    <button @click="$emit('setContent', `[${value}]`)"
             type="button" class="btn btn-light mx-2">{{ label }}</button>
 </template>
 

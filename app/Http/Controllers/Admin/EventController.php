@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
@@ -152,6 +153,56 @@ class EventController extends Controller
         fclose($csvHandle);
 
         return response()->download($filename, 'seznam_ucastniku_email.csv', ['Content-Type' => 'text/csv']);
+    }
+
+    public function getEventTags(int $id, EventFacade $eventFacade): JsonResponse
+    {
+        $event = $eventFacade->getEventById($id);
+
+        return response()->json([
+            'tags' => $event->c_fields
+        ]);
+    }
+
+    public function storeEventTag(int $id, Request $request, TagFacade $tagFacade)
+    {
+        try {
+            $validator = Validator::make($request->all(), $tagFacade->getTagValidationRules());
+
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 400);
+            }
+
+            $tagFacade->storeTag($id, $request->get('tag'));
+
+            return response()->noContent();
+        } catch (\Exception $e) {
+            return response()->json(['errors' => $e->getMessage()], 400);
+        }
+    }
+
+    public function updateEventTag(int $id, int $tag, Request $request, TagFacade $tagFacade)
+    {
+        try {
+            $validator = Validator::make($request->all(), $tagFacade->getTagValidationRules());
+
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 400);
+            }
+
+            $tagFacade->updateTag($id, $tag, $request->get('tag'));
+
+            return response()->noContent();
+        } catch (\Exception $e) {
+            return response()->json(['errors' => $e->getMessage()], 400);
+        }
+    }
+
+    public function destroyEventTag(int $id, int $tag, TagFacade $tagFacade):  Response
+    {
+        $tagFacade->removeTag($id, $tag);
+
+        return response()->noContent();
     }
 
 }

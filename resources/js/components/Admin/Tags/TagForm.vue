@@ -165,8 +165,6 @@ function addDate() {
         edit = false
     }
 
-    wrapTagValue()
-
     props.tags.push({...tag})
     showTagForm.value = false
 
@@ -196,11 +194,6 @@ function closeForm() {
 
 function clearTagObject() {
     Object.keys(tag).forEach((i) => tag[i] = null)
-}
-
-function wrapTagValue() {
-    let regex = /[\[\]]/
-    tag.value = regex.test(tag.value) ? tag.value : `[${tag.value}]`
 }
 
 function assignEditValue(tagToEdit) {

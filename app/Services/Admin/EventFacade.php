@@ -37,7 +37,6 @@ class EventFacade
         $eventData = $data['event'];
         $dates = !empty($data['dates']) ? $data['dates'] : null;
         $tags = !empty($data['tags']) ? $data['tags'] : null;
-        $tagsDecoded = null;
         $blacklist = $eventData['event_blacklist']
             ? $this->blacklistFacade->createBlacklist()
             : null;
@@ -47,11 +46,7 @@ class EventFacade
             $this->blacklistFacade->addUsersToBlacklist($blacklist->id, $blacklistUsers);
         }
 
-        if (isset($tags)) {
-            $tagsDecoded = $this->tagFacade->parseTagsToJson($tags);
-        }
-
-        $event = $this->createEventFromRequest($eventData, $tagsDecoded, $blacklist);
+        $event = $this->createEventFromRequest($eventData, $tags, $blacklist);
 
         if (isset($dates)) {
             $this->dateFacade->createDatesFromEvent($dates, $event->id);
@@ -163,6 +158,7 @@ class EventFacade
             'dates.*.time_to' => 'required|date_format:H:i',
             'tags.*' => 'sometimes|required',
             'tags.*.label' => 'required|string',
+            'tags.*.value' => 'required|string',
             'tags.*.options' => 'required_if:tags.*.type,radio,checkbox,select'
         ];
     }
@@ -177,7 +173,7 @@ class EventFacade
 
 
 
-    private function createEventFromRequest(array $event, ?string $customFields, ?Blacklist $blacklist): Event
+    private function createEventFromRequest(array $event, ?array $customFields, ?Blacklist $blacklist): void
     {
         try {
             Event::create([
@@ -193,7 +189,7 @@ class EventFacade
                 'template_id' => $event['template']['id'],
                 'template_content' => $event['template']['content'],
                 'user_group' => (int) $event['user_group'],
-                'c_fields' => $customFields,
+                'c_fields' => $customFields !== null ? json_encode($customFields) : null,
                 'user_id' => auth()->user()->id,
                 'status' => EventStatusEnum::DRAFT,
             ]);

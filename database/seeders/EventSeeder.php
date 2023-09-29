@@ -18,7 +18,7 @@ class EventSeeder extends Seeder
         DB::table('events')->insert([
             'id' => 1,
             'user_id' => 1,
-            'template_id' => 1,
+            'template_id' => 2,
             'calendar_id' => 4719,
             'name' => 'Název události',
             'subtitle' => 'Podtitulek události',
@@ -29,7 +29,10 @@ class EventSeeder extends Seeder
             'user_group' => 1,
             'date_start_cache' => Carbon::now()->startOfMonth()->addHours(12),
             'date_end_cache' => Carbon::now()->startOfMonth()->addDays(2)->addHours(3)->addHours(11)->addMinutes(15),
-            'c_fields' => '[{"label":"Jméno","type":"text","default":null,"required":true,"value":"name"},{"label":"Pohlaví","type":"select","options":[{"text":"mu\u017e","value":"man"},{"text":"\u017eena","value":"female"}],"default":"male","required":true}]',
+            'c_fields' => '[
+                {"id":1,"label":"Jméno","type":"text","default":null,"required":true,"value":"name"},
+                {"id":2,"label":"Pohlaví","type":"select","options":"Muž,Žena","default":"male","required":true, "value":"gender"}
+            ]',
         ]);
     }
 }
