@@ -24,7 +24,7 @@
                     <EditDateList
                         v-if="dates.length > 0"
                         :dates="dates"
-                        @edit-date="editDate"
+                        @edit-date="setEditForm"
                         @remove-date="removeDate"
                     />
                     <p v-else class="card-text">{{ $t('date.empty' )}}</p>
@@ -188,12 +188,13 @@ import BaseInput from "../../Form/BaseInput.vue";
 import BaseCheckbox from "../../Form/BaseCheckbox.vue";
 import moment from "moment/moment";
 import EditDateList from "./EditDateList.vue";
-import {dateObject, formatEventDates, mapLastDateObject} from "../../../../utils/DataMapper"
+import {dateObject, mapLastDateObject} from "../../../../utils/DataMapper"
 import axios from "axios";
 
 const ADMIN_URL = inject('ADMIN_URL')
 const props = defineProps({
-    dates: {type: Array, required: false}
+    dates: {type: Array, required: false},
+    eventId: {type: Number, required: true}
 })
 const emit = defineEmits(['getDates'])
 
@@ -201,43 +202,51 @@ let showDateForm = ref(false)
 let edit = false
 let date = reactive(dateObject)
 
-setLastDates()
-
 async function addDate() {
     if (props.dates.length === 0) {
         date.id = 1
     }
 
-    if (edit) {
-        edit = false
-        removeDate(date.id)
-    }
+    edit ? await editDate() : await createDate()
 
-    props.dates.push({...date})
     showDateForm.value = false
-
+    emit('getDates')
     clearDateObject()
 }
 
 async function removeDate(id) {
-  await axios.delete(ADMIN_URL+'/dates/'+id)
+  await axios.delete(ADMIN_URL+'/dates/'+id+'/delete')
   emit('getDates')
 }
 
-function editDate(id) {
+async function createDate() {
+    await axios.post(ADMIN_URL+'/dates/'+props.eventId+'/create', {
+        date: date
+    })
+}
+
+async function editDate() {
+    edit = false
+
+    await axios.put(ADMIN_URL+'/dates/'+date.id+'/update', {
+        date: date
+    })
+}
+
+function setEditForm(id) {
     clearDateObject()
     showDateForm.value = true
     edit = true
-
-    date = {...props.dates.find(date => date.id === id)}
-    console.log(date)
+    date = Object.assign(date, {...props.dates.find(date => date.id === id)})
 }
 
-
-
 function clearDateObject() {
-    showDateForm.value = false
-    Object.keys(date).forEach((i) => date[i] = null)
+    edit = false
+    Object.keys(date).forEach(function(i) {
+        date[i] = i === 'substitute' || i === 'unlimited_capacity'
+            ? date[i] = false
+            : date[i] = null
+    })
     setLastDates()
 }
 

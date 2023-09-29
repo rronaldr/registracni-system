@@ -136,6 +136,7 @@
 
         <EditDateForm
             :dates="dates"
+            :event-id="event.id"
             @get-dates="getEventDates"
         />
 

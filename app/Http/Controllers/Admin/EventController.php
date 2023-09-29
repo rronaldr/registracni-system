@@ -61,9 +61,9 @@ class EventController extends Controller
         ]);
     }
 
-    public function update(string $id, Request $request): View
+    public function update(string $id, Request $request): JsonResponse
     {
-        return view('admin.event-form');
+        return response()->json();
     }
 
     public function destroy(int $id, EventFacade $eventFacade): RedirectResponse

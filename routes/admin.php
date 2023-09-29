@@ -20,8 +20,9 @@ Route::middleware(['auth'])->group(function () {
 
     // Date routes
     Route::get('/dates/{id}', [DateController::class, 'getEventDates'])->name('admin.dates');
-    Route::put('/dates/{id}', [DateController::class, 'update'])->name('admin.dates.update');
-    Route::delete('/dates/{id}', [DateController::class, 'destroy'])->name('admin.dates.destroy');
+    Route::post('/dates/{id}/create', [DateController::class, 'store'])->name('admin.dates.store');
+    Route::put('/dates/{id}/update', [DateController::class, 'update'])->name('admin.dates.update');
+    Route::delete('/dates/{id}/delete', [DateController::class, 'destroy'])->name('admin.dates.destroy');
 
     // Event routes
     Route::get('/', function () {

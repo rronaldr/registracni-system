@@ -54,6 +54,7 @@ export const mapLastDateObject = function (date, lastDate) {
 
 export const editEventMap = function (event) {
     return {
+        id: event.id,
         name: event.name,
         subtitle: event.subtitle,
         calendar_id: event.calendar_id,
@@ -79,11 +80,11 @@ export const formatEventDates = function (dates) {
         let dateFormat = 'YYYY-MM-DD'
         let timeFormat = 'HH:mm'
 
-        let datetimeFrom = moment(date.date_start,dateTimeFormat)
-        let datetimeTo = moment(date.date_end,dateTimeFormat)
-        let enrollmentFrom = moment(date.enrollment_start,dateTimeFormat)
-        let enrollmentTo = moment(date.enrollment_end,dateTimeFormat)
-        let withdrawTo = moment(date.withdraw_end,dateTimeFormat)
+        let datetimeFrom = date.date_start !== null ? moment(date.date_start,dateTimeFormat) : null
+        let datetimeTo = date.date_end !== null ? moment(date.date_end,dateTimeFormat) : null
+        let enrollmentFrom = date.enrollment_start !== null ? moment(date.enrollment_start,dateTimeFormat) : null
+        let enrollmentTo = date.enrollment_end !== null ? moment(date.enrollment_end,dateTimeFormat) : null
+        let withdrawTo = date.withdraw_end !== null ? moment(date.withdraw_end,dateTimeFormat) : null
 
         return {
             id: date.id,
@@ -92,16 +93,16 @@ export const formatEventDates = function (dates) {
             capacity: date.capacity,
             name: date.name,
             unlimited_capacity: date.capacity === -1,
-            date_from: datetimeFrom.format(dateFormat),
-            time_from: datetimeFrom.format(timeFormat),
-            date_to: datetimeTo.format(dateFormat),
-            time_to: datetimeTo.format(timeFormat),
-            enrollment_from: enrollmentFrom.format(dateFormat),
-            enrollment_from_time: enrollmentFrom.format(timeFormat),
-            enrollment_to: enrollmentTo.format(dateFormat),
-            enrollment_to_time: enrollmentTo.format(timeFormat),
-            withdraw_date: withdrawTo.format(dateFormat),
-            withdraw_time: withdrawTo.format(timeFormat)
+            date_from: datetimeFrom !== null ? datetimeFrom.format(dateFormat) : null,
+            time_from: datetimeFrom !== null ? datetimeFrom.format(timeFormat) : null,
+            date_to: datetimeTo !== null ? datetimeTo.format(dateFormat) : null,
+            time_to: datetimeTo !== null ? datetimeTo.format(timeFormat) : null,
+            enrollment_from: enrollmentFrom !== null ? enrollmentFrom.format(dateFormat) : null,
+            enrollment_from_time: enrollmentFrom !== null ? enrollmentFrom.format(timeFormat) : null,
+            enrollment_to: enrollmentTo !== null ? enrollmentTo.format(dateFormat) : null,
+            enrollment_to_time: enrollmentTo !== null ? enrollmentTo.format(timeFormat) : null,
+            withdraw_date: withdrawTo !== null ? withdrawTo.format(dateFormat) : null,
+            withdraw_time: withdrawTo !== null ? withdrawTo.format(timeFormat) : null
         }
     })
 }

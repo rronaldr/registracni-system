@@ -232,6 +232,8 @@ function removeDate(id) {
 }
 
 function clearDateObject() {
+    showDateForm.value = false
+    edit = false
     Object.keys(date).forEach((i) => date[i] = null)
     setLastDates()
 }
