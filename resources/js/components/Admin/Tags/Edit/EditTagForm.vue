@@ -134,8 +134,6 @@ const props = defineProps({
 const emit = defineEmits(['getTags'])
 const {t} = useI18n({})
 
-console.log(props.tags)
-
 let showTagForm = ref(false)
 let showOptions = ref(false)
 let edit = false
@@ -181,12 +179,12 @@ async function createTag() {
         tag: tag
     })
 }
-async function editTag(id) {
-    edit = false
-
-    await axios.put(ADMIN_URL+'/events/'+props.eventId+'/tags/'+id+'/update', {
+async function editTag() {
+    await axios.put(ADMIN_URL+'/events/'+props.eventId+'/tags/'+tag.id+'/update', {
         tag: tag
     })
+
+    edit = false
 }
 
 async function removeTag(id) {
