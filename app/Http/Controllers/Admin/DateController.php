@@ -19,7 +19,7 @@ class DateController extends Controller
         return response()->json(['dates' => $dates], 200);
     }
 
-    public function store(int $id, Request $request, DateFacade $dateFacade)
+    public function store(int $id, Request $request, DateFacade $dateFacade): JsonResponse
     {
         try {
             $validator = Validator::make($request->all(), $dateFacade->getDateValidationRules());
@@ -30,13 +30,13 @@ class DateController extends Controller
 
             $dateFacade->createDate($id, $request->get('date'));
 
-            return response()->noContent();
+            return response()->json(null, 204);
         } catch (Throwable $e) {
             dump($e);
         }
     }
 
-    public function update(int $id, Request $request, DateFacade $dateFacade)
+    public function update(int $id, Request $request, DateFacade $dateFacade): JsonResponse
     {
         try {
             $validator = Validator::make($request->all(), array_merge(['date.id' => 'required|numeric'], $dateFacade->getDateValidationRules()));
@@ -47,7 +47,7 @@ class DateController extends Controller
 
             $dateFacade->updateDate($id, $request->get('date'));
 
-            return response()->noContent();
+            return response()->json(null, 204);
         } catch (Throwable $e) {
             dump($e);
         }

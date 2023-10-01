@@ -4,7 +4,6 @@ namespace App\Services\Admin;
 
 use App\Enums\Event\EventStatusEnum;
 use App\Models\Blacklist;
-use App\Models\Enrollment;
 use App\Models\Event;
 use App\Repositories\EventRepository;
 use Carbon\Carbon;
@@ -171,12 +170,10 @@ class EventFacade
         $event->save();
     }
 
-
-
-    private function createEventFromRequest(array $event, ?array $customFields, ?Blacklist $blacklist): void
+    private function createEventFromRequest(array $event, ?array $customFields, ?Blacklist $blacklist): Event
     {
         try {
-            Event::create([
+            return Event::create([
                 'blacklist_id' => $blacklist->id ?? null,
                 'name' => $event['name'],
                 'subtitle' => $event['subtitle'],

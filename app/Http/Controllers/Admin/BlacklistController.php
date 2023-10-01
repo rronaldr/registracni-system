@@ -20,12 +20,12 @@ class BlacklistController extends Controller
         ]);
     }
 
-    public function update(int $id, Request $request, BlacklistFacade $blacklistFacade)
+    public function update(int $id, Request $request, BlacklistFacade $blacklistFacade): JsonResponse
     {
         try {
             $blacklistFacade->addUsersToBlacklist($id, $request->blacklist);
 
-            return response()->noContent();
+            return response()->json(null, 204);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
         }
@@ -38,12 +38,12 @@ class BlacklistController extends Controller
         return response()->json(['users' => $blacklist->users()->get()]);
     }
 
-    public function destroy(int $id, int $user, BlacklistFacade $blacklistFacade)
+    public function destroy(int $id, int $user, BlacklistFacade $blacklistFacade): JsonResponse
     {
         try {
             $blacklistFacade->removeUserFromBlacklist($id, $user);
 
-            return response()->noContent();
+            return response()->json(null, 204);
         } catch (\Exception $e) {
             return response()->json(['error' => $e]);
         }

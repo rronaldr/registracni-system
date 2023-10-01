@@ -34,7 +34,7 @@ class EventController extends Controller
         return view('admin.event-create');
     }
 
-    public function store(Request $request, EventFacade $eventFacade)
+    public function store(Request $request, EventFacade $eventFacade): JsonResponse
     {
         try {
             $validator = Validator::make($request->all(), $eventFacade->getValidationRules());
@@ -47,13 +47,13 @@ class EventController extends Controller
 
             Session::flash('message', __('app.event.saved'));
 
-            return response()->noContent();
+            return response()->json(null, 204);
         } catch (\Exception $e) {
             dump($e);
         }
     }
 
-    public function edit(string $id, EventFacade $eventFacade, TagFacade $tagFacade): View
+    public function edit(string $id, EventFacade $eventFacade): View
     {
         $event = $eventFacade->getEventById((int) $id);
 
@@ -62,9 +62,15 @@ class EventController extends Controller
         ]);
     }
 
-    public function update(string $id, Request $request): JsonResponse
+    public function update(string $id, Request $request, EventFacade $eventFacade): JsonResponse
     {
-        return response()->json();
+        $validator = Validator::make($request->all(), $eventFacade->getValidationRules());
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        return response()->json(null, 204);
     }
 
     public function destroy(int $id, EventFacade $eventFacade): RedirectResponse
@@ -96,16 +102,6 @@ class EventController extends Controller
         Session::flash('message', trans('event.duplicated'));
 
         return redirect()->route('admin.events');
-    }
-
-    public function getEventDates(int $id, EventFacade $eventFacade): JsonResponse
-    {
-        try {
-            $dates = $eventFacade->getEventWithStartAndEndDates($id);
-            return response()->json($dates);
-        } catch (ModelNotFoundException $exception) {
-            return response()->json(['error' => trans('An error occurred.')]);
-        }
     }
 
     public function getEventEnrollmentsUsers(string $id, EventFacade $eventFacade): JsonResponse
@@ -164,7 +160,7 @@ class EventController extends Controller
         ]);
     }
 
-    public function storeEventTag(int $id, Request $request, TagFacade $tagFacade)
+    public function storeEventTag(int $id, Request $request, TagFacade $tagFacade): JsonResponse
     {
         try {
             $validator = Validator::make($request->all(), $tagFacade->getTagValidationRules());
@@ -175,13 +171,13 @@ class EventController extends Controller
 
             $tagFacade->storeTag($id, $request->get('tag'));
 
-            return response()->noContent();
+            return response()->json(null, 204);
         } catch (\Exception $e) {
             return response()->json(['errors' => $e->getMessage()], 400);
         }
     }
 
-    public function updateEventTag(int $id, int $tag, Request $request, TagFacade $tagFacade)
+    public function updateEventTag(int $id, int $tag, Request $request, TagFacade $tagFacade): JsonResponse
     {
         try {
             $validator = Validator::make($request->all(), $tagFacade->getTagValidationRules());
@@ -192,7 +188,7 @@ class EventController extends Controller
 
             $tagFacade->updateTag($id, $tag, $request->get('tag'));
 
-            return response()->noContent();
+            return response()->json(null, 204);
         } catch (\Exception $e) {
             return response()->json(['errors' => $e->getMessage()], 400);
         }
