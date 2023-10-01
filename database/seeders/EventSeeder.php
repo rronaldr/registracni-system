@@ -23,7 +23,7 @@ class EventSeeder extends Seeder
             'name' => 'Název události',
             'subtitle' => 'Podtitulek události',
             'type' => 1,
-            'status' => 'draft',
+            'status' => 2,
             'contact_person' => 'Ronald Rebernigg',
             'contact_email' => 'rebr00@vse.cz',
             'user_group' => 1,

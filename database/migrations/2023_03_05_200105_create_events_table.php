@@ -24,7 +24,7 @@ class CreateEventsTable extends Migration
             $table->string('contact_person');
             $table->string('contact_email');
             $table->integer('type');
-            $table->string('status');
+            $table->integer('status');
             $table->json('c_fields')->nullable();
             $table->text('template_content')->nullable();
             $table->boolean('global_blacklist')->default(false);

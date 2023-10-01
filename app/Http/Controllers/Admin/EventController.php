@@ -15,8 +15,10 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Throwable;
 
 class EventController extends Controller
 {
@@ -37,7 +39,7 @@ class EventController extends Controller
     public function store(Request $request, EventFacade $eventFacade): JsonResponse
     {
         try {
-            $validator = Validator::make($request->all(), $eventFacade->getValidationRules());
+            $validator = Validator::make($request->all(), $eventFacade->getEventCreateValidationRules());
 
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 400);
@@ -62,15 +64,23 @@ class EventController extends Controller
         ]);
     }
 
-    public function update(string $id, Request $request, EventFacade $eventFacade): JsonResponse
+    public function update(int $id, Request $request, EventFacade $eventFacade): JsonResponse
     {
-        $validator = Validator::make($request->all(), $eventFacade->getValidationRules());
+        try {
+            $validator = Validator::make($request->get('data'), $eventFacade->getEventUpdateValidationRules());
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 400);
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 400);
+            }
+            $eventFacade->updateEvent($id, $request->get('data'));
+
+            Session::flash('message', __('app.event.updated'));
+
+            return response()->json(null, 204);
+        } catch (Throwable $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
         }
 
-        return response()->json(null, 204);
     }
 
     public function destroy(int $id, EventFacade $eventFacade): RedirectResponse

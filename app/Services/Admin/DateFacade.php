@@ -7,6 +7,7 @@ namespace App\Services\Admin;
 use App\Helpers\DateFormatter;
 use App\Models\Date;
 use App\Repositories\DateRepository;
+use App\Repositories\EventRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
@@ -39,22 +40,30 @@ class DateFacade
         return $this->dateRepository->getEventDates($id);
     }
 
-    public function createDate(int $eventId, array $data): void
+    public function createDate(int $eventId, array $data): Date
     {
         $attributes = array_merge(['event_id' => $eventId], $this->getDataAttributesMapping($data));
 
-        Date::create($attributes);
+        return Date::create($attributes);
     }
 
-    public function updateDate(int $dateId, array $data): void
+    public function updateDate(int $dateId, array $data): ?Date
     {
         $date = $this->dateRepository->getDateById($dateId);
 
         if ($date === null) {
-            return;
+            return null;
         }
 
         $date->update($this->getDataAttributesMapping($data));
+        $date->refresh();
+
+        return $date;
+    }
+
+    public function removeDate(int $id): void
+    {
+        Date::destroy($id);
     }
 
     public function createDatesFromEvent(array $dates, int $eventId): void
@@ -72,8 +81,6 @@ class DateFacade
             'date.capacity' => 'required_if:date.unlimited_capacity,==,false|sometimes:numeric',
             'date.date_from' => 'required|date',
             'date.time_from' => 'required|date_format:H:i',
-            'date.date_to' => 'required|date',
-            'date.time_to' => 'required|date_format:H:i',
             'date.date_to' => 'required|date',
             'date.time_to' => 'required|date_format:H:i',
         ];

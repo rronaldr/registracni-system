@@ -6,7 +6,7 @@ namespace App\Enums\Event;
 
 final class EventStatusEnum
 {
-    public const PUBLISHED = 'published';
-    public const DRAFT = 'draft';
-    public const DELETED = 'deleted';
+    public const PUBLISHED = 1;
+    public const DRAFT = 2;
+    public const DELETED = 3;
 }

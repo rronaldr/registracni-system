@@ -31,11 +31,12 @@ return [
     ],
     'event' => [
         'status' => [
-            'published' => 'Publikováno',
-            'draft' => 'Koncept',
-            'deleted' => 'Smazána',
+            '1' => 'Publikováno',
+            '2' => 'Koncept',
+            '3' => 'Smazána',
         ],
         'saved' => 'Událost vytvořena',
+        'updated' => 'Událost upravena',
         'deleted' => 'Událost odstraněna'
     ],
     'email' => [

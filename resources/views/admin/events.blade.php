@@ -33,7 +33,7 @@
                     @foreach($events as $event)
                         <tr>
                             <td><a href="{{ route('admin.events.edit', ['id' => $event->id]) }}" class="link-primary">{{ $event->name }}</a></td>
-                            <td><span class="fa fa-circle text-secondary"></span> {{ __('app.event.status.'.$event->status) }}</td>
+                            <td><span class="fa fa-circle @if($event->status === 1) text-success @else text-secondary @endif"></span> {{ __('app.event.status.'.$event->status) }}</td>
                             <td><a href="#" class="link-primary" data-bs-toggle="modal" data-bs-target="#datesModal" onClick="getDates({{$event->id}})">
                                     Zobrazit termíny ({{ $event->dates_count }})
                                 </a></td>

@@ -70,7 +70,8 @@ export const editEventMap = function (event) {
             content: event.template_content,
         },
         blacklist_id: event.blacklist_id,
-        user_group: event.user_group
+        user_group: event.user_group,
+        status: event.status
     }
 }
 

@@ -91,7 +91,8 @@
         "template": "Šablona",
         "template_content": "Obsah šablony",
         "user_group": "Skupina uživatelů",
-        "user_group_placeholder": "Vyberte kdo se může na událost přihlásit"
+        "user_group_placeholder": "Vyberte kdo se může na událost přihlásit",
+        "status": "Stav"
     },
     "blacklist": {
         "blocked_until": "Blokace do",
@@ -107,5 +108,10 @@
         "3": "Absolventi",
         "4": "Zaměstnanci",
         "5": "Studenti a absolventi"
+    },
+    "statuses": {
+        "1": "Publikováno",
+        "2": "Koncept",
+        "3": "Smazáno"
     }
 }

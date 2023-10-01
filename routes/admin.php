@@ -32,7 +32,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/events/create', [EventController::class, 'create'])->name('admin.events.create');
     Route::post('/events/store', [EventController::class, 'store'])->name('admin.events.store');
     Route::get('/events/{id}/edit', [EventController::class, 'edit'])->name('admin.events.edit');
-    Route::put('/events/{id}', [EventController::class, 'update'])->name('admin.events.update');
+    Route::put('/events/{id}/update', [EventController::class, 'update'])->name('admin.events.update');
     Route::delete('/events/{id}', [EventController::class, 'destroy'])->name('admin.events.destroy');
     Route::post('/events/{id}/duplicate', [EventController::class, 'duplicate'])->name('admin.events.duplicate');
     Route::get('/events/{id}/dates', [EventController::class, 'getEventDates'])->name('admin.events.dates');

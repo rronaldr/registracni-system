@@ -17,17 +17,15 @@ class EventFacade
     private EventRepository $eventRepository;
     private DateFacade  $dateFacade;
     private BlacklistFacade $blacklistFacade;
-    private TagFacade $tagFacade;
+
     public function __construct(
         EventRepository $eventRepository,
         DateFacade $dateFacade,
-        BlacklistFacade $blacklistFacade,
-        TagFacade $tagFacade
+        BlacklistFacade $blacklistFacade
     ){
         $this->eventRepository = $eventRepository;
         $this->dateFacade = $dateFacade;
         $this->blacklistFacade = $blacklistFacade;
-        $this->tagFacade = $tagFacade;
     }
 
     public function createEvent(Request $request): void
@@ -51,7 +49,13 @@ class EventFacade
             $this->dateFacade->createDatesFromEvent($dates, $event->id);
         }
 
-        $this->setEventDateCache($event);
+        $this->setEventDateCache($event->id);
+    }
+
+    public function updateEvent(int $eventId, array $data): void
+    {
+        $event = $this->getEventById($eventId);
+        $event->update($this->getDataAttributesMapping($data['event']));
     }
 
     public function getEventsForOverviewPaginated(): LengthAwarePaginator
@@ -129,17 +133,12 @@ class EventFacade
         return $eventUsersList->unique('email');
     }
 
-    public function getEventWithStartAndEndDates(int $eventId): Collection
-    {
-        return $this->dateFacade->getEventWithStartAndEndDates($eventId);
-    }
-
     public function getEventById(int $id): Event
     {
         return $this->eventRepository->getEventById($id);
     }
 
-    public function getValidationRules(): array
+    public function getEventCreateValidationRules(): array
     {
         return [
             'event.blacklist_id' => 'nullable|numeric',
@@ -147,7 +146,8 @@ class EventFacade
             'event.type' => 'required|numeric',
             'event.blacklist_users' => 'required_if:event.event_blacklist,==,true|sometimes:string',
             'event.user_group' => 'required|numeric',
-            'contact.*' => 'required',
+            'contact.person' => 'required|string',
+            'contact.email' => 'required|email',
             'dates' => 'required|array',
             'dates.*.location' => 'required|string',
             'dates.*.capacity' => 'required_if:dates.*.unlimited_capacity,==,false|sometimes:numeric',
@@ -162,8 +162,25 @@ class EventFacade
         ];
     }
 
-    private function setEventDateCache(Event $event): void
+    public function getEventUpdateValidationRules(): array
     {
+        return [
+            'event.name' => 'required|string',
+            'event.subtitle' => 'string',
+            'event.blacklist_id' => 'nullable|numeric',
+            'event.type' => 'required|numeric',
+            'event.user_group' => 'required|numeric',
+            'event.contact.person' => 'required|string',
+            'event.contact.email' => 'required|email',
+            'event.global_blacklist' => 'required|boolean',
+            'event.event_blacklist' => 'required|boolean',
+            'event.status' => 'required|numeric',
+        ];
+    }
+
+    public function setEventDateCache(int $id): void
+    {
+        $event = $this->eventRepository->getEventById($id);
         $dateCache = $this->dateFacade->getFirstAndLastDateOfEvent($event->id);
         $event->date_start_cache = Carbon::parse($dateCache->get('date_start'));
         $event->date_end_cache = Carbon::parse($dateCache->get('date_end'));
@@ -193,5 +210,23 @@ class EventFacade
         } catch (Throwable $e) {
             dd($e);
         }
+    }
+
+    private function getDataAttributesMapping(array $data): array
+    {
+        return [
+            'name' => $data['name'],
+            'subtitle' => $data['subtitle'],
+            'calendar_id' => $data['calendar_id'],
+            'contact_person' => $data['contact']['person'],
+            'contact_email' => $data['contact']['email'],
+            'type' => $data['type'],
+            'global_blacklist' => (bool) $data['global_blacklist'],
+            'event_blacklist' => (bool) $data['event_blacklist'],
+            'template_id' => $data['template']['id'],
+            'template_content' => $data['template']['content'],
+            'user_group' => (int) $data['user_group'],
+            'status' => $data['status'],
+        ];
     }
 }

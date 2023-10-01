@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Date;
 use App\Services\Admin\DateFacade;
+use App\Services\Admin\EventFacade;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -19,7 +19,7 @@ class DateController extends Controller
         return response()->json(['dates' => $dates], 200);
     }
 
-    public function store(int $id, Request $request, DateFacade $dateFacade): JsonResponse
+    public function store(int $id, Request $request, DateFacade $dateFacade, EventFacade $eventFacade): JsonResponse
     {
         try {
             $validator = Validator::make($request->all(), $dateFacade->getDateValidationRules());
@@ -28,7 +28,8 @@ class DateController extends Controller
                 return response()->json(['errors' => $validator->errors()], 400);
             }
 
-            $dateFacade->createDate($id, $request->get('date'));
+            $date = $dateFacade->createDate($id, $request->get('date'));
+            $eventFacade->setEventDateCache($date->event->id);
 
             return response()->json(null, 204);
         } catch (Throwable $e) {
@@ -36,7 +37,7 @@ class DateController extends Controller
         }
     }
 
-    public function update(int $id, Request $request, DateFacade $dateFacade): JsonResponse
+    public function update(int $id, Request $request, DateFacade $dateFacade, EventFacade $eventFacade): JsonResponse
     {
         try {
             $validator = Validator::make($request->all(), array_merge(['date.id' => 'required|numeric'], $dateFacade->getDateValidationRules()));
@@ -45,7 +46,8 @@ class DateController extends Controller
                 return response()->json(['errors' => $validator->errors()], 400);
             }
 
-            $dateFacade->updateDate($id, $request->get('date'));
+            $date = $dateFacade->updateDate($id, $request->get('date'));
+            $eventFacade->setEventDateCache($date->event->id);
 
             return response()->json(null, 204);
         } catch (Throwable $e) {
@@ -53,8 +55,14 @@ class DateController extends Controller
         }
     }
 
-    public function destroy(int $id): void
+    public function destroy(int $id, DateFacade $dateFacade, EventFacade $eventFacade): JsonResponse
     {
-        Date::destroy($id);
+        $date = $dateFacade->getDateById($id);
+        $eventId = $date->event->id;
+
+        $dateFacade->removeDate($id);
+        $eventFacade->setEventDateCache($eventId);
+
+        return response()->json(null, 204);
     }
 }

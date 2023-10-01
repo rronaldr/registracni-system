@@ -1,6 +1,6 @@
 <template>
     <tr>
-        <td>{{ dateDuration }}</td>
+        <td>{{ formattedDuration }}</td>
         <td>{{ date.location }}</td>
         <td>{{ date.capacity === -1 ? '∞' : date.capacity }}</td>
         <td>{{ date.unlimited_capacity ? 'Ano' : 'Ne' }}</td>
@@ -28,15 +28,18 @@
 
 <script setup>
 import moment from "moment";
+import {computed, ref} from "vue";
 
 const emit = defineEmits(['editDate', 'removeDate'])
 const props = defineProps({
     date: {type: Object, required: true},
 })
 
-let durationFrom = moment(`${props.date.date_from} ${props.date.time_from}`, 'YYYY-MM-DD HH:mm').format('D.M.YYYY HH:mm')
-let durationTo = moment(`${props.date.date_to} ${props.date.time_to}`, 'YYYY-MM-DD HH:mm').format('D.M.YYYY HH:mm')
-let dateDuration = `${durationFrom} - ${durationTo}`
+let durationFrom = ref(moment(`${props.date.date_from} ${props.date.time_from}`, 'YYYY-MM-DD HH:mm'))
+let durationTo = ref(moment(`${props.date.date_to} ${props.date.time_to}`, 'YYYY-MM-DD HH:mm'))
+const formattedDuration = computed(() => {
+  return `${durationFrom.value.format('D.M.YYYY HH:mm')} - ${durationTo.value.format('D.M.YYYY HH:mm')}`;
+});
 
 function editItem() {
     emit('editDate', props.date.id)

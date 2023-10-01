@@ -1,6 +1,17 @@
 <template>
     <form method="post" enctype="multipart/form-data" @submit.prevent="submitEvent">
         <slot name="csrf"></slot>
+
+        <div v-if="errors" class="row mb-3">
+            <div class="bg-red-500 text-white py-2 px-4 pr-0 rounded font-bold mb-4 shadow-lg">
+                <div v-for="(v, k) in errors" :key="k">
+                    <p v-for="error in v" :key="error" class="text-sm">
+                        {{ error }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
         <div class="row mb-3">
             <div class="col">
                 <BaseInput
@@ -68,9 +79,17 @@
         <div class="row mb-3">
             <div class="col">
                 <UserGroupSelect
-                    :user-group="event.user_group"
+                    v-model="event.user_group"
                 />
             </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col">
+            <EventStatusSelect
+                v-model="event.status"
+            />
+          </div>
         </div>
 
         <div class="line"></div><br>
@@ -213,6 +232,7 @@ import UserGroupSelect from "./UserGroupSelect.vue";
 import EditDateForm from "../Dates/Edit/EditDateForm.vue";
 import EditTagForm from "../Tags/Edit/EditTagForm.vue";
 import {formatEventDates, editEventMap} from "../../../utils/DataMapper"
+import EventStatusSelect from "./EventStatusSelect.vue";
 
 const ADMIN_URL = inject('ADMIN_URL')
 const props = defineProps({
@@ -230,6 +250,9 @@ let tags = ref([])
 let dates = ref([])
 let templates = ref(null)
 let event = reactive(editEventMap(props.event))
+let errors = null
+
+console.log(event)
 
 getEventDates()
 getEventTags()
@@ -238,19 +261,21 @@ getApprovedTemplates()
 function submitEvent() {
     let csrf = document.getElementsByName('_token')[0].value
     let data = {
-        event: props.event,
+        event: event,
         _token: csrf
     }
 
-    axios.post(
-        ADMIN_URL+'/events/update',
-        data
+    axios.put(
+        ADMIN_URL+'/events/'+event.id+'/update',{
+            data,
+        }
     )
-    // .then(
-    //     window.location.href = ADMIN_URL+'/events',
-    // )
+    .then(
+        // window.location.href = ADMIN_URL+'/events',
+    )
     .catch(error => {
         console.log(error)
+        errors = error.data.errors
     })
 }
 
