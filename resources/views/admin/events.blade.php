@@ -130,6 +130,7 @@
 @endsection
 
 @section('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <script>
         function getUsers(eventId) {
             let rows = $('#usersBody')
@@ -172,9 +173,9 @@
         }
 
         function formatDate(date) {
-            var formattedDate = new Date(date);
-            return ''+ formattedDate.getDate() +'.'+ formattedDate.getMonth() +'.'+ formattedDate.getFullYear() +' '
-                + formattedDate.getHours() +':' + formattedDate.getMinutes()
+            if (date) {
+                return moment(String(date)).format('DD.MM.YYYY HH:mm')
+            }
         }
     </script>
 @endsection

@@ -12,7 +12,6 @@ class CustomHtmlMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public User $user;
     public $html;
 
     /**
@@ -20,11 +19,10 @@ class CustomHtmlMail extends Mailable
      *
      * @return void
      */
-    public function __construct(string $subject, string $html, User $user)
+    public function __construct(string $subject, string $html)
     {
         $this->subject = $subject;
         $this->html = $html;
-        $this->user = $user;
     }
 
     /**

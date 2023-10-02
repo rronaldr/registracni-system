@@ -24,9 +24,9 @@
             <table width="100%" class="table table-hover" id="dataTables-example">
                 <thead>
                 <tr>
-                    <th>Šablona</th>
-                    <th>Autor</th>
-                    <th>Stav</th>
+                    <th>{{ __('app.templates.template') }}</th>
+                    <th>{{ __('app.author') }}</th>
+                    <th>{{ __('app.templates.status') }}</th>
                     <th></th>
                 </tr>
                 </thead>

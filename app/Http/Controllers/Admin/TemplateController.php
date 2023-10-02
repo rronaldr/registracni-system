@@ -105,7 +105,9 @@ class TemplateController extends Controller
         $template = $templateFacade->getTemplateById($id);
 
         Mail::to([$currentUser->email])
-            ->send(new CustomHtmlMail($currentUser, $template->html));
+            ->send(new CustomHtmlMail(sprintf('Test email: %s', $template->name), $template->html));
+
+        Session::flash('message', trans('app.templates.test-sent-success'));
 
         return redirect()->route('admin.templates');
     }

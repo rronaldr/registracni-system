@@ -1,15 +1,21 @@
 <?php
 
 return [
-    'save' => 'Uložit',
-    'cancel' => 'Zrušit',
-    'back' => 'Zpět',
+
     'author' => 'Autor',
     'merge-tags' => 'Merge tagy',
     'app-title' => 'Registrační systém VŠE',
     'cs' => 'CZ',
     'en' => 'EN',
 
+    'actions' => [
+        'edit' => 'Editovat',
+        'duplicate' => 'Duplikovat',
+        'delete' => 'Odstranit',
+        'save' => 'Uložit',
+        'cancel' => 'Zrušit',
+        'back' => 'Zpět',
+    ],
     'auth' => [
         'login' => 'Přihlášení',
     ],
@@ -62,6 +68,7 @@ return [
         'xname' => 'Xname',
     ],
     'templates' => [
+        'template' => 'Šablona',
         'templates' => 'Šablony',
         'name' => 'Název šablony',
         'approved' => 'Schválená',
@@ -80,6 +87,10 @@ return [
         'for-approval' => 'Šablony čekající na schválení',
         'updated' => 'Šablona byla úspěšně změněna.',
         'show-content' => 'Zobrazit obsah šablony',
-        'invalid-html' => 'HTML kód není validní. Chybí <body> tag.'
+        'invalid-html' => 'HTML kód není validní. Chybí <body> tag.',
+        'status' => 'Stav',
+        'template-create-title' => 'Vytvoření šablony',
+        'template-edit-title' => 'Editace šablony',
+        'test-sent-success' => 'Testovací email byl úspěšně odeslán.'
     ]
 ];

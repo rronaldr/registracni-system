@@ -28,7 +28,7 @@ class TemplateSeeder extends Seeder
                             <title>HTML 5 Boilerplate</title>
                           </head>
                           <body>
-                            <div id="customContent">I am {{ $name }} from {{ $faculty }} with email {{ $user->email }}</div>
+                            <div>[message]</div>
                           </body>
                         </html>',
         ]);
@@ -405,7 +405,7 @@ class TemplateSeeder extends Seeder
                             </tr>
                           </tbody>
                         </table>
-                        <p>This is a really simple email template. Its sole purpose is to get the recipient to click the button with no distractions.</p>
+                        <p>[message]</p>
                         <p>Good luck! Hope it works.</p>
                       </td>
                     </tr>

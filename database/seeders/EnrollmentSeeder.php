@@ -21,7 +21,7 @@ class EnrollmentSeeder extends Seeder
             'user_id' => 2,
             'date_id' => 1,
             'state' => 1,
-            'c_fields' => '{"name": "name1", "gender": "male"}',
+            'c_fields' => '[{"label": "Pohlaví", "name": "name", "value": "male"}]',
             'created_at' => Carbon::now()->subMinutes(random_int(0, 55)),
         ]);
 
@@ -29,35 +29,35 @@ class EnrollmentSeeder extends Seeder
             'user_id' => 3,
             'date_id' => 1,
             'state' => 1,
-            'c_fields' => '{"name": "name1", "gender": "female"}',
+            'c_fields' => '[{"label": "Pohlaví", "name": "name", "value": "male"}]',
             'created_at' => Carbon::now()->subMinutes(random_int(0, 55)),
         ]);
         DB::table('enrollments')->insert([
             'user_id' => 4,
             'date_id' => 1,
             'state' => 1,
-            'c_fields' => '{"name": "name1", "gender": "male"}',
+            'c_fields' => '[{"label": "Pohlaví", "name": "name", "value": "male"}]',
             'created_at' => Carbon::now()->subMinutes(random_int(0, 55)),
         ]);
         DB::table('enrollments')->insert([
             'user_id' => 5,
             'date_id' => 1,
             'state' => 1,
-            'c_fields' => '{"name": "name1", "gender": "male"}',
+            'c_fields' => '[{"label": "Pohlaví", "name": "name", "value": "male"}]',
             'created_at' => Carbon::now()->subMinutes(random_int(0, 55)),
         ]);
         DB::table('enrollments')->insert([
             'user_id' => 6,
             'date_id' => 1,
             'state' => 1,
-            'c_fields' => '{"name": "name1", "gender":"male"}',
+            'c_fields' => '[{"label": "Pohlaví", "name": "name", "value": "male"}]',
             'created_at' => Carbon::now()->subMinutes(random_int(0, 55)),
         ]);
         DB::table('enrollments')->insert([
             'user_id' => 2,
             'date_id' => 2,
             'state' => 1,
-            'c_fields' => '{"name": "name1", "gender": "male"}',
+            'c_fields' => '[{"label": "Pohlaví", "name": "name", "value": "male"}]',
             'created_at' => Carbon::now()->subMinutes(random_int(0, 55)),
         ]);
 
@@ -65,14 +65,14 @@ class EnrollmentSeeder extends Seeder
             'user_id' => 3,
             'date_id' => 2,
             'state' => 1,
-            'c_fields' => '{"name": "name1", "gender": "male"}',
+            'c_fields' => '[{"label": "Pohlaví", "name": "name", "value": "male"}]',
             'created_at' => Carbon::now()->subMinutes(random_int(0, 55)),
         ]);
         DB::table('enrollments')->insert([
             'user_id' => 4,
             'date_id' => 2,
             'state' => 1,
-            'c_fields' => '{"name": "name1", "gender": "male"}',
+            'c_fields' => '[{"label": "Pohlaví", "name": "name", "value": "male"}]',
             'created_at' => Carbon::now()->subMinutes(random_int(0, 55)),
         ]);
 

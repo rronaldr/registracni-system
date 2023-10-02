@@ -1,4 +1,4 @@
-@extends('layouts.admin.main', ['title' => 'Vytvoření šablony'])
+@extends('layouts.admin.main', ['title' => __('app.templates.template-create-title')])
 
 @section('content')
     <div class="card mt-3">
@@ -43,11 +43,11 @@
                         <div class="mb-3 row justify-content-between">
                             <div class="col">
                                 <a href="{{ route('admin.templates') }}" class="btn btn-danger mb-2"><i
-                                        class="fas fa-times"></i> {{ __('app.cancel') }}</a>
+                                        class="fas fa-times"></i> {{ __('app.actions.cancel') }}</a>
                             </div>
                             <div class="col text-end">
                                 <button type="submit" class="btn btn-primary mb-2"><i
-                                        class="fas fa-save"></i> {{ __('app.save') }}</button>
+                                        class="fas fa-save"></i> {{ __('app.actions.save') }}</button>
                             </div>
                         </div>
                     </form>
