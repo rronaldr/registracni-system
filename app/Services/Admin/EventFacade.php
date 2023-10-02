@@ -192,27 +192,23 @@ class EventFacade
 
     private function createEventFromRequest(array $event, ?array $customFields, ?Blacklist $blacklist): Event
     {
-        try {
-            return Event::create([
-                'blacklist_id' => $blacklist->id ?? null,
-                'name' => $event['name'],
-                'subtitle' => $event['subtitle'],
-                'calendar_id' => is_int($event['calendar_id']) ? $event['calendar_id'] : $this->parseCalendarEventId($event['calendar_id']),
-                'contact_person' => $event['contact']['person'],
-                'contact_email' => $event['contact']['email'],
-                'type' => $event['type'],
-                'global_blacklist' => $event['global_blacklist'],
-                'event_blacklist' => $event['event_blacklist'],
-                'template_id' => $event['template']['id'],
-                'template_content' => $event['template']['content'],
-                'user_group' => (int) $event['user_group'],
-                'c_fields' => $customFields !== null ? json_encode($customFields) : null,
-                'user_id' => auth()->user()->id,
-                'status' => EventStatusEnum::DRAFT,
-            ]);
-        } catch (Throwable $e) {
-            dd($e);
-        }
+        return Event::create([
+            'blacklist_id' => $blacklist->id ?? null,
+            'name' => $event['name'],
+            'subtitle' => $event['subtitle'],
+            'calendar_id' => is_int($event['calendar_id']) ? $event['calendar_id'] : $this->parseCalendarEventId($event['calendar_id']),
+            'contact_person' => $event['contact']['person'],
+            'contact_email' => $event['contact']['email'],
+            'type' => $event['type'],
+            'global_blacklist' => $event['global_blacklist'],
+            'event_blacklist' => $event['event_blacklist'],
+            'template_id' => $event['template']['id'],
+            'template_content' => $event['template']['content'],
+            'user_group' => (int) $event['user_group'],
+            'c_fields' => $customFields ?? null,
+            'user_id' => auth()->user()->id,
+            'status' => EventStatusEnum::DRAFT,
+        ]);
     }
 
     private function getDataAttributesMapping(array $data): array

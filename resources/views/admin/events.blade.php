@@ -136,12 +136,18 @@
             let rows = $('#usersBody')
             rows.empty()
             $.get('events/'+parseInt(eventId)+'/users', function (data) {
+                if (data.length === 0) {
+                    rows.append('<tr>')
+                    rows.append('<td colspan="4">No records</td>')
+                    rows.append('</tr>')
+                }
+
                 $.each(data, function (key, val) {
                     let tag = []
                     $.each(val.c_fields, function (k, v) {
                         tag.push(' '+k +': '+ v+' ')
                     })
-                    rows.append('<tr scope="row">')
+                    rows.append('<tr>')
                     rows.append('<td>'+ val.xname +'</td>')
                     rows.append('<td>'+ val.email +'</td>')
                     rows.append('<td>'+ formatDate(val.enrolled) +'</td>')
