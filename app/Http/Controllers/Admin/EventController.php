@@ -99,21 +99,13 @@ class EventController extends Controller
     }
 
     /* @todo REDO this with VUE and json response */
-    public function duplicate(Event $event, EventFacade $eventFacade): RedirectResponse
+    public function duplicate(int $id, EventFacade $eventFacade): View
     {
-        try {
-            $newEvent = $eventFacade->duplicateEvent($event);
+        $event = $eventFacade->duplicateEvent($id);
 
-            return redirect()->route('admin.events.edit', [
-                'id' => $newEvent->id,
-            ]);
-        } catch (\Exception $e){
-            Session::flash('error', trans('event.duplication_error'));
-        }
-
-        Session::flash('message', trans('event.duplicated'));
-
-        return redirect()->route('admin.events');
+        return view('admin.event-create', [
+            'event' => $event
+        ]);
     }
 
     public function getEventEnrollmentsUsers(string $id, EventFacade $eventFacade): JsonResponse

@@ -83,20 +83,11 @@ class EventFacade
         $event->delete();
     }
 
-    public function duplicateEvent(Event $event): Event
+    public function duplicateEvent(int $id): Event
     {
         /** @var \App\Models\Event $duplicate */
-        $duplicate = $event->replicate();
+        $duplicate = $this->getEventById($id)->withoutRelations();
         $duplicate->name = $duplicate->name.' (copy)';
-        $duplicate->push();
-
-        $event->load('dates');
-
-        foreach ($event->getRelation('dates') as $date) {
-            unset($date->id);
-            unset($date->event_id);
-            $duplicate->dates()->create($date->toArray());
-        }
 
         return $duplicate;
     }

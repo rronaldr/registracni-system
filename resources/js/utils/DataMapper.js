@@ -78,6 +78,28 @@ export const editEventMap = function (event) {
     }
 }
 
+export const duplicateEventMap = function (event) {
+    return {
+        name: event.name,
+        subtitle: event.subtitle,
+        calendar_id: event.calendar_id,
+        contact: {
+            person: event.contact_person,
+            email: event.contact_email,
+        },
+        type: event.type,
+        global_blacklist: Boolean(event.global_blacklist),
+        event_blacklist: Boolean(event.event_blacklist),
+        template: {
+            id: event.template_id,
+            content: event.template_content,
+        },
+        blacklist_id: event.blacklist_id,
+        user_group: event.user_group,
+        user_id: event.user_id
+    }
+}
+
 export const formatEventDates = function (dates) {
     return dates.map(function (date) {
         let dateTimeFormat = 'YYYY-MM-DD HH:mm:ss'

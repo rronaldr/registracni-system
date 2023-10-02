@@ -213,11 +213,12 @@ import TemplateTags from "../TemplateTags/TemplateTags.vue";
 import DateForm from "../Dates/DateForm.vue";
 import TagForm from "../Tags/TagForm.vue";
 import UserGroupSelect from "./UserGroupSelect.vue";
-import { eventCreateObject } from "../../../utils/DataMapper"
+import {duplicateEventMap, eventCreateObject} from "../../../utils/DataMapper"
 
 const ADMIN_URL = inject('ADMIN_URL')
 const props = defineProps({
-    user: {type: Object, required: true}
+    user: {type: Object, required: true},
+    event: {type: Object, required: false}
 })
 
 const {t} = useI18n({})
@@ -226,13 +227,23 @@ const dateTypeOptions = [
     {label: t('event.type_2'), value: 2}
 ]
 
-let event = reactive(eventCreateObject)
+console.log(props.event)
+console.log(props.event == null)
+let event = props.event == null
+    ? reactive(eventCreateObject)
+    : reactive(duplicateEventMap(props.event))
+
+console.log(duplicateEventMap(props.event))
 
 let tags = ref([])
 let dates = ref([])
 let templates = ref(null)
 
 getApprovedTemplates()
+
+if (props.event !== null) {
+    getEventTags()
+}
 
 function submitEvent() {
     let csrf = document.getElementsByName('_token')[0].value
@@ -265,5 +276,10 @@ function fillContactWithCurrentUser() {
 async function getApprovedTemplates() {
     let response = await axios.get(ADMIN_URL+'/templates/approved')
     templates.value = response.data.templates
+}
+
+async function getEventTags() {
+    let response = await axios.get(ADMIN_URL+'/events/'+props.event.id+'/tags')
+    tags.value = response.data.tags
 }
 </script>
