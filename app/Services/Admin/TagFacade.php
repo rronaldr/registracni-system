@@ -21,13 +21,12 @@ class TagFacade
         $this->blacklistFacade = $blacklistFacade;
     }
 
-    public function getCustomFieldsValueWithLabel(array $labels, Enrollment $enrollment): Collection
+    public function getTagsWithLabelAndValue(Enrollment $enrollment): Collection
     {
-        /** @todo refactor custom field label is taken from event */
-        $data = collect(json_decode($enrollment->c_fields, true));
-        return $data->mapWithKeys(function ($value, $key) use ($labels): array
+        $tags = collect($enrollment->c_fields);
+        return $tags->mapWithKeys(function ($tag): array
         {
-            return [$labels[$key]['label'] => $value];
+            return [$tag['label'] => $tag['value']];
         });
     }
 

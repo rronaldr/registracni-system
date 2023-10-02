@@ -17,15 +17,18 @@ class EventFacade
     private EventRepository $eventRepository;
     private DateFacade  $dateFacade;
     private BlacklistFacade $blacklistFacade;
+    private TagFacade $tagFacade;
 
     public function __construct(
         EventRepository $eventRepository,
         DateFacade $dateFacade,
-        BlacklistFacade $blacklistFacade
+        BlacklistFacade $blacklistFacade,
+        TagFacade $tagFacade
     ){
         $this->eventRepository = $eventRepository;
         $this->dateFacade = $dateFacade;
         $this->blacklistFacade = $blacklistFacade;
+        $this->tagFacade = $tagFacade;
     }
 
     public function createEvent(Request $request): void
@@ -102,7 +105,7 @@ class EventFacade
     {
         /** @var \App\Models\Event $event */
         $event = $this->eventRepository->getEventWithEnrollmentsAndUsers($id);
-        $customFieldsLabels = json_decode($event->c_fields, true);
+        $customFields = $event->c_fields;
 
         $eventUsersList = collect();
         foreach ($event->enrollments as $enrollment) {
@@ -110,7 +113,7 @@ class EventFacade
                 'id'=> $enrollment->user->id,
                 'xname' => $enrollment->user->xname,
                 'email' => $enrollment->user->email,
-//                'c_fields' => $this->tagFacade->getCustomFieldsValueWithLabel($customFieldsLabels, $enrollment),
+                'c_fields' => $this->tagFacade->getTagsWithLabelAndValue($enrollment),
                 'enrolled' => $enrollment->created_at,
             ]);
         }

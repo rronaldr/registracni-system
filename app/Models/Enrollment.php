@@ -18,6 +18,10 @@ class Enrollment extends Model
         'c_fields',
     ];
 
+    protected $casts = [
+        'c_fields' => 'array'
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

@@ -74,7 +74,7 @@
                                     <tr>
                                         <th scope="col">{{ __('app.date.date_start') }}</th>
                                         <th scope="col">{{ __('app.date.date_end') }}</th>
-                                        <th scope="col">{{ __('app.date.name') }}</th>
+                                        <th scope="col">{{ __('app.date.capacity') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody id="datesBody">
@@ -86,7 +86,7 @@
             </div>
             <!-- Custom dates modal end -->
 
-            <!-- Custom dates modal start -->
+            <!-- Custom users modal start -->
             <div class="modal fade" id="usersModal" role="dialog" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -117,7 +117,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Custom dates modal end -->
+            <!-- Custom users modal end -->
 
             <div class="row justify-content-end">
                 <div class="float-right">
@@ -138,7 +138,7 @@
                 $.each(data, function (key, val) {
                     let tag = []
                     $.each(val.c_fields, function (k, v) {
-                        tag.push(k +": "+ v)
+                        tag.push(' '+k +': '+ v+' ')
                     })
                     rows.append('<tr scope="row">')
                     rows.append('<td>'+ val.xname +'</td>')
@@ -153,13 +153,12 @@
         function getDates(eventId) {
             let rows = $('#datesBody')
             rows.empty()
-            $.get('events/'+parseInt(eventId)+'/dates', function (data) {
-                $.each(data, function (key, val) {
-                    let name = val.name ?? '-'
+            $.get('dates/'+parseInt(eventId)+'/event', function (data) {
+                $.each(data['dates'], function (key, val) {
                     rows.append('<tr scope="row">')
                     rows.append('<td>'+ formatDate(val.date_start) +'</td> - ')
                     rows.append('<td>'+ formatDate(val.date_end)+'</td>')
-                    rows.append('<td>'+ name +'</td>')
+                    rows.append('<td>'+ val.capacity === -1 ? 'Infinite' : val.capacity +'</td>')
                     rows.append('</tr>')
                 })
 
