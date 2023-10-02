@@ -239,7 +239,6 @@ class EventFacade
 
         if (preg_match($pattern, $calendar, $matches)) {
             $dateParam = $matches[1]; // The date parameter value will be in $matches[1]
-            dd($dateParam);
             return $dateParam;
         } else {
             return null;
