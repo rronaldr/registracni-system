@@ -8,6 +8,7 @@
                 <td>{{ $t('date.capacity') }}</td>
                 <td>{{ $t('date.unlimited_capacity') }}</td>
                 <td>{{ $t('date.substitute') }}</td>
+                <td>{{ $t('date.participants_count') }}</td>
                 <td></td>
             </tr>
             </thead>

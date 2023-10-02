@@ -34,7 +34,10 @@
         "enrollment_to": "Datum přihlašování do",
         "enrollment_to_time": "Čas přihlašování do",
         "withdraw_date": "Datum odhlašování do",
-        "withdraw_time": "Čas odhlašování do"
+        "withdraw_time": "Čas odhlašování do",
+        "show_participants": "Zobrazit účastníky",
+        "participants_count": "Počet účastníků",
+        "no_participants": "Zatím nejsou žádní účastnící"
     },
     "tag": {
         "tag": "Vlastní pole",

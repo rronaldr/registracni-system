@@ -50,6 +50,7 @@ class DateRepository
         return Date::query()
             ->where('event_id', $id)
             ->orderBy('date_start')
+            ->withCount('enrollments')
             ->get();
     }
 }

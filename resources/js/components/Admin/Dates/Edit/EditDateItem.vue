@@ -5,7 +5,16 @@
         <td>{{ date.capacity === -1 ? '∞' : date.capacity }}</td>
         <td>{{ date.unlimited_capacity ? 'Ano' : 'Ne' }}</td>
         <td>{{ date.substitute ? 'Ano' : 'Ne' }}</td>
+        <td>{{ date.enrollments_count > 0 ? date.enrollments_count : $t('date.no_participants') }}</td>
         <td>
+            <button
+                @click="removeItem"
+                :title="$t('date.show_participants')"
+                type="button"
+                class="btn btn-outline-primary btn-rounded"
+            >
+                <i class="fas fa-users"></i>
+            </button>
             <button
                 @click="editItem"
                 :title="$t('app.edit')"
@@ -30,7 +39,7 @@
 import moment from "moment";
 import {computed, ref} from "vue";
 
-const emit = defineEmits(['editDate', 'removeDate'])
+const emit = defineEmits(['showEnrollments', 'editDate', 'removeDate'])
 const props = defineProps({
     date: {type: Object, required: true},
 })
@@ -41,6 +50,9 @@ const formattedDuration = computed(() => {
   return `${durationFrom.value.format('D.M.YYYY HH:mm')} - ${durationTo.value.format('D.M.YYYY HH:mm')}`;
 });
 
+function showEnrollments() {
+    emit('showEnrollments', props.date.id)
+}
 function editItem() {
     emit('editDate', props.date.id)
 }

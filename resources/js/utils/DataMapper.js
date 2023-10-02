@@ -35,7 +35,8 @@ export const dateObject = {
     enrollment_to: null,
     enrollment_to_time: null,
     withdraw_date: null,
-    withdraw_time: null
+    withdraw_time: null,
+    enrollments_count: 0
 }
 
 export const mapLastDateObject = function (date, lastDate) {
@@ -119,6 +120,7 @@ export const formatEventDates = function (dates) {
             capacity: date.capacity,
             name: date.name,
             unlimited_capacity: date.capacity === -1,
+            enrollments_count: date.enrollments_count,
             date_from: datetimeFrom !== null ? datetimeFrom.format(dateFormat) : null,
             time_from: datetimeFrom !== null ? datetimeFrom.format(timeFormat) : null,
             date_to: datetimeTo !== null ? datetimeTo.format(dateFormat) : null,

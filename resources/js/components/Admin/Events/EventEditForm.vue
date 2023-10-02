@@ -276,8 +276,6 @@ let templates = ref(null)
 let event = reactive(editEventMap(props.event))
 let errors = reactive(null)
 
-console.log(event)
-
 getEventDates()
 getEventTags()
 getApprovedTemplates()
