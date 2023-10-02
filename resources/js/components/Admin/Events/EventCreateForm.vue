@@ -1,4 +1,14 @@
 <template>
+    <div v-if="errors" class="row mb-3">
+        <div class="bg-danger text-white py-2 px-4 pr-0 rounded font-bold mb-4 shadow-lg">
+            <div v-for="(v, k) in errors" :key="k">
+                <p v-for="error in v" :key="error" class="text-sm">
+                    {{ error.toUpperCase() }}
+                </p>
+            </div>
+        </div>
+    </div>
+
     <form method="post" enctype="multipart/form-data" @submit.prevent="submitEvent">
         <slot name="csrf"></slot>
         <div class="row mb-3">
@@ -227,21 +237,18 @@ const dateTypeOptions = [
     {label: t('event.type_2'), value: 2}
 ]
 
-console.log(props.event)
-console.log(props.event == null)
 let event = props.event == null
     ? reactive(eventCreateObject)
     : reactive(duplicateEventMap(props.event))
-
-console.log(duplicateEventMap(props.event))
-
 let tags = ref([])
 let dates = ref([])
 let templates = ref(null)
+let errors = ref(null)
 
 getApprovedTemplates()
 
-if (props.event !== null) {
+if (props.event != null) {
+    console.log('event tags')
     getEventTags()
 }
 
@@ -259,10 +266,12 @@ function submitEvent() {
         data
     )
     .then(response => {
-      window.location.href = ADMIN_URL+'/events'
+        window.location.href = ADMIN_URL+'/events'
     })
-    .catch(error => {
-      console.log('error',error)
+    .catch(e => {
+        console.log(e.response.data)
+        errors.value = e.response.data.errors
+        window.scrollTo(0,0);
     })
 }
 

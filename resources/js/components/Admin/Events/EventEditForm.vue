@@ -21,18 +21,18 @@
         </div>
     </div>
 
-    <form method="post" enctype="multipart/form-data" @submit.prevent="submitEvent">
-        <slot name="csrf"></slot>
-
-        <div v-if="errors" class="row mb-3">
-            <div class="bg-red-500 text-white py-2 px-4 pr-0 rounded font-bold mb-4 shadow-lg">
-                <div v-for="(v, k) in errors" :key="k">
-                    <p v-for="error in v" :key="error" class="text-sm">
-                        {{ error }}
-                    </p>
-                </div>
+    <div v-if="errors" class="row mb-3">
+        <div class="bg-danger text-white py-2 px-4 pr-0 rounded font-bold mb-4 shadow-lg">
+            <div v-for="(v, k) in errors" :key="k">
+                <p v-for="error in v" :key="error" class="text-sm">
+                    {{ error.toUpperCase() }}
+                </p>
             </div>
         </div>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" @submit.prevent="submitEvent">
+        <slot name="csrf"></slot>
 
         <div class="row mb-3">
             <div class="col">
@@ -274,7 +274,7 @@ let tags = ref([])
 let dates = ref([])
 let templates = ref(null)
 let event = reactive(editEventMap(props.event))
-let errors = null
+let errors = reactive(null)
 
 console.log(event)
 
@@ -297,9 +297,10 @@ function submitEvent() {
     .then(
         // window.location.href = ADMIN_URL+'/events',
     )
-    .catch(error => {
-        console.log(error)
-        errors = error.data.errors
+    .catch(e => {
+        console.log(e.response.data)
+        errors.value = e.response.data.errors
+        window.scrollTo(0,0);
     })
 }
 
