@@ -13,11 +13,11 @@
       </div>
     </div>
     <div class="card-body">
-      <table class="table table table-striped">
+      <table class="table table-striped">
         <thead>
         <tr>
-          <td>{{ $t('user.xname') }}</td>
-          <td></td>
+          <th>{{ $t('user.xname') }}</th>
+          <th></th>
         </tr>
         </thead>
         <tbody>

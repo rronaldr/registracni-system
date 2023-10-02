@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use App\Services\Admin\BlacklistFacade;
 use App\Services\Admin\EventFacade;
 use App\Services\Admin\TagFacade;
 use Carbon\Carbon;
@@ -58,6 +59,7 @@ class EventController extends Controller
     public function edit(string $id, EventFacade $eventFacade): View
     {
         $event = $eventFacade->getEventById((int) $id);
+        $event->load('author');
 
         return view('admin.event-edit', [
             'event' => $event,
@@ -209,6 +211,26 @@ class EventController extends Controller
         $tagFacade->removeTag($id, $tag);
 
         return response()->noContent();
+    }
+
+    public function createAndGetBlacklistForEvent(int $id, EventFacade $eventFacade, BlacklistFacade $blacklistFacade): JsonResponse
+    {
+        try {
+            $event = $eventFacade->getEventById($id);
+
+            if ($event->blacklist_id !== null) {
+                return response()->json(['blacklist' => $event->blacklist_id],200);
+            }
+
+            $blacklist = $blacklistFacade->createBlacklist();
+            $event->blacklist_id = $blacklist->id;
+            $event->save();
+
+            return response()->json(['blacklist' => $event->blacklist_id],200);
+        } catch (Throwable $e) {
+            return response()->json(['error' => $e->getMessage()],400);
+        }
+
     }
 
 }

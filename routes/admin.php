@@ -34,6 +34,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/events/{id}/edit', [EventController::class, 'edit'])->name('admin.events.edit');
     Route::put('/events/{id}/update', [EventController::class, 'update'])->name('admin.events.update');
     Route::delete('/events/{id}', [EventController::class, 'destroy'])->name('admin.events.destroy');
+    Route::post('/events/{id}/blacklist', [EventController::class, 'createAndGetBlacklistForEvent'])->name('admin.events.blacklist.store');
     Route::post('/events/{id}/duplicate', [EventController::class, 'duplicate'])->name('admin.events.duplicate');
     Route::get('/events/{id}/dates', [EventController::class, 'getEventDates'])->name('admin.events.dates');
     Route::get('/events/{id}/users', [EventController::class, 'getEventEnrollmentsUsers'])->name('admin.events.users');

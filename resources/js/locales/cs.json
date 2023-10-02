@@ -6,7 +6,10 @@
         "cancel": "Zrušit",
         "delete": "Odstranit",
         "edit": "Upravit",
-        "show-hint": "Zobrazit nápovědu"
+        "show-hint": "Zobrazit nápovědu",
+        "author": "Autor",
+        "created_at": "Vytvořeno",
+        "updated_at": "Naposledy změněno"
     },
     "email": {
         "email": "Email"
@@ -39,6 +42,7 @@
         "add_tag": "Přidat pole",
         "label": "Popisek",
         "value": "Hodnota",
+        "value_hint": "<small class=\"form-text\">Vložte název vlastního pole bez dikritiky. Hodnota se využívá pro úpravu šablony.</small>",
         "type": "Typ pole",
         "options": "Hodnoty",
         "options_tip": "<small class=\"form-text\">Jednotlivé hodnoty oddělte pomocí čárky <code>,</code></small>",

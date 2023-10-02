@@ -58,7 +58,9 @@ class BlacklistFacade
             if (!$this->checkUserOnBlacklist($blacklist, $user->id)) {
                 $blacklist->users()->attach($user->id, [
                     'block_reason' => $dataCollection->get('block_reason'),
-                    'blocked_until' => Carbon::parse($dataCollection->get('blocked_until'))
+                    'blocked_until' => $dataCollection->get('blocked_until') !== null
+                                        ? Carbon::parse($dataCollection->get('blocked_until'))
+                                        : null
                 ]);
             }
 

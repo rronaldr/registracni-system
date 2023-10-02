@@ -62,6 +62,7 @@
                                 type="text"
                                 :required="true"
                             />
+                            <span v-html="$t('tag.value_hint')"></span>
                         </div>
                     </div>
                     <div class="row mb-3">

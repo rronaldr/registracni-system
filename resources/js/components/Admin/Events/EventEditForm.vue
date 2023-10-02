@@ -1,4 +1,26 @@
 <template>
+    <div class="row mb-3">
+        <div class="col">
+            <h4>ADMIN</h4>
+            <table class="table table-responsive">
+                <thead>
+                <tr>
+                    <th>{{ $t('app.author') }}</th>
+                    <th>{{ $t('app.created_at') }}</th>
+                    <th>{{ $t('app.updated_at') }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ author }}</td>
+                    <td>{{ formatDate(event.created_at) }}</td>
+                    <td>{{ formatDate(event.updated_at) }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <form method="post" enctype="multipart/form-data" @submit.prevent="submitEvent">
         <slot name="csrf"></slot>
 
@@ -117,7 +139,7 @@
             <label class="col-sm-2">{{ $t('event.event_blacklist') }}<br></label>
             <div class="col-sm-10">
                 <div class="form-check form-switch mb-3">
-                    <input v-model="event.event_blacklist" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                    <input v-model="event.event_blacklist" @change="createBlacklist" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
                     <label class="col-sm-2 d-inline">{{ $t('event.enable_event_blacklist') }}
                     </label>
                 </div>
@@ -233,11 +255,13 @@ import EditDateForm from "../Dates/Edit/EditDateForm.vue";
 import EditTagForm from "../Tags/Edit/EditTagForm.vue";
 import {formatEventDates, editEventMap} from "../../../utils/DataMapper"
 import EventStatusSelect from "./EventStatusSelect.vue";
+import {formatDate} from "../../../utils/DateFormat"
 
 const ADMIN_URL = inject('ADMIN_URL')
 const props = defineProps({
     user: {type: Object, required: true},
-    event: {type: Object, required: true}
+    event: {type: Object, required: true},
+    author: {type: String, required: false},
 })
 
 const {t} = useI18n({})
@@ -284,6 +308,13 @@ function fillContactWithCurrentUser() {
         ? props.user.display_name
         : props.user.first_name+' '+ props.user.last_name
     event.contact.email = props.user.email
+}
+
+async function createBlacklist() {
+    if (event.blacklist_id === null) {
+        let response = await axios.post(ADMIN_URL+'/events/'+event.id+'/blacklist')
+        event.blacklist_id = response.data.blacklist
+    }
 }
 
 async function getApprovedTemplates() {
