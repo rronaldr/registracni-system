@@ -76,7 +76,7 @@
         "tag_buttons": "Tlačítka pro přidání vlastních polí do šablony",
         "name": "Název",
         "subtitle": "Upřesnění názvu",
-        "calendar": "Odkaz na událost v kalendáři",
+        "calendar": "ID události v kalendáři VŠE nebo odkaz na událost",
         "contact_person": "Kontaktní osoba",
         "contact_email": "Kontaktní email",
         "fill_user_contact": "Vyplnit moje údaje",

@@ -149,8 +149,8 @@ class EventFacade
             'event.type' => 'required|numeric',
             'event.blacklist_users' => 'required_if:event.event_blacklist,==,true|sometimes:string',
             'event.user_group' => 'required|numeric',
-            'contact.person' => 'required|string',
-            'contact.email' => 'required|email',
+            'event.contact.person' => 'required|string',
+            'event.contact.email' => 'required|email',
             'dates' => 'required|array',
             'dates.*.location' => 'required|string',
             'dates.*.capacity' => 'required_if:dates.*.unlimited_capacity,==,false|sometimes:numeric',
@@ -197,7 +197,7 @@ class EventFacade
                 'blacklist_id' => $blacklist->id ?? null,
                 'name' => $event['name'],
                 'subtitle' => $event['subtitle'],
-                'calendar_id' => $event['calendar_id'],
+                'calendar_id' => is_int($event['calendar_id']) ? $event['calendar_id'] : $this->parseCalendarEventId($event['calendar_id']),
                 'contact_person' => $event['contact']['person'],
                 'contact_email' => $event['contact']['email'],
                 'type' => $event['type'],
@@ -220,7 +220,7 @@ class EventFacade
         return [
             'name' => $data['name'],
             'subtitle' => $data['subtitle'],
-            'calendar_id' => $data['calendar_id'],
+            'calendar_id' => is_int($data['calendar_id']) ? $data['calendar_id'] : $this->parseCalendarEventId($data['calendar_id']),
             'contact_person' => $data['contact']['person'],
             'contact_email' => $data['contact']['email'],
             'type' => $data['type'],
@@ -231,5 +231,18 @@ class EventFacade
             'user_group' => (int) $data['user_group'],
             'status' => $data['status'],
         ];
+    }
+
+    private function parseCalendarEventId($calendar): ?int
+    {
+        $pattern = '/\bdate=([0-9]{4})\b/';
+
+        if (preg_match($pattern, $calendar, $matches)) {
+            $dateParam = $matches[1]; // The date parameter value will be in $matches[1]
+            dd($dateParam);
+            return $dateParam;
+        } else {
+            return null;
+        }
     }
 }
