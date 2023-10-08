@@ -134,10 +134,11 @@
     <script>
         function getUsers(eventId) {
             let rows = $('#usersBody')
+            let i = 1
             rows.empty()
             $.get('events/'+parseInt(eventId)+'/users', function (data) {
                 if (data.length === 0) {
-                    rows.append('<tr>')
+                    rows.append('<tr class="test">')
                     rows.append('<td colspan="4">No records</td>')
                     rows.append('</tr>')
                 }
@@ -147,26 +148,31 @@
                     $.each(val.c_fields, function (k, v) {
                         tag.push(' '+k +': '+ v+' ')
                     })
-                    rows.append('<tr>')
-                    rows.append('<td>'+ val.xname +'</td>')
-                    rows.append('<td>'+ val.email +'</td>')
-                    rows.append('<td>'+ formatDate(val.enrolled) +'</td>')
-                    rows.append('<td>'+ tag.toString() +'</td>')
-                    rows.append('</tr>')
+                    rows.append('<tr id="user'+i+'"></tr>')
+                    let row = $('#user'+i)
+                    row.append('<td>'+ val.xname +'</td>')
+                    row.append('<td>'+ val.email +'</td>')
+                    row.append('<td>'+ formatDate(val.enrolled) +'</td>')
+                    row.append('<td>'+ tag.toString() +'</td>')
+                    i++
                 })
             })
         }
 
         function getDates(eventId) {
             let rows = $('#datesBody')
+            let i = 1
             rows.empty()
             $.get('dates/'+parseInt(eventId)+'/event', function (data) {
                 $.each(data['dates'], function (key, val) {
-                    rows.append('<tr scope="row">')
-                    rows.append('<td>'+ formatDate(val.date_start) +'</td> - ')
-                    rows.append('<td>'+ formatDate(val.date_end)+'</td>')
-                    rows.append('<td>'+ val.capacity === -1 ? 'Infinite' : val.capacity +'</td>')
-                    rows.append('</tr>')
+                    let capacity = val.capacity === -1 ? '∞' : val.capacity
+
+                    rows.append('<tr id="date'+i+'"></tr>')
+                    let row = $('#date'+i)
+                    row.append('<td>'+ formatDate(val.date_start) +'</td>')
+                    row.append('<td>'+ formatDate(val.date_end)+'</td>')
+                    row.append('<td>'+ capacity +'</td>')
+                    i++
                 })
 
             })

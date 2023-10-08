@@ -19,19 +19,43 @@
                 :date="date"
                 @edit-date="editDate"
                 @remove-date="removeDate"
+                @show-enrollments="getEnrollmentsForDate"
             />
             </tbody>
         </table>
     </div>
+
+    <Teleport to="body">
+        <Modal :show="showModal" @close="showModal = false">
+            <template #modal-header>
+                <h5>{{ $t('enrollment.enrollments') }}</h5>
+            </template>
+            <template #modal-body>
+                <EnrollmentsList
+                    :enrollments="enrollments"
+                    @sign-out="signOut"
+                />
+            </template>
+        </Modal>
+    </Teleport>
+
 </template>
 
 <script setup>
+import {inject, reactive, ref} from "vue";
 import EditDateItem from "./EditDateItem.vue";
+import Modal from "../../Modal.vue";
+import axios from "axios";
+import {formatEnrollments} from "../../../../utils/DataMapper";
+import EnrollmentsList from "./EnrollmentsList.vue";
 
+const ADMIN_URL = inject('ADMIN_URL')
 const emit = defineEmits(['editDate', 'removeDate'])
 const props = defineProps({
     dates: {type: Array, required: true}
 })
+let showModal = ref(false)
+let enrollments = ref(null)
 
 function editDate(id) {
     emit('editDate', id)
@@ -39,5 +63,16 @@ function editDate(id) {
 
 function removeDate(id) {
     emit('removeDate', id)
+}
+
+function signOut(dateId, enrollmentId) {
+    axios.post(ADMIN_URL+'/dates/enrollments/'+enrollmentId+'/signoff')
+    getEnrollmentsForDate(dateId)
+}
+
+async function getEnrollmentsForDate(id) {
+    showModal.value = true
+    let response = await axios.get(ADMIN_URL+'/dates/'+id+'/enrollments')
+    enrollments.value = formatEnrollments(response.data)
 }
 </script>

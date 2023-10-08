@@ -19,6 +19,13 @@ class DateController extends Controller
         return response()->json(['dates' => $dates], 200);
     }
 
+    public function getDateEnrollments(int $id, DateFacade $dateFacade): JsonResponse
+    {
+        $enrollments = $dateFacade->getDateEnrollments($id);
+
+        return response()->json($enrollments, 200);
+    }
+
     public function store(int $id, Request $request, DateFacade $dateFacade, EventFacade $eventFacade): JsonResponse
     {
         try {
@@ -62,6 +69,13 @@ class DateController extends Controller
 
         $dateFacade->removeDate($id);
         $eventFacade->setEventDateCache($eventId);
+
+        return response()->json(null, 204);
+    }
+
+    public function signOffEnrollmentUser(int $id, DateFacade $dateFacade): JsonResponse
+    {
+        $dateFacade->signOffUser($id);
 
         return response()->json(null, 204);
     }

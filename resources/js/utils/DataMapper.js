@@ -134,3 +134,24 @@ export const formatEventDates = function (dates) {
         }
     })
 }
+
+export const formatEnrollments = function (data) {
+
+    return data.enrollments.map(function (enrollment) {
+        let user = enrollment.user
+
+        let customFields = enrollment.c_fields.map(function (field) {
+            return `${field.label}: ${field.value}`
+        })
+
+        return {
+            date_id: data.id,
+            enrollment_id: enrollment.id,
+            xname: user.xname,
+            email: user.email,
+            enrolled: moment(enrollment.created_at,'YYYY-MM-DD HH:mm:ss').format('D.M.YYYY HH:mm'),
+            state: enrollment.state,
+            custom_fields: customFields.toString(),
+        }
+    })
+}

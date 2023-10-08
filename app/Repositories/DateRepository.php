@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Repositories;
 
 use App\Models\Date;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 class DateRepository
@@ -52,5 +53,17 @@ class DateRepository
             ->orderBy('date_start')
             ->withCount('enrollments')
             ->get();
+    }
+
+    public function getDateEnrollments(int $id): Date
+    {
+        return Date::query()
+            ->select('id')
+            ->where('id', $id)
+            ->with([
+                'enrollments' => fn($q) => $q->select('id','date_id','user_id', 'state', 'c_fields', 'created_at'),
+                'enrollments.user' => fn($q) => $q->select('id', 'xname', 'email')
+            ])
+            ->first();
     }
 }

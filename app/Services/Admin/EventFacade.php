@@ -96,7 +96,6 @@ class EventFacade
     {
         /** @var \App\Models\Event $event */
         $event = $this->eventRepository->getEventWithEnrollmentsAndUsers($id);
-        $customFields = $event->c_fields;
 
         $eventUsersList = collect();
         foreach ($event->enrollments as $enrollment) {

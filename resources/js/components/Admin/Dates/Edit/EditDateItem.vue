@@ -8,7 +8,8 @@
         <td>{{ date.enrollments_count > 0 ? date.enrollments_count : $t('date.no_participants') }}</td>
         <td>
             <button
-                @click="removeItem"
+                v-if="date.enrollments_count > 0"
+                @click="showEnrollments"
                 :title="$t('date.show_participants')"
                 type="button"
                 class="btn btn-outline-primary btn-rounded"

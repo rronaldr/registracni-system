@@ -120,5 +120,19 @@
         "1": "Publikováno",
         "2": "Koncept",
         "3": "Smazáno"
+    },
+    "enrollment": {
+        "enrollments": "Přihlášky",
+        "xname": "Xname",
+        "email": "Email",
+        "enrolled": "Datum přihlášení",
+        "state": "Stav přihlášky",
+        "c_fields": "Vyplněné hondoty",
+        "sign_out": "Odhlásit uživatele",
+        "statuses": {
+            "1": "Přihlášen",
+            "2": "Náhradník",
+            "3": "Odhlášen"
+        }
     }
 }

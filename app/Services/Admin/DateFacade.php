@@ -4,11 +4,14 @@ declare(strict_types = 1);
 
 namespace App\Services\Admin;
 
+use App\Enums\EnrollmentStates;
 use App\Helpers\DateFormatter;
 use App\Models\Date;
 use App\Repositories\DateRepository;
+use App\Repositories\EnrollmentRepository;
 use App\Repositories\EventRepository;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 
@@ -16,9 +19,11 @@ class DateFacade
 {
 
     private DateRepository $dateRepository;
+    private EnrollmentRepository $enrollmentRepository;
 
-    public function __construct(DateRepository $dateRepository){
+    public function __construct(DateRepository $dateRepository, EnrollmentRepository $enrollmentRepository){
         $this->dateRepository = $dateRepository;
+        $this->enrollmentRepository = $enrollmentRepository;
     }
     public function getEventWithStartAndEndDates(int $eventId): Collection
     {
@@ -72,6 +77,18 @@ class DateFacade
             ->each(function (array $date) use ($eventId){
                 $this->createDate($eventId, $date);
             });
+    }
+
+    public function getDateEnrollments(int $id): Date
+    {
+        return $this->dateRepository->getDateEnrollments($id);
+    }
+
+    public function signOffUser(int $id): void
+    {
+        $enrollment = $this->enrollmentRepository->getById($id);
+        $enrollment->state = EnrollmentStates::SIGNED_OFF;
+        $enrollment->save();
     }
 
     public function getDateValidationRules(): array
