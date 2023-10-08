@@ -274,7 +274,7 @@ let tags = ref([])
 let dates = ref([])
 let templates = ref(null)
 let event = reactive(editEventMap(props.event))
-let errors = reactive(null)
+let errors = ref(null)
 
 getEventDates()
 getEventTags()
