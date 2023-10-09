@@ -4,13 +4,15 @@
         <!-- Right Side Of Navbar -->
         <ul class="nav navbar-nav ms-auto">
             <!-- Authentication Links -->
-            <li class="nav-item nav-lang dropdown dropdown-primary">
-                <a class="btn btn-primary dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">{{ __(sprintf('app.%s', app()->getLocale())) }}</a>
-                <div class="dropdown-menu dropdown-menu-right text-right">
-                    <a href="{{ route('locale', ['locale' => 'cs']) }}" class="dropdown-item @if(app()->getLocale() === 'cs') active @endif">{{ __('app.cs') }}</a>
-                    <a href="{{ route('locale', ['locale' => 'en']) }}" class="dropdown-item @if(app()->getLocale() === 'en') active @endif">{{ __('app.en') }}</a>
-                </div>
-            </li>
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ __(sprintf('app.%s', app()->getLocale())) }}
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ route('locale', ['locale' => 'cs']) }}" class="dropdown-item @if(app()->getLocale() === 'cs') active @endif">{{ __('app.cs') }}</a></li>
+                    <li><a href="{{ route('locale', ['locale' => 'en']) }}" class="dropdown-item @if(app()->getLocale() === 'en') active @endif">{{ __('app.en') }}</a></li>
+                </ul>
+            </div>
             @if (Auth::guest())
                 @if (Route::has('login'))
                     <li class="nav-item">

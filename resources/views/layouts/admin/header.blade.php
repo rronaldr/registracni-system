@@ -11,6 +11,5 @@
     <link href="{{ asset('vendor/fontawesome/css/brands.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/datatables/datatables.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/airdatepicker/css/datepicker.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/admin/admin.css') }}" rel="stylesheet">
 </head>
