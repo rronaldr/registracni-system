@@ -32,7 +32,10 @@ Route::get('/enrollment/{date_id}', [EnrollmentController::class, 'show'])->name
 Route::post('/enrollment/{date_id}', [EnrollmentController::class, 'store'])->name('enrollment.store');
 
 // Auth routes
-Route::get('/login', [LoginController::class, 'shibbolethLogin'])->name('login');
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::get('/login/shibboleth', [LoginController::class, 'shibbolethLogin'])->name('login.shibboleth');
+Route::get('/login/graduate', [LoginController::class, 'graduateLogin'])->name('login.graduate');
+Route::get('/login/external', [LoginController::class, 'externalLogin'])->name('login.external');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Locale routes

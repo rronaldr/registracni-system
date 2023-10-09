@@ -5,6 +5,7 @@ return [
     'author' => 'Autor',
     'merge-tags' => 'Merge tagy',
     'app-title' => 'Registrační systém VŠE',
+    'login-picker' => 'Výběr přihlášení',
     'cs' => 'CZ',
     'en' => 'EN',
 
@@ -18,6 +19,10 @@ return [
     ],
     'auth' => [
         'login' => 'Přihlášení',
+        'login-picker' => 'Výběr přihlášení',
+        'shibboleth' => 'Přihlášení pro studenty a zaměstnance',
+        'graduate' => 'Přihlášení pro absolventy',
+        'external' => 'Přihlášení pro externisty',
     ],
     'blacklist' => [
         'user-hint' => 'Vkládejte xname jednotlivých uživatelů oddělených čárkou.<br> Například: <br><b>xname00, xname01, xname02, ...</b>',
