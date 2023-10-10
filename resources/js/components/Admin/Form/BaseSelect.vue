@@ -1,5 +1,5 @@
 <template>
-    <label v-if="label">{{ label }}</label>
+    <label v-if="label">{{ inputLabel }}</label>
     <select
         :value="modelValue"
         class="form-control"
@@ -19,6 +19,8 @@
 </template>
 
 <script setup>
+    import {useAttrs} from "vue";
+
     const props = defineProps({
         label: {type: String, default: ''},
         modelValue: {type: [String, Number], default: ''},
@@ -26,4 +28,10 @@
         placeholder: {type: Boolean, required: false},
         placeholderText: {type: String, required: false}
     })
+
+    const attrs = useAttrs()
+
+    let inputLabel = attrs.required != null && attrs.required === true
+        ? props.label+'*'
+        : props.label
 </script>

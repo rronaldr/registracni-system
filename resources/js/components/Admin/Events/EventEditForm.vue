@@ -1,7 +1,7 @@
 <template>
     <div class="row mb-3">
         <div class="col">
-            <h4>ADMIN</h4>
+            <h4>ADMIN section</h4>
             <table class="table table-responsive">
                 <thead>
                 <tr>

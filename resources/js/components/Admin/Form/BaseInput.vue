@@ -1,5 +1,5 @@
 <template>
-    <label>{{ label }}</label>
+    <label>{{ inputLabel }}</label>
     <input
         v-bind="$attrs"
         :placeholder="label"
@@ -10,8 +10,15 @@
 </template>
 
 <script setup>
+    import {useAttrs} from "vue";
+
     const props = defineProps({
         label: { type: String, default: ''},
         modelValue: { type: [String, Number], default: ''},
     })
+    const attrs = useAttrs()
+
+    let inputLabel = attrs.required != null && attrs.required === true
+        ? props.label+'*'
+        : props.label
 </script>
