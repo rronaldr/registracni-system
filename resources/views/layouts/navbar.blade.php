@@ -16,7 +16,7 @@
             @if (Auth::guest())
                 @if (Route::has('login'))
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        <a class="nav-link" href="{{ route('login') }}">{{ __('app.auth.login') }}</a>
                     </li>
                 @endif
             @else
@@ -29,7 +29,7 @@
                         <a class="dropdown-item" href="#">
                             Moje přihlášky
                         </a>
-                        <a class="dropdown-item" href="{{ route('logout') }}">{{ __('Logout') }}</a>
+                        <a class="dropdown-item" href="{{ route('logout') }}">{{ __('app.auth.logout') }}</a>
                     </div>
                 </li>
             @endguest

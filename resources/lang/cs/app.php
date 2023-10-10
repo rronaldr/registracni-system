@@ -18,11 +18,16 @@ return [
         'back' => 'Zpět',
     ],
     'auth' => [
-        'login' => 'Přihlášení',
+        'login' => 'Přihlásit se',
         'login-picker' => 'Výběr přihlášení',
         'shibboleth' => 'Přihlášení pro studenty a zaměstnance',
         'graduate' => 'Přihlášení pro absolventy',
         'external' => 'Přihlášení pro externisty',
+        'password' => 'Heslo',
+        'password-confirm' => 'Zopakujte heslo',
+        'remember_me' => 'Zapamatovat si přihlášení',
+        'logout' => 'Odhlásit se',
+        'register' => 'Registrovat se'
     ],
     'blacklist' => [
         'user-hint' => 'Vkládejte xname jednotlivých uživatelů oddělených čárkou.<br> Například: <br><b>xname00, xname01, xname02, ...</b>',

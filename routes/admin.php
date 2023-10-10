@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\Admin\Auth\LoginController;
-use App\Http\Controllers\Admin\Auth\RegisterController;
 use App\Http\Controllers\Admin\BlacklistController;
 use App\Http\Controllers\Admin\DateController;
 use App\Http\Controllers\Admin\EventController;
@@ -59,15 +57,4 @@ Route::middleware(['auth'])->group(function () {
     Route::post('templates/{id}/approve', [TemplateController::class, 'approve'])->name('admin.templates.approve');
     Route::get('templates/approved', [TemplateController::class, 'getApprovedTemplates'])->name('admin.templates.approved');
     Route::get('templates/{user}/show-user', [TemplateController::class, 'showAuthorTemplates'])->name('admin.templates.author');
-
-    Route::post('logout', [LoginController::class, 'logout'])->name('admin.logout');
-});
-
-Route::middleware(['guest'])->group(function () {
-    // Auth routes
-    Route::get('/register', [RegisterController::class, 'index'])->name('admin.register');
-    Route::post('/register', [RegisterController::class, 'register']);
-    Route::get('/login',[LoginController::class, 'index'])->name('admin.login');
-    Route::post('/login',[LoginController::class, 'login']);
-
 });

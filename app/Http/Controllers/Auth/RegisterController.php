@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Auth;
+namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -13,7 +13,7 @@ class RegisterController extends Controller
 {
     public function index(): View
     {
-        return view('admin.auth.register');
+        return view('auth.register');
     }
 
     public function register(Request $request): RedirectResponse
@@ -34,7 +34,7 @@ class RegisterController extends Controller
 
         auth()->attempt($request->only('email', 'password'));
 
-        return redirect()->route('admin');
+        return redirect()->route('events.index');
     }
 
 }
