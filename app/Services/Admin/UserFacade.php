@@ -4,6 +4,7 @@ namespace App\Services\Admin;
 
 use App\Models\User;
 use App\Repositories\UserRepository;
+use Spatie\Permission\Models\Role;
 
 class UserFacade
 {
@@ -48,5 +49,32 @@ class UserFacade
     public function getUserById(int $id): ?User
     {
         return $this->userRepository->getUserById($id);
+    }
+
+    public function findUserByXnameOrEmail(string $search): ?User
+    {
+        return $this->userRepository->findUserByXnameOrEmail($search);
+    }
+
+    public function assignRole(int $userId, int $roleId): void
+    {
+        $user = $this->getUserById($userId);
+        $role = Role::query()->where('id', $roleId)->first();
+        if (!isset($user)) {
+            return;
+        }
+
+        $user->assignRole($role);
+    }
+
+    public function revokeRole(int $userId, int $roleId): void
+    {
+        $user = $this->getUserById($userId);
+        $role = Role::query()->where('id', $roleId)->first();
+        if (!isset($user)) {
+            return;
+        }
+
+        $user->removeRole($role);
     }
 }

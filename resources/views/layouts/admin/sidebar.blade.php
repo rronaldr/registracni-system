@@ -5,17 +5,20 @@
     </div>
     <ul class="list-unstyled components text-secondary">
         <li>
-            <a href="{{ route('admin.events') }}"><i class="fas fa-home"></i>Události</a>
+            <a href="{{ route('admin.events') }}"><i class="fas fa-home"></i>{{ __('app.event.events') }}</a>
         </li>
         <li>
-            <a href="{{ route('admin.blacklist') }}"><i class="fas fa-list"></i>Blacklist</a>
+            <a href="{{ route('admin.blacklist') }}"><i class="fas fa-list"></i>{{ __('app.blacklist.blacklist') }}</a>
         </li>
         <li>
-            <a href="{{ route('admin.templates') }}"><i class="fas fa-envelope"></i>Šablony</a>
+            <a href="{{ route('admin.templates') }}"><i class="fas fa-envelope"></i>{{ __('app.templates.templates') }}</a>
+        </li>
+        <li>
+            <a href="{{ route('admin.users') }}"><i class="fas fa-users"></i>{{ __('app.user.users') }}</a>
         </li>
         <li>
             <a href="{{ route('events.index') }}" target="_blank">
-                <i class="fas fa-external-link-alt"></i>Kalendář
+                <i class="fas fa-external-link-alt"></i>{{ __('app.app') }}
             </a>
         </li>
 

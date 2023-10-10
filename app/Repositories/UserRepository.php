@@ -39,4 +39,15 @@ class UserRepository {
         return $user;
     }
 
+    public function findUserByXnameOrEmail(string $search): ?User
+    {
+        /** @var User $user */
+        $user = User::query()
+            ->where('xname', 'LIKE', sprintf('%%%s%%',$search))
+            ->orWhere('email', 'LIKE', sprintf('%%%s%%',$search))
+            ->first();
+
+        return $user;
+    }
+
 }

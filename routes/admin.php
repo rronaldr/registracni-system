@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\BlacklistController;
 use App\Http\Controllers\Admin\DateController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\TemplateController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
@@ -57,4 +58,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('templates/{id}/approve', [TemplateController::class, 'approve'])->name('admin.templates.approve');
     Route::get('templates/approved', [TemplateController::class, 'getApprovedTemplates'])->name('admin.templates.approved');
     Route::get('templates/{user}/show-user', [TemplateController::class, 'showAuthorTemplates'])->name('admin.templates.author');
+
+    // User routes
+    Route::get('/users', [UserController::class, 'index'])->name('admin.users');
+    Route::get('/users/{search}', [UserController::class, 'findUser'])->name('admin.users.find');
+    Route::get('/users/{id}/roles', [UserController::class, 'getUserByIdWithRoles'])->name('admin.users.roles.list');
+    Route::post('/users/{id}/roles/assign', [UserController::class, 'assignRole'])->name('admin.users.roles.assign');
+    Route::post('/users/{id}/roles/revoke', [UserController::class, 'revokeRole'])->name('admin.users.roles.revoke');
 });

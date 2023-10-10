@@ -8,6 +8,7 @@ return [
     'login-picker' => 'Výběr přihlášení',
     'cs' => 'CZ',
     'en' => 'EN',
+    'app' => 'Aplikace',
 
     'actions' => [
         'edit' => 'Editovat',
@@ -30,6 +31,7 @@ return [
         'register' => 'Registrovat se'
     ],
     'blacklist' => [
+        'blacklist' => 'blacklist',
         'user-hint' => 'Vkládejte xname jednotlivých uživatelů oddělených čárkou.<br> Například: <br><b>xname00, xname01, xname02, ...</b>',
         'block_reason' => 'Důvod blokace',
         'blocked_until' => 'Blokace do',
@@ -46,6 +48,7 @@ return [
         'capacity' => 'Kapacita',
     ],
     'event' => [
+        'events' => 'Události',
         'status' => [
             '1' => 'Publikováno',
             '2' => 'Koncept',
@@ -76,6 +79,7 @@ return [
         'last_name' => 'Příjmení',
         'email' => 'Email',
         'xname' => 'Xname',
+        'users' => 'Uživatelé'
     ],
     'templates' => [
         'template' => 'Šablona',

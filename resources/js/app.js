@@ -1,5 +1,4 @@
 require('./bootstrap');
-
 import { createApp } from 'vue';
 import { createI18n } from 'vue-i18n';
 
@@ -11,6 +10,7 @@ import FormButtons from "./components/Admin/Form/FormButtons.vue";
 import BlacklistPage from "./components/Admin/Blacklist/BlacklistPage.vue";
 import EventCreateForm from "./components/Admin/Events/EventCreateForm.vue";
 import EventEditForm from "./components/Admin/Events/EventEditForm.vue";
+import Roles from "./components/Admin/Roles/Roles.vue";
 // Components
 import EventList from "./components/Event/EventList";
 import EventDetail from "./components/Event/EventDetail";
@@ -33,6 +33,7 @@ const app = createApp({
         EventList,
         EventDetail,
         Enrollment,
+        Roles
     },
 });
 

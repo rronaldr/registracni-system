@@ -110,7 +110,12 @@
         "users": "Xname uživatelů"
     },
     "user": {
-        "xname": "Xname"
+        "xname": "Xname",
+        "user_xname_email": "Zadejte xname nebo email uživatele",
+        "assign_role": "Přiřaďte roli",
+        "not_found": "Uživatel nenalezen",
+        "user_no_roles": "Uživatel nemá přidělenou žádnou roli",
+        "role_name": "Role přiřazené uživateli"
     },
     "user_group": {
         "1": "Všichni",
