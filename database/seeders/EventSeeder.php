@@ -33,6 +33,8 @@ class EventSeeder extends Seeder
                 {"id":1,"label":"Jméno","type":"text","default":null,"required":true,"value":"name"},
                 {"id":2,"label":"Pohlaví","type":"select","options":"Muž,Žena","default":"male","required":true, "value":"gender"}
             ]',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
     }
 }

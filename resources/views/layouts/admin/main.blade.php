@@ -18,10 +18,10 @@
     </div>
 </div>
 
-<script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-<script src="{{ asset('js/admin/admin.js') }}"></script>
+<script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('vendor/datatables/datatables.min.js') }}"></script>
+<script src="{{ asset('js/admin/admin.js') }}"></script>
 @yield('scripts')
 </body>
 
