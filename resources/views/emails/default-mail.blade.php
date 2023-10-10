@@ -231,10 +231,12 @@
                                            style="border-collapse:collapse;border-spacing:0px;">
                                         <tbody>
                                         <tr>
-                                            <td style="width:234px;"><img height="auto"
-                                                                          src="https://storage.googleapis.com/ronald38635/logo-horizontal-cs-01.png"
-                                                                          style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;"
-                                                                          width="234"></td>
+                                            <td style="width:234px;">
+                                                <img height="auto"
+                                                     src="https://storage.googleapis.com/ronald38635/logo-horizontal-cs-01.png"
+                                                     style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;"
+                                                     width="234">
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -267,7 +269,7 @@
                             <tr>
                                 <td align="left"
                                     style="font-size:0px;padding:10px 35px 20px 35px;word-break:break-word;">
-                                    <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11;line-height:1.5;text-align:left;color:#000000;">
+                                    <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1.5;text-align:left;color:#000000;">
                                         {{ $content }}
                                     </div>
                                 </td>
@@ -288,7 +290,8 @@
                             src="https://storage.googleapis.com/ronald38635/net-inv-top-01_edited_69a32a58-5efb-476a-8a74-1949c176719c.png"
                             color="#FFFFFF" type="tile"/>
                     <v:textbox style="mso-fit-shape-to-text:true" inset="0,0,0,0"><![endif]-->
-    <div style="background:#FFFFFF url(https://storage.googleapis.com/ronald38635/net-inv-top-01_edited_69a32a58-5efb-476a-8a74-1949c176719c.png) top center / cover repeat;margin:0px auto;max-width:600px;">
+    <div
+        style="background:#FFFFFF url(https://storage.googleapis.com/ronald38635/net-inv-top-01_edited_69a32a58-5efb-476a-8a74-1949c176719c.png) top center / cover repeat;margin:0px auto;max-width:600px;">
         <div style="line-height:0;font-size:0;">
             <table align="center"
                    background="https://storage.googleapis.com/ronald38635/net-inv-top-01_edited_69a32a58-5efb-476a-8a74-1949c176719c.png"
@@ -308,7 +311,8 @@
                                 <tr>
                                     <td align="left"
                                         style="font-size:0px;padding:0px 35px 0px 35px;word-break:break-word;">
-                                        <div style="font-family:Lato, Tahoma, sans-serif;font-size:11;line-height:1.5;text-align:left;color:#1D1D1D;">
+                                        <div
+                                            style="font-family:Lato, Tahoma, sans-serif;font-size:11px;line-height:1.5;text-align:left;color:#1D1D1D;">
                                             <p style="font-size: 11px; font-family: Ubuntu, Helvetica, Arial;"><span
                                                     style="color: rgb(255, 255, 255);"><span
                                                         style="font-size: 19px;"><span
@@ -341,7 +345,7 @@
                                                            style="background:transparent;border-radius:3px;width:35px;">
                                                         <tr>
                                                             <td style="font-size:0;height:35px;vertical-align:middle;width:35px;">
-                                                                <a href="https://www.linkedin.com/school/vysok%C3%A1-%C5%A1kola-ekonomick%C3%A1-v-praze/"
+                                                                <a href="https://www.facebook.com/vse.cz"
                                                                    target="_blank" style="color: #0000EE;"><img
                                                                         height="35"
                                                                         src="https://s3-eu-west-1.amazonaws.com/ecomail-assets/editor/social-icos/simplewhite/facebook.png"
@@ -385,11 +389,12 @@
                                                            style="background:transparent;border-radius:3px;width:35px;">
                                                         <tr>
                                                             <td style="font-size:0;height:35px;vertical-align:middle;width:35px;">
-                                                                <a href="linkedin-noshare" target="_blank"
-                                                                   style="color: #0000EE;"><img height="35"
-                                                                                                src="https://s3-eu-west-1.amazonaws.com/ecomail-assets/editor/social-icos/simplewhite/linkedin.png"
-                                                                                                style="border-radius:3px;display:block;"
-                                                                                                width="35"></a></td>
+                                                                <a href="https://www.linkedin.com/school/vysok%C3%A1-%C5%A1kola-ekonomick%C3%A1-v-praze/"
+                                                                   target="_blank" style="color: #0000EE;"><img
+                                                                        height="35"
+                                                                        src="https://s3-eu-west-1.amazonaws.com/ecomail-assets/editor/social-icos/simplewhite/linkedin.png"
+                                                                        style="border-radius:3px;display:block;"
+                                                                        width="35"></a></td>
                                                         </tr>
                                                     </table>
                                                 </td>

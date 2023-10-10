@@ -6,7 +6,6 @@ namespace App\Services\Admin;
 use App\Models\Template;
 use App\Models\User;
 use App\Repositories\TemplateRepository;
-use App\Services\UserFacade;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;

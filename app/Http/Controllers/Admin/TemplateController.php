@@ -109,7 +109,7 @@ class TemplateController extends Controller
 
         Session::flash('message', trans('app.templates.test-sent-success'));
 
-        return redirect()->route('admin.templates');
+        return redirect()->back();
     }
 
     public function showApprovals(TemplateFacade $templateFacade): view
