@@ -28,15 +28,7 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-end mt-0" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('admin.logout') }}"
-                           onclick="event.preventDefault();
-                                     document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
-                        </a>
-
-                        <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
+                        <a class="dropdown-item" href="{{ route('logout') }}">{{ __('app.auth.logout') }}</a>
                     </div>
                 </li>
             @endguest

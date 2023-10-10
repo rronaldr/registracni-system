@@ -13,7 +13,7 @@
                     <li><a href="{{ route('locale', ['locale' => 'en']) }}" class="dropdown-item @if(app()->getLocale() === 'en') active @endif">{{ __('app.en') }}</a></li>
                 </ul>
             </div>
-            @if (Auth::guest())
+            @guest()
                 @if (Route::has('login'))
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">{{ __('app.auth.login') }}</a>
@@ -31,6 +31,9 @@
                         </a>
                         <a class="dropdown-item" href="{{ route('logout') }}">{{ __('app.auth.logout') }}</a>
                     </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin') }}">{{ __('Administrace') }}</a>
                 </li>
             @endguest
         </ul>
