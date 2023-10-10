@@ -301,7 +301,7 @@ function submitEvent() {
         }
     )
     .then(
-        // window.location.href = ADMIN_URL+'/events',
+        window.location.href = ADMIN_URL+'/events',
     )
     .catch(e => {
         console.log(e.response.data)

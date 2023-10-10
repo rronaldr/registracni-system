@@ -17,7 +17,8 @@ class EnrollmentController extends Controller
         $fields = $eventFacade->getEventCustomFields($dateId);
 
         return view('enrollment', [
-            'fields' => $fields
+            'dateId' => $dateId,
+            'fields' => collect($fields->c_fields)
         ]);
     }
 

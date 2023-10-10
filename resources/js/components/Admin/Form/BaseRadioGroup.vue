@@ -1,6 +1,7 @@
 <template>
     <BaseRadio
         v-for="option in options"
+        v-bind="$attrs"
         :key="option.value"
         :label="option.label"
         :value="option.value"

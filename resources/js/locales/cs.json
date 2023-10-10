@@ -141,6 +141,7 @@
             "1": "Přihlášen",
             "2": "Náhradník",
             "3": "Odhlášen"
-        }
+        },
+        "form_select_placeholder": "Vyberte z nabídky"
     }
 }

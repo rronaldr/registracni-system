@@ -64,6 +64,7 @@ return [
         'send-test' => 'Poslat testovací email',
     ],
     'enrollment' => [
+        'enrollment_form' => 'Přihlašovací formulář',
         'list' => 'Seznam účastníků',
         'enrolled' => 'Přihlášen',
         'c_fields' => 'Vyplněné hodnoty'

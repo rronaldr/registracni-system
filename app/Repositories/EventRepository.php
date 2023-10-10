@@ -60,7 +60,7 @@ class EventRepository
         /** @var \App\Models\Event $event */
         $event = Event::query()
             ->with(['dates' => fn($q) => $q->where('id', $dateId)])
-            ->select(['id', 'c_fields'])
+            ->select('id', 'c_fields')
             ->first();
 
         return $event;

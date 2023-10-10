@@ -5,6 +5,7 @@
         :id="id"
         @change="$emit('update:modelValue', $event.target.checked)"
         class="form-check-input field mr-1"
+        v-bind="$attrs"
     />
     <label v-if="label" :for="id" class="form-check-label">{{ inputLabel }}</label>
 </template>
