@@ -99,7 +99,10 @@
         "template_content": "Obsah šablony",
         "user_group": "Skupina uživatelů",
         "user_group_placeholder": "Vyberte kdo se může na událost přihlásit",
-        "status": "Stav"
+        "status": "Stav",
+        "export": "Export",
+        "export_emails": "Exportovat emaily",
+        "duplicate": "Duplikovat"
     },
     "blacklist": {
         "blocked_until": "Blokace do",

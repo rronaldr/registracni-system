@@ -248,7 +248,6 @@ let errors = ref(null)
 getApprovedTemplates()
 
 if (props.event != null) {
-    console.log('event tags')
     getEventTags()
 }
 

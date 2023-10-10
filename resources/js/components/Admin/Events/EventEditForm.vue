@@ -31,6 +31,14 @@
         </div>
     </div>
 
+    <div class="row mb-3 justify-content-end">
+        <div class="col-5 text-end">
+            <a type="button" class="btn btn-secondary mx-1" :href="ADMIN_URL+'/events/'+ event.id +'/duplicate'"><i class="fas fa-copy"></i> {{ $t('event.duplicate') }}</a>
+            <a type="button" class="btn btn-secondary mx-1" :href="ADMIN_URL+'/events/'+ event.id +'/users/export'"><i class="fas fa-file-export"></i> {{ $t('event.export') }}</a>
+            <a type="button" class="btn btn-secondary mx-1" :href="ADMIN_URL+'/events/'+ event.id +'/users/export-email'"><i class="fas fa-envelope"></i> {{ $t('event.export_emails') }}</a>
+        </div>
+    </div>
+
     <form method="post" enctype="multipart/form-data" @submit.prevent="submitEvent">
         <slot name="csrf"></slot>
 

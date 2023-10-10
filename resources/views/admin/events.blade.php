@@ -44,11 +44,8 @@
                                     Zobrazit všechny účastníky
                                 </a></td>
                             <td class="text-end">
-                                <a href="{{ route('admin.events.edit', ['id' => $event->id]) }}" class="btn btn-outline-primary btn-rounded" title="{{__('app.actions.edit')}}"><i class="fas fa-pen"></i></a>
-                                <form class="d-inline" action="{{ route('admin.events.duplicate', ['id' => $event->id]) }}" method="post">
-                                    @csrf
-                                    <button type="submit" title="{{__('app.actions.duplicate')}}" class="btn btn-outline-info btn-rounded"> <i class="fas fa-copy"></i></button>
-                                </form>
+                                <a href="{{ route('admin.events.edit', ['id' => $event->id]) }}" class="btn btn-outline-primary btn-rounded mx-1" title="{{__('app.actions.edit')}}"><i class="fas fa-pen"></i></a>
+                                <a href="{{ route('admin.events.duplicate', ['id' => $event->id]) }}" class="btn btn-outline-info btn-rounded mx-1" title="{{__('app.actions.duplicate')}}"><i class="fas fa-copy"></i></a>
                                 <form class="d-inline" action="{{ route('admin.events.destroy', ['id' => $event->id]) }}" method="post">
                                     @csrf
                                     @method('DELETE')
@@ -119,11 +116,7 @@
             </div>
             <!-- Custom users modal end -->
 
-            <div class="row justify-content-end">
-                <div class="float-right">
-                    {!! $events->appends(\Request::except('page'))->render() !!}
-                </div>
-            </div>
+            {{ $events->links() }}
         </div>
 
     </div>
