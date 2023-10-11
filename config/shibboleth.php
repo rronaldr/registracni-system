@@ -36,7 +36,7 @@ return [
         'xname' => 'uid',
         'emplid' => 'Shib-emplId',
         'display_name' => 'displayName',
-        'roles' => 'eduPersonAffiliation',
+        'entitlements' => 'eduPersonAffiliation',
     ],
 
     //The user model field (from the user array above) that should be used for authentication
