@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('last_name')->nullable();
             $table->string('display_name')->nullable();
             $table->string('locale')->default('cs');
-            $table->string('entitlements')->nullable();
+            $table->string('entitlement')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
