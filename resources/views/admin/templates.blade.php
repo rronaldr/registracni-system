@@ -32,6 +32,7 @@
                 </thead>
 
                 <tbody>
+                @if(count($templates) > 0)
                 @foreach($templates as $template)
                     <tr>
                         <td><a href="{{ route('admin.templates.edit', ['id' => $template->id]) }}" class="link-primary">{{ $template->name }}</a></td>
@@ -56,6 +57,7 @@
                         </td>
                     </tr>
                 @endforeach
+                @endif
                 </tbody>
             </table>
 
