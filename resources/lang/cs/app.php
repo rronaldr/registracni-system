@@ -31,7 +31,7 @@ return [
         'register' => 'Registrovat se'
     ],
     'blacklist' => [
-        'blacklist' => 'blacklist',
+        'blacklist' => 'Blacklist',
         'user-hint' => 'Vkládejte xname jednotlivých uživatelů oddělených čárkou.<br> Například: <br><b>xname00, xname01, xname02, ...</b>',
         'block_reason' => 'Důvod blokace',
         'blocked_until' => 'Blokace do',
