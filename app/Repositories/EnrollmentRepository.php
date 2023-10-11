@@ -18,4 +18,14 @@ class EnrollmentRepository
 
         return $enrollment;
     }
+
+    public function checkExistsEnrollmentByDateAndUser(int $dateId, int $userId): bool
+    {
+        $enrollment = Enrollment::query()
+            ->where('date_id', $dateId)
+            ->where('user_id', $userId)
+            ->first();
+
+        return !($enrollment === null);
+    }
 }

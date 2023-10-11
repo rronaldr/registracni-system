@@ -67,7 +67,8 @@ return [
         'enrollment_form' => 'Přihlašovací formulář',
         'list' => 'Seznam účastníků',
         'enrolled' => 'Přihlášen',
-        'c_fields' => 'Vyplněné hodnoty'
+        'c_fields' => 'Vyplněné hodnoty',
+        'already_exists' => 'Pro tento termín již máte podanou přihlášku.'
     ],
     'c_fields' => [
         'name' => 'Název tagu',

@@ -23,4 +23,14 @@ class UserFacade
         return $this->userRepository->getUserForEmail($id);
     }
 
+    public function getCurrentUser(): ?User
+    {
+        if (auth()->check()){
+            $user = $this->userRepository->getUserById(auth()->user()->id);
+            return $user;
+        } else {
+            return null;
+        }
+    }
+
 }

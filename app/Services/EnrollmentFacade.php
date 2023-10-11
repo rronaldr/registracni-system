@@ -4,7 +4,9 @@ declare(strict_types = 1);
 
 namespace App\Services;
 
+use App\Enums\EnrollmentStates;
 use App\Mail\CustomHtmlMail;
+use App\Models\Enrollment;
 use App\Repositories\EnrollmentRepository;
 use App\Services\Admin\DateFacade;
 use App\Services\Admin\TemplateFacade;
@@ -15,35 +17,70 @@ use Illuminate\Support\Facades\Mail;
 
 class EnrollmentFacade
 {
-
     private EnrollmentRepository $enrollmentRepository;
     private UserFacade $userFacade;
+    private EventFacade $eventFacade;
+    private EmailFacade $emailFacade;
     private DateFacade $dateFacade;
-    private TemplateFacade $templateFacade;
 
-    public function __construct(EnrollmentRepository $enrollmentRepository, UserFacade $userFacade, DateFacade $dateFacade, TemplateFacade $templateFacade){
+    public function __construct(
+        EnrollmentRepository $enrollmentRepository,
+        UserFacade $userFacade,
+        EventFacade $eventFacade,
+        DateFacade $dateFacade,
+        EmailFacade $emailFacade
+    ){
         $this->enrollmentRepository = $enrollmentRepository;
         $this->userFacade = $userFacade;
+        $this->eventFacade = $eventFacade;
         $this->dateFacade = $dateFacade;
-        $this->templateFacade = $templateFacade;
+        $this->emailFacade = $emailFacade;
     }
 
-    /** @todo Refactor email send and save enrollment */
-    public function createEnrollment(int $dateId, Request $request): void
+    public function createEnrollment(int $dateId, int $eventId, Request $request): void
     {
         $date = $this->dateFacade->getDateById($dateId);
-        $event = $date->getRelation('event');
         $user = $this->userFacade->getCurrentUser();
-        $userData = $this->userFacade->getUserForEmail($user->id);
-        $template = $this->templateFacade->getTemplateById($event->template_id);
-        $enrollmentData = collect($request->get('enrollment'));
+        $enrollmentData = collect($request->get('data'))->values()->toArray();
 
-        $templateWithContent = str_replace('[message]', $event->template_content, $template->html);
+        Enrollment::create([
+            'user_id' => $user->id,
+            'date_id' => $date->id,
+            'state' => $date->getSignedCount() >= $date->capacity ? EnrollmentStates::SUBSTITUTE : EnrollmentStates::SIGNED,
+            'c_fields' => $enrollmentData
+        ]);
+        /** @todo Refactor email send in EmailFacade */
+//        $this->emailFacade->sendUserEnrolledEmail();
+    }
 
-        $finalHtml = Blade::render($templateWithContent, ['user' => $userData, 'params' => $enrollmentData->toArray()]);
+    public function getValidationRulesForTags(array $fields): ?array
+    {
+        return collect($fields)->mapWithKeys(function ($field): ?array
+        {
+            $rules = collect();
+            if ($field['required']) {
+                $rules->push('required');
+            }
 
-        Mail::to([$user->email])
-            ->send(new CustomHtmlMail($event->template_subject, $finalHtml, $userData));
+            switch($field['type']) {
+                case in_array($field['type'], ['text', 'url']):
+                    $rules->push('string');
+                    break;
+                case in_array($field['type'], ['number', 'tel']):
+                    $rules->push('numeric');
+                    break;
+                case 'email':
+                    $rules->push('email');
+                    break;
+            }
+
+            return [sprintf('%s.value',$field['value']) => $rules->implode('|')];
+        })->filter(static fn($rule) => !empty($rule))->toArray();
+    }
+
+    public function checkExistingEnrollment(int $dateId, int $userId): bool
+    {
+        return $this->enrollmentRepository->checkExistsEnrollmentByDateAndUser($dateId, $userId);
     }
 
 }

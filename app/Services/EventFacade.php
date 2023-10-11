@@ -45,4 +45,9 @@ class EventFacade
     {
         return $this->eventRepository->getEventCustomFields($dateId);
     }
+
+    public function getEventById(int $id): Event
+    {
+        return $this->eventRepository->getEventById($id);
+    }
 }

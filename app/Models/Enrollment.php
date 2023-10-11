@@ -14,6 +14,8 @@ class Enrollment extends Model
 
     /** @var array $fillable */
     protected $fillable = [
+        'date_id',
+        'user_id',
         'state',
         'c_fields',
     ];

@@ -8,7 +8,7 @@
             v-bind="$attrs"
             class="form-check-input"
         />
-        <label v-if="label" class="form-check-label">{{ inputLabel }}</label>
+        <label v-if="label" class="form-check-label">{{ label }}</label>
     </div>
 </template>
 
@@ -20,11 +20,5 @@ const props = defineProps({
     modelValue: {type: [String, Number], default: ''},
     value: {type: [String, Number], required: true}
 })
-
-const attrs = useAttrs()
-
-let inputLabel = attrs.required != null && attrs.required === true
-    ? props.label+'*'
-    : props.label
 
 </script>

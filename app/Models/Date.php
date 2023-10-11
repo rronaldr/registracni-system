@@ -38,4 +38,9 @@ class Date extends Model
     {
         return $this->belongsTo(Event::class);
     }
+
+    public function getSignedCount(): int
+    {
+        return $this->enrollments()->where('state',1)->count();
+    }
 }

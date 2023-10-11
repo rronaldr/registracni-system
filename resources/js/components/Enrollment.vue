@@ -10,6 +10,16 @@
                 </div>
             </div>
 
+            <div v-if="errors" class="row mb-3">
+                <div class="bg-danger text-white py-2 px-4 pr-0 rounded font-bold mb-4 shadow-lg">
+                    <div v-for="(v, k) in errors" :key="k">
+                        <p v-for="error in v" :key="error" class="text-sm">
+                            {{ error.toUpperCase() }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
             <form @submit.prevent="submitEnrollment">
                 <div class="mt-2">
                     <div
@@ -17,11 +27,12 @@
                         :key="field.id"
                         class="row p-2"
                     >
+                        <label v-if="['radio'].includes(field.type)" class="col-1">{{ field.required ? `${field.label}*` : field.label }}</label>
                         <div class="col">
                             <Component
                                 v-if="['text', 'number', 'email', 'tel', 'date', 'url'].includes(field.type)"
                                 :is="BaseInput"
-                                v-model="form[field.value]"
+                                v-model="form[field.value].value"
                                 :type="field.type"
                                 :label="field.label"
                                 :required="field.required"
@@ -30,7 +41,7 @@
                             <Component
                                 v-else-if="['textarea'].includes(field.type)"
                                 :is="BaseTextarea"
-                                v-model="form[field.value]"
+                                v-model="form[field.value].value"
                                 :label="field.label"
                                 :required="field.required"
                                 :name="field.value"
@@ -38,7 +49,7 @@
                             <Component
                                 v-else-if="['select'].includes(field.type)"
                                 :is="BaseSelect"
-                                v-model="form[field.value]"
+                                v-model="form[field.value].value"
                                 :label="field.label"
                                 :required="field.required"
                                 :name="field.value"
@@ -46,10 +57,11 @@
                                 :placeholder="true"
                                 :placeholder-text="$t('enrollment.form_select_placeholder')"
                             />
+
                             <Component
                                 v-else-if="['radio'].includes(field.type)"
                                 :is="BaseRadioGroup"
-                                v-model="form[field.value]"
+                                v-model="form[field.value].value"
                                 :required="field.required"
                                 :name="field.value"
                                 :options="getFieldOptions(field)"
@@ -57,7 +69,7 @@
                             <Component
                                 v-else-if="['checkbox'].includes(field.type)"
                                 :is="BaseCheckbox"
-                                v-model="form[field.value]"
+                                v-model="form[field.value].value"
                                 :id="field.value"
                                 :required="field.required"
                                 :name="field.value"
@@ -78,7 +90,7 @@
 </template>
 
 <script setup>
-import {inject, reactive} from "vue";
+import {inject, reactive, ref} from "vue";
 import axios from "axios";
 import BaseInput from "./Admin/Form/BaseInput.vue";
 import BaseSelect from "./Admin/Form/BaseSelect.vue";
@@ -92,13 +104,20 @@ const props = defineProps({
 })
 const APP_URL = inject('APP_URL')
 let form = reactive({})
+let errors = ref(null)
 
 createFormBinding()
 function createFormBinding() {
   props.fields.map(function(field) {
-    form[field.value] = field.default != null
-        ? field.default
-        : null
+    form[field.value] = {
+        name: field.value,
+        value: field.default != null ? field.default : null,
+        label: field.label,
+    }
+
+    if(field.type === 'checkbox') {
+        form[field.value].value = false
+    }
   })
 }
 
@@ -117,12 +136,19 @@ function getFieldOptions(field) {
     return optionsArray
 }
 
-function submitEnrollment(event) {
-    console.log(event)
-    // axios.post(APP_URL +'/enrollment/' + 1,
-    //     {
-    //         enrollment: {name: "Ronald", gender: "Muž"}
-    //     }
-    // )
+async function submitEnrollment() {
+    axios.post(APP_URL +'/enrollment/' + props.dateId,
+        {
+            data: form
+        }
+    ).then((response) => {
+      if (response.status === 204) {
+        window.location.href = APP_URL
+      }
+    }
+    ).catch((e) => {
+        errors.value = e.response.data.errors
+        window.scrollTo(0,0);
+    })
 }
 </script>
