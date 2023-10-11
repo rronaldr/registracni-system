@@ -38,58 +38,6 @@
             </div>
         </div>
     </div>
-
-
-    <div class="col-lg-4">
-        <div class="card card-margin">
-            <div class="card-header no-border">
-                <h5 class="card-title">Promoce absolventů bakalářského studia FIS</h5>
-            </div>
-            <div class="card-body pt-0">
-                <div class="widget-49">
-                    <div class="widget-49-title-wrapper">
-                        <div class="widget-49-date-primary">
-                            <span class="widget-49-date-day">12</span>
-                            <span class="widget-49-date-month">čvc</span>
-                        </div>
-                        <div class="widget-49-meeting-info">
-                            <span class="widget-49-pro-title">Vencovského aula</span>
-                            <span class="widget-49-meeting-time">12:00 to 13.30 Hrs</span>
-                        </div>
-                    </div>
-                    <div class="widget-49-meeting-action">
-                        <a href="#" class="btn btn-sm btn-flash-border-primary">Více informací</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4">
-        <div class="card card-margin">
-            <div class="card-header no-border">
-                <h5 class="card-title">Začátek výuky</h5>
-            </div>
-            <div class="card-body pt-0">
-                <div class="widget-49">
-                    <div class="widget-49-title-wrapper">
-                        <div class="widget-49-date-primary">
-                            <span class="widget-49-date-day">30</span>
-                            <span class="widget-49-date-month">čvc</span>
-                        </div>
-                        <div class="widget-49-meeting-info">
-                            <span class="widget-49-pro-title">(ZS 2023/24)</span>
-                            <span class="widget-49-meeting-time">12:00 to 13.30 Hrs</span>
-                        </div>
-                    </div>
-<!--                    <span>první týden výuky v zimním semestru</span>-->
-                    <div class="widget-49-meeting-action">
-                        <a href="#" class="btn btn-sm btn-flash-border-primary">Více informací</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </template>
 
 <style scoped>
