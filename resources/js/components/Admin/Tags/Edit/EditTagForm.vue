@@ -66,7 +66,9 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col">
+                        <div class="col"
+                             v-if="showRequired"
+                        >
                             <BaseCheckbox
                                 id="required"
                                 :label="$t('tag.required')"
@@ -99,11 +101,13 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col">
+                        <div class="col"
+                            v-if="showDefault"
+                        >
                             <BaseInput
                                 v-model="tag.default"
                                 :label="$t('tag.default')"
-                                type="text"
+                                :type="tag.type"
                             />
                         </div>
                     </div>
@@ -137,6 +141,8 @@ const {t} = useI18n({})
 
 let showTagForm = ref(false)
 let showOptions = ref(false)
+let showDefault = ref(false)
+let showRequired = ref(false)
 let edit = false
 let tag = reactive({
     id: null,
@@ -221,10 +227,16 @@ watch(
     () => tag.type,
     (type, prevType) => {
         showOptions = tag.type !== null && (
-            tag.type === 'checkbox'
-            || tag.type === 'select'
+            tag.type === 'select'
             || tag.type === 'radio'
         )
+        showDefault = tag.type !== null && (
+            tag.type !== 'checkbox'
+            && tag.type !== 'radio'
+            && tag.type !== 'select'
+        )
+        showRequired = tag.type !== null
+            && tag.type !== 'checkbox'
     }
 )
 
