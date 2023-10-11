@@ -35,7 +35,7 @@ class TagFacade
         $event = $this->eventRepository->getEventById($eventId);
         $tags = $event->getTagsCollection();
         $tags->push($data);
-        $event->c_fields = $tags->toArray();
+        $event->c_fields = $tags->values()->toArray();
         $event->save();
     }
 
@@ -44,7 +44,7 @@ class TagFacade
         $event = $this->eventRepository->getEventById($eventId);
         $tags = $event->getTagsCollection()->filter(static fn($tag) => $tag['id'] !== $tagId);
         $tags->push($data);
-        $event->c_fields = $tags->toArray();
+        $event->c_fields = $tags->values()->toArray();
         $event->save();
     }
 
@@ -53,7 +53,8 @@ class TagFacade
         $event = $this->eventRepository->getEventById($eventId);
         $remainingTags = $event->getTagsCollection()->filter(static fn($tag) => $tag['id'] !== $tagId);
 
-        $event->c_fields = $remainingTags->toArray();
+        /* @todo fix update issue*/
+        $event->c_fields = $remainingTags->values()->toArray();
         $event->save();
     }
 

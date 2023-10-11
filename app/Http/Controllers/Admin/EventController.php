@@ -158,9 +158,10 @@ class EventController extends Controller
     public function getEventTags(int $id, EventFacade $eventFacade): JsonResponse
     {
         $event = $eventFacade->getEventById($id);
+        $tags = collect($event->c_fields)->sortBy('id')->values()->toArray();
 
         return response()->json([
-            'tags' => $event->c_fields
+            'tags' => $tags
         ]);
     }
 
