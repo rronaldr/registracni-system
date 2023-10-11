@@ -34,9 +34,9 @@ return [
         'last_name' => 'sn',
         'email' => 'mail',
         'xname' => 'uid',
-        'emplid' => 'Shib-emplId',
+        'empl_id' => 'Shib-emplId',
         'display_name' => 'displayName',
-        'entitlements' => 'eduPersonAffiliation',
+        'entitlement' => 'eduPersonAffiliation',
     ],
 
     //The user model field (from the user array above) that should be used for authentication

@@ -21,12 +21,14 @@ class User extends Authenticatable
         'shibboleth_id',
         'xname',
         'absolvent_id',
+        'empl_id',
         'first_name',
         'last_name',
         'roles',
         'email',
         'password',
-        'display_name'
+        'display_name',
+        'entitlements'
     ];
 
     /**

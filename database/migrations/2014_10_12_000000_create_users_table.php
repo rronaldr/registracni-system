@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->integer('shibboleth_id')->nullable();
             $table->string('xname')->unique()->nullable();
             $table->string('absolvent_id')->nullable();
+            $table->string('empl_id')->nullable();
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
