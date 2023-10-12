@@ -1,12 +1,10 @@
 <template>
-    <div class="container">
-        <div class="row">
-            <EventItem
-                v-for="event in events"
-                :key="event.id"
-                :event="event"
-            />
-        </div>
+    <div class="row">
+        <EventItem
+            v-for="event in events"
+            :key="event.id"
+            :event="event"
+        />
     </div>
 
 </template>

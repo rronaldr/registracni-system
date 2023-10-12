@@ -10,6 +10,5 @@
     <link href="{{ asset('vendor/fontawesome/css/fontawesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/fontawesome/css/solid.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/fontawesome/css/brands.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/admin/admin.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
