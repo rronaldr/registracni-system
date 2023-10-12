@@ -1,12 +1,11 @@
-@extends('layouts.admin.main', ['title' => 'Události'])
+@extends('layouts.admin.main', ['title' => __('app.event.events')])
 
 @section('content')
     <div class="box box-primary">
-
-        <div class="row justify-content-center my-3 mx-1">
+        <div class="row justify-content-center my-1">
             <div class="col-12">
-                <a href="{{ route('admin.events.create') }}" class="btn btn-success float-end mx-1"><span class="fas fa-plus"></span> Vytvořit událost</a>
-                <a href="{{ route('admin.events.create') }}" class="btn btn-secondary float-end mx-1"><span class="fas fa-file-import"></span> Importovat</a>
+                <a href="{{ route('admin.events.create') }}" class="btn btn-outline-success rounded-0 float-right mx-1"><span class="fas fa-plus"></span> {{ __('app.event.create') }}</a>
+                <a href="{{ route('admin.events.create') }}" class="btn btn-outline-secondary rounded-0 float-right mx-1"><span class="fas fa-file-import"></span> {{ __('app.event.import') }}</a>
             </div>
         </div>
 
@@ -20,11 +19,11 @@
             <table width="100%" class="table table-hover" id="dataTables">
                 <thead>
                     <tr>
-                        <th>Název události</th>
-                        <th>Stav</th>
-                        <th>Termíny</th>
-                        <th>Od - Do</th>
-                        <th>Účastníci</th>
+                        <th>{{ __('app.event.name') }}</th>
+                        <th>{{ __('app.event.status-label') }}</th>
+                        <th>{{ __('app.date.dates') }}</th>
+                        <th>{{ __('app.date.from-to') }}</th>
+                        <th>{{ __('app.event.participants') }}</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -34,22 +33,22 @@
                         <tr>
                             <td><a href="{{ route('admin.events.edit', ['id' => $event->id]) }}" class="link-primary">{{ $event->name }}</a></td>
                             <td><span class="fa fa-circle @if($event->status === 1) text-success @else text-secondary @endif"></span> {{ __('app.event.status.'.$event->status) }}</td>
-                            <td><a href="#" class="link-primary" data-bs-toggle="modal" data-bs-target="#datesModal" onClick="getDates({{$event->id}})">
-                                    Zobrazit termíny ({{ $event->dates_count }})
+                            <td><a href="#" class="link-primary" data-toggle="modal" data-target="#datesModal" onClick="getDates({{$event->id}})">
+                                    {{ __('app.event.show-dates') }} ({{ $event->dates_count }})
                                 </a></td>
                             <td>
                                 {{ \Carbon\Carbon::parse($event->date_start_cache)->format('j.n.Y') }} - {{ \Carbon\Carbon::parse($event->date_end_cache)->format('j.n.Y') }}
                             </td>
-                            <td><a href="#" class="link-primary" data-bs-toggle="modal" data-bs-target="#usersModal" onClick="getUsers({{ $event->id }})">
-                                    Zobrazit všechny účastníky
+                            <td><a href="#" class="link-primary" data-toggle="modal" data-target="#usersModal" onClick="getUsers({{ $event->id }})">
+                                    {{ __('app.event.show-all-participants') }}
                                 </a></td>
-                            <td class="text-end">
-                                <a href="{{ route('admin.events.edit', ['id' => $event->id]) }}" class="btn btn-outline-primary btn-rounded mx-1" title="{{__('app.actions.edit')}}"><i class="fas fa-pen"></i></a>
-                                <a href="{{ route('admin.events.duplicate', ['id' => $event->id]) }}" class="btn btn-outline-info btn-rounded mx-1" title="{{__('app.actions.duplicate')}}"><i class="fas fa-copy"></i></a>
+                            <td class="text-right">
+                                <a href="{{ route('admin.events.edit', ['id' => $event->id]) }}" class="text-primary px-1" title="{{__('app.actions.edit')}}"><i class="fas fa-pen"></i></a>
+                                <a href="{{ route('admin.events.duplicate', ['id' => $event->id]) }}" class="text-info px-1" title="{{__('app.actions.duplicate')}}"><i class="fas fa-copy"></i></a>
                                 <form class="d-inline" action="{{ route('admin.events.destroy', ['id' => $event->id]) }}" method="post">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" title="{{__('app.actions.delete')}}" class="btn btn-outline-danger btn-rounded"> <i class="fas fa-trash"></i></button>
+                                    <button type="submit" title="{{__('app.actions.delete')}}" class="btn-link border-0 text-danger px-1"> <i class="fas fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>
@@ -63,7 +62,9 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">{{ __('app.date.list') }}</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
                         <div class="modal-body text-start">
                             <table class="table">
@@ -85,14 +86,16 @@
 
             <!-- Custom users modal start -->
             <div class="modal fade" id="usersModal" role="dialog" tabindex="-1">
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">{{ __('app.enrollment.list') }}</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
                         <div class="modal-body text-start">
-                            <table class="table">
+                            <table class="table table-responsive">
                                 <thead>
                                 <tr>
                                     <th scope="col">{{ __('app.user.xname') }}</th>
@@ -107,8 +110,8 @@
                         </div>
                         @if(count($events) > 0)
                             <div class="modal-footer">
-                                <a type="button" class="btn btn-secondary" href="{{ route('admin.events.users.export', ['id' => $event->id]) }}"><i class="fas fa-file-export"></i> Exportovat</a>
-                                <a type="button" class="btn btn-secondary" href="{{ route('admin.events.users.export.email', ['id' => $event->id]) }}"><i class="fas fa-envelope"></i> Exportovat emaily</a>
+                                <a type="button" class="btn btn-secondary rounded-0" href="{{ route('admin.events.users.export', ['id' => $event->id]) }}"><i class="fas fa-file-export"></i> Exportovat</a>
+                                <a type="button" class="btn btn-secondary rounded-0" href="{{ route('admin.events.users.export.email', ['id' => $event->id]) }}"><i class="fas fa-envelope"></i> Exportovat emaily</a>
                             </div>
                         @endif
                     </div>

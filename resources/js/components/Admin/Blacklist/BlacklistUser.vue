@@ -4,7 +4,7 @@
         <td>{{ formatDate(user.pivot.blocked_until) ?? '-' }}</td>
         <td>{{ user.pivot.block_reason ?? '-'}}</td>
         <td>
-            <button @click="removeUserFromBlacklist" title="{{ $t('app.delete') }}" class="btn btn-outline-danger btn-rounded"> <i class="fas fa-trash"></i></button>
+            <button @click="removeUserFromBlacklist" :title="$t('app.delete')" class="btn-link text-danger border-0"> <i class="fas fa-trash"></i></button>
         </td>
     </tr>
 </template>

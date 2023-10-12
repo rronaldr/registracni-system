@@ -1,4 +1,4 @@
-@extends('layouts.main', ['title' => __('app.app-title')])
+@extends('layouts.main', ['title' => __('app.event.events')])
 
 @section('content')
     @if(Illuminate\Support\Facades\Session::has('message'))

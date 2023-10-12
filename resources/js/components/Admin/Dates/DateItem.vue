@@ -10,7 +10,7 @@
                 @click="editItem"
                 :title="$t('app.edit')"
                 type="button"
-                class="btn btn-outline-info btn-rounded mx-1"
+                class="btn-link text-info border-0 mx-1"
             >
                 <i class="fas fa-edit"></i>
             </button>
@@ -18,7 +18,7 @@
                 @click="removeItem"
                 :title="$t('app.delete')"
                 type="button"
-                class="btn btn-outline-danger btn-rounded"
+                class="btn-link text-danger border-0"
             >
                 <i class="fas fa-trash"></i>
             </button>

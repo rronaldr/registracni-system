@@ -16,7 +16,7 @@ class LoginController extends Controller
 
     public function index(): View
     {
-        return view('login-picker');
+        return view('auth.login');
     }
     public function shibbolethLogin(): RedirectResponse
     {
@@ -26,11 +26,6 @@ class LoginController extends Controller
     public function graduateLogin(): RedirectResponse
     {
         return redirect('/shibboleth-login');
-    }
-
-    public function externalLogin(): View
-    {
-        return view('auth.login');
     }
 
     function login(Request $request): RedirectResponse

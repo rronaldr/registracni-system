@@ -1,38 +1,75 @@
-<!-- navbar navigation component -->
-<nav class="navbar navbar-expand-lg navbar-white bg-white">
-    @auth
-    <button type="button" id="sidebarCollapse" class="btn btn-light">
-        <i class="fas fa-bars"></i><span></span>
-    </button>
-    @endauth
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <!-- Right Side Of Navbar -->
-        <ul class="nav navbar-nav ms-auto">
-            <!-- Authentication Links -->
-            @guest
-                @if (Route::has('admin.login'))
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.login') }}">{{ __('Login') }}</a>
+<body>
+<header class="header-main bg-primary bg-cover">
+    <div class="header-mobile bg-cover">
+        <div class="container">
+            <nav class="navbar navbar-main navbar-expand p-0">
+                <!-- mainmenu -->
+                <ul class="navbar-nav nav-main mr-auto">
+                    <li class="nav-item nav-logo nav-caret">
+                        <a class="nav-link" href="https://www.vse.cz/">
+                            <img src="{{ asset('storage/dist/img/logo/logo-full-cs-white.svg') }}" alt="VŠE">
+                        </a>
                     </li>
-                @endif
-
-                @if (Route::has('admin.register'))
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.register') }}">{{ __('Register') }}</a>
+                    <li class="nav-item no-dropdown d-none d-xl-block bg-primary-600">
+                        <a href="{{ route('admin.events') }}" class="nav-link">{{ __('app.event.events') }}</a>
                     </li>
-                @endif
-            @else
-                <li class="nav-item dropdown mt-0">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        <i class="fas fa-user"></i> <span>{{ Auth::user()->getFullname() }}</span>
-                    </a>
+                    <li class="nav-item no-dropdown d-none d-xl-block bg-primary-600">
+                        <a href="{{ route('admin.blacklist') }}" class="nav-link">{{ __('app.blacklist.blacklist') }}</a>
+                    </li>
+                    <li class="nav-item no-dropdown d-none d-xl-block bg-primary-600">
+                        <a href="{{ route('admin.templates') }}" class="nav-link">{{ __('app.templates.templates') }}</a>
+                    </li>
+                    <li class="nav-item no-dropdown d-none d-xl-block bg-primary-600">
+                        <a href="{{ route('admin.users') }}" class="nav-link">{{ __('app.user.users') }}</a>
+                    </li>
+                </ul>
 
-                    <div class="dropdown-menu dropdown-menu-end mt-0" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('logout') }}">{{ __('app.auth.logout') }}</a>
-                    </div>
-                </li>
-            @endguest
-        </ul>
+                <nav class="navbar-top d-none d-xl-flex justify-content-between align-self-start">
+                    <ul class="nav">
+                        <li class="nav-item nav-lang dropdown dropdown-secondary">
+                            <a class="btn btn-primary dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
+                                {{ __(sprintf('app.%s', app()->getLocale())) }}
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right text-right">
+                                <a href="{{ route('locale', ['locale' => 'cs']) }}" class="dropdown-item @if(app()->getLocale() === 'cs') active @endif">{{ __('app.cs') }}</a>
+                                <a href="{{ route('locale', ['locale' => 'en']) }}" class="dropdown-item @if(app()->getLocale() === 'en') active @endif">{{ __('app.en') }}</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <i class="icon icon-user"></i> <span>{{ Auth::user()->getFullname() }}</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right text-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="@if(isset(auth()->user()->xname)) {{ route('logout') }}@else {{ route('logout.external') }}@endif">{{ __('app.auth.logout') }}</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('events.index') }}">{{ __('app.homepage') }}</a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <!-- secondary menu -->
+                <ul class="nav d-block d-xl-none d-flex text-right align-items-center">
+
+                    <li class="d-xl-none nav-item nav-lang dropdown dropdown-primary mr-sm-1">
+                        <a class="btn btn-primary dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">CZ</a>
+                        <div class="dropdown-menu dropdown-menu-right text-right">
+                            <a href="/" class="dropdown-item active">Česky</a>
+                            <a href="/english/" class="dropdown-item">English</a>
+                        </div>							</li>
+
+                    <li class="nav-item d-xl-none">
+                        <a class="nav-link text-white" href="#modal-mainmenu" data-toggle="modal">
+                            <span class="icon icon-menu"></span>
+                            <span class="d-none d-inline-block ml-1">Menu</span>
+                        </a>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+
     </div>
-</nav>
-<!-- end of navbar navigation -->
+</header>

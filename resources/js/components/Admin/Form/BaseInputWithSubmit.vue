@@ -5,9 +5,9 @@
             :placeholder="inputLabel"
             :value="modelValue"
             @input="$emit('update:modelValue', $event.target.value)"
-            class="form-control"
+            class="form-control rounded-0"
         />
-        <button class="btn btn-outline-secondary" type="submit">{{ $t('app.submit') }}</button>
+        <button class="btn btn-outline-secondary rounded-0" type="submit">{{ $t('app.submit') }}</button>
     </div>
 </template>
 

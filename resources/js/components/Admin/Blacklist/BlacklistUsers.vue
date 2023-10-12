@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col">
                     <h5>
-                        Uživatelé na blacklistu
+                        {{ $t('blacklist.users_on_blacklist') }}
                         <i class="fas fa-info-circle"
                            data-toggle="tooltip" data-placement="top"
                            title="Zde je seznam uživatelů, kteří jsou na globálním blacklistu"></i>
@@ -24,11 +24,13 @@
                 </thead>
                 <tbody>
                     <BlacklistUser
+                        v-if="users != null"
                         v-for="user in users"
                         :key="user.id"
                         :user="user"
                         @refresh-users="getUsers()"
                     />
+                    <span v-else>{{ $t('blacklist.no_users') }}</span>
                 </tbody>
             </table>
         </div>
@@ -39,33 +41,23 @@
 import {inject, nextTick, ref} from "vue";
     import BlacklistUser from "./BlacklistUser.vue";
 
-    const props = defineProps({
-        blacklistId: {type: Number, required: true}
-    })
-    const ADMIN_URL = inject('ADMIN_URL')
-    let users = ref(null)
+const props = defineProps({
+    blacklistId: {type: Number, required: true}
+})
+const ADMIN_URL = inject('ADMIN_URL')
+let users = ref(null)
 
-    getUsers()
+getUsers()
 
-    async function getUsers() {
-        let response = await axios.get(
-            ADMIN_URL+'/blacklist/'+props.blacklistId+'/users'
-        )
-        users.value = response.data.users
-    }
+async function getUsers() {
+    let response = await axios.get(
+        ADMIN_URL+'/blacklist/'+props.blacklistId+'/users'
+    )
+    users.value = response.data.users
+}
 
-    defineExpose({
-        getUsers,
-        users
-    })
+defineExpose({
+    getUsers,
+    users
+})
 </script>
-
-<style scoped>
-.page-item.active .page-link {
-    background-color: lightgrey !important;
-    border: 1px solid black;
-}
-.page-link {
-    color: black !important;
-}
-</style>

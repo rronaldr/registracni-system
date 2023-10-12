@@ -2,7 +2,7 @@
     <label v-if="label">{{ inputLabel }}</label>
     <select
         :value="modelValue"
-        class="form-control"
+        class="form-control rounded-0"
         v-bind="{
             ...$attrs,
             onChange: ($event) => {$emit('update:modelValue', $event.target.value)}

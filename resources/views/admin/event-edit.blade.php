@@ -1,17 +1,13 @@
-@extends('layouts.admin.main', ['title' => 'Editace události'])
+@extends('layouts.admin.main', ['title' => __('app.event.edit')])
 
 @section('content')
-    <div class="card mt-3">
-        <div class="card-body">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 col-md-10 col-sm-12">
-                    <event-edit-form :author="'{{ $event->author->getFullname() }}'" :user="{{ auth()->user() }}" :event="{{ $event }}">
-                        <template v-slot:csrf>
-                            {{ csrf_field() }}
-                        </template>
-                    </event-edit-form>
-                </div>
-            </div>
+    <div class="row">
+        <div class="col-lg-9">
+            <event-edit-form :author="'{{ $event->author->getFullname() }}'" :user="{{ auth()->user() }}" :event="{{ $event }}">
+                <template v-slot:csrf>
+                    {{ csrf_field() }}
+                </template>
+            </event-edit-form>
         </div>
     </div>
 @endsection

@@ -1,4 +1,4 @@
-@extends('layouts.main', ['title' => $event->name])
+@extends('layouts.main', ['title' => __('app.event.detail')])
 
 @section('content')
     <event-detail :event="{{ $event }}"></event-detail>

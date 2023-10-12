@@ -71,7 +71,6 @@
                                 :is="BaseCheckbox"
                                 v-model="form[field.value].value"
                                 :id="field.value"
-                                :required="field.required"
                                 :name="field.value"
                                 :label="field.label"
                             />

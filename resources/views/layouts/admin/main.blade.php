@@ -1,28 +1,22 @@
-@include('layouts.admin.header')
+@include('layouts.header')
 
-<body>
-<div class="wrapper">
-    @auth
-    @include('layouts.admin.sidebar')
-    @endauth
-    <div id="body" class="active">
-        @include('layouts.admin.navbar')
-        <div class="content" id="vueApp">
-            <div class="container-fluid">
-                <div class="page-title">
-                    <h3>{{ $title ?? '' }}</h3>
-                </div>
-                @yield('content')
-            </div>
-        </div>
-    </div>
-</div>
+@include('layouts.admin.navbar')
 
-<script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+<main class="container mt-2 mb-8" id="vueApp">
+    <h3 class="text-primary mb-2">{{ $title ?? '' }}</h3>
+    @yield('content')
+</main>
+
+@include('layouts.admin.navbar-mobile')
+
 <script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('storage/dist/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/datatables/datatables.min.js') }}"></script>
-<script src="{{ asset('js/admin/admin.js') }}"></script>
-@yield('scripts')
-</body>
 
-</html>
+@if(app()->getLocale() === 'cs')
+    <script src="{{ asset('js/datatables-cs.js') }}"></script>
+@else
+    <script src="{{ asset('js/datatables-en.js') }}"></script>
+@endif
+@yield('scripts')
+@include('layouts.footer')

@@ -1,14 +1,15 @@
 <?php
 
 return [
-
     'author' => 'Autor',
     'merge-tags' => 'Merge tagy',
     'app-title' => 'Registrační systém VŠE',
     'login-picker' => 'Výběr přihlášení',
-    'cs' => 'CZ',
-    'en' => 'EN',
+    'cs' => 'Česky',
+    'en' => 'English',
     'app' => 'Aplikace',
+    'administration' => 'Administrace',
+    'homepage' => 'Hlavní stránka',
 
     'actions' => [
         'edit' => 'Editovat',
@@ -21,14 +22,16 @@ return [
     'auth' => [
         'login' => 'Přihlásit se',
         'login-picker' => 'Výběr přihlášení',
-        'shibboleth' => 'Přihlášení pro studenty a zaměstnance',
-        'graduate' => 'Přihlášení pro absolventy',
-        'external' => 'Přihlášení pro externisty',
+        'shibboleth' => 'Shibboleth',
+        'graduate-login' => 'Přihlášení pro absolventy',
+        'external-login' => 'Přihlášení pro externisty',
         'password' => 'Heslo',
         'password-confirm' => 'Zopakujte heslo',
         'remember_me' => 'Zapamatovat si přihlášení',
         'logout' => 'Odhlásit se',
-        'register' => 'Registrovat se'
+        'register' => 'Registrovat se',
+        'shibboleth-hint' => 'V rámci jednotného školního přihlášení pomocí Shibbolethu jsou vaše uživatelské údaje stejné jako do systému InSIS.',
+        'graduate-hint' => 'Přihlášení pomocí absolventského portálu.',
     ],
     'blacklist' => [
         'blacklist' => 'Blacklist',
@@ -38,6 +41,7 @@ return [
         'global-blacklist' => 'Globální blacklist',
     ],
     'date' => [
+        'dates' => 'Termíny',
         'list' => 'Seznam termínů',
         'date_start' => 'Začátek',
         'date_end' => 'Konec',
@@ -46,6 +50,7 @@ return [
         'enrollment_end' => 'Přihlašování do',
         'withdraw_end' => 'Odhlašování do',
         'capacity' => 'Kapacita',
+        'from-to' => 'Od-Do',
     ],
     'event' => [
         'events' => 'Události',
@@ -56,7 +61,16 @@ return [
         ],
         'saved' => 'Událost vytvořena',
         'updated' => 'Událost upravena',
-        'deleted' => 'Událost odstraněna'
+        'deleted' => 'Událost odstraněna',
+        'detail' => 'Detail události',
+        'create' => 'Vytvořit událost',
+        'edit' => 'Editace události',
+        'name' => 'Název',
+        'status-label' => 'Stav',
+        'participants' => 'Účastníci',
+        'import' => 'Importovat',
+        'show-dates' => 'Zobrazit termíny',
+        'show-all-participants' => 'Zobrazit všechny účasnítky'
     ],
     'email' => [
         'email' => 'Email',
@@ -68,7 +82,8 @@ return [
         'list' => 'Seznam účastníků',
         'enrolled' => 'Přihlášen',
         'c_fields' => 'Vyplněné hodnoty',
-        'already_exists' => 'Pro tento termín již máte podanou přihlášku.'
+        'already_exists' => 'Pro tento termín již máte podanou přihlášku.',
+        'my_enrollments' => 'Moje přihlášky',
     ],
     'c_fields' => [
         'name' => 'Název tagu',

@@ -6,7 +6,7 @@
                 @click="revokeRole"
                 :title="$t('app.delete')"
                 type="button"
-                class="btn btn-outline-danger btn-rounded"
+                class="btn-link border-0 text-danger px-1"
             >
                 <i class="fas fa-trash"></i>
             </button>

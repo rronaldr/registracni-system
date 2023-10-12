@@ -2,7 +2,7 @@
     <div class="input-group">
         <select
             :value="modelValue"
-            class="form-select"
+            class="form-select rounded-0"
             v-bind="{
             ...$attrs,
             onChange: ($event) => {$emit('update:modelValue', $event.target.value)}
@@ -16,7 +16,7 @@
                 :selected="option.id === modelValue"
             >{{ option.name }}</option>
         </select>
-        <button class="btn btn-outline-secondary" type="submit">{{ $t('app.submit') }}</button>
+        <button class="btn btn-outline-secondary rounded-0" type="submit">{{ $t('app.submit') }}</button>
     </div>
 </template>
 

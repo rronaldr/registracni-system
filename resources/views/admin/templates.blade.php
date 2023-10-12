@@ -1,16 +1,14 @@
 @extends('layouts.admin.main', ['title' => __('app.templates.templates')])
 
 @section('content')
-    <div class="row justify-content-end align-content-end">
-        <div class="col-12 my-2 ">
-            <a href="{{ route('admin.templates.approvals') }}" class="btn btn-primary m-2 float-end">{{ __('app.templates.for-approval') }}</a>
-            <a href="{{ route('admin.templates.author', ['user' => Auth::user()->id]) }}" class="btn btn-primary m-2 float-end">{{ __('app.templates.my-templates') }}</a>
-        </div>
-    </div>
     <div class="box box-primary">
-        <div class="row justify-content-center my-3 mx-1">
+        <div class="row justify-content-center my-3">
             <div class="col-12">
-                <a href="{{ route('admin.templates.create') }}" class="btn btn-success float-end mx-1"><span class="fas fa-plus"></span> Vytvořit šablonu</a>
+                <span class="float-left">
+                    <a href="{{ route('admin.templates.approvals') }}" class="btn btn-primary rounded-0 mx-1 float-right">{{ __('app.templates.for-approval') }}</a>
+                    <a href="{{ route('admin.templates.author', ['user' => Auth::user()->id]) }}" class="btn btn-primary rounded-0 mx-1 float-right">{{ __('app.templates.my-templates') }}</a>
+                </span>
+                <a href="{{ route('admin.templates.create') }}" class="btn btn-outline-success rounded-0 float-right mx-1"><span class="fas fa-plus"></span> Vytvořit šablonu</a>
             </div>
         </div>
 
@@ -21,7 +19,7 @@
         @endif
 
         <div class="box-body">
-            <table width="100%" class="table table-hover" id="dataTables-example">
+            <table width="100%" class="table table-hover" id="dataTables">
                 <thead>
                 <tr>
                     <th>{{ __('app.templates.template') }}</th>
@@ -43,16 +41,16 @@
                             <td><span class="fa fa-circle text-secondary"></span> {{ __('app.templates.not_approved') }}</td>
                         @endif
 
-                        <td class="text-end">
-                            <a href="{{ route('admin.templates.edit', ['id' => $template->id]) }}" class="btn btn-outline-primary btn-rounded" title="Editovat"><i class="fas fa-pen"></i></a>
+                        <td class="text-right">
+                            <a href="{{ route('admin.templates.edit', ['id' => $template->id]) }}" class="text-primary px-1" title="Editovat"><i class="fas fa-pen"></i></a>
                             <form class="d-inline" action="{{ route('admin.templates.send-test', ['id' => $template->id]) }}" method="post">
                                 @csrf
-                                <button type="submit" title="{{ __('app.email.send-test') }}" class="btn btn-outline-info btn-rounded"> <i class="fas fa-envelope"></i></button>
+                                <button type="submit" title="{{ __('app.email.send-test') }}" class="btn-link border-0 text-info px-1"> <i class="fas fa-envelope"></i></button>
                             </form>
                             <form class="d-inline" action="{{ route('admin.templates.destroy', ['id' => $template->id]) }}" method="post">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" title="Odstranit" class="btn btn-outline-danger btn-rounded"> <i class="fas fa-trash"></i></button>
+                                <button type="submit" title="Odstranit" class="btn-link border-0 text-danger px-1 mx-1"> <i class="fas fa-trash"></i></button>
                             </form>
                         </td>
                     </tr>
@@ -61,17 +59,9 @@
                 </tbody>
             </table>
 
-            <div class="row justify-content-end">
-                <div class="float-right">
-                    {!! $templates->appends(\Request::except('page'))->render() !!}
-                </div>
-            </div>
+            {{ $templates->links() }}
 
         </div>
     </div>
 
-@endsection
-
-@section('scripts')
-    <script src="{{ asset('js/admin/initiate-datatables.js') }}"></script>
 @endsection

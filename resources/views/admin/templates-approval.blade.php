@@ -30,14 +30,14 @@
                             <td><span class="fa fa-circle text-secondary"></span> {{ __('app.templates.not_approved') }}</td>
                         @endif
 
-                        <td class="text-end">
+                        <td class="text-right">
                             <form class="d-inline" action="{{ route('admin.templates.send-test', ['id' => $template->id]) }}" method="post">
                                 @csrf
-                                <button type="submit" title="{{ __('app.email.send-test') }}" class="btn btn-outline-info btn-rounded"> <i class="fas fa-envelope"></i></button>
+                                <button type="submit" title="{{ __('app.email.send-test') }}" class="btn-link border-0 mx-1"> <i class="fas fa-envelope"></i></button>
                             </form>
                             <form class="d-inline" action="{{ route('admin.templates.approve', ['id' => $template->id]) }}" method="post">
                                 @csrf
-                                <button type="submit" title="{{ __('app.templates.approve-template') }}" class="btn btn-outline-success btn-rounded"> <i class="fas fa-check-circle"></i></button>
+                                <button type="submit" title="{{ __('app.templates.approve-template') }}" class="btn-link border-0 mx-1"> <i class="fas fa-check-circle"></i></button>
                             </form>
                         </td>
                     </tr>

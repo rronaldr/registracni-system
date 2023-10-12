@@ -5,7 +5,7 @@
         :placeholder="label"
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
-        class="form-control"
+        class="form-control rounded-0"
     >
 
     </textarea>

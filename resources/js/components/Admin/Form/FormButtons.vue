@@ -3,7 +3,7 @@
         <div class="col">
             <BackButton :route="route" />
         </div>
-        <div class="col text-end">
+        <div class="col text-right">
             <SubmitButton/>
         </div>
     </div>

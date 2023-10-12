@@ -82,7 +82,7 @@
         "calendar": "ID události v kalendáři VŠE nebo odkaz na událost",
         "contact_person": "Kontaktní osoba",
         "contact_email": "Kontaktní email",
-        "fill_user_contact": "Vyplnit moje údaje",
+        "fill_user_contact": "Vyplnit údaje",
         "external_login": "Povolit registraci na událost externistům",
         "notifications": "Povolit notifikace (přihlášení na událost, plná kapacita atd.)",
         "settings": "Nastavení události",
@@ -90,7 +90,7 @@
         "type_1": "Opakovaná událost či části události, kterých se lze zúčastnit samostatně",
         "type_2": "Navazující části jedné události (např. části jednoho kurzu)",
         "global_blacklist": "Globální blacklist",
-        "global_blacklist_link": "Zapnout systémový <a class=\"link-primary\" href=\"{href}\" target=\"_blank\">blacklist</a>",
+        "global_blacklist_event": "Zapnout globální blacklist pro událost",
         "event_blacklist": "Blacklist pro událost",
         "enable_event_blacklist": "Zapnout vlastní blacklist pro událost",
         "blacklist_modal_title": "Jak přidat uživatele na blacklist?",
@@ -107,7 +107,9 @@
     "blacklist": {
         "blocked_until": "Blokace do",
         "block_reason": "Důvod blokace",
-        "users": "Xname uživatelů"
+        "users": "Xname uživatelů",
+        "users_on_blacklist": "Uživatele na blacklistu",
+        "no_users": "Žádní uživatelé na blacklistu"
     },
     "user": {
         "xname": "Xname",

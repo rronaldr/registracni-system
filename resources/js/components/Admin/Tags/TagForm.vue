@@ -12,7 +12,7 @@
                         <div class="col">
                             <button
                                 @click="showTagForm = true"
-                                class="btn btn-sm btn-primary float-end"
+                                class="btn btn-sm btn-primary float-right"
                                 type="button"
                             >
                                 <i class="fas fa-plus"></i> {{ $t('tag.add_tag') }}
@@ -32,7 +32,7 @@
             </div>
 
             <form
-                class="bg-lighter-grey border rounded p-2"
+                class="bg-lighter-grey border p-2"
                 v-if="showTagForm"
                 @submit.prevent="addDate"
             >
@@ -40,8 +40,10 @@
                     <h5 class="fw-bold">{{ $t('tag.add_tag') }}</h5>
                     <button
                         type="button"
-                        class="btn-close"
-                        @click="closeForm()"></button>
+                        class="close"
+                        @click="closeForm()">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="text-start">
                     <div class="row mb-3">

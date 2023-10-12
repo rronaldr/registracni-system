@@ -13,5 +13,7 @@ const mix = require('laravel-mix');
 
 
 mix.js('resources/js/app.js', 'public/js')
+    .js('resources/js/datatables-cs.js', 'public/js')
+    .js('resources/js/datatables-en.js', 'public/js')
     .vue({ version: 3})
     .version();

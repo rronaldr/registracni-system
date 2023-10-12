@@ -7,7 +7,7 @@
                         <a class="nav-link" href="/user/consent">Podmínky používání</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/user/login">Přihlášení</a>
+                        <a class="nav-link" href="{{ route('login') }}">{{ __('app.auth.login') }}</a>
                     </li>
                 </ul>					</div>
             <div class="col-xxl-4 order-xxl-1 small text-muted text-sm-center text-xxl-left">
