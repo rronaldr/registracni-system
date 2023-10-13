@@ -29,8 +29,11 @@ Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show'
 // Event routes
 
 // Form routes
-Route::get('/enrollment/{date_id}', [EnrollmentController::class, 'show'])->name('enrollment.show');
-Route::post('/enrollment/{date_id}', [EnrollmentController::class, 'store'])->name('enrollment.store');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/enrollment/{date_id}', [EnrollmentController::class, 'show'])->name('enrollment.show');
+    Route::post('/enrollment/{date_id}', [EnrollmentController::class, 'store'])->name('enrollment.store');
+});
+
 
 // Auth routes
 Route::get('/login', [LoginController::class, 'index'])->name('login.index');

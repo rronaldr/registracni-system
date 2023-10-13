@@ -10,6 +10,7 @@ return [
     'app' => 'Aplikace',
     'administration' => 'Administrace',
     'homepage' => 'Hlavní stránka',
+    '403-error-message' => 'Nemáte dostatečné oprávnění.',
 
     'actions' => [
         'edit' => 'Editovat',

@@ -29,7 +29,7 @@ class EventController extends Controller
         $user = $userFacade->getCurrentUser();
 
         /** @todo refactor once event collaboration feature is done */
-        if ($user->can('event:see-all')) {
+        if ($user->can('event-see-all')) {
             $events = $eventFacade->getEventsPaginated();
         } else {
             $events = $eventFacade->getEventsByAuthor($user->id);
