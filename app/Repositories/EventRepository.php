@@ -13,10 +13,20 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class EventRepository
 {
 
-    public function getEventsForOverviewPaginated(): LengthAwarePaginator
+    public function getEventsPaginated(): LengthAwarePaginator
     {
         return Event::query()
             ->withCount(['dates'])
+            ->orderBy('date_start_cache')
+            ->paginate(10);
+    }
+
+    public function getEventsByAuthorPaginated(int $id): LengthAwarePaginator
+    {
+        return Event::query()
+            ->withCount(['dates'])
+            ->where('user_id', $id)
+            ->orderBy('date_start_cache')
             ->paginate(10);
     }
 

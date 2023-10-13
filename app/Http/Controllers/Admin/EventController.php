@@ -8,6 +8,7 @@ use App\Models\Event;
 use App\Services\Admin\BlacklistFacade;
 use App\Services\Admin\EventFacade;
 use App\Services\Admin\TagFacade;
+use App\Services\Admin\UserFacade;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
@@ -23,9 +24,16 @@ use Throwable;
 
 class EventController extends Controller
 {
-    public function index(EventFacade $eventFacade): View
+    public function index(EventFacade $eventFacade, UserFacade $userFacade): View
     {
-        $events = $eventFacade->getEventsForOverviewPaginated();
+        $user = $userFacade->getCurrentUser();
+
+        /** @todo refactor once event collaboration feature is done */
+        if ($user->can('event:see-all')) {
+            $events = $eventFacade->getEventsPaginated();
+        } else {
+            $events = $eventFacade->getEventsByAuthor($user->id);
+        }
 
         return view('admin.events', [
             'events' => $events,

@@ -61,9 +61,14 @@ class EventFacade
         $event->update($this->getDataAttributesMapping($data['event']));
     }
 
-    public function getEventsForOverviewPaginated(): LengthAwarePaginator
+    public function getEventsPaginated(): LengthAwarePaginator
     {
-        return $this->eventRepository->getEventsForOverviewPaginated();
+        return $this->eventRepository->getEventsPaginated();
+    }
+
+    public function getEventsByAuthor(int $id): LengthAwarePaginator
+    {
+        return $this->eventRepository->getEventsByAuthorPaginated($id);
     }
 
     public function deleteEvent(int $id): void
