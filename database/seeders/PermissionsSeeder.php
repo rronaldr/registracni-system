@@ -78,7 +78,7 @@ class PermissionsSeeder extends Seeder
 
         // Assign admin role to rebr00 and xvojs03
         DB::table('model_has_roles')->insert([
-            'role_id' => Roles::STAFF_ID,
+            'role_id' => Roles::ADMIN_ID,
             'model_type' => 'App\Models\User',
             'model_id' => 1
         ]);
