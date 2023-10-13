@@ -5,14 +5,11 @@ declare(strict_types = 1);
 namespace App\Services;
 
 use App\Enums\EnrollmentStates;
-use App\Mail\CustomHtmlMail;
 use App\Models\Enrollment;
 use App\Repositories\EnrollmentRepository;
 use App\Services\Admin\DateFacade;
-use App\Services\Admin\TemplateFacade;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 
 class EnrollmentFacade
@@ -81,6 +78,11 @@ class EnrollmentFacade
     public function checkExistingEnrollment(int $dateId, int $userId): bool
     {
         return $this->enrollmentRepository->checkExistsEnrollmentByDateAndUser($dateId, $userId);
+    }
+
+    public function getEnrollmentsForUser(int $id): LengthAwarePaginator
+    {
+        return $this->enrollmentRepository->getEnrollmentsByUser($id);
     }
 
 }

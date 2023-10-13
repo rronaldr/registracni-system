@@ -42,6 +42,7 @@ return [
         'global-blacklist' => 'Globální blacklist',
     ],
     'date' => [
+        'date' => 'Termín',
         'dates' => 'Termíny',
         'list' => 'Seznam termínů',
         'date_start' => 'Začátek',
@@ -67,6 +68,7 @@ return [
         'create' => 'Vytvořit událost',
         'edit' => 'Editace události',
         'name' => 'Název',
+        'event-name' => 'Název události',
         'status-label' => 'Stav',
         'participants' => 'Účastníci',
         'import' => 'Importovat',
@@ -85,6 +87,13 @@ return [
         'c_fields' => 'Vyplněné hodnoty',
         'already_exists' => 'Pro tento termín již máte podanou přihlášku.',
         'my_enrollments' => 'Moje přihlášky',
+        'no-enrollments' => 'Zatím nemáte žádné přihlášky.',
+        'state' => [
+            'title' => 'Stav přihlášky',
+            '1' => 'Přihlášen',
+            '2' => 'Náhradník',
+            '3' => 'Odhlášen'
+        ]
     ],
     'c_fields' => [
         'name' => 'Název tagu',

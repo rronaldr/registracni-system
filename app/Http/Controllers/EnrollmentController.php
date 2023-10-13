@@ -12,6 +12,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\View\View;
 use Throwable;
 
 class EnrollmentController extends Controller
@@ -53,5 +54,14 @@ class EnrollmentController extends Controller
         } catch (Throwable $e) {
             dump($e);
         }
+    }
+
+    public function getUserEnrollments(int $id, EnrollmentFacade $enrollmentFacade): view
+    {
+        $enrollments = $enrollmentFacade->getEnrollmentsForUser($id);
+
+        return view('enrollment-user', [
+            'enrollments' => $enrollments
+        ]);
     }
 }

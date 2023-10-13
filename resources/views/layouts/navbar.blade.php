@@ -15,9 +15,6 @@
                             <span class="d-sm-inline d-lg-none">{{ __('app.event.events') }}</span>
                             <span class="d-lg-inline d-none small">{{ __('app.event.events') }}</span></a>
                     </li>
-                    <li class="nav-item no-dropdown d-none d-xl-block bg-primary-600">
-                        <a href="/consultation/list" class="nav-link">Nabízené konzultace</a>
-                    </li>
                 </ul>
 
                 <nav class="navbar-top d-none d-xl-flex justify-content-between align-self-start">
@@ -44,10 +41,10 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    <i class="icon icon-user"></i> <span>{{ Auth::user()->getFullname() }}</span>
+                                    <i class="icon icon-user"></i> <span>{{ auth()->user()->getFullname() }}</span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right text-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">{{ __('app.enrollment.my_enrollments') }}</a>
+                                    <a class="dropdown-item" href="{{ route('enrollment.user', auth()->user()->id) }}">{{ __('app.enrollment.my_enrollments') }}</a>
                                     <a class="dropdown-item"
                                        href="@if(isset(auth()->user()->xname)) {{ route('logout') }}@else {{ route('logout.external') }}@endif"
                                     >{{ __('app.auth.logout') }}</a>

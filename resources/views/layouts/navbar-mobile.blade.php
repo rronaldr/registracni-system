@@ -10,11 +10,6 @@
             </div>
             <div class="modal-body">
                 <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a href="/consultation/list" class="nav-link ">Nabízené konzultace</a>
-                    </li>
-                </ul>
-                <ul class="nav flex-column">
                     @guest()
                         @if(Route::has('login'))
                             <li class="nav-item">
@@ -26,7 +21,7 @@
                         @endif
                     @else
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin') }}">{{ __('app.enrollment.my_enrollments') }}</a>
+                            <a class="nav-link" href="{{ route('enrollment.user', auth()->user()->id) }}">{{ __('app.enrollment.my_enrollments') }}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link"

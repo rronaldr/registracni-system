@@ -35,13 +35,15 @@
                             <td><span class="fa fa-circle @if($event->status === 1) text-success @else text-secondary @endif"></span> {{ __('app.event.status.'.$event->status) }}</td>
                             <td><a href="#" class="link-primary" data-toggle="modal" data-target="#datesModal" onClick="getDates({{$event->id}})">
                                     {{ __('app.event.show-dates') }} ({{ $event->dates_count }})
-                                </a></td>
+                                </a>
+                            </td>
                             <td>
                                 {{ \Carbon\Carbon::parse($event->date_start_cache)->format('j.n.Y') }} - {{ \Carbon\Carbon::parse($event->date_end_cache)->format('j.n.Y') }}
                             </td>
                             <td><a href="#" class="link-primary" data-toggle="modal" data-target="#usersModal" onClick="getUsers({{ $event->id }})">
                                     {{ __('app.event.show-all-participants') }}
-                                </a></td>
+                                </a>
+                            </td>
                             <td class="text-right">
                                 <a href="{{ route('admin.events.edit', ['id' => $event->id]) }}" class="text-primary px-1" title="{{__('app.actions.edit')}}"><i class="fas fa-pen"></i></a>
                                 <a href="{{ route('admin.events.duplicate', ['id' => $event->id]) }}" class="text-info px-1" title="{{__('app.actions.duplicate')}}"><i class="fas fa-copy"></i></a>

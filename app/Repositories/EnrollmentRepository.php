@@ -5,6 +5,8 @@ declare(strict_types = 1);
 namespace App\Repositories;
 
 use App\Models\Enrollment;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class EnrollmentRepository
 {
@@ -27,5 +29,14 @@ class EnrollmentRepository
             ->first();
 
         return !($enrollment === null);
+    }
+
+    public function getEnrollmentsByUser(int $id): LengthAwarePaginator
+    {
+        return Enrollment::query()
+            ->with(['date:id,date_start,date_end,event_id', 'date.event:id,name'])
+            ->where('user_id', $id)
+            ->orderBy('created_at')
+            ->paginate(5);
     }
 }

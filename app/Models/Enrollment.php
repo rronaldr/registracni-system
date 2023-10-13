@@ -33,9 +33,4 @@ class Enrollment extends Model
     {
         return $this->belongsTo(Date::class);
     }
-
-    public function event(): BelongsTo
-    {
-        return $this->belongsTo(Event::class);
-    }
 }
