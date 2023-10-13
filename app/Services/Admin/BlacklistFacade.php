@@ -47,20 +47,20 @@ class BlacklistFacade
             throw new \Exception('No xname values provided');
         }
 
-        $delimiters = [",",";","\n"];
+        $delimiters = [",", ";", "\n"];
         $parsedData = str_replace($delimiters, $delimiters[0], $dataCollection->get('users'));
 
         $users = collect(explode(',', $parsedData));
 
-        $users->each( function (string $xname) use ($blacklist, $dataCollection): void  {
+        $users->each(function (string $xname) use ($blacklist, $dataCollection): void {
             $user = $this->userFacade->getOrCreateUserByXname(trim($xname));
 
             if (!$this->checkUserOnBlacklist($blacklist, $user->id)) {
                 $blacklist->users()->attach($user->id, [
                     'block_reason' => $dataCollection->get('block_reason'),
                     'blocked_until' => $dataCollection->get('blocked_until') !== null
-                                        ? Carbon::parse($dataCollection->get('blocked_until'))
-                                        : null
+                        ? Carbon::parse($dataCollection->get('blocked_until'))
+                        : null
                 ]);
             }
 
@@ -85,6 +85,13 @@ class BlacklistFacade
         }
 
         $blacklist->users()->detach($user->id);
+    }
+
+    public function removeUnblockedUsers(): void
+    {
+        $blacklist = $this->blacklistRepository->getGlobalBlacklist();
+        $now = Carbon::now()->timezone('Europe/Prague');
+        $blacklist->users()->newPivotQuery()->where('blocked_until', '<', $now)->delete();
     }
 
 }
