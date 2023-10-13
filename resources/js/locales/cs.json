@@ -42,6 +42,7 @@
     "tag": {
         "tag": "Vlastní pole",
         "tag_box_hint": "Zde vytvořte vlastní pole",
+        "show_tag": "Zobrazit vlastní pole",
         "add_tag": "Přidat pole",
         "label": "Popisek",
         "value": "Hodnota",

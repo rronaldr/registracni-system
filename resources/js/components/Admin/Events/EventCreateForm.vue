@@ -97,7 +97,7 @@
         <div class="row mb-3">
             <label class="col-sm-2">{{ $t('event.global_blacklist') }}<br></label>
             <div class="col-sm-10">
-                <div class="form-check">
+                <div>
                     <BaseCheckbox
                         v-model="event.global_blacklist"
                         :label="$t('event.global_blacklist_event')"
@@ -109,7 +109,7 @@
         <div class="row mb-3">
             <label class="col-sm-2">{{ $t('event.event_blacklist') }}<br></label>
             <div class="col-sm-10">
-                <div class="form-check">
+                <div>
                     <BaseCheckbox
                         v-model="event.event_blacklist"
                         :label="$t('event.enable_event_blacklist')"
@@ -162,55 +162,115 @@
 
         <div class="row mb-3">
           <div class="col-md-12">
-            <div class="accordion accordion-flush">
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="accordion-tags-header">
-                  <button class="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#accordion-tags" aria-expanded="false" aria-controls="accordion-tags">
-                    {{ $t('tag.tag')}}
-                  </button>
-                </h2>
-                <div id="accordion-tags" class="accordion-collapse collapse mt-2" aria-labelledby="accordion-tags-header">
-                  <TagForm
-                      :tags="tags"
-                  />
-                </div>
-              </div>
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="accordion-template-header">
-                  <button class="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#accordion-template" aria-expanded="false" aria-controls="accordion-template">
-                    {{ $t('event.template')}}
-                  </button>
-                </h2>
-                <div id="accordion-template" class="accordion-collapse collapse show mt-2" aria-labelledby="accordion-template-header">
-                  <div class="row mb-3">
-                    <div class="col">
-                      <BaseSelect
-                          v-model="event.template.id"
-                          :options="templates"
-                          :label="$t('template.select')"
-                          :required="true"
-                          :placeholder="true"
-                          :placeholder-text="$t('template.select')"
-                      />
-                    </div>
+              <div id="accordion">
+                  <div class="card">
+                      <div class="card-header bg-white" id="accordion-tags-header">
+                          <h5 class="mb-0">
+                              <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#accordion-tags" aria-expanded="true" aria-controls="collapseOne">
+                                  {{ $t('tag.show_tag')}}
+                              </button>
+                          </h5>
+                      </div>
+
+                      <div id="accordion-tags" class="collapse" aria-labelledby="accordion-tags-header" data-parent="#accordion">
+                          <div class="card-body">
+                              <TagForm
+                                  :tags="tags"
+                              />
+                          </div>
+                      </div>
                   </div>
-                  <TemplateTags
-                      :tags="tags"
-                  />
-                  <div
-                      v-if="event.template.id !== 1"
-                      class="row mb-3"
-                  >
-                    <div class="col">
-                      <label for="subtitle" class="form-label">{{ $t('event.template_content') }}</label>
-                      <TinyEditor
-                          v-model="event.template.content"
-                      />
-                    </div>
+                  <div class="card">
+                      <div class="card-header bg-white" id="accordion-template-header">
+                          <h5 class="mb-0">
+                              <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#accordion-template" aria-expanded="false" aria-controls="collapseTwo">
+                                  {{ $t('event.template')}}
+                              </button>
+                          </h5>
+                      </div>
+                      <div id="accordion-template" class="collapse show" aria-labelledby="accordion-template-header" data-parent="#accordion">
+                          <div class="card-body">
+                              <div class="row mb-3">
+                                  <div class="col">
+                                      <BaseSelect
+                                          v-model="event.template.id"
+                                          :options="templates"
+                                          :label="$t('template.select')"
+                                          :required="true"
+                                          :placeholder="true"
+                                          :placeholder-text="$t('template.select')"
+                                      />
+                                  </div>
+                              </div>
+                              <TemplateTags
+                                  :tags="tags"
+                              />
+                              <div
+                                  v-if="event.template.id !== 1"
+                                  class="row mb-3"
+                              >
+                                  <div class="col">
+                                      <label for="subtitle" class="form-label">{{ $t('event.template_content') }}</label>
+                                      <TinyEditor
+                                          v-model="event.template.content"
+                                      />
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
                   </div>
-                </div>
               </div>
-            </div>
+
+
+<!--            <div class="accordion accordion-flush">-->
+<!--              <div class="accordion-item">-->
+<!--                <h2 class="accordion-header" id="accordion-tags-header">-->
+<!--                  <button class="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#accordion-tags" aria-expanded="false" aria-controls="accordion-tags">-->
+<!--                    {{ $t('tag.tag')}}-->
+<!--                  </button>-->
+<!--                </h2>-->
+<!--                <div id="accordion-tags" class="accordion-collapse collapse mt-2" aria-labelledby="accordion-tags-header">-->
+<!--                  <TagForm-->
+<!--                      :tags="tags"-->
+<!--                  />-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="accordion-item">-->
+<!--                <h2 class="accordion-header" id="accordion-template-header">-->
+<!--                  <button class="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#accordion-template" aria-expanded="false" aria-controls="accordion-template">-->
+<!--                    {{ $t('event.template')}}-->
+<!--                  </button>-->
+<!--                </h2>-->
+<!--                <div id="accordion-template" class="accordion-collapse collapse show mt-2" aria-labelledby="accordion-template-header">-->
+<!--                  <div class="row mb-3">-->
+<!--                    <div class="col">-->
+<!--                      <BaseSelect-->
+<!--                          v-model="event.template.id"-->
+<!--                          :options="templates"-->
+<!--                          :label="$t('template.select')"-->
+<!--                          :required="true"-->
+<!--                          :placeholder="true"-->
+<!--                          :placeholder-text="$t('template.select')"-->
+<!--                      />-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                  <TemplateTags-->
+<!--                      :tags="tags"-->
+<!--                  />-->
+<!--                  <div-->
+<!--                      v-if="event.template.id !== 1"-->
+<!--                      class="row mb-3"-->
+<!--                  >-->
+<!--                    <div class="col">-->
+<!--                      <label for="subtitle" class="form-label">{{ $t('event.template_content') }}</label>-->
+<!--                      <TinyEditor-->
+<!--                          v-model="event.template.content"-->
+<!--                      />-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
           </div>
         </div>
         <FormButtons :route="ADMIN_URL +'/events'" />
