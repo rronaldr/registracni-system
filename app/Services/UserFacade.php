@@ -4,10 +4,10 @@ declare(strict_types = 1);
 
 namespace App\Services;
 
+use App\Enums\Roles;
 use App\Models\User;
 use App\Repositories\UserRepository;
-use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class UserFacade
 {
@@ -31,6 +31,36 @@ class UserFacade
         } else {
             return null;
         }
+    }
+
+    public function assignRolesToUserFromEntitlements(): void
+    {
+        $user = $this->getCurrentUser();
+
+        if ($user === null || $user->shibboleth_id === null) {
+            return;
+        }
+
+        if ($user->hasRole(Roles::STUDENT) && !Str::contains($user->entitlement, 'student')) {
+            $user->removeRole(Roles::STUDENT);
+        }
+
+        if ($user->hasRole(Roles::STAFF) && !Str::contains($user->entitlement, 'staff')) {
+            $user->removeRole(Roles::STAFF);
+        }
+
+        collect(explode(';', $user->entitlement))
+            ->each(function (string $entitlement) use($user):void
+        {
+            switch ($entitlement) {
+                case 'student':
+                    $user->assignRole(Roles::STUDENT);
+                    break;
+                case 'staff':
+                    $user->assignRole(Roles::STAFF);
+                    break;
+            }
+        });
     }
 
 }

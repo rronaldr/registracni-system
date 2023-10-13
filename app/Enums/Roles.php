@@ -2,12 +2,12 @@
 
 declare(strict_types = 1);
 
-namespace App\Enums\Roles;
+namespace App\Enums;
 
 final class Roles
 {
-    public const ADMIN = 1;
-    public const EDITOR = 2;
-    public const STAFF = 3;
-    public const STUDENT = 4;
+    public const ADMIN = 'Admin';
+    public const EDITOR = 'Editor';
+    public const STAFF = 'Staff';
+    public const STUDENT = 'Student';
 }
