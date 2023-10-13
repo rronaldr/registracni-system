@@ -10,7 +10,7 @@
                 @click="removeItem()"
                 :title="$t('enrollment.sign_out')"
                 type="button"
-                class="btn btn-outline-danger btn-rounded"
+                class="btn-link text-danger border-0"
             >
                 <i class="fas fa-sign-out-alt"></i>
             </button>

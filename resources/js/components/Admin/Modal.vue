@@ -1,9 +1,11 @@
 <template>
-    <div v-if="show" @click.self="$emit('close')" class="modal modal-backdrop modal-lg" role="dialog">
+    <div v-if="show" @click.self="$emit('close')" class="modal modal-backdrop" role="dialog">
         <div class="modal-container">
             <div class="modal-header">
                 <slot name="modal-header"></slot>
-                <button @click="$emit('close')"  type="button" class="btn-close" aria-label="Close"></button>
+                <button @click="$emit('close')"  type="button" class="close" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
             </div>
 
             <div class="modal-body">

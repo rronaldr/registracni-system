@@ -96,7 +96,8 @@ return [
         'last_name' => 'Příjmení',
         'email' => 'Email',
         'xname' => 'Xname',
-        'users' => 'Uživatelé'
+        'users' => 'Uživatelé',
+        'roles' => 'Uživatelské role'
     ],
     'templates' => [
         'template' => 'Šablona',

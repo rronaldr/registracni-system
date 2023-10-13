@@ -1,6 +1,6 @@
 <template>
     <div class="table-responsive">
-        <table class="table table table-striped">
+        <table class="table table-striped">
             <thead>
             <tr>
                 <td>{{ $t('date.duration') }}</td>
@@ -9,7 +9,7 @@
                 <td>{{ $t('date.unlimited_capacity') }}</td>
                 <td>{{ $t('date.substitute') }}</td>
                 <td>{{ $t('date.participants_count') }}</td>
-                <td></td>
+                <td class="w-10"></td>
             </tr>
             </thead>
             <tbody>

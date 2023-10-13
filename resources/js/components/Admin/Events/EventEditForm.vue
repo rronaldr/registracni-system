@@ -1,6 +1,6 @@
 <template>
     <div class="row mb-3">
-        <div class="col">
+        <div class="col-12">
             <h4>ADMIN section</h4>
             <table class="table table-responsive">
                 <thead>
@@ -31,11 +31,15 @@
         </div>
     </div>
 
-    <div class="row mb-3 justify-content-end">
-        <div class="col-5 text-end">
-            <a type="button" class="btn btn-secondary mx-1" :href="ADMIN_URL+'/events/'+ event.id +'/duplicate'"><i class="fas fa-copy"></i> {{ $t('event.duplicate') }}</a>
-            <a type="button" class="btn btn-secondary mx-1" :href="ADMIN_URL+'/events/'+ event.id +'/users/export'"><i class="fas fa-file-export"></i> {{ $t('event.export') }}</a>
-            <a type="button" class="btn btn-secondary mx-1" :href="ADMIN_URL+'/events/'+ event.id +'/users/export-email'"><i class="fas fa-envelope"></i> {{ $t('event.export_emails') }}</a>
+    <div class="row mb-3 justify-content-right">
+        <div class="col-12 text-right">
+            <a type="button" class="btn btn-secondary mx-1" :href="ADMIN_URL+'/events/'+ event.id +'/duplicate'"><i
+                class="fas fa-copy"></i> {{ $t('event.duplicate') }}</a>
+            <a type="button" class="btn btn-secondary mx-1" :href="ADMIN_URL+'/events/'+ event.id +'/users/export'"><i
+                class="fas fa-file-export"></i> {{ $t('event.export') }}</a>
+            <a type="button" class="btn btn-secondary mx-1"
+               :href="ADMIN_URL+'/events/'+ event.id +'/users/export-email'"><i class="fas fa-envelope"></i>
+                {{ $t('event.export_emails') }}</a>
         </div>
     </div>
 
@@ -102,7 +106,8 @@
                     v-show="(event.contact.person === null || event.contact.person === '') || (event.contact.email === null || event.contact.email === '')"
                     type="button"
                     class="btn btn-primary form-control align-self-end"
-                    name="event-link">{{ $t('event.fill_user_contact') }}</button>
+                    name="event-link">{{ $t('event.fill_user_contact') }}
+                </button>
             </div>
         </div>
 
@@ -115,14 +120,15 @@
         </div>
 
         <div class="row mb-3">
-          <div class="col">
-            <EventStatusSelect
-                v-model="event.status"
-            />
-          </div>
+            <div class="col">
+                <EventStatusSelect
+                    v-model="event.status"
+                />
+            </div>
         </div>
 
-        <div class="line"></div><br>
+        <div class="line"></div>
+        <br>
 
         <div class="row mb-3">
             <label class="col-sm-2">{{ $t('event.type') }}</label>
@@ -136,21 +142,20 @@
         <div class="row mb-3">
             <label class="col-sm-2">{{ $t('event.global_blacklist') }}<br></label>
             <div class="col-sm-10">
-                <div class="form-check form-switch mb-3">
-                    <input v-model="event.global_blacklist" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="col-sm-2 d-inline" v-html="$t('event.global_blacklist_link', {href: ADMIN_URL +'/blacklist' })"></label>
-                </div>
+                <BaseCheckbox
+                    v-model="event.global_blacklist"
+                    :label="$t('event.global_blacklist_event')"
+                />
             </div>
         </div>
 
         <div class="row mb-3">
             <label class="col-sm-2">{{ $t('event.event_blacklist') }}<br></label>
             <div class="col-sm-10">
-                <div class="form-check form-switch mb-3">
-                    <input v-model="event.event_blacklist" @change="createBlacklist" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="col-sm-2 d-inline">{{ $t('event.enable_event_blacklist') }}
-                    </label>
-                </div>
+                <BaseCheckbox
+                    v-model="event.event_blacklist"
+                    :label="$t('event.enable_event_blacklist')"
+                />
             </div>
         </div>
 
@@ -158,9 +163,9 @@
             v-if="event.event_blacklist"
             :blacklist-id="event.blacklist_id"
         >
-          <template v-slot:csrf>
-            <slot name="csrf"></slot>
-          </template>
+            <template v-slot:csrf>
+                <slot name="csrf"></slot>
+            </template>
         </BlacklistEditPage>
 
         <!-- Custom blacklist modal start -->
@@ -169,7 +174,9 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">{{ $t('event.blacklist_modal_title') }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                     <div class="modal-body text-start">
                         <p>
@@ -181,7 +188,8 @@
         </div>
         <!-- Custom blacklist modal end -->
 
-        <div class="line"></div><br>
+        <div class="line"></div>
+        <br>
 
         <EditDateForm
             :dates="dates"
@@ -189,61 +197,81 @@
             @get-dates="getEventDates"
         />
 
-        <div class="line"></div><br>
+        <div class="line"></div>
+        <br>
+
 
         <div class="row mb-3">
-            <div class="accordion accordion-flush">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="accordion-tags-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-tags" aria-expanded="false" aria-controls="accordion-tags">
-                            {{ $t('tag.tag')}}
-                        </button>
-                    </h2>
-                    <div id="accordion-tags" class="accordion-collapse collapse mt-2" aria-labelledby="accordion-tags-header">
-                        <EditTagForm
-                            :tags="tags"
-                            :event-id="event.id"
-                            @get-tags="getEventTags"
-                        />
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="accordion-template-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-template" aria-expanded="false" aria-controls="accordion-template">
-                            {{ $t('event.template')}}
-                        </button>
-                    </h2>
-                    <div id="accordion-template" class="accordion-collapse collapse show mt-2" aria-labelledby="accordion-template-header">
-                        <div class="row mb-3">
-                            <div class="col">
-                                <BaseSelect
-                                    v-model="event.template.id"
-                                    :options="templates"
-                                    :label="$t('template.select')"
-                                    :placeholder="true"
-                                    :placeholder-text="$t('template.select')"
+            <div class="col-md-12">
+                <div id="accordion">
+                    <div class="card">
+                        <div class="card-header bg-white" id="accordion-tags-header">
+                            <h5 class="mb-0">
+                                <button type="button" class="btn btn-link" data-toggle="collapse"
+                                        data-target="#accordion-tags"
+                                        aria-expanded="true" aria-controls="collapseOne">
+                                    {{ $t('tag.show_tag') }}
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="accordion-tags" class="collapse" aria-labelledby="accordion-tags-header"
+                             data-parent="#accordion">
+                            <div class="card-body">
+                                <EditTagForm
+                                    :tags="tags"
+                                    :event-id="event.id"
+                                    @get-tags="getEventTags"
                                 />
                             </div>
                         </div>
-                        <TemplateTags
-                            :tags="tags"
-                        />
-                      <div
-                          v-if="event.template.id !== 1"
-                          class="row mb-3"
-                      >
-                        <div class="col">
-                          <label for="subtitle" class="form-label">{{ $t('event.template_content') }}</label>
-                          <TinyEditor
-                              v-model="event.template.content"
-                          />
+                    </div>
+                    <div class="card">
+                        <div class="card-header bg-white" id="accordion-template-header">
+                            <h5 class="mb-0">
+                                <button type="button" class="btn btn-link" data-toggle="collapse"
+                                        data-target="#accordion-template"
+                                        aria-expanded="false" aria-controls="collapseTwo">
+                                    {{ $t('event.template') }}
+                                </button>
+                            </h5>
                         </div>
-                      </div>
+                        <div id="accordion-template" class="collapse show" aria-labelledby="accordion-template-header"
+                             data-parent="#accordion">
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <BaseSelect
+                                            v-model="event.template.id"
+                                            :options="templates"
+                                            :label="$t('template.select')"
+                                            :placeholder="true"
+                                            :placeholder-text="$t('template.select')"
+                                        />
+                                    </div>
+                                </div>
+                                <TemplateTags
+                                    :tags="tags"
+                                />
+                                <div
+                                    v-if="event.template.id !== 1"
+                                    class="row mb-3"
+                                >
+                                    <div class="col">
+                                        <label for="subtitle" class="form-label">{{
+                                                $t('event.template_content')
+                                            }}</label>
+                                        <TinyEditor
+                                            v-model="event.template.content"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <FormButtons :route="ADMIN_URL +'/events'" />
+        <FormButtons :route="ADMIN_URL +'/events'"/>
     </form>
 </template>
 
@@ -254,6 +282,7 @@ import {useI18n} from "vue-i18n";
 import FormButtons from "../Form/FormButtons.vue";
 import BaseInput from "../Form/BaseInput.vue";
 import BaseRadioGroup from "../Form/BaseRadioGroup.vue";
+import BaseCheckbox from "../Form/BaseCheckbox.vue";
 import BaseSelect from "../Form/BaseSelect.vue";
 import TinyEditor from "../../TinyEditor.vue";
 import TemplateTags from "../TemplateTags/TemplateTags.vue";
@@ -264,6 +293,7 @@ import EditTagForm from "../Tags/Edit/EditTagForm.vue";
 import {formatEventDates, editEventMap} from "../../../utils/DataMapper"
 import EventStatusSelect from "./EventStatusSelect.vue";
 import {formatDate} from "../../../utils/DateFormat"
+import TagForm from "../Tags/TagForm.vue";
 
 const ADMIN_URL = inject('ADMIN_URL')
 const props = defineProps({
@@ -296,46 +326,46 @@ function submitEvent() {
     }
 
     axios.put(
-        ADMIN_URL+'/events/'+event.id+'/update',{
+        ADMIN_URL + '/events/' + event.id + '/update', {
             data,
         }
     )
-    .then(
-        window.location.href = ADMIN_URL+'/events',
-    )
-    .catch(e => {
-        console.log(e.response.data)
-        errors.value = e.response.data.errors
-        window.scrollTo(0,0);
-    })
+        .then(
+            window.location.href = ADMIN_URL + '/events',
+        )
+        .catch(e => {
+            console.log(e.response.data)
+            errors.value = e.response.data.errors
+            window.scrollTo(0, 0);
+        })
 }
 
 function fillContactWithCurrentUser() {
     event.contact.person = props.user.display_name !== null
         ? props.user.display_name
-        : props.user.first_name+' '+ props.user.last_name
+        : props.user.first_name + ' ' + props.user.last_name
     event.contact.email = props.user.email
 }
 
 async function createBlacklist() {
     if (event.blacklist_id === null) {
-        let response = await axios.post(ADMIN_URL+'/events/'+event.id+'/blacklist')
+        let response = await axios.post(ADMIN_URL + '/events/' + event.id + '/blacklist')
         event.blacklist_id = response.data.blacklist
     }
 }
 
 async function getApprovedTemplates() {
-  let response = await axios.get(ADMIN_URL+'/templates/approved')
-  templates.value = response.data.templates
+    let response = await axios.get(ADMIN_URL + '/templates/approved')
+    templates.value = response.data.templates
 }
 
 async function getEventDates() {
-  let response = await axios.get(ADMIN_URL+'/dates/'+props.event.id)
-  dates.value = formatEventDates(response.data.dates)
+    let response = await axios.get(ADMIN_URL + '/dates/' + props.event.id)
+    dates.value = formatEventDates(response.data.dates)
 }
 
 async function getEventTags() {
-    let response = await axios.get(ADMIN_URL+'/events/'+props.event.id+'/tags')
+    let response = await axios.get(ADMIN_URL + '/events/' + props.event.id + '/tags')
     tags.value = response.data.tags
 }
 </script>

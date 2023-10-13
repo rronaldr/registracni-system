@@ -1,8 +1,9 @@
 <template>
   <form @submit.prevent="addToBlacklist">
-    <a class="link-secondary float-end" data-bs-toggle="modal" data-bs-target="#infoModal">
+    <a class="link-secondary float-end" data-toggle="modal" data-target="#infoModal">
       <i class="fas fa-info-circle"></i> {{ $t('app.show-hint') }}
     </a>
+    <br/>
     <BaseTextarea
         v-model="blacklist.users"
         :label="$t('blacklist.users')"

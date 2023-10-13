@@ -1,4 +1,4 @@
-@extends('layouts.admin.main', ['title' => 'Editace události'])
+@extends('layouts.admin.main', ['title' => __('app.user.roles')])
 
 @section('content')
     <div class="row justify-content-center">

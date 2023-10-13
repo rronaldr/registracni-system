@@ -12,7 +12,7 @@
                         <div class="col">
                             <button
                                 @click="showDateForm = true"
-                                class="btn btn-sm btn-primary float-end"
+                                class="btn btn-sm btn-primary float-right"
                                 type="button"
                             >
                                 <i class="fas fa-plus"></i> {{ $t('date.add_date') }}
@@ -32,7 +32,7 @@
             </div>
 
             <form
-                class="bg-lighter-grey border rounded p-2"
+                class="bg-lighter-grey border p-2"
                 v-if="showDateForm"
                 @submit.prevent="addDate"
             >
@@ -40,8 +40,10 @@
                     <h5 class="fw-bold">{{ $t('date.add_date') }}</h5>
                     <button
                         type="button"
-                        class="btn-close"
-                        @click="closeForm()"></button>
+                        class="close"
+                        @click="closeForm()">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="text-start">
                     <div class="row g-2 mb-3">
@@ -91,7 +93,7 @@
                         </div>
                     </div>
                     <div class="row g-2 mb-3">
-                        <div class="col-3">
+                        <div class="col-lg-3 col-sm-6">
                             <BaseInput
                                 v-model="date.date_from"
                                 :label="$t('date.date_from')"
@@ -100,7 +102,7 @@
                                 :required="true"
                             />
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-3 col-sm-6">
                             <BaseInput
                                 v-model="date.time_from"
                                 :label="$t('date.time_from')"
@@ -110,7 +112,7 @@
                             />
                         </div>
 
-                        <div class="col-3">
+                        <div class="col-lg-3 col-sm-6">
                             <BaseInput
                                 v-model="date.date_to"
                                 :label="$t('date.date_to')"
@@ -118,7 +120,7 @@
                                 :required="true"
                             />
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-3 col-sm-6">
                             <BaseInput
                                 v-model="date.time_to"
                                 :label="$t('date.time_to')"
