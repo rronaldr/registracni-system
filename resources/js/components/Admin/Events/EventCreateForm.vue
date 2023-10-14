@@ -199,13 +199,11 @@
                             <div class="card-body">
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <BaseSelect
+                                        <TemplateSelect
                                             v-model="event.template.id"
                                             :options="templates"
                                             :label="$t('template.select')"
                                             :required="true"
-                                            :placeholder="true"
-                                            :placeholder-text="$t('template.select')"
                                         />
                                     </div>
                                 </div>
@@ -251,6 +249,7 @@ import TagForm from "../Tags/TagForm.vue";
 import UserGroupSelect from "./UserGroupSelect.vue";
 import {duplicateEventMap, eventCreateObject} from "../../../utils/DataMapper"
 import BaseCheckbox from "../Form/BaseCheckbox.vue";
+import TemplateSelect from "../TemplateTags/TemplateSelect.vue";
 
 const ADMIN_URL = inject('ADMIN_URL')
 const props = defineProps({

@@ -13,7 +13,7 @@ export const eventCreateObject = {
     event_blacklist: false,
     blacklist_users: null,
     template: {
-        id: null,
+        id: 0,
         content: null,
     },
     user_group: null,

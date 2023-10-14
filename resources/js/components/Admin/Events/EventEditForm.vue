@@ -240,12 +240,11 @@
                             <div class="card-body">
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <BaseSelect
+                                        <TemplateSelect
                                             v-model="event.template.id"
                                             :options="templates"
                                             :label="$t('template.select')"
-                                            :placeholder="true"
-                                            :placeholder-text="$t('template.select')"
+                                            :required="true"
                                         />
                                     </div>
                                 </div>
@@ -294,6 +293,7 @@ import {formatEventDates, editEventMap} from "../../../utils/DataMapper"
 import EventStatusSelect from "./EventStatusSelect.vue";
 import {formatDate} from "../../../utils/DateFormat"
 import TagForm from "../Tags/TagForm.vue";
+import TemplateSelect from "../TemplateTags/TemplateSelect.vue";
 
 const ADMIN_URL = inject('ADMIN_URL')
 const props = defineProps({

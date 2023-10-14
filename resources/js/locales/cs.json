@@ -74,7 +74,8 @@
         "enrollment_created": "Datum přihlášení na termín"
     },
     "template": {
-        "select": "Vyberte šablonu z nabídky"
+        "select": "Vyberte šablonu z nabídky",
+        "default": "Výchozí šablona"
     },
     "event": {
         "tag_buttons": "Tlačítka pro přidání vlastních polí do šablony",
