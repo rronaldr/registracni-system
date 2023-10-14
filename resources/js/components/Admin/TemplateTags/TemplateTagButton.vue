@@ -1,6 +1,6 @@
 <template>
     <button @click="$emit('setContent', `[${value}]`)"
-            type="button" class="btn btn-sm mx-1">{{ label }}</button>
+            type="button" class="btn btn-sm mb-1 mx-1">{{ label }}</button>
 </template>
 
 <script setup>
