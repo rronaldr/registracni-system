@@ -71,6 +71,11 @@ class Event extends Model
         return $this->hasMany(Date::class);
     }
 
+    public function enrollments(): HasManyThrough
+    {
+        return $this->hasManyThrough(Enrollment::class, Date::class);
+    }
+
     public function users(): HasManyThrough
     {
         return $this->hasManyThrough(User::class, Enrollment::class);
