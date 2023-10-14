@@ -11,7 +11,7 @@
             </div>
 
             <div v-if="errors" class="row mb-3">
-                <div class="bg-danger text-white py-2 px-4 pr-0 rounded font-bold mb-4 shadow-lg">
+                <div class="text-danger py-2 px-4 pr-0 rounded font-bold mb-4 shadow-lg">
                     <div v-for="(v, k) in errors" :key="k">
                         <p v-for="error in v" :key="error" class="text-sm">
                             {{ error.toUpperCase() }}
@@ -21,7 +21,7 @@
             </div>
 
             <form @submit.prevent="submitEnrollment">
-                <div class="mt-2">
+                <div class="mt-1">
                     <div
                         v-for="field in fields"
                         :key="field.id"
@@ -78,7 +78,8 @@
                     </div>
                     <div class="row p-2">
                         <div class="col-12">
-                            <p><input type="checkbox"> Souhlasím s <a class="link-primary" href="#">GDPR</a> ....</p>
+<!--                            <p><input type="checkbox"> Souhlasím s <a class="link-primary" :href="gdprLink">GDPR</a> ....</p>-->
+                            <p v-html="$t('enrollment.gdpr_agree', {link: gdprLink})"></p>
                             <button class="btn btn-primary" type="submit">Odeslat</button>
                         </div>
                     </div>
@@ -96,10 +97,12 @@ import BaseSelect from "./Admin/Form/BaseSelect.vue";
 import BaseCheckbox from "./Admin/Form/BaseCheckbox.vue";
 import BaseRadioGroup from "./Admin/Form/BaseRadioGroup.vue";
 import BaseTextarea from "./Admin/Form/BaseTextarea.vue";
+import SubmitButton from "./Admin/Form/SubmitButton.vue";
 
 const props = defineProps({
     dateId: {type: Number, required: true},
     fields: {type: Array, required: true},
+    gdprLink: {type: URL, required: false}
 })
 const APP_URL = inject('APP_URL')
 let form = reactive({})

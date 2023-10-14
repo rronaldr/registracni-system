@@ -145,6 +145,7 @@
             "2": "Náhradník",
             "3": "Odhlášen"
         },
-        "form_select_placeholder": "Vyberte z nabídky"
+        "form_select_placeholder": "Vyberte z nabídky",
+        "gdpr_agree": "Registrací na událost souhlasím se <a href=\"{{link}}\" title=\"GDPR\">Zásadami zpracování osobních údajů</a>"
     }
 }
