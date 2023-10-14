@@ -111,6 +111,7 @@
         "block_reason": "Důvod blokace",
         "users": "Xname uživatelů",
         "users_on_blacklist": "Uživatele na blacklistu",
+        "users_hint": "Zde je seznam uživatelů, kteří jsou na globálním blacklistu",
         "no_users": "Žádní uživatelé na blacklistu"
     },
     "user": {

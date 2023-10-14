@@ -1,11 +1,11 @@
 <template>
     <tr>
         <td>{{ user.xname ?? '-' }}</td>
-        <td>
+        <td class="text-right">
             <button
                 type="button"
                 title="{{ $t('app.delete') }}"
-                class="btn btn-outline-danger btn-rounded"
+                class="btn-link text-danger border-0"
                 @click="removeUserFromBlacklist"
             >
                 <i class="fas fa-trash"></i>

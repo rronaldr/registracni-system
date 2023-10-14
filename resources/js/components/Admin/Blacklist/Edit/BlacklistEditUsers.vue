@@ -4,12 +4,12 @@
             <div class="row">
                 <div class="col">
                     <h5>
-                        Uživatelé na blacklistu
+                        {{ $t('blacklist.users_on_blacklist') }}
                         <i
                             class="fas fa-info-circle"
                             data-toggle="tooltip"
                             data-placement="top"
-                            title="Zde je seznam uživatelů, kteří jsou na globálním blacklistu"
+                            :title="$t('blacklist.users_hint')"
                         ></i>
                     </h5>
                 </div>
