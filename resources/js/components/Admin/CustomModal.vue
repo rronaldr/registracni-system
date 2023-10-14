@@ -3,6 +3,9 @@
         v-if="show"
         class="modal modal-backdrop"
         role="dialog"
+        v-bind="{
+            ...$attrs
+        }"
         @click.self="$emit('close')"
     >
         <div class="modal-container">
@@ -55,6 +58,7 @@ defineProps({
     background-color: #fff;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     transition: all 0.3s ease;
+    min-width: 30%;
 }
 
 .modal-header {

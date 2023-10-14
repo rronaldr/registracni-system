@@ -142,6 +142,8 @@
         "state": "Stav přihlášky",
         "c_fields": "Vyplněné hondoty",
         "sign_out": "Odhlásit uživatele",
+        "sign_off_block_reason": "Důvod odhlášení uživatele",
+        "sign_off_block_hint": "O odhlášení bude uživatel informován emailem.",
         "statuses": {
             "1": "Přihlášen",
             "2": "Náhradník",

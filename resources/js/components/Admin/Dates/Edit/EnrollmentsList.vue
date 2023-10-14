@@ -31,7 +31,7 @@ defineProps({
     enrollments: { type: Array, required: true }
 })
 
-function signOut(dateId, enrollmentId) {
-    emit('signOut', dateId, enrollmentId)
+function signOut(dateId, enrollmentId, blockReason) {
+    emit('signOut', dateId, enrollmentId, blockReason)
 }
 </script>

@@ -64,8 +64,10 @@ function removeDate(id) {
     emit('removeDate', id)
 }
 
-function signOut(dateId, enrollmentId) {
-    axios.post(ADMIN_URL + '/dates/enrollments/' + enrollmentId + '/signoff')
+function signOut(dateId, enrollmentId, blockReason) {
+    axios.post(ADMIN_URL + '/dates/enrollments/' + enrollmentId + '/signoff', {
+        data: blockReason.value
+    })
     getEnrollmentsForDate(dateId)
 }
 

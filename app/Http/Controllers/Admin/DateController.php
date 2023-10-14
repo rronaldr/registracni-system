@@ -74,8 +74,10 @@ class DateController extends Controller
         return response()->json(null, 204);
     }
 
-    public function signOffEnrollmentUser(int $id, DateFacade $dateFacade): JsonResponse
+    public function signOffEnrollmentUser(int $id, Request $request, DateFacade $dateFacade): JsonResponse
     {
+        /** @todo send email with localization of message */
+        $blockReason = $request->get('data');
         $dateFacade->signOffUser($id);
 
         return response()->json(null, 204);
