@@ -57,7 +57,7 @@ class EventController extends Controller
 
             return response()->json(null, 204);
         } catch (\Exception $e) {
-            dump($e);
+            return response()->json(['error' => $e->getMessage()], 400);
         }
     }
 
