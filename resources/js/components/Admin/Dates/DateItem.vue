@@ -7,18 +7,18 @@
         <td>{{ date.substitute ? 'Ano' : 'Ne' }}</td>
         <td>
             <button
-                @click="editItem"
                 :title="$t('app.edit')"
                 type="button"
                 class="btn-link text-info border-0 mx-1"
+                @click="editItem"
             >
                 <i class="fas fa-edit"></i>
             </button>
             <button
-                @click="removeItem"
                 :title="$t('app.delete')"
                 type="button"
                 class="btn-link text-danger border-0"
+                @click="removeItem"
             >
                 <i class="fas fa-trash"></i>
             </button>
@@ -27,15 +27,21 @@
 </template>
 
 <script setup>
-import moment from "moment";
+import moment from 'moment'
 
 const emit = defineEmits(['editDate', 'removeDate'])
 const props = defineProps({
-    date: {type: Object, required: true},
+    date: { type: Object, required: true }
 })
 
-let durationFrom = moment(`${props.date.date_from} ${props.date.time_from}`, 'YYYY-MM-DD HH:mm').format('D.M.YYYY HH:mm')
-let durationTo = moment(`${props.date.date_to} ${props.date.time_to}`, 'YYYY-MM-DD HH:mm').format('D.M.YYYY HH:mm')
+let durationFrom = moment(
+    `${props.date.date_from} ${props.date.time_from}`,
+    'YYYY-MM-DD HH:mm'
+).format('D.M.YYYY HH:mm')
+let durationTo = moment(
+    `${props.date.date_to} ${props.date.time_to}`,
+    'YYYY-MM-DD HH:mm'
+).format('D.M.YYYY HH:mm')
 let dateDuration = `${durationFrom} - ${durationTo}`
 
 function editItem() {

@@ -6,16 +6,23 @@
                     <div class="row">
                         <div class="col">
                             <span>
-                                {{ $t('tag.tag') }} <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" :title="$t('tag.tag_box_hint')"></i>
+                                {{ $t('tag.tag') }}
+                                <i
+                                    class="fas fa-info-circle"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    :title="$t('tag.tag_box_hint')"
+                                ></i>
                             </span>
                         </div>
                         <div class="col">
                             <button
-                                @click="showTagForm = true"
                                 class="btn btn-sm btn-primary float-right"
                                 type="button"
+                                @click="showTagForm = true"
                             >
-                                <i class="fas fa-plus"></i> {{ $t('tag.add_tag') }}
+                                <i class="fas fa-plus"></i>
+                                {{ $t('tag.add_tag') }}
                             </button>
                         </div>
                     </div>
@@ -27,21 +34,18 @@
                         @edit-tag="setEditForm"
                         @remove-tag="removeTag"
                     />
-                    <p v-else class="card-text">{{ $t('tag.empty' )}}</p>
+                    <p v-else class="card-text">{{ $t('tag.empty') }}</p>
                 </div>
             </div>
 
             <form
-                class="bg-lighter-grey border p-2"
                 v-if="showTagForm"
+                class="bg-lighter-grey border p-2"
                 @submit.prevent="addDate"
             >
                 <div class="d-flex align-items-center justify-content-between">
                     <h5 class="fw-bold">{{ $t('tag.add_tag') }}</h5>
-                    <button
-                        type="button"
-                        class="close"
-                        @click="closeForm()">
+                    <button type="button" class="close" @click="closeForm()">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -68,13 +72,11 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col"
-                             v-if="showRequired"
-                        >
+                        <div v-if="showRequired" class="col">
                             <BaseCheckbox
                                 id="required"
-                                :label="$t('tag.required')"
                                 v-model="tag.required"
+                                :label="$t('tag.required')"
                             />
                         </div>
                     </div>
@@ -91,9 +93,7 @@
                         </div>
                     </div>
                     <div class="row g-2 mb-3">
-                        <div class="col"
-                             v-if="showOptions"
-                        >
+                        <div v-if="showOptions" class="col">
                             <BaseTextarea
                                 v-model="tag.options"
                                 :label="$t('tag.options')"
@@ -103,9 +103,7 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col"
-                            v-if="showDefault"
-                        >
+                        <div v-if="showDefault" class="col">
                             <BaseInput
                                 v-model="tag.default"
                                 :label="$t('tag.default')"
@@ -114,7 +112,7 @@
                         </div>
                     </div>
 
-                    <SubmitButton/>
+                    <SubmitButton />
                 </div>
             </form>
         </div>
@@ -122,24 +120,23 @@
 </template>
 
 <script setup>
-import {inject, reactive, ref, watch} from "vue";
-import SubmitButton from "../../Form/SubmitButton.vue";
-import BaseInput from "../../Form/BaseInput.vue";
-import BaseCheckbox from "../../Form/BaseCheckbox.vue";
-import BaseTextarea from "../../Form/BaseTextarea.vue";
-import {useI18n} from "vue-i18n";
-import BaseSelect from "../../Form/BaseSelect.vue";
-import EditTagList from "./EditTagList.vue";
-import axios from "axios";
-import {mapLastDateObject} from "../../../../utils/DataMapper";
+import { inject, reactive, ref, watch } from 'vue'
+import SubmitButton from '../../Form/SubmitButton.vue'
+import BaseInput from '../../Form/BaseInput.vue'
+import BaseCheckbox from '../../Form/BaseCheckbox.vue'
+import BaseTextarea from '../../Form/BaseTextarea.vue'
+import { useI18n } from 'vue-i18n'
+import BaseSelect from '../../Form/BaseSelect.vue'
+import EditTagList from './EditTagList.vue'
+import axios from 'axios'
 
 const ADMIN_URL = inject('ADMIN_URL')
 const props = defineProps({
-    eventId: {type: Number, required: true},
-    tags: {type: Array, required: false}
+    eventId: { type: Number, required: true },
+    tags: { type: Array, required: false, default: null }
 })
 const emit = defineEmits(['getTags'])
-const {t} = useI18n({})
+const { t } = useI18n({})
 
 let showTagForm = ref(false)
 let showOptions = ref(false)
@@ -157,16 +154,16 @@ let tag = reactive({
 })
 
 let typeOptions = [
-    {name: t('tag.text'), id: 'text'},
-    {name: t('tag.number'), id: 'number'},
-    {name: t('tag.checkbox'), id: 'checkbox'},
-    {name: t('tag.radio'), id: 'radio'},
-    {name: t('tag.select'), id: 'select'},
-    {name: t('tag.email'), id: 'email'},
-    {name: t('tag.tel'), id: 'tel'},
-    {name: t('tag.date'), id: 'date'},
-    {name: t('tag.url'), id: 'url'},
-    {name: t('tag.textarea'), id: 'textarea'},
+    { name: t('tag.text'), id: 'text' },
+    { name: t('tag.number'), id: 'number' },
+    { name: t('tag.checkbox'), id: 'checkbox' },
+    { name: t('tag.radio'), id: 'radio' },
+    { name: t('tag.select'), id: 'select' },
+    { name: t('tag.email'), id: 'email' },
+    { name: t('tag.tel'), id: 'tel' },
+    { name: t('tag.date'), id: 'date' },
+    { name: t('tag.url'), id: 'url' },
+    { name: t('tag.textarea'), id: 'textarea' }
 ]
 
 async function addDate() {
@@ -184,20 +181,25 @@ async function addDate() {
 async function createTag() {
     setTagId()
 
-    await axios.post(ADMIN_URL+'/events/'+props.eventId+'/tags/create', {
+    await axios.post(ADMIN_URL + '/events/' + props.eventId + '/tags/create', {
         tag: tag
     })
 }
 async function editTag() {
-    await axios.put(ADMIN_URL+'/events/'+props.eventId+'/tags/'+tag.id+'/update', {
-        tag: tag
-    })
+    await axios.put(
+        ADMIN_URL + '/events/' + props.eventId + '/tags/' + tag.id + '/update',
+        {
+            tag: tag
+        }
+    )
 
     edit = false
 }
 
 async function removeTag(id) {
-    await axios.delete(ADMIN_URL+'/events/'+props.eventId+'/tags/'+id+'/delete')
+    await axios.delete(
+        ADMIN_URL + '/events/' + props.eventId + '/tags/' + id + '/delete'
+    )
     emit('getTags')
 }
 
@@ -206,7 +208,7 @@ function setEditForm(id) {
     showTagForm.value = true
     edit = true
 
-    tag = Object.assign(tag, {...props.tags.find(tag => tag.id === id)})
+    tag = Object.assign(tag, { ...props.tags.find((tag) => tag.id === id) })
 }
 
 function closeForm() {
@@ -215,7 +217,9 @@ function closeForm() {
 }
 
 function clearTagObject() {
-    Object.keys(tag).forEach((i) => tag[i] = i === 'required' ? tag[i] = false : tag[i] = null)
+    Object.keys(tag).forEach(
+        (i) => (tag[i] = i === 'required' ? (tag[i] = false) : (tag[i] = null))
+    )
 }
 
 function setTagId() {
@@ -227,19 +231,15 @@ function setTagId() {
 
 watch(
     () => tag.type,
-    (type, prevType) => {
-        showOptions = tag.type !== null && (
-            tag.type === 'select'
-            || tag.type === 'radio'
-        )
-        showDefault = tag.type !== null && (
-            tag.type !== 'checkbox'
-            && tag.type !== 'radio'
-            && tag.type !== 'select'
-        )
-        showRequired = tag.type !== null
-            && tag.type !== 'checkbox'
+    () => {
+        showOptions.value =
+            tag.type !== null && (tag.type === 'select' || tag.type === 'radio')
+        showDefault.value =
+            tag.type !== null &&
+            tag.type !== 'checkbox' &&
+            tag.type !== 'radio' &&
+            tag.type !== 'select'
+        showRequired.value = tag.type !== null && tag.type !== 'checkbox'
     }
 )
-
 </script>

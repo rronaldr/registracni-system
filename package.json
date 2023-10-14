@@ -8,7 +8,8 @@
         "hot": "mix watch --hot",
         "prod": "npm run production",
         "production": "mix --production",
-        "lint": "./node_modules/.bin/eslint resources/js/ --ext .js,.vue"
+        "lint": "./node_modules/.bin/eslint resources/js/ --ext .js,.vue",
+        "lint-fix": "./node_modules/.bin/eslint resources/js/ --ext .js,.vue --fix"
     },
     "devDependencies": {
         "@babel/eslint-parser": "^7.22.15",
@@ -18,6 +19,7 @@
         "eslint": "^8.51.0",
         "eslint-config-prettier": "^9.0.0",
         "eslint-plugin-prettier": "^5.0.1",
+        "eslint-plugin-unused-imports": "^3.0.0",
         "laravel-mix": "^6.0.49",
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",

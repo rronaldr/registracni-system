@@ -1,44 +1,48 @@
 <template>
-  <div class="card">
-    <div class="card-header">
-      <div class="row">
-        <div class="col">
-          <h5>
-            Uživatelé na blacklistu
-            <i class="fas fa-info-circle"
-               data-toggle="tooltip" data-placement="top"
-               title="Zde je seznam uživatelů, kteří jsou na globálním blacklistu"></i>
-          </h5>
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col">
+                    <h5>
+                        Uživatelé na blacklistu
+                        <i
+                            class="fas fa-info-circle"
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title="Zde je seznam uživatelů, kteří jsou na globálním blacklistu"
+                        ></i>
+                    </h5>
+                </div>
+            </div>
         </div>
-      </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>{{ $t('user.xname') }}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <BlacklistEditUser
+                        v-for="user in users"
+                        :key="user.id"
+                        :user="user"
+                        @refresh-users="getUsers()"
+                    />
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="card-body">
-      <table class="table table-striped">
-        <thead>
-        <tr>
-          <th>{{ $t('user.xname') }}</th>
-          <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <BlacklistEditUser
-            v-for="user in users"
-            :key="user.id"
-            :user="user"
-            @refresh-users="getUsers()"
-        />
-        </tbody>
-      </table>
-    </div>
-  </div>
 </template>
 
 <script setup>
-import {inject, ref} from "vue";
-import BlacklistEditUser from "./BlacklistEditUser.vue";
+import { inject, ref } from 'vue'
+import axios from 'axios'
+import BlacklistEditUser from './BlacklistEditUser.vue'
 
 const props = defineProps({
-  blacklistId: {type: Number, required: true}
+    blacklistId: { type: Number, required: true }
 })
 const ADMIN_URL = inject('ADMIN_URL')
 let users = ref(null)
@@ -46,24 +50,24 @@ let users = ref(null)
 getUsers()
 
 async function getUsers() {
-  let response = await axios.get(
-      ADMIN_URL+'/blacklist/'+props.blacklistId+'/users'
-  )
-  users.value = response.data.users
+    let response = await axios.get(
+        ADMIN_URL + '/blacklist/' + props.blacklistId + '/users'
+    )
+    users.value = response.data.users
 }
 
 defineExpose({
-  getUsers,
-  users
+    getUsers,
+    users
 })
 </script>
 
 <style scoped>
 .page-item.active .page-link {
-  background-color: lightgrey !important;
-  border: 1px solid black;
+    background-color: lightgrey !important;
+    border: 1px solid black;
 }
 .page-link {
-  color: black !important;
+    color: black !important;
 }
 </style>

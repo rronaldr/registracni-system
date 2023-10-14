@@ -4,16 +4,16 @@
             <BackButton :route="route" />
         </div>
         <div class="col text-right">
-            <SubmitButton/>
+            <SubmitButton />
         </div>
     </div>
 </template>
 
 <script setup>
-import SubmitButton from "./SubmitButton.vue";
-import BackButton from "./BackButton.vue";
+import SubmitButton from './SubmitButton.vue'
+import BackButton from './BackButton.vue'
 
-const props = defineProps({
-    route: {type: String, required: true}
+defineProps({
+    route: { type: String, required: true }
 })
 </script>

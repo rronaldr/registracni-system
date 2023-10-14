@@ -6,16 +6,23 @@
                     <div class="row">
                         <div class="col">
                             <h5>
-                                {{ $t('date.dates') }} <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" :title="$t('date.date_box_hint')"></i>
+                                {{ $t('date.dates') }}
+                                <i
+                                    class="fas fa-info-circle"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    :title="$t('date.date_box_hint')"
+                                ></i>
                             </h5>
                         </div>
                         <div class="col">
                             <button
-                                @click="showDateForm = true"
                                 class="btn btn-sm btn-primary float-right"
                                 type="button"
+                                @click="showDateForm = true"
                             >
-                                <i class="fas fa-plus"></i> {{ $t('date.add_date') }}
+                                <i class="fas fa-plus"></i>
+                                {{ $t('date.add_date') }}
                             </button>
                         </div>
                     </div>
@@ -27,22 +34,19 @@
                         @edit-date="setEditForm"
                         @remove-date="removeDate"
                     />
-                    <p v-else class="card-text">{{ $t('date.empty' )}}</p>
+                    <p v-else class="card-text">{{ $t('date.empty') }}</p>
                 </div>
             </div>
 
             <form
-                class="bg-lighter-grey border p-2"
                 v-if="showDateForm"
+                class="bg-lighter-grey border p-2"
                 @submit.prevent="addDate"
             >
                 <div class="d-flex align-items-center justify-content-between">
                     <h5 class="fw-bold">{{ $t('date.add_date') }}</h5>
-                    <button
-                        type="button"
-                        class="close"
-                        @click="closeForm()">
-                      <span aria-hidden="true">&times;</span>
+                    <button type="button" class="close" @click="closeForm()">
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="text-start">
@@ -79,15 +83,15 @@
                             <div class="form-check form-check-inline">
                                 <BaseCheckbox
                                     id="unlimited_capacity"
-                                    :label="$t('date.unlimited_capacity')"
                                     v-model="date.unlimited_capacity"
+                                    :label="$t('date.unlimited_capacity')"
                                 />
                             </div>
                             <div class="form-check form-check-inline">
                                 <BaseCheckbox
                                     id="substitute"
-                                    :label="$t('date.substitute')"
                                     v-model="date.substitute"
+                                    :label="$t('date.substitute')"
                                 />
                             </div>
                         </div>
@@ -98,8 +102,8 @@
                                 v-model="date.date_from"
                                 :label="$t('date.date_from')"
                                 type="date"
-                                @change="updateDateTo"
                                 :required="true"
+                                @change="updateDateTo"
                             />
                         </div>
                         <div class="col-lg-3 col-sm-6">
@@ -107,8 +111,8 @@
                                 v-model="date.time_from"
                                 :label="$t('date.time_from')"
                                 type="time"
-                                @change="updateTimeTo"
                                 :required="true"
+                                @change="updateTimeTo"
                             />
                         </div>
 
@@ -176,7 +180,7 @@
                         </div>
                     </div>
 
-                    <SubmitButton/>
+                    <SubmitButton />
                 </div>
             </form>
         </div>
@@ -184,19 +188,19 @@
 </template>
 
 <script setup>
-import {inject, reactive, ref} from "vue";
-import SubmitButton from "../../Form/SubmitButton.vue";
-import BaseInput from "../../Form/BaseInput.vue";
-import BaseCheckbox from "../../Form/BaseCheckbox.vue";
-import moment from "moment/moment";
-import EditDateList from "./EditDateList.vue";
-import {dateObject, mapLastDateObject} from "../../../../utils/DataMapper"
-import axios from "axios";
+import { inject, reactive, ref } from 'vue'
+import SubmitButton from '../../Form/SubmitButton.vue'
+import BaseInput from '../../Form/BaseInput.vue'
+import BaseCheckbox from '../../Form/BaseCheckbox.vue'
+import moment from 'moment/moment'
+import EditDateList from './EditDateList.vue'
+import { dateObject, mapLastDateObject } from '../../../../utils/DataMapper'
+import axios from 'axios'
 
 const ADMIN_URL = inject('ADMIN_URL')
 const props = defineProps({
-    dates: {type: Array, required: false},
-    eventId: {type: Number, required: true}
+    dates: { type: Array, required: false, default: null },
+    eventId: { type: Number, required: true }
 })
 const emit = defineEmits(['getDates'])
 
@@ -217,12 +221,12 @@ async function addDate() {
 }
 
 async function removeDate(id) {
-  await axios.delete(ADMIN_URL+'/dates/'+id+'/delete')
-  emit('getDates')
+    await axios.delete(ADMIN_URL + '/dates/' + id + '/delete')
+    emit('getDates')
 }
 
 async function createDate() {
-    await axios.post(ADMIN_URL+'/dates/'+props.eventId+'/create', {
+    await axios.post(ADMIN_URL + '/dates/' + props.eventId + '/create', {
         date: date
     })
 }
@@ -230,7 +234,7 @@ async function createDate() {
 async function editDate() {
     edit = false
 
-    await axios.put(ADMIN_URL+'/dates/'+date.id+'/update', {
+    await axios.put(ADMIN_URL + '/dates/' + date.id + '/update', {
         date: date
     })
 }
@@ -239,29 +243,32 @@ function setEditForm(id) {
     clearDateObject()
     showDateForm.value = true
     edit = true
-    date = Object.assign(date, {...props.dates.find(date => date.id === id)})
+    date = Object.assign(date, {
+        ...props.dates.find((date) => date.id === id)
+    })
 }
 
 function clearDateObject() {
     edit = false
-    Object.keys(date).forEach(function(i) {
-        date[i] = i === 'substitute' || i === 'unlimited_capacity'
-            ? date[i] = false
-            : date[i] = null
+    Object.keys(date).forEach(function (i) {
+        date[i] =
+            i === 'substitute' || i === 'unlimited_capacity'
+                ? (date[i] = false)
+                : (date[i] = null)
     })
     setLastDates()
 }
 
 function updateDateTo() {
-    if (date.date_from !== null && date.date_to === null){
+    if (date.date_from !== null && date.date_to === null) {
         date.date_to = date.date_from
     }
 }
 function updateTimeTo() {
-    if (date.time_from !== null && date.time_to === null){
-        let [hour, minute] = date.time_from.split(":")
+    if (date.time_from !== null && date.time_to === null) {
+        let [hour, minute] = date.time_from.split(':')
         let fromTime = moment().hour(parseInt(hour)).minute(parseInt(minute))
-        date.time_to = fromTime.add(1, 'h').add(30,'m').format('HH:mm')
+        date.time_to = fromTime.add(1, 'h').add(30, 'm').format('HH:mm')
     }
 }
 

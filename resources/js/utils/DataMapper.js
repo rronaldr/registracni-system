@@ -1,4 +1,4 @@
-import moment from "moment/moment";
+import moment from 'moment/moment'
 
 export const eventCreateObject = {
     name: null,
@@ -14,9 +14,9 @@ export const eventCreateObject = {
     blacklist_users: null,
     template: {
         id: 0,
-        content: null,
+        content: null
     },
-    user_group: null,
+    user_group: null
 }
 
 export const dateObject = {
@@ -61,14 +61,14 @@ export const editEventMap = function (event) {
         calendar_id: event.calendar_id,
         contact: {
             person: event.contact_person,
-            email: event.contact_email,
+            email: event.contact_email
         },
         type: event.type,
         global_blacklist: Boolean(event.global_blacklist),
         event_blacklist: Boolean(event.event_blacklist),
         template: {
             id: event.template_id,
-            content: event.template_content,
+            content: event.template_content
         },
         blacklist_id: event.blacklist_id,
         user_group: event.user_group,
@@ -86,14 +86,14 @@ export const duplicateEventMap = function (event) {
         calendar_id: event.calendar_id,
         contact: {
             person: event.contact_person,
-            email: event.contact_email,
+            email: event.contact_email
         },
         type: event.type,
         global_blacklist: Boolean(event.global_blacklist),
         event_blacklist: Boolean(event.event_blacklist),
         template: {
             id: event.template_id,
-            content: event.template_content,
+            content: event.template_content
         },
         blacklist_id: event.blacklist_id,
         user_group: event.user_group,
@@ -107,11 +107,26 @@ export const formatEventDates = function (dates) {
         let dateFormat = 'YYYY-MM-DD'
         let timeFormat = 'HH:mm'
 
-        let datetimeFrom = date.date_start !== null ? moment(date.date_start,dateTimeFormat) : null
-        let datetimeTo = date.date_end !== null ? moment(date.date_end,dateTimeFormat) : null
-        let enrollmentFrom = date.enrollment_start !== null ? moment(date.enrollment_start,dateTimeFormat) : null
-        let enrollmentTo = date.enrollment_end !== null ? moment(date.enrollment_end,dateTimeFormat) : null
-        let withdrawTo = date.withdraw_end !== null ? moment(date.withdraw_end,dateTimeFormat) : null
+        let datetimeFrom =
+            date.date_start !== null
+                ? moment(date.date_start, dateTimeFormat)
+                : null
+        let datetimeTo =
+            date.date_end !== null
+                ? moment(date.date_end, dateTimeFormat)
+                : null
+        let enrollmentFrom =
+            date.enrollment_start !== null
+                ? moment(date.enrollment_start, dateTimeFormat)
+                : null
+        let enrollmentTo =
+            date.enrollment_end !== null
+                ? moment(date.enrollment_end, dateTimeFormat)
+                : null
+        let withdrawTo =
+            date.withdraw_end !== null
+                ? moment(date.withdraw_end, dateTimeFormat)
+                : null
 
         return {
             id: date.id,
@@ -121,22 +136,33 @@ export const formatEventDates = function (dates) {
             name: date.name,
             unlimited_capacity: date.capacity === -1,
             enrollments_count: date.enrollments_count,
-            date_from: datetimeFrom !== null ? datetimeFrom.format(dateFormat) : null,
-            time_from: datetimeFrom !== null ? datetimeFrom.format(timeFormat) : null,
+            date_from:
+                datetimeFrom !== null ? datetimeFrom.format(dateFormat) : null,
+            time_from:
+                datetimeFrom !== null ? datetimeFrom.format(timeFormat) : null,
             date_to: datetimeTo !== null ? datetimeTo.format(dateFormat) : null,
             time_to: datetimeTo !== null ? datetimeTo.format(timeFormat) : null,
-            enrollment_from: enrollmentFrom !== null ? enrollmentFrom.format(dateFormat) : null,
-            enrollment_from_time: enrollmentFrom !== null ? enrollmentFrom.format(timeFormat) : null,
-            enrollment_to: enrollmentTo !== null ? enrollmentTo.format(dateFormat) : null,
-            enrollment_to_time: enrollmentTo !== null ? enrollmentTo.format(timeFormat) : null,
-            withdraw_date: withdrawTo !== null ? withdrawTo.format(dateFormat) : null,
-            withdraw_time: withdrawTo !== null ? withdrawTo.format(timeFormat) : null
+            enrollment_from:
+                enrollmentFrom !== null
+                    ? enrollmentFrom.format(dateFormat)
+                    : null,
+            enrollment_from_time:
+                enrollmentFrom !== null
+                    ? enrollmentFrom.format(timeFormat)
+                    : null,
+            enrollment_to:
+                enrollmentTo !== null ? enrollmentTo.format(dateFormat) : null,
+            enrollment_to_time:
+                enrollmentTo !== null ? enrollmentTo.format(timeFormat) : null,
+            withdraw_date:
+                withdrawTo !== null ? withdrawTo.format(dateFormat) : null,
+            withdraw_time:
+                withdrawTo !== null ? withdrawTo.format(timeFormat) : null
         }
     })
 }
 
 export const formatEnrollments = function (data) {
-
     return data.enrollments.map(function (enrollment) {
         let user = enrollment.user
 
@@ -149,9 +175,12 @@ export const formatEnrollments = function (data) {
             enrollment_id: enrollment.id,
             xname: user.xname,
             email: user.email,
-            enrolled: moment(enrollment.created_at,'YYYY-MM-DD HH:mm:ss').format('D.M.YYYY HH:mm'),
+            enrolled: moment(
+                enrollment.created_at,
+                'YYYY-MM-DD HH:mm:ss'
+            ).format('D.M.YYYY HH:mm'),
             state: enrollment.state,
-            custom_fields: customFields.toString(),
+            custom_fields: customFields.toString()
         }
     })
 }

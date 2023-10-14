@@ -3,7 +3,7 @@
 @section('content')
     <div class="row justify-content-center">
         <div class="col-lg-12 col-md-10 col-sm-8">
-            <roles :roles="'{{ $roles }}'"></roles>
+            <roles-page :roles="'{{ $roles }}'"></roles-page>
 
             <hr class="line">
 

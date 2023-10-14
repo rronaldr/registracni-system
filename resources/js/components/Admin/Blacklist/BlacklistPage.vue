@@ -1,14 +1,12 @@
 <template>
     <div class="row mb-3">
         <div class="col-md-12">
-            <BlacklistUsers
-                :blacklist-id="blacklistId"
-                ref="listRef"
-            />
+            <BlacklistUsers ref="listRef" :blacklist-id="blacklistId" />
         </div>
     </div>
 
-    <div class="line"></div><br>
+    <div class="line"></div>
+    <br />
 
     <div class="row mb-3">
         <div class="col">
@@ -16,7 +14,7 @@
                 :blacklist-id="blacklistId"
                 @refresh-users="refreshUsers()"
             >
-                <template v-slot:csrf>
+                <template #csrf>
                     <slot name="csrf"></slot>
                 </template>
             </BlacklistForm>
@@ -25,17 +23,17 @@
 </template>
 
 <script setup>
-    import {onMounted, onUnmounted, onUpdated, ref} from "vue";
-    import BlacklistForm from "./BlacklistForm.vue";
-    import BlacklistUsers from "./BlacklistUsers.vue";
+import { ref } from 'vue'
+import BlacklistForm from './BlacklistForm.vue'
+import BlacklistUsers from './BlacklistUsers.vue'
 
-    const props = defineProps({
-        blacklistId: {type: Number, required: true}
-    })
+defineProps({
+    blacklistId: { type: Number, required: true }
+})
 
-    const listRef = ref(null)
+const listRef = ref(null)
 
-    function refreshUsers() {
-        listRef.value.getUsers()
-    }
+function refreshUsers() {
+    listRef.value.getUsers()
+}
 </script>

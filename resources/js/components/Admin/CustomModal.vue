@@ -1,10 +1,20 @@
 <template>
-    <div v-if="show" @click.self="$emit('close')" class="modal modal-backdrop" role="dialog">
+    <div
+        v-if="show"
+        class="modal modal-backdrop"
+        role="dialog"
+        @click.self="$emit('close')"
+    >
         <div class="modal-container">
             <div class="modal-header">
                 <slot name="modal-header"></slot>
-                <button @click="$emit('close')"  type="button" class="close" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
+                <button
+                    type="button"
+                    class="close"
+                    aria-label="Close"
+                    @click="$emit('close')"
+                >
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
 
@@ -16,8 +26,8 @@
 </template>
 
 <script setup>
-const props = defineProps({
-    show: {type: Boolean, required: true}
+defineProps({
+    show: { type: Boolean, required: true }
 })
 </script>
 

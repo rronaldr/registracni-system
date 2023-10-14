@@ -7,18 +7,18 @@
         <td>{{ tag.default ?? $t('tag.default_not_set') }}</td>
         <td>
             <button
-                @click="editItem"
                 :title="$t('app.edit')"
                 type="button"
                 class="btn-link text-info border-0 mx-1"
+                @click="editItem"
             >
                 <i class="fas fa-edit"></i>
             </button>
             <button
-                @click="removeItem"
                 :title="$t('app.delete')"
                 type="button"
                 class="btn-link text-danger border-0"
+                @click="removeItem"
             >
                 <i class="fas fa-trash"></i>
             </button>
@@ -29,7 +29,7 @@
 <script setup>
 const emit = defineEmits(['editTag', 'removeTag'])
 const props = defineProps({
-    tag: {type: Object, required: true},
+    tag: { type: Object, required: true }
 })
 
 function editItem() {

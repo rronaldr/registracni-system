@@ -1,13 +1,17 @@
 <template>
-    <button @click="$emit('setContent', `[${value}]`)"
-            type="button" class="btn btn-sm mb-1 mx-1">{{ label }}</button>
+    <button
+        type="button"
+        class="btn btn-sm mb-1 mx-1"
+        @click="$emit('setContent', `[${value}]`)"
+    >
+        {{ label }}
+    </button>
 </template>
 
 <script setup>
-const emits = defineEmits(['setContent'])
-const props = defineProps({
-    label: {type: String, required: true},
-    value: {type: String, required: true}
+defineEmits(['setContent'])
+defineProps({
+    label: { type: String, required: true },
+    value: { type: String, required: true }
 })
-
 </script>

@@ -1,25 +1,37 @@
 <template>
-  <tr>
-    <td>{{ user.xname ?? '-'}}</td>
-    <td>
-      <button type="button" @click="removeUserFromBlacklist" title="{{ $t('app.delete') }}" class="btn btn-outline-danger btn-rounded"> <i class="fas fa-trash"></i></button>
-    </td>
-  </tr>
+    <tr>
+        <td>{{ user.xname ?? '-' }}</td>
+        <td>
+            <button
+                type="button"
+                title="{{ $t('app.delete') }}"
+                class="btn btn-outline-danger btn-rounded"
+                @click="removeUserFromBlacklist"
+            >
+                <i class="fas fa-trash"></i>
+            </button>
+        </td>
+    </tr>
 </template>
 
 <script setup>
-import {inject} from "vue";
+import { inject } from 'vue'
+import axios from 'axios'
 
 const props = defineProps({
-  user: {type: Object, required: true},
+    user: { type: Object, required: true }
 })
 const emit = defineEmits(['refreshUsers'])
 const ADMIN_URL = inject('ADMIN_URL')
 
 function removeUserFromBlacklist() {
-  axios.delete(
-      ADMIN_URL+'/blacklist/'+props.user.pivot.blacklist_id+'/'+props.user.id
-  )
-  emit('refreshUsers')
+    axios.delete(
+        ADMIN_URL +
+            '/blacklist/' +
+            props.user.pivot.blacklist_id +
+            '/' +
+            props.user.id
+    )
+    emit('refreshUsers')
 }
 </script>

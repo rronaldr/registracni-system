@@ -3,10 +3,10 @@
         <td>{{ role.name }}</td>
         <td>
             <button
-                @click="revokeRole"
                 :title="$t('app.delete')"
                 type="button"
                 class="btn-link border-0 text-danger px-1"
+                @click="revokeRole"
             >
                 <i class="fas fa-trash"></i>
             </button>
@@ -17,9 +17,8 @@
 <script setup>
 const emit = defineEmits(['revokeRole'])
 const props = defineProps({
-    role: {type: Object, required: true},
+    role: { type: Object, required: true }
 })
-
 
 function revokeRole() {
     emit('revokeRole', props.role.id)

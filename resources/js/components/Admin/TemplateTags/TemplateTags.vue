@@ -1,7 +1,7 @@
 <template>
     <div class="row mb-3">
         <div class="col">
-            <p>{{  $t('event.tag_buttons') }}</p>
+            <p>{{ $t('event.tag_buttons') }}</p>
 
             <TemplateTagButton
                 v-for="button in buttons"
@@ -20,25 +20,25 @@
 </template>
 
 <script setup>
-import TemplateTagButton from "./TemplateTagButton.vue";
-import {useI18n} from "vue-i18n";
+import TemplateTagButton from './TemplateTagButton.vue'
+import { useI18n } from 'vue-i18n'
 
-const props = defineProps({
-    tags: {type: Array, required: false}
+defineProps({
+    tags: { type: Array, required: false, default: null }
 })
-const {t} = useI18n({})
+const { t } = useI18n({})
 
 let buttons = [
-    {label: t('tag.user_fname'), value: 'user.first_name'},
-    {label: t('tag.user_lname'), value: 'user.last_name'},
-    {label: t('tag.user_xname'), value: 'user.xname'},
-    {label: t('tag.user_email'), value: 'user.email'},
-    {label: t('tag.event_title'), value: 'event.title'},
-    {label: t('tag.date_start'), value: 'date.date_start'},
-    {label: t('tag.enrollment_created'), value: 'enrollment.created_at'},
+    { label: t('tag.user_fname'), value: 'user.first_name' },
+    { label: t('tag.user_lname'), value: 'user.last_name' },
+    { label: t('tag.user_xname'), value: 'user.xname' },
+    { label: t('tag.user_email'), value: 'user.email' },
+    { label: t('tag.event_title'), value: 'event.title' },
+    { label: t('tag.date_start'), value: 'date.date_start' },
+    { label: t('tag.enrollment_created'), value: 'enrollment.created_at' }
 ]
 
 function setContent(text) {
-    tinymce.activeEditor.execCommand('mceInsertContent', false, text);
+    tinymce.activeEditor.execCommand('mceInsertContent', false, text)
 }
 </script>

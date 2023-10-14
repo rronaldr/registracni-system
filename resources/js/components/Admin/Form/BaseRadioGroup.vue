@@ -5,16 +5,16 @@
         :key="option.value"
         :label="option.label"
         :value="option.value"
-        :modelValue="modelValue"
+        :model-value="modelValue"
         @update:modelValue="$emit('update:modelValue', $event)"
     />
 </template>
 
 <script setup>
-import BaseRadio from "./BaseRadio.vue";
+import BaseRadio from './BaseRadio.vue'
 
-const props = defineProps({
-    options: {type: Array, required: true},
-    modelValue: {type: [String, Number, null], required: true},
+defineProps({
+    options: { type: Array, required: true },
+    modelValue: { type: [String, Number, null], required: true }
 })
 </script>
