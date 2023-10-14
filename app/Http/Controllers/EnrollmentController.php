@@ -17,8 +17,12 @@ use Throwable;
 
 class EnrollmentController extends Controller
 {
-    public function show(int $dateId, EventFacade $eventFacade, EnrollmentFacade $enrollmentFacade, UserFacade $userFacade)
-    {
+    public function show(
+        int $dateId,
+        EventFacade $eventFacade,
+        EnrollmentFacade $enrollmentFacade,
+        UserFacade $userFacade
+    ) {
         $fields = $eventFacade->getEventCustomFields($dateId);
 
         $existingEnrollment = $enrollmentFacade->checkExistingEnrollment($dateId, $userFacade->getCurrentUser()->id);
@@ -34,15 +38,20 @@ class EnrollmentController extends Controller
         ]);
     }
 
-    public function store(int $dateId, Request $request, EnrollmentFacade $enrollmentFacade, DateFacade $dateFacade): JsonResponse
-    {
+    public function store(
+        int $dateId,
+        Request $request,
+        EnrollmentFacade $enrollmentFacade,
+        DateFacade $dateFacade
+    ): JsonResponse {
         try {
             $date = $dateFacade->getDateById($dateId);
             $event = $date->load('event')->event;
             $eventFields = $event->c_fields;
             $eventId = $event->id;
 
-            $validator = Validator::make($request->get('data'), $enrollmentFacade->getValidationRulesForTags($eventFields));
+            $validator = Validator::make($request->get('data'),
+                $enrollmentFacade->getValidationRulesForTags($eventFields));
 
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 400);

@@ -291,7 +291,7 @@
                             color="#FFFFFF" type="tile"/>
                     <v:textbox style="mso-fit-shape-to-text:true" inset="0,0,0,0"><![endif]-->
     <div
-        style="background:#FFFFFF url(https://storage.googleapis.com/ronald38635/net-inv-top-01_edited_69a32a58-5efb-476a-8a74-1949c176719c.png) top center / cover repeat;margin:0px auto;max-width:600px;">
+            style="background:#FFFFFF url(https://storage.googleapis.com/ronald38635/net-inv-top-01_edited_69a32a58-5efb-476a-8a74-1949c176719c.png) top center / cover repeat;margin:0px auto;max-width:600px;">
         <div style="line-height:0;font-size:0;">
             <table align="center"
                    background="https://storage.googleapis.com/ronald38635/net-inv-top-01_edited_69a32a58-5efb-476a-8a74-1949c176719c.png"
@@ -312,11 +312,11 @@
                                     <td align="left"
                                         style="font-size:0px;padding:0px 35px 0px 35px;word-break:break-word;">
                                         <div
-                                            style="font-family:Lato, Tahoma, sans-serif;font-size:11px;line-height:1.5;text-align:left;color:#1D1D1D;">
+                                                style="font-family:Lato, Tahoma, sans-serif;font-size:11px;line-height:1.5;text-align:left;color:#1D1D1D;">
                                             <p style="font-size: 11px; font-family: Ubuntu, Helvetica, Arial;"><span
-                                                    style="color: rgb(255, 255, 255);"><span
-                                                        style="font-size: 19px;"><span
-                                                            style="font-family: Arial, sans-serif;"><strong>Registrační systém VŠE</strong></span></span></span>
+                                                        style="color: rgb(255, 255, 255);"><span
+                                                            style="font-size: 19px;"><span
+                                                                style="font-family: Arial, sans-serif;"><strong>Registrační systém VŠE</strong></span></span></span>
                                             </p></div>
                                     </td>
                                 </tr>
@@ -347,10 +347,10 @@
                                                             <td style="font-size:0;height:35px;vertical-align:middle;width:35px;">
                                                                 <a href="https://www.facebook.com/vse.cz"
                                                                    target="_blank" style="color: #0000EE;"><img
-                                                                        height="35"
-                                                                        src="https://s3-eu-west-1.amazonaws.com/ecomail-assets/editor/social-icos/simplewhite/facebook.png"
-                                                                        style="border-radius:3px;display:block;"
-                                                                        width="35"></a></td>
+                                                                            height="35"
+                                                                            src="https://s3-eu-west-1.amazonaws.com/ecomail-assets/editor/social-icos/simplewhite/facebook.png"
+                                                                            style="border-radius:3px;display:block;"
+                                                                            width="35"></a></td>
                                                         </tr>
                                                     </table>
                                                 </td>
@@ -369,10 +369,10 @@
                                                             <td style="font-size:0;height:35px;vertical-align:middle;width:35px;">
                                                                 <a href="https://www.instagram.com/vsecz"
                                                                    target="_blank" style="color: #0000EE;"><img
-                                                                        height="35"
-                                                                        src="https://s3-eu-west-1.amazonaws.com/ecomail-assets/editor/social-icos/simplewhite/instagram.png"
-                                                                        style="border-radius:3px;display:block;"
-                                                                        width="35"></a></td>
+                                                                            height="35"
+                                                                            src="https://s3-eu-west-1.amazonaws.com/ecomail-assets/editor/social-icos/simplewhite/instagram.png"
+                                                                            style="border-radius:3px;display:block;"
+                                                                            width="35"></a></td>
                                                         </tr>
                                                     </table>
                                                 </td>
@@ -391,10 +391,10 @@
                                                             <td style="font-size:0;height:35px;vertical-align:middle;width:35px;">
                                                                 <a href="https://www.linkedin.com/school/vysok%C3%A1-%C5%A1kola-ekonomick%C3%A1-v-praze/"
                                                                    target="_blank" style="color: #0000EE;"><img
-                                                                        height="35"
-                                                                        src="https://s3-eu-west-1.amazonaws.com/ecomail-assets/editor/social-icos/simplewhite/linkedin.png"
-                                                                        style="border-radius:3px;display:block;"
-                                                                        width="35"></a></td>
+                                                                            height="35"
+                                                                            src="https://s3-eu-west-1.amazonaws.com/ecomail-assets/editor/social-icos/simplewhite/linkedin.png"
+                                                                            style="border-radius:3px;display:block;"
+                                                                            width="35"></a></td>
                                                         </tr>
                                                     </table>
                                                 </td>

@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
@@ -97,7 +97,7 @@ class EventController extends Controller
     {
         try {
             $eventFacade->deleteEvent($id);
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             dump($e);
         }
 
@@ -134,8 +134,7 @@ class EventController extends Controller
         $filename = public_path('seznam_ucastniku.csv');
 
         $csvHandle = fopen($filename, 'w');
-        $data->each(function ($row) use ($csvHandle)
-        {
+        $data->each(function ($row) use ($csvHandle) {
             $row['c_fields'] = json_encode($row['c_fields']);
             fputcsv($csvHandle, $row);
         });
@@ -153,8 +152,7 @@ class EventController extends Controller
         $filename = public_path('seznam_ucastniku_email.csv');
 
         $csvHandle = fopen($filename, 'w');
-        $data->each(function ($row) use ($csvHandle)
-        {
+        $data->each(function ($row) use ($csvHandle) {
             fputcsv($csvHandle, $row);
         });
 
@@ -207,29 +205,32 @@ class EventController extends Controller
         }
     }
 
-    public function destroyEventTag(int $id, int $tag, TagFacade $tagFacade):  Response
+    public function destroyEventTag(int $id, int $tag, TagFacade $tagFacade): Response
     {
         $tagFacade->removeTag($id, $tag);
 
         return response()->noContent();
     }
 
-    public function createAndGetBlacklistForEvent(int $id, EventFacade $eventFacade, BlacklistFacade $blacklistFacade): JsonResponse
-    {
+    public function createAndGetBlacklistForEvent(
+        int $id,
+        EventFacade $eventFacade,
+        BlacklistFacade $blacklistFacade
+    ): JsonResponse {
         try {
             $event = $eventFacade->getEventById($id);
 
             if ($event->blacklist_id !== null) {
-                return response()->json(['blacklist' => $event->blacklist_id],200);
+                return response()->json(['blacklist' => $event->blacklist_id], 200);
             }
 
             $blacklist = $blacklistFacade->createBlacklist();
             $event->blacklist_id = $blacklist->id;
             $event->save();
 
-            return response()->json(['blacklist' => $event->blacklist_id],200);
+            return response()->json(['blacklist' => $event->blacklist_id], 200);
         } catch (Throwable $e) {
-            return response()->json(['error' => $e->getMessage()],400);
+            return response()->json(['error' => $e->getMessage()], 400);
         }
 
     }

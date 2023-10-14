@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services;
 
@@ -13,7 +13,8 @@ class DateFacade
 
     private DateRepository $dateRepository;
 
-    public function __construct(DateRepository $dateRepository, EnrollmentRepository $enrollmentRepository){
+    public function __construct(DateRepository $dateRepository, EnrollmentRepository $enrollmentRepository)
+    {
         $this->dateRepository = $dateRepository;
     }
 

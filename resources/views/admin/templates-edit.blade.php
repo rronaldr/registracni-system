@@ -8,7 +8,8 @@
     @endif
     <div class="row justify-content-center">
         <div class="col-lg-12">
-            <form action="{{ route('admin.templates.update', ['id' => $template->id]) }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('admin.templates.update', ['id' => $template->id]) }}" method="post"
+                  enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="row mb-3">

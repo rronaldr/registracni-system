@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services\Admin;
 
@@ -21,10 +21,12 @@ class DateFacade
     private DateRepository $dateRepository;
     private EnrollmentRepository $enrollmentRepository;
 
-    public function __construct(DateRepository $dateRepository, EnrollmentRepository $enrollmentRepository){
+    public function __construct(DateRepository $dateRepository, EnrollmentRepository $enrollmentRepository)
+    {
         $this->dateRepository = $dateRepository;
         $this->enrollmentRepository = $enrollmentRepository;
     }
+
     public function getEventWithStartAndEndDates(int $eventId): Collection
     {
         return $this->dateRepository->getEventWithStartAndEndDates($eventId);
@@ -74,7 +76,7 @@ class DateFacade
     public function createDatesFromEvent(array $dates, int $eventId): void
     {
         collect($dates)
-            ->each(function (array $date) use ($eventId){
+            ->each(function (array $date) use ($eventId) {
                 $this->createDate($eventId, $date);
             });
     }
@@ -112,8 +114,10 @@ class DateFacade
             'substitute' => $data['substitute'],
             'date_start' => DateFormatter::getDatetimeFromDateAndTime($data['date_from'], $data['time_from']),
             'date_end' => DateFormatter::getDatetimeFromDateAndTime($data['date_to'], $data['time_to']),
-            'enrollment_start' => DateFormatter::getDatetimeFromDateAndTime($data['enrollment_from'], $data['enrollment_from_time']),
-            'enrollment_end' => DateFormatter::getDatetimeFromDateAndTime($data['enrollment_to'], $data['enrollment_to_time']),
+            'enrollment_start' => DateFormatter::getDatetimeFromDateAndTime($data['enrollment_from'],
+                $data['enrollment_from_time']),
+            'enrollment_end' => DateFormatter::getDatetimeFromDateAndTime($data['enrollment_to'],
+                $data['enrollment_to_time']),
             'withdraw_end' => DateFormatter::getDatetimeFromDateAndTime($data['withdraw_date'], $data['withdraw_time']),
         ];
     }

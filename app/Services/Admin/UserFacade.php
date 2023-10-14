@@ -18,7 +18,7 @@ class UserFacade
 
     public function getCurrentUser(): ?User
     {
-        if (auth()->check()){
+        if (auth()->check()) {
             $user = $this->userRepository->getUserById(auth()->user()->id);
             return $user;
         } else {

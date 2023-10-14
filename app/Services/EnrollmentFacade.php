@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services;
 
@@ -26,7 +26,7 @@ class EnrollmentFacade
         EventFacade $eventFacade,
         DateFacade $dateFacade,
         EmailFacade $emailFacade
-    ){
+    ) {
         $this->enrollmentRepository = $enrollmentRepository;
         $this->userFacade = $userFacade;
         $this->eventFacade = $eventFacade;
@@ -52,14 +52,13 @@ class EnrollmentFacade
 
     public function getValidationRulesForTags(array $fields): ?array
     {
-        return collect($fields)->mapWithKeys(function ($field): ?array
-        {
+        return collect($fields)->mapWithKeys(function ($field): ?array {
             $rules = collect();
             if ($field['required']) {
                 $rules->push('required');
             }
 
-            switch($field['type']) {
+            switch ($field['type']) {
                 case in_array($field['type'], ['text', 'url']):
                     $rules->push('string');
                     break;
@@ -71,7 +70,7 @@ class EnrollmentFacade
                     break;
             }
 
-            return [sprintf('%s.value',$field['value']) => $rules->implode('|')];
+            return [sprintf('%s.value', $field['value']) => $rules->implode('|')];
         })->filter(static fn($rule) => !empty($rule))->toArray();
     }
 

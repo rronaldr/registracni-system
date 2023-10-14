@@ -15,7 +15,7 @@ class TagFacade
         EventRepository $eventRepository,
         DateFacade $dateFacade,
         BlacklistFacade $blacklistFacade
-    ){
+    ) {
         $this->eventRepository = $eventRepository;
         $this->dateFacade = $dateFacade;
         $this->blacklistFacade = $blacklistFacade;
@@ -24,8 +24,7 @@ class TagFacade
     public function getTagsWithLabelAndValue(Enrollment $enrollment): Collection
     {
         $tags = collect($enrollment->c_fields);
-        return $tags->mapWithKeys(function ($tag): array
-        {
+        return $tags->mapWithKeys(function ($tag): array {
             return [$tag['label'] => $tag['value']];
         });
     }

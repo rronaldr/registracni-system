@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services;
 
@@ -18,9 +18,10 @@ class EmailFacade
 
     public function __construct(
         TemplateFacade $templateFacade
-    ){
+    ) {
         $this->templateFacade = $templateFacade;
     }
+
     public function sendUserEnrolledEmail(): void
     {
 //        $userData = $this->userFacade->getUserForEmail($user->id);

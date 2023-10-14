@@ -11,7 +11,8 @@
             <a href="{{ route('admin.blacklist') }}"><i class="fas fa-list"></i>{{ __('app.blacklist.blacklist') }}</a>
         </li>
         <li>
-            <a href="{{ route('admin.templates') }}"><i class="fas fa-envelope"></i>{{ __('app.templates.templates') }}</a>
+            <a href="{{ route('admin.templates') }}"><i class="fas fa-envelope"></i>{{ __('app.templates.templates') }}
+            </a>
         </li>
         <li>
             <a href="{{ route('admin.users') }}"><i class="fas fa-users"></i>{{ __('app.user.users') }}</a>

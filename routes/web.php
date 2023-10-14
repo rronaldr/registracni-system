@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::namespace('Admin')
     ->prefix('admin')
-    ->group(__DIR__. '/admin.php');
+    ->group(__DIR__.'/admin.php');
 
 // Date routes
 Route::get('/', [EventController::class, 'index'])->name('events.index');

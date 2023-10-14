@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services;
 
@@ -19,13 +19,14 @@ use Illuminate\Support\Collection;
 class EventFacade
 {
     private EventRepository $eventRepository;
-    private DateFacade  $dateFacade;
+    private DateFacade $dateFacade;
     private BlacklistFacade $blacklistFacade;
+
     public function __construct(
         EventRepository $eventRepository,
         DateFacade $dateFacade,
         BlacklistFacade $blacklistFacade
-    ){
+    ) {
         $this->eventRepository = $eventRepository;
         $this->dateFacade = $dateFacade;
         $this->blacklistFacade = $blacklistFacade;

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services;
 
@@ -25,7 +25,7 @@ class UserFacade
 
     public function getCurrentUser(): ?User
     {
-        if (auth()->check()){
+        if (auth()->check()) {
             $user = $this->userRepository->getUserById(auth()->user()->id);
             return $user;
         } else {
@@ -50,17 +50,16 @@ class UserFacade
         }
 
         collect(explode(';', $user->entitlement))
-            ->each(function (string $entitlement) use($user):void
-        {
-            switch ($entitlement) {
-                case 'student':
-                    $user->assignRole(Roles::STUDENT);
-                    break;
-                case 'staff':
-                    $user->assignRole(Roles::STAFF);
-                    break;
-            }
-        });
+            ->each(function (string $entitlement) use ($user): void {
+                switch ($entitlement) {
+                    case 'student':
+                        $user->assignRole(Roles::STUDENT);
+                        break;
+                    case 'staff':
+                        $user->assignRole(Roles::STAFF);
+                        break;
+                }
+            });
     }
 
 }

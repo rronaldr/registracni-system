@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Repositories;
 
@@ -78,13 +78,12 @@ class EventRepository
 
     public function getEventsWithDatesInMonth(Carbon $month): Collection
     {
-        /** @var \App\Models\Event $event **/
+        /** @var \App\Models\Event $event * */
         $events = Event::query()
-            ->with('dates', fn ($q) =>
-                $q->whereBetween('date_start', [
-                    $month->startOfMonth()->toDateString(),
-                    $month->endOfMonth()->toDateString()
-                ])
+            ->with('dates', fn($q) => $q->whereBetween('date_start', [
+                $month->startOfMonth()->toDateString(),
+                $month->endOfMonth()->toDateString()
+            ])
             )
             ->get();
 

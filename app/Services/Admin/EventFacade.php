@@ -15,7 +15,7 @@ use Throwable;
 class EventFacade
 {
     private EventRepository $eventRepository;
-    private DateFacade  $dateFacade;
+    private DateFacade $dateFacade;
     private BlacklistFacade $blacklistFacade;
     private TagFacade $tagFacade;
 
@@ -24,7 +24,7 @@ class EventFacade
         DateFacade $dateFacade,
         BlacklistFacade $blacklistFacade,
         TagFacade $tagFacade
-    ){
+    ) {
         $this->eventRepository = $eventRepository;
         $this->dateFacade = $dateFacade;
         $this->blacklistFacade = $blacklistFacade;
@@ -105,7 +105,7 @@ class EventFacade
         $eventUsersList = collect();
         foreach ($event->enrollments as $enrollment) {
             $eventUsersList->push([
-                'id'=> $enrollment->user->id,
+                'id' => $enrollment->user->id,
                 'xname' => $enrollment->user->xname,
                 'email' => $enrollment->user->email,
                 'c_fields' => $this->tagFacade->getTagsWithLabelAndValue($enrollment),

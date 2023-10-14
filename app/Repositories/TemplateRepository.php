@@ -1,8 +1,9 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Repositories;
+
 use App\Models\Template;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -33,7 +34,7 @@ class TemplateRepository
     {
         return Template::query()
             ->where('approved', true)
-            ->select(['id','name'])
+            ->select(['id', 'name'])
             ->get();
     }
 

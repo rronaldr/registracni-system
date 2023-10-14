@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Repositories;
 
@@ -61,7 +61,7 @@ class DateRepository
             ->select('id')
             ->where('id', $id)
             ->with([
-                'enrollments' => fn($q) => $q->select('id','date_id','user_id', 'state', 'c_fields', 'created_at'),
+                'enrollments' => fn($q) => $q->select('id', 'date_id', 'user_id', 'state', 'c_fields', 'created_at'),
                 'enrollments.user' => fn($q) => $q->select('id', 'xname', 'email')
             ])
             ->first();

@@ -1,12 +1,13 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Repositories;
 
 use App\Models\User;
 
-class UserRepository {
+class UserRepository
+{
 
     public function getByXname(string $xname): ?User
     {
@@ -43,8 +44,8 @@ class UserRepository {
     {
         /** @var User $user */
         $user = User::query()
-            ->where('xname', 'LIKE', sprintf('%%%s%%',$search))
-            ->orWhere('email', 'LIKE', sprintf('%%%s%%',$search))
+            ->where('xname', 'LIKE', sprintf('%%%s%%', $search))
+            ->orWhere('email', 'LIKE', sprintf('%%%s%%', $search))
             ->first();
 
         return $user;

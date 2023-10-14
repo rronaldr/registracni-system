@@ -29,7 +29,9 @@ class UserController extends Controller
             return response()->json('User not found', 404);
         }
 
-        return response()->json(['user' => $user->only(['id','email']), 'roles' => $user->roles()->get(['id','name'])]);
+        return response()->json([
+            'user' => $user->only(['id', 'email']), 'roles' => $user->roles()->get(['id', 'name'])
+        ]);
     }
 
     public function getUserByIdWithRoles(int $id, UserFacade $userFacade): JsonResponse
@@ -37,7 +39,9 @@ class UserController extends Controller
         $user = $userFacade->getUserById($id);
 
 
-        return response()->json(['user' => $user->only(['id','email']), 'roles' => $user->roles()->get(['id','name'])]);
+        return response()->json([
+            'user' => $user->only(['id', 'email']), 'roles' => $user->roles()->get(['id', 'name'])
+        ]);
     }
 
     public function assignRole(int $id, Request $request, UserFacade $userFacade): JsonResponse

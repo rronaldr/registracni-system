@@ -18,6 +18,7 @@ class LoginController extends Controller
     {
         return view('auth.login');
     }
+
     public function shibbolethLogin(): RedirectResponse
     {
         return redirect('/shibboleth-login');
@@ -30,12 +31,12 @@ class LoginController extends Controller
 
     function login(Request $request): RedirectResponse
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'email' => 'required',
             'password' => 'required'
         ]);
 
-        if(auth()->attempt($request->only('email', 'password'), $request->remember)){
+        if (auth()->attempt($request->only('email', 'password'), $request->remember)) {
             $request->session()->regenerate();
 
             return redirect()->route('events.index');
@@ -60,7 +61,7 @@ class LoginController extends Controller
             return redirect()->route('logout.external');
         }
 
-        if($user === null) {
+        if ($user === null) {
             return redirect()->route('events.index');
         }
 

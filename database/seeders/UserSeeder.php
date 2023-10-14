@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
 
         for ($i = 0; $i < 5; $i++) {
             DB::table('users')->insert([
-                'xname' => sprintf('johd0%d',$i),
+                'xname' => sprintf('johd0%d', $i),
                 'first_name' => 'John',
                 'last_name' => sprintf('Doe %d', $i),
                 'email' => Str::random(10).'@gmail.com',

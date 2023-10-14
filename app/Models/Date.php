@@ -41,6 +41,6 @@ class Date extends Model
 
     public function getSignedCount(): int
     {
-        return $this->enrollments()->where('state',1)->count();
+        return $this->enrollments()->where('state', 1)->count();
     }
 }

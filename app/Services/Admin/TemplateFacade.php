@@ -1,8 +1,9 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services\Admin;
+
 use App\Models\Template;
 use App\Models\User;
 use App\Repositories\TemplateRepository;
@@ -130,7 +131,7 @@ class TemplateFacade
         preg_match("/<body[^>]*>(.*?)<\/body>/is", $html, $bodyContent);
         preg_match("/<body[^>]*>(.*?)/si", $html, $bodyTag);
 
-        $purifiedBodyHtml = sprintf("%s%s</body>",$bodyTag[0], clean($bodyContent[0]));
+        $purifiedBodyHtml = sprintf("%s%s</body>", $bodyTag[0], clean($bodyContent[0]));
         $cleanedHtml = preg_replace("/<body[^>]*>(.*?)<\/body>/is", $purifiedBodyHtml, $html);
 
         return $cleanedHtml;

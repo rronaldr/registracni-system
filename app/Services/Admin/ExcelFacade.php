@@ -10,11 +10,12 @@ class ExcelFacade
 {
 
     private EventFacade $eventFacade;
-    private DateFacade  $dateFacade;
+    private DateFacade $dateFacade;
+
     public function __construct(
         EventRepository $eventRepository,
         DateFacade $dateFacade
-    ){
+    ) {
         $this->$eventRepository = $eventRepository;
         $this->dateFacade = $dateFacade;
     }

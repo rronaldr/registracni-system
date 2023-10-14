@@ -21,11 +21,13 @@
                         @endif
                     @else
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('enrollment.user', auth()->user()->id) }}">{{ __('app.enrollment.my_enrollments') }}</a>
+                            <a class="nav-link"
+                               href="{{ route('enrollment.user', auth()->user()->id) }}">{{ __('app.enrollment.my_enrollments') }}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link"
-                               href="@if(isset(auth()->user()->xname)) {{ route('logout') }}@else {{ route('logout.external') }}@endif">{{ __('app.auth.logout') }}"
+                               href="@if(isset(auth()->user()->xname)) {{ route('logout') }}@else {{ route('logout.external') }}@endif">{{ __('app.auth.logout') }}
+                                "
                                 >{{ __('app.auth.logout') }}</a>
                         </li>
                         <li class="nav-item">

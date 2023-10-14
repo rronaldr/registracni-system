@@ -47,7 +47,8 @@ class DateController extends Controller
     public function update(int $id, Request $request, DateFacade $dateFacade, EventFacade $eventFacade): JsonResponse
     {
         try {
-            $validator = Validator::make($request->all(), array_merge(['date.id' => 'required|numeric'], $dateFacade->getDateValidationRules()));
+            $validator = Validator::make($request->all(),
+                array_merge(['date.id' => 'required|numeric'], $dateFacade->getDateValidationRules()));
 
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 400);

@@ -14,10 +14,12 @@
                         <a href="{{ route('admin.events') }}" class="nav-link ">{{ __('app.event.events') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.blacklist') }}" class="nav-link ">{{ __('app.blacklist.blacklist') }}</a>
+                        <a href="{{ route('admin.blacklist') }}"
+                           class="nav-link ">{{ __('app.blacklist.blacklist') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.templates') }}" class="nav-link ">{{ __('app.templates.templates') }}</a>
+                        <a href="{{ route('admin.templates') }}"
+                           class="nav-link ">{{ __('app.templates.templates') }}</a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('admin.users') }}" class="nav-link ">{{ __('app.user.users') }}</a>

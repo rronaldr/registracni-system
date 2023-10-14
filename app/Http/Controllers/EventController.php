@@ -19,7 +19,7 @@ class EventController extends Controller
         $date = Carbon::now()->startOfMonth();
         $events = $eventFacade->getEventsWithDatesInMonth($date);
 
-        return view('events',[
+        return view('events', [
             'events' => $events
         ]);
     }
