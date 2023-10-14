@@ -66,6 +66,9 @@ class PermissionsSeeder extends Seeder
 
         $staff->syncPermissions([
             'event-access',
+            'event-create',
+            'event-edit',
+            'event-delete',
             'enrollment-signup',
             'enrollment-sign-off',
             'admin-access'

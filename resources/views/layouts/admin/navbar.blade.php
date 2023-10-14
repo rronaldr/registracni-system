@@ -10,20 +10,31 @@
                             <img src="{{ asset('storage/dist/img/logo/logo-full-cs-white.svg') }}" alt="VŠE">
                         </a>
                     </li>
+                    @can('event-access')
                     <li class="nav-item no-dropdown d-none d-xl-block bg-primary-600">
                         <a href="{{ route('admin.events') }}" class="nav-link">{{ __('app.event.events') }}</a>
                     </li>
+                    @endcan
+
+                    @can('blacklist-access')
                     <li class="nav-item no-dropdown d-none d-xl-block bg-primary-600">
                         <a href="{{ route('admin.blacklist') }}"
                            class="nav-link">{{ __('app.blacklist.blacklist') }}</a>
                     </li>
+                    @endcan
+
+                    @can('template-access')
                     <li class="nav-item no-dropdown d-none d-xl-block bg-primary-600">
                         <a href="{{ route('admin.templates') }}"
                            class="nav-link">{{ __('app.templates.templates') }}</a>
                     </li>
+                    @endcan
+
+                    @can('user-access')
                     <li class="nav-item no-dropdown d-none d-xl-block bg-primary-600">
                         <a href="{{ route('admin.users') }}" class="nav-link">{{ __('app.user.users') }}</a>
                     </li>
+                    @endcan
                 </ul>
 
                 <nav class="navbar-top d-none d-xl-flex justify-content-between align-self-start">

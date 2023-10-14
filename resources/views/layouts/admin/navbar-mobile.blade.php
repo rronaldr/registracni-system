@@ -10,20 +10,31 @@
             </div>
             <div class="modal-body">
                 <ul class="nav flex-column">
+                    @can('event-access')
                     <li class="nav-item">
                         <a href="{{ route('admin.events') }}" class="nav-link ">{{ __('app.event.events') }}</a>
                     </li>
+                    @endcan
+
+                    @can('blacklist-access')
                     <li class="nav-item">
                         <a href="{{ route('admin.blacklist') }}"
                            class="nav-link ">{{ __('app.blacklist.blacklist') }}</a>
                     </li>
+                    @endcan
+
+                    @can('template-access')
                     <li class="nav-item">
                         <a href="{{ route('admin.templates') }}"
                            class="nav-link ">{{ __('app.templates.templates') }}</a>
                     </li>
+                    @endcan
+
+                    @can('user-access')
                     <li class="nav-item">
                         <a href="{{ route('admin.users') }}" class="nav-link ">{{ __('app.user.users') }}</a>
                     </li>
+                    @endcan
                 </ul>
                 <ul class="nav flex-column">
                     <li class="nav-item">
