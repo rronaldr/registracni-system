@@ -234,6 +234,7 @@ class EventFacade
             'template_content' => $data['template']['content'],
             'user_group' => (int) $data['user_group'],
             'status' => $data['status'],
+            'last_changed_by' => auth()->user()->id
         ];
     }
 

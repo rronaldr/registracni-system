@@ -32,6 +32,7 @@ class CreateEventsTable extends Migration
             $table->integer('user_group');
             $table->dateTime('date_start_cache')->nullable();
             $table->dateTime('date_end_cache')->nullable();
+            $table->integer('last_changed_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

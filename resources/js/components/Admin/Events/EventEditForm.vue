@@ -16,7 +16,7 @@
                         <td>{{ author }}</td>
                         <td>{{ formatDate(event.created_at) }}</td>
                         <td>{{ formatDate(event.updated_at) }}</td>
-                        <td>Test</td>
+                        <td>{{ lastChangeUser }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -396,7 +396,8 @@ const ADMIN_URL = inject('ADMIN_URL')
 const props = defineProps({
     user: { type: Object, required: true },
     event: { type: Object, required: true },
-    author: { type: String, required: false, default: null }
+    author: { type: String, required: false, default: null },
+    lastChangeUser: { type: String, required: false, default: null }
 })
 
 const { t } = useI18n({})

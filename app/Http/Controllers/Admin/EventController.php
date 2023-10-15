@@ -61,13 +61,15 @@ class EventController extends Controller
         }
     }
 
-    public function edit(string $id, EventFacade $eventFacade): View
+    public function edit(string $id, EventFacade $eventFacade, UserFacade $userFacade): View
     {
         $event = $eventFacade->getEventById((int) $id);
         $event->load('author');
+        $lastChangeUser = $userFacade->getUserById($event->last_changed_by)->getFullname();
 
         return view('admin.event-edit', [
             'event' => $event,
+            'last_changed' => $lastChangeUser ?? null
         ]);
     }
 

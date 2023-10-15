@@ -48,7 +48,9 @@ class User extends Authenticatable
 
     public function getFullname(): string
     {
-        return sprintf("%s %s", $this->first_name, $this->last_name);
+        return isset($this->display_name)
+            ? $this->display_name
+            : sprintf("%s %s", $this->first_name, $this->last_name);
     }
 
     public function events(): HasMany

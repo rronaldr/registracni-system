@@ -38,7 +38,8 @@ class Event extends Model
         'event_blacklist',
         'user_group',
         'date_start_cache',
-        'date_end_cache'
+        'date_end_cache',
+        'last_changed_by'
     ];
 
     protected $casts = [
