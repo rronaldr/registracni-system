@@ -70,4 +70,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Blacklist::class)->withTimestamps()->withPivot(['block_reason', 'blocked_until']);
     }
+
+    public function collaborations(): BelongsToMany
+    {
+        return $this->belongsToMany(Event::class)->withTimestamps();
+    }
 }

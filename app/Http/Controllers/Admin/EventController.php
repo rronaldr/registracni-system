@@ -232,4 +232,24 @@ class EventController extends Controller
 
     }
 
+    public function addEventCollaborator(int $id, Request $request, EventFacade $eventFacade, UserFacade $userFacade): JsonResponse
+    {
+        try {
+            $validator = Validator::make($request->get('data'), [
+                'collaborator' => 'required|email'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 400);
+            }
+            $collaborator = $userFacade->getOrCreateUserByEmail($request->get('data')['collaborator']);
+            $currentUser = $userFacade->getCurrentUser();
+            $eventFacade->addEventCollaborator($id, $collaborator->id, $currentUser->id);
+
+            return response()->json(null, 204);
+        } catch (\Exception $e) {
+            return response()->json(['errors' => $e->getMessage()], 400);
+        }
+    }
+
 }

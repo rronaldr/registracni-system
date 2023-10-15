@@ -80,4 +80,9 @@ class Event extends Model
     {
         return $this->hasManyThrough(User::class, Enrollment::class);
     }
+
+    public function collaborators(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class)->withTimestamps();
+    }
 }

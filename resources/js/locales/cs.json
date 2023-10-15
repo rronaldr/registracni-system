@@ -78,6 +78,7 @@
         "default": "Výchozí šablona"
     },
     "event": {
+        "info": "Informace o události",
         "tag_buttons": "Tlačítka pro přidání vlastních polí do šablony",
         "name": "Název",
         "subtitle": "Upřesnění názvu",
@@ -104,7 +105,11 @@
         "status": "Stav",
         "export": "Export",
         "export_emails": "Exportovat emaily",
-        "duplicate": "Duplikovat"
+        "duplicate": "Duplikovat",
+        "updated_by": "Naposledy upravil",
+        "add_collaborator": "Sdílet přístup k úpravám",
+        "add_collaborator_hint": "Email uživatele, kterého chcete přizvat ke spolupráci",
+        "collaborator_added": "Přístup úspěšně nastaven."
     },
     "blacklist": {
         "blocked_until": "Blokace do",

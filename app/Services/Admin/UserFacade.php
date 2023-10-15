@@ -41,6 +41,21 @@ class UserFacade
         return $user;
     }
 
+    public function getOrCreateUserByEmail(string $email): User
+    {
+        $user = $this->userRepository->getUserByEmail($email);
+
+        if (isset($user)) {
+            return $user;
+        }
+
+        $user = new User();
+        $user->email = $email;
+        $user->save();
+
+        return $user;
+    }
+
     public function getUserForEmail(int $id): User
     {
         return $this->userRepository->getUserForEmail($id);

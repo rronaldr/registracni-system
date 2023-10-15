@@ -185,6 +185,19 @@ class EventFacade
         $event->save();
     }
 
+    public function addEventCollaborator(int $id, int $collaboratorId, int $currentUserId): void
+    {
+        $event = $this->eventRepository->getEventById($id);
+
+        if ($event->collaborators()->where('user_id', $collaboratorId)->get()->isNotEmpty()) {
+            return;
+        }
+
+        $event->collaborators()->attach($collaboratorId,[
+            'granted_by' => $currentUserId
+        ]);
+    }
+
     private function createEventFromRequest(array $event, ?array $customFields, ?Blacklist $blacklist): Event
     {
         return Event::create([

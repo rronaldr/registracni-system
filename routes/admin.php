@@ -70,6 +70,7 @@ Route::middleware(['auth', 'can:admin-access'])->group(function () {
         Route::delete('/events/{id}/tags/{tag}/delete', [
             EventController::class, 'destroyEventTag'
         ])->middleware('can:event-delete')->name('admin.events.tags.delete');
+        Route::post('/events/{id}/collaborate', [EventController::class, 'addEventCollaborator'])->name('admin.events.collaborate');
     });
 
     // Template routes

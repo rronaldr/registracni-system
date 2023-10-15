@@ -1,13 +1,14 @@
 <template>
     <div class="row mb-3">
         <div class="col-12">
-            <h4>ADMIN section</h4>
+            <h4>{{ $t('event.info') }}</h4>
             <table class="table table-responsive">
                 <thead>
                     <tr>
                         <th>{{ $t('app.author') }}</th>
                         <th>{{ $t('app.created_at') }}</th>
                         <th>{{ $t('app.updated_at') }}</th>
+                        <th>{{ $t('event.updated_by') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -15,47 +16,54 @@
                         <td>{{ author }}</td>
                         <td>{{ formatDate(event.created_at) }}</td>
                         <td>{{ formatDate(event.updated_at) }}</td>
+                        <td>Test</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <div v-if="errors" class="row mb-3">
-        <div
-            class="bg-danger text-white py-2 px-4 pr-0 rounded font-bold mb-4 shadow-lg"
-        >
-            <div v-for="(v, k) in errors" :key="k">
-                <p v-for="error in v" :key="error" class="text-sm">
-                    {{ error.toUpperCase() }}
-                </p>
-            </div>
-        </div>
+    <div
+        v-if="showCollabMessage"
+        class="bg-success text-white py-1 px-1 pr-0 rounded font-bold mb-2 shadow-lg"
+    >
+        <p>
+            {{ $t('event.collaborator_added') }}
+        </p>
     </div>
+    <ErrorMessages :errors="errors" />
 
     <div class="row mb-3 justify-content-right">
         <div class="col-12 text-right">
             <a
                 type="button"
-                class="btn btn-secondary mx-1"
+                class="btn btn-outline-secondary btn-sm mr-1"
                 :href="ADMIN_URL + '/events/' + event.id + '/duplicate'"
                 ><i class="fas fa-copy"></i> {{ $t('event.duplicate') }}</a
             >
             <a
                 type="button"
-                class="btn btn-secondary mx-1"
+                class="btn btn-outline-secondary btn-sm mr-1"
                 :href="ADMIN_URL + '/events/' + event.id + '/users/export'"
                 ><i class="fas fa-file-export"></i> {{ $t('event.export') }}</a
             >
             <a
                 type="button"
-                class="btn btn-secondary mx-1"
+                class="btn btn-outline-secondary btn-sm mr-1"
                 :href="
                     ADMIN_URL + '/events/' + event.id + '/users/export-email'
                 "
                 ><i class="fas fa-envelope"></i>
                 {{ $t('event.export_emails') }}</a
             >
+            <button
+                type="button"
+                class="btn btn-outline-success btn-sm mr-1"
+                @click="showCollabModal = true"
+            >
+                <i class="fas fa-user-plus"></i>
+                {{ $t('event.add_collaborator') }}
+            </button>
         </div>
     </div>
 
@@ -333,6 +341,33 @@
         </div>
         <FormButtons :route="ADMIN_URL + '/events'" />
     </form>
+
+    <!-- START Collaborator modal -->
+    <Teleport to="body">
+        <CustomModal :show="showCollabModal" @close="showCollabModal = false">
+            <template #modal-header>
+                <h5>{{ $t('enrollment.enrollments') }}</h5>
+            </template>
+            <template #modal-body>
+                <div class="row">
+                    <div class="col-12">
+                        <form @submit.prevent="addCollaboratorToEvent">
+                            <BaseInput
+                                v-model="collabEmail"
+                                :label="$t('event.add_collaborator_hint')"
+                                :required="true"
+                                class="mb-3"
+                                type="email"
+                            />
+
+                            <SubmitButton />
+                        </form>
+                    </div>
+                </div>
+            </template>
+        </CustomModal>
+    </Teleport>
+    <!-- END Collaborator modal -->
 </template>
 
 <script setup>
@@ -353,6 +388,9 @@ import { formatEventDates, editEventMap } from '../../../utils/DataMapper'
 import EventStatusSelect from './EventStatusSelect.vue'
 import { formatDate } from '../../../utils/DateFormat'
 import TemplateSelect from '../TemplateTags/TemplateSelect.vue'
+import SubmitButton from '../Form/SubmitButton.vue'
+import CustomModal from '../CustomModal.vue'
+import ErrorMessages from '../../ErrorMessages.vue'
 
 const ADMIN_URL = inject('ADMIN_URL')
 const props = defineProps({
@@ -372,6 +410,9 @@ let dates = ref([])
 let templates = ref(null)
 let event = reactive(editEventMap(props.event))
 let errors = ref(null)
+let showCollabModal = ref(false)
+let showCollabMessage = ref(false)
+let collabEmail = ref(null)
 
 getEventDates()
 getEventTags()
@@ -390,7 +431,6 @@ function submitEvent() {
         })
         .then((window.location.href = ADMIN_URL + '/events'))
         .catch((e) => {
-            console.log(e.response.data)
             errors.value = e.response.data.errors
             window.scrollTo(0, 0)
         })
@@ -402,6 +442,34 @@ function fillContactWithCurrentUser() {
             ? props.user.display_name
             : props.user.first_name + ' ' + props.user.last_name
     event.contact.email = props.user.email
+}
+
+function addCollaboratorToEvent() {
+    let csrf = document.getElementsByName('_token')[0].value
+    let data = {
+        collaborator: collabEmail.value,
+        _token: csrf
+    }
+
+    axios
+        .post(ADMIN_URL + '/events/' + event.id + '/collaborate', {
+            data
+        })
+        .then(() => {
+            collabEmail.value = null
+            showCollabModal.value = false
+            showCollabMessage.value = true
+
+            setTimeout(() => {
+                showCollabMessage.value = false
+            }, 5000)
+        })
+        .catch((e) => {
+            collabEmail.value = null
+            showCollabModal.value = false
+            errors.value = e.response.data.errors
+            window.scrollTo(0, 0)
+        })
 }
 
 async function createBlacklist() {
