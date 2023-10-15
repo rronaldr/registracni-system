@@ -22,17 +22,7 @@
                 </div>
             </div>
 
-            <div v-if="errors" class="row mb-3">
-                <div
-                    class="text-danger py-2 px-4 pr-0 rounded font-bold mb-4 shadow-lg"
-                >
-                    <div v-for="(v, k) in errors" :key="k">
-                        <p v-for="error in v" :key="error" class="text-sm">
-                            {{ error.toUpperCase() }}
-                        </p>
-                    </div>
-                </div>
-            </div>
+            <ErrorMessages :errors="errors" />
 
             <form @submit.prevent="submitEnrollment">
                 <div class="mt-1">
@@ -136,6 +126,7 @@ import BaseSelect from './Admin/Form/BaseSelect.vue'
 import BaseCheckbox from './Admin/Form/BaseCheckbox.vue'
 import BaseRadioGroup from './Admin/Form/BaseRadioGroup.vue'
 import BaseTextarea from './Admin/Form/BaseTextarea.vue'
+import ErrorMessages from './ErrorMessages.vue'
 
 const props = defineProps({
     dateId: { type: Number, required: true },

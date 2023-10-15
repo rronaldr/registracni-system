@@ -1,15 +1,5 @@
 <template>
-    <div v-if="errors" class="row mb-3">
-        <div
-            class="bg-danger text-white py-2 px-4 pr-0 rounded font-bold mb-4 shadow-lg"
-        >
-            <div v-for="(v, k) in errors" :key="k">
-                <p v-for="error in v" :key="error" class="text-sm">
-                    {{ error.toUpperCase() }}
-                </p>
-            </div>
-        </div>
-    </div>
+    <ErrorMessages :errors="errors" />
 
     <form
         method="post"
@@ -299,6 +289,7 @@ import UserGroupSelect from './UserGroupSelect.vue'
 import { duplicateEventMap, eventCreateObject } from '../../../utils/DataMapper'
 import BaseCheckbox from '../Form/BaseCheckbox.vue'
 import TemplateSelect from '../TemplateTags/TemplateSelect.vue'
+import ErrorMessages from '../../ErrorMessages.vue'
 
 const ADMIN_URL = inject('ADMIN_URL')
 const props = defineProps({
