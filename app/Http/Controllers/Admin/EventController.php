@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Event;
 use App\Services\Admin\BlacklistFacade;
 use App\Services\Admin\EventFacade;
 use App\Services\Admin\TagFacade;
@@ -25,11 +26,12 @@ class EventController extends Controller
     {
         $user = $userFacade->getCurrentUser();
 
-        /** @todo refactor once event collaboration feature is done */
         if ($user->can('event-see-all')) {
             $events = $eventFacade->getEventsPaginated();
         } else {
-            $events = $eventFacade->getEventsByAuthor($user->id);
+            $collaborations = $user->collaborations()->pluck('event_id');
+            $collaborationsIds = $collaborations->isNotEmpty() ? $collaborations : null;
+            $events = $eventFacade->getEventsByAuthor($user->id, $collaborationsIds);
         }
 
         return view('admin.events', [
@@ -65,11 +67,14 @@ class EventController extends Controller
     {
         $event = $eventFacade->getEventById((int) $id);
         $event->load('author');
-        $lastChangeUser = $userFacade->getUserById($event->last_changed_by)->getFullname();
+
+        $user = $event->last_changed_by === null
+            ? null :
+            $userFacade->getUserById($event->last_changed_by)->getFullname();
 
         return view('admin.event-edit', [
             'event' => $event,
-            'last_changed' => $lastChangeUser ?? null
+            'last_changed' => $user ?? null
         ]);
     }
 

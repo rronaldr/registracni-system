@@ -7,7 +7,7 @@ namespace App\Repositories;
 use App\Models\Event;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection as SupportCollection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class EventRepository
@@ -21,13 +21,18 @@ class EventRepository
             ->paginate(10);
     }
 
-    public function getEventsByAuthorPaginated(int $id): LengthAwarePaginator
+    public function getEventsByAuthorPaginated(int $id, ?SupportCollection $collaborationIds): LengthAwarePaginator
     {
-        return Event::query()
+        $query = Event::query()
             ->withCount(['dates'])
             ->where('user_id', $id)
-            ->orderBy('date_start_cache')
-            ->paginate(10);
+            ->orderBy('date_start_cache');
+
+        if ($collaborationIds !== null) {
+            $query->orWhereIn('id', $collaborationIds->toArray());
+        }
+
+        return $query->paginate(10);
     }
 
     public function getEventWithEnrollmentsAndUsers(int $eventId): ?Event

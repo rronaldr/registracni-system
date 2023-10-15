@@ -66,9 +66,9 @@ class EventFacade
         return $this->eventRepository->getEventsPaginated();
     }
 
-    public function getEventsByAuthor(int $id): LengthAwarePaginator
+    public function getEventsByAuthor(int $id, ?Collection $collaborationsIds): LengthAwarePaginator
     {
-        return $this->eventRepository->getEventsByAuthorPaginated($id);
+        return $this->eventRepository->getEventsByAuthorPaginated($id, $collaborationsIds);
     }
 
     public function deleteEvent(int $id): void
@@ -164,7 +164,7 @@ class EventFacade
     {
         return [
             'event.name' => 'required|string',
-            'event.subtitle' => 'string',
+            'event.subtitle' => 'string|nullable',
             'event.blacklist_id' => 'nullable|numeric',
             'event.type' => 'required|numeric',
             'event.user_group' => 'required|numeric',
