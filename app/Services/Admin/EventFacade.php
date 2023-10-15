@@ -179,6 +179,11 @@ class EventFacade
     public function setEventDateCache(int $id): void
     {
         $event = $this->eventRepository->getEventById($id);
+
+        if ($event->dates()->count() === 0) {
+            return;
+        }
+
         $dateCache = $this->dateFacade->getFirstAndLastDateOfEvent($event->id);
         $event->date_start_cache = Carbon::parse($dateCache->get('date_start'));
         $event->date_end_cache = Carbon::parse($dateCache->get('date_end'));

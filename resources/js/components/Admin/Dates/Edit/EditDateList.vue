@@ -60,8 +60,8 @@ function editDate(id) {
     emit('editDate', id)
 }
 
-function removeDate(id) {
-    emit('removeDate', id)
+function removeDate(id, blockReason) {
+    emit('removeDate', id, blockReason)
 }
 
 function signOut(dateId, enrollmentId, blockReason) {

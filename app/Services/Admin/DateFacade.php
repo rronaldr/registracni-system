@@ -70,7 +70,9 @@ class DateFacade
 
     public function removeDate(int $id): void
     {
-        Date::destroy($id);
+        $date = $this->dateRepository->getDateById($id);
+        $date->enrollments()->delete();
+        $date->delete();
     }
 
     public function createDatesFromEvent(array $dates, int $eventId): void

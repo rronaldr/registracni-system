@@ -34,23 +34,57 @@
                 :title="$t('app.delete')"
                 type="button"
                 class="btn-link text-danger border-0"
-                @click="removeItem"
+                @click="date.enrollments_count > 0 ? showModal = true : removeItem(null)"
             >
                 <i class="fas fa-trash"></i>
             </button>
         </td>
     </tr>
+
+    <Teleport to="body">
+        <CustomModal :show="showModal" @close="showModal = false">
+            <template #modal-header>
+                <h5>{{ $t('enrollment.enrollments') }}</h5>
+            </template>
+            <template #modal-body>
+                <div class="row">
+                    <div class="col-12">
+                        <form @submit.prevent="removeItem(blockReason.value)">
+                            <BaseInput
+                                v-model="blockReason"
+                                :label="$t('enrollment.sign_off_block_reason')"
+                                :required="true"
+                                class="mb-3"
+                                type="text"
+                            />
+                            <p>
+                                <small>{{
+                                    $t('enrollment.sign_off_all_block_hint')
+                                }}</small>
+                            </p>
+
+                            <SubmitButton />
+                        </form>
+                    </div>
+                </div>
+            </template>
+        </CustomModal>
+    </Teleport>
 </template>
 
 <script setup>
 import moment from 'moment'
 import { computed, ref } from 'vue'
+import SubmitButton from '../../Form/SubmitButton.vue'
+import CustomModal from '../../CustomModal.vue'
+import BaseInput from '../../Form/BaseInput.vue'
 
 const emit = defineEmits(['showEnrollments', 'editDate', 'removeDate'])
 const props = defineProps({
     date: { type: Object, required: true }
 })
-
+let showModal = ref(false)
+let blockReason = ref(null)
 let durationFrom = ref(
     moment(
         `${props.date.date_from} ${props.date.time_from}`,
@@ -73,7 +107,7 @@ function editItem() {
     emit('editDate', props.date.id)
 }
 
-function removeItem() {
-    emit('removeDate', props.date.id)
+function removeItem(blockReason) {
+    emit('removeDate', props.date.id, blockReason)
 }
 </script>

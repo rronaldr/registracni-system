@@ -220,8 +220,10 @@ async function addDate() {
     clearDateObject()
 }
 
-async function removeDate(id) {
-    await axios.delete(ADMIN_URL + '/dates/' + id + '/delete')
+async function removeDate(id, blockReason) {
+    await axios.post(ADMIN_URL + '/dates/' + id + '/delete', {
+        data: blockReason
+    })
     emit('getDates')
 }
 

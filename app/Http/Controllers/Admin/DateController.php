@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\DateFacade;
 use App\Services\Admin\EventFacade;
+use App\Services\EmailFacade;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -63,10 +64,12 @@ class DateController extends Controller
         }
     }
 
-    public function destroy(int $id, DateFacade $dateFacade, EventFacade $eventFacade): JsonResponse
+    public function destroy(int $id, Request $request,DateFacade $dateFacade, EventFacade $eventFacade, EmailFacade $emailFacade): JsonResponse
     {
         $date = $dateFacade->getDateById($id);
         $eventId = $date->event->id;
+
+        // @todo Send email about signoff and block reason
 
         $dateFacade->removeDate($id);
         $eventFacade->setEventDateCache($eventId);
