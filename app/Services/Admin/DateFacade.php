@@ -75,6 +75,13 @@ class DateFacade
         $date->delete();
     }
 
+    public function getDateEnrollmentIds(int $id): Collection
+    {
+        $date = $this->dateRepository->getDateById($id);
+
+        return $date->enrollments()->pluck('id');
+    }
+
     public function createDatesFromEvent(array $dates, int $eventId): void
     {
         collect($dates)

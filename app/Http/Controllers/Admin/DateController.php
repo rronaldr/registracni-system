@@ -68,19 +68,24 @@ class DateController extends Controller
     {
         $date = $dateFacade->getDateById($id);
         $eventId = $date->event->id;
+        $blockReason = $request->get('data');
+        $enrollmentIds = $dateFacade->getDateEnrollmentIds($id)->toArray();
 
-        // @todo Send email about signoff and block reason
+        try {
+            $emailFacade->sendSignOffEmail($enrollmentIds, $blockReason);
 
-        $dateFacade->removeDate($id);
-        $eventFacade->setEventDateCache($eventId);
-
-        return response()->json(null, 204);
+            $dateFacade->removeDate($id);
+            $eventFacade->setEventDateCache($eventId);
+            return response()->json(null, 204);
+        } catch (Throwable $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
     }
 
-    public function signOffEnrollmentUser(int $id, Request $request, DateFacade $dateFacade): JsonResponse
+    public function signOffEnrollmentUser(int $id, Request $request, DateFacade $dateFacade, EmailFacade $emailFacade): JsonResponse
     {
-        /** @todo send email with localization of message */
         $blockReason = $request->get('data');
+        $emailFacade->sendSignOffEmail([$id], $blockReason);
         $dateFacade->signOffUser($id);
 
         return response()->json(null, 204);

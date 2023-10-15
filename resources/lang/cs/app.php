@@ -134,5 +134,9 @@ return [
         'template-create-title' => 'Vytvoření šablony',
         'template-edit-title' => 'Editace šablony',
         'test-sent-success' => 'Testovací email byl úspěšně odeslán.'
+    ],
+    'notifications' => [
+        'sign_off_title' => 'Odhlášení z termínu',
+        'sign_off' => 'Byli jste odhlášeni z termínu :date, důvod odhlášení :reason.',
     ]
 ];

@@ -49,9 +49,9 @@
             <template #modal-body>
                 <div class="row">
                     <div class="col-12">
-                        <form @submit.prevent="removeItem(blockReason.value)">
+                        <form @submit.prevent="removeItem(blockReasonText)">
                             <BaseInput
-                                v-model="blockReason"
+                                v-model="blockReasonText"
                                 :label="$t('enrollment.sign_off_block_reason')"
                                 :required="true"
                                 class="mb-3"
@@ -84,7 +84,7 @@ const props = defineProps({
     date: { type: Object, required: true }
 })
 let showModal = ref(false)
-let blockReason = ref(null)
+let blockReasonText = ref(null)
 let durationFrom = ref(
     moment(
         `${props.date.date_from} ${props.date.time_from}`,
