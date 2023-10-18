@@ -99,7 +99,6 @@
                     </div>
                     <div class="row p-2">
                         <div class="col-12">
-                            <!--                            <p><input type="checkbox"> Souhlasím s <a class="link-primary" :href="gdprLink">GDPR</a> ....</p>-->
                             <p
                                 v-html="
                                     $t('enrollment.gdpr_agree', {
@@ -108,7 +107,7 @@
                                 "
                             ></p>
                             <button class="btn btn-primary" type="submit">
-                                Odeslat
+                                {{ $t('app.submit') }}
                             </button>
                         </div>
                     </div>

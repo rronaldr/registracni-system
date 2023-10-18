@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 require('./bootstrap')
 import { createApp } from 'vue'
 import { createI18n } from 'vue-i18n'
@@ -37,8 +39,24 @@ const app = createApp({
     }
 })
 
-app.provide('ADMIN_URL', 'http://localhost/admin')
-app.provide('APP_URL', 'http://localhost')
+const APP_URL = 'http://localhost'
+const ADMIN_URL = 'http://localhost/admin'
+
+function loadLocale() {
+    return axios
+        .get(APP_URL + '/locale/get')
+        .then((response) => {
+            return response.data.locale
+        })
+        .catch((error) => {
+            console.error(error)
+        })
+}
+
+i18n.global.locale.value = await loadLocale()
+
+app.provide('ADMIN_URL', ADMIN_URL)
+app.provide('APP_URL', APP_URL)
 
 app.use(i18n)
 app.mount('#vueApp')

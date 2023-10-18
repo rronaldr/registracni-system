@@ -49,3 +49,4 @@ Route::post('/register', [RegisterController::class, 'register'])->name('registe
 
 // Locale routes
 Route::get('/{locale}', [LanguageController::class, 'setLocale'])->name('locale');
+Route::get('/locale/get', [LanguageController::class, 'getLocale'])->name('locale.get');
