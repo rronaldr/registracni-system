@@ -4,7 +4,6 @@ return [
     'author' => 'Autor',
     'merge-tags' => 'Merge tagy',
     'app-title' => 'Registrační systém VŠE',
-    'login-picker' => 'Výběr přihlášení',
     'cs' => 'Česky',
     'en' => 'English',
     'app' => 'Aplikace',
