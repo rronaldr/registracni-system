@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use App\Models\Date;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
@@ -57,7 +58,8 @@ class DateRepository
 
     public function getDateEnrollments(int $id): Date
     {
-        return Date::query()
+        /** @var Date $date */
+        $date = Date::query()
             ->select('id')
             ->where('id', $id)
             ->with([
@@ -65,5 +67,14 @@ class DateRepository
                 'enrollments.user' => fn($q) => $q->select('id', 'xname', 'email')
             ])
             ->first();
+
+        return $date;
+    }
+
+    public function getDatesByEnrollmentFromDate(Carbon $date): Collection
+    {
+        return Date::query()
+            ->whereDate('enrollment_end', $date)
+            ->get();
     }
 }

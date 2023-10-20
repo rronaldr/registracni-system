@@ -137,5 +137,7 @@ return [
     'notifications' => [
         'sign_off_title' => 'Sign off title',
         'sign_off' => 'You have been signed off from the date :date, sign off reason :reason.',
+        'enrollment_end_title' => 'End of enrollment',
+        'enrollment_end' => 'Today is the end of enrolling for the date :date, for the event :event.',
     ]
 ];

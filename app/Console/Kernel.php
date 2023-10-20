@@ -16,7 +16,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // Delete users from blacklist after blocked_until date passes
-        $schedule->command('blacklist:remove-unblocked-users')->daily();
+//        $schedule->command('blacklist:remove-unblocked-users')->daily();
+        $schedule->command('email:enrollment-end-notification')->everyMinute();
     }
 
     /**

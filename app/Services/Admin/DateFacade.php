@@ -102,6 +102,11 @@ class DateFacade
         $enrollment->save();
     }
 
+    public function getDatesWithEnrollmentEnding(Carbon $date): Collection
+    {
+        return $this->dateRepository->getDatesByEnrollmentFromDate($date);
+    }
+
     public function getDateValidationRules(): array
     {
         return [

@@ -137,5 +137,7 @@ return [
     'notifications' => [
         'sign_off_title' => 'Odhlášení z termínu',
         'sign_off' => 'Byli jste odhlášeni z termínu :date, důvod odhlášení :reason.',
+        'enrollment_end_title' => 'Konec prihlašování na termín',
+        'enrollment_end' => 'Dnes končí přihlašování na termín :date, u události :event.',
     ]
 ];
