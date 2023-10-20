@@ -22,6 +22,7 @@ return [
     'auth' => [
         'login' => 'Přihlásit se',
         'login-picker' => 'Výběr přihlášení',
+        'login-error' => 'Nesprávné přihlašovací údaje',
         'shibboleth' => 'Shibboleth',
         'graduate-login' => 'Přihlášení pro absolventy',
         'external-login' => 'Přihlášení pro externisty',
@@ -32,6 +33,12 @@ return [
         'register' => 'Registrovat se',
         'shibboleth-hint' => 'V rámci jednotného školního přihlášení pomocí Shibbolethu jsou vaše uživatelské údaje stejné jako do systému InSIS.',
         'graduate-hint' => 'Přihlášení pomocí absolventského portálu.',
+        'change-password' => 'Změna hesla',
+        'current-password' => 'Stávající heslo',
+        'new-password' => 'Nové heslo',
+        'new-password-confirm' => 'Potvrdit nové heslo',
+        'password-changed-success' => 'Heslo úspěšně změněno',
+        'password-change-error' => 'Zadané stávající heslo nesouhlasí.'
     ],
     'blacklist' => [
         'blacklist' => 'Blacklist',

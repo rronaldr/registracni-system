@@ -42,7 +42,7 @@ class LoginController extends Controller
             return redirect()->route('events.index');
         }
 
-        return back()->withErrors('email', 'Invalid login credentials.');
+        return back()->withErrors('email', __('app.auth.login-error'));
     }
 
     public function logoutExternal(): RedirectResponse

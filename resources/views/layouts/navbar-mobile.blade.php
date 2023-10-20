@@ -24,11 +24,16 @@
                             <a class="nav-link"
                                href="{{ route('enrollment.user', auth()->user()->id) }}">{{ __('app.enrollment.my_enrollments') }}</a>
                         </li>
+                        @if(auth()->user()->isExternalUser())
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('auth.change-password')}}">{{ __('app.auth.change-password') }}</a>
+                        </li>
+                        @endif
                         <li class="nav-item">
                             <a class="nav-link"
-                               href="@if(isset(auth()->user()->xname)) {{ route('logout') }}@else {{ route('logout.external') }}@endif">{{ __('app.auth.logout') }}
-                                "
-                                >{{ __('app.auth.logout') }}</a>
+                               href="@if(isset(auth()->user()->xname)) {{ route('logout') }}@else {{ route('logout.external') }}@endif">
+                                {{ __('app.auth.logout') }}
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('admin') }}">{{ __('app.administration') }}</a>

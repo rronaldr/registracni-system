@@ -22,6 +22,7 @@ return [
     'auth' => [
         'login' => 'Login',
         'login-picker' => 'Choose login',
+        'login-error' => 'Invalid login credentials',
         'shibboleth' => 'Shibboleth',
         'graduate-login' => 'Login for graduates',
         'external-login' => 'External login',
@@ -32,6 +33,12 @@ return [
         'register' => 'Sign up',
         'shibboleth-hint' => 'With Shibboleth single sign-on, your user details are the same as for InSIS',
         'graduate-hint' => 'Login through Absolventský portál.',
+        'change-password' => 'Change password',
+        'current-password' => 'Current password',
+        'new-password' => 'New password',
+        'new-password-confirm' => 'Confirm new password',
+        'password-changed-success' => 'Password changed successfully',
+        'password-change-error' => 'Invalid current password.'
     ],
     'blacklist' => [
         'blacklist' => 'Blacklist',

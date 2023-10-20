@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/enrollment/{date_id}', [EnrollmentController::class, 'show'])->name('enrollment.show');
     Route::post('/enrollment/{date_id}', [EnrollmentController::class, 'store'])->name('enrollment.store');
     Route::get('/enrollment/user/{id}', [EnrollmentController::class, 'getUserEnrollments'])->name('enrollment.user');
+
+    Route::get('/change-password', [UserController::class, 'changePassword'])->name('auth.change-password');
+    Route::post('/change-password', [UserController::class, 'storeChangedPassword'])->name('auth.change-password.store');
 });
 
 

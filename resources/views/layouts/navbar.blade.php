@@ -51,8 +51,13 @@
                                      aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item"
                                        href="{{ route('enrollment.user', auth()->user()->id) }}">{{ __('app.enrollment.my_enrollments') }}</a>
+                                    @if(auth()->user()->isExternalUser())
                                     <a class="dropdown-item"
-                                       href="@if(isset(auth()->user()->xname)) {{ route('logout') }}@else {{ route('logout.external') }}@endif"
+                                        href="{{ route('auth.change-password')}}"
+                                    >{{ __('app.auth.change-password') }}</a>
+                                    @endif
+                                    <a class="dropdown-item"
+                                       href="@if(isset(auth()->user()->xname)) {{ route('logout') }} @else {{ route('logout.external') }}@endif"
                                     >{{ __('app.auth.logout') }}</a>
                                 </div>
                             </li>

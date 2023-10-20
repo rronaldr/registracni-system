@@ -53,6 +53,11 @@ class User extends Authenticatable
             : sprintf("%s %s", $this->first_name, $this->last_name);
     }
 
+    public function isExternalUser(): bool
+    {
+        return empty($this->xname) && !empty($this->password);
+    }
+
     public function events(): HasMany
     {
         return $this->hasMany(Event::class);
