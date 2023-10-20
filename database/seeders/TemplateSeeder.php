@@ -34,7 +34,7 @@ class TemplateSeeder extends Seeder
         ]);
         DB::table('templates')->insert([
             'user_id' => 1,
-            'name' => 'Responsive email template',
+            'name' => 'Základní VŠE šablona',
             'type' => 'custom',
             'approved' => 1,
             'html' => '<!doctype html>
@@ -309,7 +309,7 @@ class TemplateSeeder extends Seeder
                                 <td align="left"
                                     style="font-size:0px;padding:10px 35px 20px 35px;word-break:break-word;">
                                     <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1.5;text-align:left;color:#000000;">
-                                        {{ $content }}
+                                        [message]
                                     </div>
                                 </td>
                             </tr>

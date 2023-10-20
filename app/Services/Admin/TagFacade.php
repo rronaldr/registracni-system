@@ -35,7 +35,7 @@ class TagFacade
         $tags = $event->getTagsCollection();
         $tags->push($data);
         $event->c_fields = $tags->values()->toArray();
-        $event->last_chagned_by = auth()->user()->id;
+        $event->last_changed_by = auth()->user()->id;
         $event->save();
     }
 
