@@ -72,7 +72,7 @@ return [
         'participants' => 'Účastníci',
         'import' => 'Importovat',
         'show-dates' => 'Zobrazit termíny',
-        'show-all-participants' => 'Zobrazit všechny účasnítky'
+        'show-all-participants' => 'Zobrazit všechny účastníky'
     ],
     'email' => [
         'email' => 'Email',
