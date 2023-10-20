@@ -34,8 +34,14 @@ class Enrollment extends Model
         return $this->belongsTo(Date::class);
     }
 
-    public function event(): BelongsTo
+    public function tagsToStringWithLabel(): ?string
     {
-        return $this->belongsTo(Event::class);
+        if (empty($this->c_fields)) {
+            return null;
+        }
+
+        return collect($this->c_fields)->map(function ($tag) {
+            return sprintf('%s: %s', $tag['label'], $tag['value']);
+        })->implode(',');
     }
 }

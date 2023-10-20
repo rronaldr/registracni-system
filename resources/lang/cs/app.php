@@ -139,5 +139,8 @@ return [
         'sign_off' => 'Byli jste odhlášeni z termínu :date, důvod odhlášení :reason.',
         'enrollment_end_title' => 'Konec prihlašování na termín',
         'enrollment_end' => 'Dnes končí přihlašování na termín :date, u události :event.',
+        'enrollment_title' => 'Registrace na událost',
+        'enrollment_text' => 'Byli jste úspěšně registrováni na událost :event na termín :date.',
+        'enrollment_tags' => 'Zde jsou vámi vyplněné údaje: :tags'
     ]
 ];

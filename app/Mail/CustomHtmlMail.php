@@ -32,6 +32,8 @@ class CustomHtmlMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.html.mail.blade.php');
+        return $this->view('emails.default-mail', [
+            'html' => $this->html
+        ]);
     }
 }

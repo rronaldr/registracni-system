@@ -19,10 +19,10 @@ class DefaultMail extends Mailable
      *
      * @return void
      */
-    public function __construct(string $content, string $subject)
+    public function __construct(string $content, ?string $subject)
     {
         $this->content = $content;
-        $this->subject = $subject;
+        $this->subject = $subject ?? null;
     }
 
     /**

@@ -21,6 +21,17 @@ class EnrollmentRepository
         return $enrollment;
     }
 
+    public function getByIdWithRelations(int $id): Enrollment
+    {
+        /** @var Enrollment $enrollment */
+        $enrollment = Enrollment::query()
+            ->with(['date', 'user', 'date.event'])
+            ->where('id', $id)
+            ->first();
+
+        return $enrollment;
+    }
+
     public function checkExistsEnrollmentByDateAndUser(int $dateId, int $userId): bool
     {
         $enrollment = Enrollment::query()

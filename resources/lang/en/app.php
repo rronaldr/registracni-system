@@ -139,5 +139,8 @@ return [
         'sign_off' => 'You have been signed off from the date :date, sign off reason :reason.',
         'enrollment_end_title' => 'End of enrollment',
         'enrollment_end' => 'Today is the end of enrolling for the date :date, for the event :event.',
+        'enrollment_title' => 'Event enrollment',
+        'enrollment_text' => 'You have been successfully enrolled for :event on termín :date.',
+        'enrollment_tags' => '\n Here are the details you filled in. :tags'
     ]
 ];

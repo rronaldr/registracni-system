@@ -34,20 +34,20 @@ class EnrollmentFacade
         $this->emailFacade = $emailFacade;
     }
 
-    public function createEnrollment(int $dateId, int $eventId, Request $request): void
+    public function createEnrollment(int $dateId, Request $request): void
     {
         $date = $this->dateFacade->getDateById($dateId);
         $user = $this->userFacade->getCurrentUser();
         $enrollmentData = collect($request->get('data'))->values()->toArray();
 
-        Enrollment::create([
+        $enrollment = Enrollment::create([
             'user_id' => $user->id,
             'date_id' => $date->id,
             'state' => $date->getSignedCount() >= $date->capacity ? EnrollmentStates::SUBSTITUTE : EnrollmentStates::SIGNED,
             'c_fields' => $enrollmentData
         ]);
-        /** @todo Refactor email send in EmailFacade */
-//        $this->emailFacade->sendUserEnrolledEmail();
+
+        $this->emailFacade->sendUserEnrolledEmail($enrollment->id);
     }
 
     public function getValidationRulesForTags(array $fields): ?array
