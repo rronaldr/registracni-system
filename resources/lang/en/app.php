@@ -141,6 +141,8 @@ return [
         'enrollment_end' => 'Today is the end of enrolling for the date :date, for the event :event.',
         'enrollment_title' => 'Event enrollment',
         'enrollment_text' => 'You have been successfully enrolled for :event on termín :date.',
-        'enrollment_tags' => '\n Here are the details you filled in. :tags'
+        'enrollment_tags' => '\n Here are the details you filled in. :tags',
+        'capacity_full_title' => 'Term capacity filled',
+        'capacity_full' => 'The capacity on the date :date for the event :event has been filled.'
     ]
 ];

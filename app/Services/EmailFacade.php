@@ -10,7 +10,9 @@ use App\Models\Date;
 use App\Models\Enrollment;
 use App\Models\Event;
 use App\Models\User;
+use App\Repositories\DateRepository;
 use App\Repositories\EnrollmentRepository;
+use App\Repositories\UserRepository;
 use App\Services\Admin\TemplateFacade;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
@@ -22,13 +24,19 @@ class EmailFacade
 {
     private TemplateFacade $templateFacade;
     private EnrollmentRepository $enrollmentRepository;
+    private UserRepository $userRepository;
+    private DateRepository $dateRepository;
 
     public function __construct(
         TemplateFacade $templateFacade,
-        EnrollmentRepository $enrollmentRepository
+        EnrollmentRepository $enrollmentRepository,
+        UserRepository $userRepository,
+        DateRepository $dateRepository
     ) {
         $this->templateFacade = $templateFacade;
         $this->enrollmentRepository = $enrollmentRepository;
+        $this->userRepository = $userRepository;
+        $this->dateRepository = $dateRepository;
     }
 
     public function sendUserEnrolledEmail(int $id): void
@@ -105,6 +113,19 @@ class EmailFacade
             Mail::to($author->email)
                 ->send(new DefaultMail($content, $subject));
         });
+    }
+
+    public function sendCapacityReachedEmail(Date $date): void
+    {
+        $event = $date->event;
+        $author = $event->author;
+        $dateStart = Carbon::parse($date->date_start)->format('j.n.Y H:i');
+
+        $subject = __('app.notifications.capacity_full_title', [], $author->locale);
+        $content = __('app.notifications.capacity_full', ['date' => $dateStart, 'event' => $event->name], $author->locale);
+
+        Mail::to($author->email)
+            ->send(new DefaultMail($content, $subject));
     }
 
     private function buildHtmlWithData(string $html, array $data, array $enrollmentFields): string

@@ -141,6 +141,8 @@ return [
         'enrollment_end' => 'Dnes končí přihlašování na termín :date, u události :event.',
         'enrollment_title' => 'Registrace na událost',
         'enrollment_text' => 'Byli jste úspěšně registrováni na událost :event na termín :date.',
-        'enrollment_tags' => 'Zde jsou vámi vyplněné údaje: :tags'
+        'enrollment_tags' => 'Zde jsou vámi vyplněné údaje: :tags',
+        'capacity_full_title' => 'Kapacita termínu naplněna',
+        'capacity_full' => 'Kapacita na termínu :date u události :event byla naplněna.'
     ]
 ];

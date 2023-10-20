@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Services\DateFacade;
+use App\Services\EmailFacade;
 use App\Services\EnrollmentFacade;
 use App\Services\EventFacade;
 use App\Services\UserFacade;
@@ -42,7 +43,8 @@ class EnrollmentController extends Controller
         int $dateId,
         Request $request,
         EnrollmentFacade $enrollmentFacade,
-        DateFacade $dateFacade
+        DateFacade $dateFacade,
+        EmailFacade $emailFacade
     ): JsonResponse {
         try {
             $date = $dateFacade->getDateById($dateId);
@@ -57,7 +59,13 @@ class EnrollmentController extends Controller
                 return response()->json(['errors' => $validator->errors()], 400);
             }
 
-            $enrollmentFacade->createEnrollment($dateId, $eventId, $request);
+            $enrollmentId = $enrollmentFacade->createEnrollment($dateId, $request);
+
+            $emailFacade->sendUserEnrolledEmail($enrollmentId);
+
+            if ($date->getSignedCount() === $date->capacity) {
+                $emailFacade->sendCapacityReachedEmail($date);
+            }
 
             return response()->json(null, 204);
         } catch (Throwable $e) {

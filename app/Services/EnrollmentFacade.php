@@ -31,10 +31,9 @@ class EnrollmentFacade
         $this->userFacade = $userFacade;
         $this->eventFacade = $eventFacade;
         $this->dateFacade = $dateFacade;
-        $this->emailFacade = $emailFacade;
     }
 
-    public function createEnrollment(int $dateId, Request $request): void
+    public function createEnrollment(int $dateId, Request $request): int
     {
         $date = $this->dateFacade->getDateById($dateId);
         $user = $this->userFacade->getCurrentUser();
@@ -47,7 +46,7 @@ class EnrollmentFacade
             'c_fields' => $enrollmentData
         ]);
 
-        $this->emailFacade->sendUserEnrolledEmail($enrollment->id);
+        return $enrollment->id;
     }
 
     public function getValidationRulesForTags(array $fields): ?array
