@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\Roles;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Services\Admin\BlacklistFacade;
@@ -41,11 +42,15 @@ class EventController extends Controller
 
     public function create(): View
     {
+        $this->authorize('create', Event::class);
+
         return view('admin.event-create');
     }
 
     public function store(Request $request, EventFacade $eventFacade): JsonResponse
     {
+        $this->authorize('create', Event::class);
+
         try {
             $validator = Validator::make($request->all(), $eventFacade->getEventCreateValidationRules());
 
@@ -63,7 +68,7 @@ class EventController extends Controller
         }
     }
 
-    public function edit(string $id, EventFacade $eventFacade, UserFacade $userFacade): View
+    public function edit(string $id, EventFacade $eventFacade, UserFacade $userFacade)
     {
         $event = $eventFacade->getEventById((int) $id);
         $event->load('author');
@@ -71,6 +76,10 @@ class EventController extends Controller
         $user = $event->last_changed_by === null
             ? null :
             $userFacade->getUserById($event->last_changed_by)->getFullname();
+
+        if (auth()->user()->cannot('view', $event)) {
+            return abort(403);
+        }
 
         return view('admin.event-edit', [
             'event' => $event,
@@ -99,7 +108,14 @@ class EventController extends Controller
 
     public function destroy(int $id, EventFacade $eventFacade): RedirectResponse
     {
+        if (auth()->user()->cannot('delete', [Event::class, $id])){
+            Session::flash('message', __('app.event.delete-date-error'));
+
+            return redirect()->route('admin.events');
+        }
+
         try {
+            dd('test');
             $eventFacade->deleteEvent($id);
         } catch (\Exception $e) {
             dump($e);
@@ -110,7 +126,6 @@ class EventController extends Controller
         return redirect()->route('admin.events');
     }
 
-    /* @todo REDO this with VUE and json response */
     public function duplicate(int $id, EventFacade $eventFacade): View
     {
         $event = $eventFacade->duplicateEvent($id);

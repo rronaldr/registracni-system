@@ -79,7 +79,8 @@ return [
         'participants' => 'Participants',
         'import' => 'Import',
         'show-dates' => 'See dates',
-        'show-all-participants' => 'See all participants'
+        'show-all-participants' => 'See all participants',
+        'delete-date-error' => 'You cannot delete this event. Participants are enrolled for the event.'
     ],
     'email' => [
         'email' => 'Email',

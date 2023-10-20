@@ -73,11 +73,8 @@ class EventFacade
 
     public function deleteEvent(int $id): void
     {
-        /** @var Event $event */
-        $event = Event::query()
-            ->where('id', $id)
-            ->with(['dates', 'blacklist'])
-            ->first();
+        $event = $this->eventRepository->getEventById($id);
+        $event->load(['dates', 'blacklist']);
 
         if (!isset($event)) {
             return;

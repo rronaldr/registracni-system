@@ -79,7 +79,8 @@ return [
         'participants' => 'Účastníci',
         'import' => 'Importovat',
         'show-dates' => 'Zobrazit termíny',
-        'show-all-participants' => 'Zobrazit všechny účastníky'
+        'show-all-participants' => 'Zobrazit všechny účastníky',
+        'delete-date-error' => 'Nelze odstranit událost. Na události jsou přihlášeni účastníci.'
     ],
     'email' => [
         'email' => 'Email',
