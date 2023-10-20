@@ -71,6 +71,7 @@
         "user_email": "Email",
         "event_title": "Název události",
         "date_start": "Datum termínu",
+        "date_end": "Datum konce termínu",
         "enrollment_created": "Datum přihlášení na termín"
     },
     "template": {

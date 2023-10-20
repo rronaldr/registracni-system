@@ -71,6 +71,7 @@
         "user_email": "Email",
         "event_title": "Event title",
         "date_start": "Date from",
+        "date_end": "Date to",
         "enrollment_created": "User enrolled at"
     },
     "template": {

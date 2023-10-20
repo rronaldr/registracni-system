@@ -35,6 +35,7 @@ let buttons = [
     { label: t('tag.user_email'), value: 'user.email' },
     { label: t('tag.event_title'), value: 'event.title' },
     { label: t('tag.date_start'), value: 'date.date_start' },
+    { label: t('tag.date_end'), value: 'date.date_end' },
     { label: t('tag.enrollment_created'), value: 'enrollment.created_at' }
 ]
 
