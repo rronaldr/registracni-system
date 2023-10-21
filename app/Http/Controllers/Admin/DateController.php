@@ -69,10 +69,12 @@ class DateController extends Controller
         $date = $dateFacade->getDateById($id);
         $eventId = $date->event->id;
         $blockReason = $request->get('data');
-        $enrollmentIds = $dateFacade->getDateEnrollmentIds($id)->toArray();
 
         try {
-            $emailFacade->sendSignOffEmail($enrollmentIds, $blockReason);
+            if ($date->enrollments()->count() > 0) {
+                $enrollmentIds = $dateFacade->getDateEnrollmentIds($id)->toArray();
+                $emailFacade->sendSignOffEmail($enrollmentIds, $blockReason);
+            }
 
             $dateFacade->removeDate($id);
             $eventFacade->setEventDateCache($eventId);
