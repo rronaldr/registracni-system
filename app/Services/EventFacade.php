@@ -37,9 +37,9 @@ class EventFacade
         return $this->eventRepository->getEventByIdForDetailPage($id);
     }
 
-    public function getEventsWithDatesInMonth(Carbon $month): Collection
+    public function getPublishedEventsWithDatesInMonth(Carbon $month): Collection
     {
-        return $this->eventRepository->getEventsWithDatesInMonth($month);
+        return $this->eventRepository->getPublishedEventsWithDatesInMonth($month);
     }
 
     public function getEventCustomFields(int $dateId): Event

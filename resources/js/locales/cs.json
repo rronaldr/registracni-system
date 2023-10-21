@@ -110,7 +110,8 @@
         "updated_by": "Naposledy upravil",
         "add_collaborator": "Sdílet přístup k úpravám",
         "add_collaborator_hint": "Email uživatele, kterého chcete přizvat ke spolupráci",
-        "collaborator_added": "Přístup úspěšně nastaven."
+        "collaborator_added": "Přístup úspěšně nastaven.",
+        "no_events": "Zatím nejsou vypsány žádné události."
     },
     "blacklist": {
         "blocked_until": "Blokace do",

@@ -109,7 +109,8 @@
         "updated_by": "Last updated by",
         "add_collaborator": "Add event collaborator",
         "add_collaborator_hint": "Email of collaborator",
-        "collaborator_added": "Access granted."
+        "collaborator_added": "Access granted.",
+        "no_events": "There are no events listed yet."
     },
     "blacklist": {
         "blocked_until": "Blocked until",

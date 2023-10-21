@@ -17,7 +17,7 @@ class EventController extends Controller
         $userFacade->assignRolesToUserFromEntitlements();
 
         $date = Carbon::now()->startOfMonth();
-        $events = $eventFacade->getEventsWithDatesInMonth($date);
+        $events = $eventFacade->getPublishedEventsWithDatesInMonth($date);
 
         return view('events', [
             'events' => $events

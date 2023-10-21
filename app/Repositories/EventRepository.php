@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
+use App\Enums\Event\EventStatusEnum;
 use App\Models\Event;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
@@ -81,15 +82,16 @@ class EventRepository
         return $event;
     }
 
-    public function getEventsWithDatesInMonth(Carbon $month): Collection
+    public function getPublishedEventsWithDatesInMonth(Carbon $month): Collection
     {
         /** @var \App\Models\Event $event * */
         $events = Event::query()
             ->with('dates', fn($q) => $q->whereBetween('date_start', [
                 $month->startOfMonth()->toDateString(),
                 $month->endOfMonth()->toDateString()
-            ])
-            )
+            ]))
+            ->where('status', EventStatusEnum::PUBLISHED)
+            ->where('date_end_cache', '>=', Carbon::now())
             ->get();
 
         return $events;
