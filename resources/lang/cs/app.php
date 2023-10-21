@@ -100,7 +100,8 @@ return [
             '1' => 'Přihlášen',
             '2' => 'Náhradník',
             '3' => 'Odhlášen'
-        ]
+        ],
+        'sign-out' => 'Odhlásit se'
     ],
     'c_fields' => [
         'name' => 'Název tagu',

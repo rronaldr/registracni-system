@@ -100,7 +100,8 @@ return [
             '1' => 'Enrolled',
             '2' => 'Substitute',
             '3' => 'Signed off'
-        ]
+        ],
+        'sign-out' => 'Sign out of event'
     ],
     'c_fields' => [
         'name' => 'Tag label',

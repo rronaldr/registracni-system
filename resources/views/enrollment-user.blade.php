@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="box-body">
-        @if(isset($enrollments))
+        @if(!isset($enrollments))
             <p>{{ __('app.enrollment.no-enrollments') }}</p>
         @else
             <table width="100%" class="table table-hover" id="dataTables">
@@ -11,6 +11,7 @@
                     <th>{{ __('app.event.event-name') }}</th>
                     <th>{{ __('app.date.date') }}</th>
                     <th>{{ __('app.enrollment.state.title') }}</th>
+                    <th></th>
                 </tr>
                 </thead>
 
@@ -22,6 +23,15 @@
                         <td>{{ \Carbon\Carbon::parse($enrollment->date->date_start)->format('j.n.Y H:i') }}
                             - {{ \Carbon\Carbon::parse($enrollment->date->date_end)->format('j.n.Y H:i') }}</td>
                         <td>{{ __('app.enrollment.state.'.$enrollment->state) }}</td>
+                        <td>
+                            @if($enrollment->date->withdraw_end > \Carbon\Carbon::now())
+                                <a
+                                    href="{{ route('events.index') }}"
+                                    class="btn btn-link">
+                                    {{ __('app.enrollment.sign-out') }}
+                                </a>
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>
