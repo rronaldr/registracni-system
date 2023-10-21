@@ -11,6 +11,7 @@ use App\Services\EmailFacade;
 use App\Services\EnrollmentFacade;
 use App\Services\EventFacade;
 use App\Services\UserFacade;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -88,5 +89,37 @@ class EnrollmentController extends Controller
         return view('enrollment-user', [
             'enrollments' => $enrollments
         ]);
+    }
+
+    public function signOff(int $id, EnrollmentFacade $enrollmentFacade): RedirectResponse
+    {
+        $enrollment = $enrollmentFacade->getEnrollmentById($id);
+
+        if (auth()->user()->cannot('signOff',$enrollment)){
+            Session::flash('message', __('app.enrollment.sign-off-error'));
+
+            return redirect()->back();
+        }
+
+        $enrollmentFacade->signOffUser($enrollment);
+
+        Session::flash('message', __('app.enrollment.signed-off'));
+
+        return redirect()->back();
+    }
+
+    public function signSubstituteByEmail(int $id, string $email, EnrollmentFacade $enrollmentFacade): RedirectResponse
+    {
+        $enrolled = $enrollmentFacade->enrollUserByEmail($id, $email);
+
+        if (!$enrolled) {
+            Session::flash('message', __('app.enrollment.enroll-email-error'));
+
+            return redirect()->route('events.index');
+        }
+
+        Session::flash('message', __('app.enrollment.enroll-email-success'));
+
+        return redirect()->route('events.index');
     }
 }

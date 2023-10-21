@@ -101,7 +101,11 @@ return [
             '2' => 'Substitute',
             '3' => 'Signed off'
         ],
-        'sign-out' => 'Sign out of event'
+        'sign-out' => 'Sign out of event',
+        'signed-off' => 'You have been signed off the date.',
+        'sign-off-error' => 'You cannot sign off the date.',
+        'enroll-email-success' => 'You have been enrolled successfully',
+        'enroll-email-error' => 'Another substitute has already signed up for the date.',
     ],
     'c_fields' => [
         'name' => 'Tag label',
@@ -152,6 +156,8 @@ return [
         'enrollment_text' => 'You have been successfully enrolled for :event on termín :date.',
         'enrollment_tags' => '\n Here are the details you filled in. :tags',
         'capacity_full_title' => 'Term capacity filled',
-        'capacity_full' => 'The capacity on the date :date for the event :event has been filled.'
+        'capacity_full' => 'The capacity on the date :date for the event :event has been filled.',
+        'free_spot_title' => 'Free spot on a term you are registerd as a substitute',
+        'free_spot' => 'There was a vacancy for the date :date at the event :event. If you want to sign up click <a href=":link">here</a>.'
     ]
 ];

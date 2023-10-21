@@ -128,6 +128,22 @@ class EmailFacade
             ->send(new DefaultMail($content, $subject));
     }
 
+    public function sendFreeSpotNotificationToSubstitutes(Date $date, Collection $emailsWithLocale): void
+    {
+        $eventName = $date->event->name;
+        $dateStart = Carbon::parse($date->date_start)->format('j.n.Y H:i');
+
+        $emailsWithLocale->each(function (User $userData) use ($date, $eventName, $dateStart) {
+            $link = route('date.enroll.email',['id' => $date->id, 'email' => $userData->email]);
+
+            $subject = __('app.notifications.free_spot_title', [], $userData->locale);
+            $content = __('app.notifications.free_spot', ['date' => $dateStart, 'event' => $eventName, 'link' => $link], $userData->locale);
+
+            Mail::to($userData->email)
+                ->send(new DefaultMail($content, $subject));
+        });
+    }
+
     private function buildHtmlWithData(string $html, array $data, array $enrollmentFields): string
     {
         $tags = collect($enrollmentFields)->mapWithKeys(function ($tag) {

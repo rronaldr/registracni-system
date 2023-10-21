@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 
 class UserRepository
 {
@@ -59,6 +60,13 @@ class UserRepository
             ->first();
 
         return $user;
+    }
+
+    public function getUsersEmailsAndLocaleByIds(array $userIds): Collection
+    {
+        return User::query()
+            ->whereIn('id', $userIds)
+            ->get(['email', 'locale']);
     }
 
 }

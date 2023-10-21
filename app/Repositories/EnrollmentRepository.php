@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
+use App\Enums\EnrollmentStates;
 use App\Models\Enrollment;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
 
 class EnrollmentRepository
 {
@@ -32,16 +32,6 @@ class EnrollmentRepository
         return $enrollment;
     }
 
-    public function checkExistsEnrollmentByDateAndUser(int $dateId, int $userId): bool
-    {
-        $enrollment = Enrollment::query()
-            ->where('date_id', $dateId)
-            ->where('user_id', $userId)
-            ->first();
-
-        return !($enrollment === null);
-    }
-
     public function getEnrollmentsByUser(int $id): LengthAwarePaginator
     {
         return Enrollment::query()
@@ -49,5 +39,47 @@ class EnrollmentRepository
             ->where('user_id', $id)
             ->orderBy('created_at')
             ->paginate(5);
+    }
+
+    public function getFirstSubstituteEnrolled(int $dateId): ?Enrollment
+    {
+        /** @var Enrollment $enrollment */
+        $enrollment =  Enrollment::query()
+            ->where('date_id', $dateId)
+            ->where('state', EnrollmentStates::SUBSTITUTE)
+            ->orderBy('created_at')
+            ->first();
+
+        return $enrollment;
+    }
+
+    public function getSubstituteUserIds(int $dateId): array
+    {
+        return Enrollment::query()
+            ->where('date_id', $dateId)
+            ->where('state', EnrollmentStates::SUBSTITUTE)
+            ->pluck('user_id')
+            ->all();
+    }
+
+    public function getSubstituteCount(int $dateId): int
+    {
+        return Enrollment::query()
+            ->where('date_id', $dateId)
+            ->where('state', EnrollmentStates::SUBSTITUTE)
+            ->count();
+    }
+
+    public function getEnrollmentByDateAndEmail(int $dateId, string $email): Enrollment
+    {
+        /** @var Enrollment $enrollment */
+        $enrollment = Enrollment::query()
+            ->where('date_id', $dateId)
+            ->whereHas('user', function($q) use ($email) {
+                $q->where('email', $email);
+            })
+            ->first();
+
+        return $enrollment;
     }
 }

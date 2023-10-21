@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Enums\Roles;
 use App\Models\User;
 use App\Repositories\UserRepository;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class UserFacade
@@ -31,6 +32,11 @@ class UserFacade
         } else {
             return null;
         }
+    }
+
+    public function getUsersEmailsAndLocaleByIds(array $ids): Collection
+    {
+        return $this->userRepository->getUsersEmailsAndLocaleByIds($ids);
     }
 
     public function assignRolesToUserFromEntitlements(): void

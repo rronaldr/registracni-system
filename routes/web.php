@@ -34,6 +34,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/enrollment/{date_id}', [EnrollmentController::class, 'show'])->name('enrollment.show');
     Route::post('/enrollment/{date_id}', [EnrollmentController::class, 'store'])->name('enrollment.store');
     Route::get('/enrollment/user/{id}', [EnrollmentController::class, 'getUserEnrollments'])->name('enrollment.user');
+    Route::post('/enrollment/{id}/signoff', [EnrollmentController::class, 'signOff'])->name('enrollment.user.singoff');
 
     Route::get('/change-password', [UserController::class, 'changePassword'])->name('auth.change-password');
     Route::post('/change-password', [UserController::class, 'storeChangedPassword'])->name('auth.change-password.store');
@@ -54,3 +55,4 @@ Route::post('/register', [RegisterController::class, 'register'])->name('registe
 // Locale routes
 Route::get('/{locale}', [LanguageController::class, 'setLocale'])->name('locale');
 Route::get('/locale/get', [LanguageController::class, 'getLocale'])->name('locale.get');
+Route::get('/date/{id}/enroll/{email}', [EnrollmentController::class, 'signSubstituteByEmail'])->name('date.enroll.email');

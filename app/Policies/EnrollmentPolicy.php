@@ -2,9 +2,11 @@
 
 namespace App\Policies;
 
+use App\Enums\EnrollmentStates;
 use App\Enums\Event\EventUserGroups;
 use App\Enums\Roles;
 use App\Models\Date;
+use App\Models\Enrollment;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -53,6 +55,11 @@ class EnrollmentPolicy
             && $date->getSignedCount() >= $date->capacity
             && $date->enrollment_end >= Carbon::now()
             && !$date->hasUserEnrolled($user->id);
+    }
+
+    public function signOff(User $user, Enrollment $enrollment): bool
+    {
+        return $enrollment->date->withdraw_end >= Carbon::now() && $enrollment->state !== EnrollmentStates::SIGNED_OFF;
     }
 
     public function before(User $user)

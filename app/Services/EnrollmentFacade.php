@@ -17,21 +17,24 @@ class EnrollmentFacade
 {
     private EnrollmentRepository $enrollmentRepository;
     private UserFacade $userFacade;
-    private EventFacade $eventFacade;
-    private EmailFacade $emailFacade;
     private DateFacade $dateFacade;
+    private EmailFacade $emailFacade;
 
     public function __construct(
         EnrollmentRepository $enrollmentRepository,
         UserFacade $userFacade,
-        EventFacade $eventFacade,
         DateFacade $dateFacade,
         EmailFacade $emailFacade
     ) {
         $this->enrollmentRepository = $enrollmentRepository;
         $this->userFacade = $userFacade;
-        $this->eventFacade = $eventFacade;
         $this->dateFacade = $dateFacade;
+        $this->emailFacade = $emailFacade;
+    }
+
+    public function getEnrollmentById(int $id): Enrollment
+    {
+        return $this->enrollmentRepository->getById($id);
     }
 
     public function createEnrollment(int $dateId, Request $request): Enrollment
@@ -83,6 +86,53 @@ class EnrollmentFacade
     public function getEnrollmentsForUser(int $id): LengthAwarePaginator
     {
         return $this->enrollmentRepository->getEnrollmentsByUser($id);
+    }
+
+    public function enrollUserByEmail(int $id, string $email): bool
+    {
+        $date = $this->dateFacade->getDateById($id);
+
+        if ($date->getSignedCount() < $date->capacity) {
+            $enrollment = $this->enrollmentRepository->getEnrollmentByDateAndEmail($id, $email);
+            $enrollment->state = EnrollmentStates::SIGNED;
+            $enrollment->save();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public function signOffUser(Enrollment $enrollment): void
+    {
+        $enrollment->state = EnrollmentStates::SIGNED_OFF;
+        $enrollment->save();
+
+        $this->enrollSubstitutes($enrollment);
+    }
+
+    private function enrollSubstitutes(Enrollment $enrollment): void
+    {
+        $date = $enrollment->date;
+        $substitutesCount = $this->enrollmentRepository->getSubstituteCount($date->id);
+        if (!$date->substitute || $substitutesCount === 0) {
+            return;
+        }
+
+
+        $dayBeforeWithdrawEnd = Carbon::parse($date->withdraw_end)->subDay();
+
+        if ($dayBeforeWithdrawEnd < Carbon::now()) {
+            $userIds = $this->enrollmentRepository->getSubstituteUserIds($date->id);
+            $userEmails = $this->userFacade->getUsersEmailsAndLocaleByIds($userIds);
+            $this->emailFacade->sendFreeSpotNotificationToSubstitutes($date, $userEmails);
+
+            return;
+        }
+
+        $firstSubstituteEnrollment = $this->enrollmentRepository->getFirstSubstituteEnrolled($date->id);
+        $firstSubstituteEnrollment->state = EnrollmentStates::SIGNED;
+        $firstSubstituteEnrollment->save();
     }
 
 }

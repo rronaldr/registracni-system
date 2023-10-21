@@ -101,7 +101,11 @@ return [
             '2' => 'Náhradník',
             '3' => 'Odhlášen'
         ],
-        'sign-out' => 'Odhlásit se'
+        'sign-out' => 'Odhlásit se',
+        'signed-off' => 'Byli jste odhlášeni z termínu.',
+        'sign-off-error' => 'Z termínu se nemůžete odhlásit.',
+        'enroll-email-success' => 'Byli jste přihlášeni na termín.',
+        'enroll-email-error' => 'Na termín se již přihlásil jiný náhradník.',
     ],
     'c_fields' => [
         'name' => 'Název tagu',
@@ -152,6 +156,8 @@ return [
         'enrollment_text' => 'Byli jste úspěšně registrováni na událost :event na termín :date.',
         'enrollment_tags' => 'Zde jsou vámi vyplněné údaje: :tags',
         'capacity_full_title' => 'Kapacita termínu naplněna',
-        'capacity_full' => 'Kapacita na termínu :date u události :event byla naplněna.'
+        'capacity_full' => 'Kapacita na termínu :date u události :event byla naplněna.',
+        'free_spot_title' => 'Volné místo na termínu, u kterého jste náhradníkem',
+        'free_spot' => 'Pro termín :date u události :event bylo uvolněné místo. Pokud se chcete přihlásit klikněte <a href=":link">zde</a>.'
     ]
 ];

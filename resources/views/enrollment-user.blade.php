@@ -1,8 +1,14 @@
 @extends('layouts.main', ['title' => __('app.enrollment.my_enrollments')])
 
 @section('content')
+    @if(Illuminate\Support\Facades\Session::has('message'))
+        <div id="messageAlert" class="alert alert-secondary m-2">
+            {{ Illuminate\Support\Facades\Session::get('message') }}
+        </div>
+    @endif
+
     <div class="box-body">
-        @if(!empty($enrollments))
+        @if($enrollments->isEmpty())
             <p>{{ __('app.enrollment.no-enrollments') }}</p>
         @else
             <table width="100%" class="table table-hover" id="dataTables">
@@ -24,13 +30,13 @@
                             - {{ \Carbon\Carbon::parse($enrollment->date->date_end)->format('j.n.Y H:i') }}</td>
                         <td>{{ __('app.enrollment.state.'.$enrollment->state) }}</td>
                         <td>
-                            @if($enrollment->date->withdraw_end > \Carbon\Carbon::now())
-                                <a
-                                    href="{{ route('events.index') }}"
-                                    class="btn btn-link">
-                                    {{ __('app.enrollment.sign-out') }}
-                                </a>
-                            @endif
+                            @can('signOff', $enrollment)
+                                <form method="POST" action="{{ route('enrollment.user.singoff', $enrollment->id) }}">
+                                    @csrf
+                                    <button class="btn-link border-0 pe-auto" type="submit">{{ __('app.enrollment.sign-out') }}</button>
+                                </form>
+
+                            @endcan
                         </td>
                     </tr>
                 @endforeach
