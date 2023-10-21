@@ -8,6 +8,7 @@ use App\Enums\EnrollmentStates;
 use App\Models\Enrollment;
 use App\Repositories\EnrollmentRepository;
 use App\Services\Admin\DateFacade;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -33,20 +34,26 @@ class EnrollmentFacade
         $this->dateFacade = $dateFacade;
     }
 
-    public function createEnrollment(int $dateId, Request $request): int
+    public function createEnrollment(int $dateId, Request $request): Enrollment
     {
         $date = $this->dateFacade->getDateById($dateId);
         $user = $this->userFacade->getCurrentUser();
         $enrollmentData = collect($request->get('data'))->values()->toArray();
+        $state = EnrollmentStates::SIGNED;
+
+        if ($user->can('substituteEnroll', $date)
+        ) {
+            $state = EnrollmentStates::SUBSTITUTE;
+        }
 
         $enrollment = Enrollment::create([
             'user_id' => $user->id,
             'date_id' => $date->id,
-            'state' => $date->getSignedCount() >= $date->capacity ? EnrollmentStates::SUBSTITUTE : EnrollmentStates::SIGNED,
+            'state' => $state,
             'c_fields' => $enrollmentData
         ]);
 
-        return $enrollment->id;
+        return $enrollment;
     }
 
     public function getValidationRulesForTags(array $fields): ?array
@@ -71,11 +78,6 @@ class EnrollmentFacade
 
             return [sprintf('%s.value', $field['value']) => $rules->implode('|')];
         })->filter(static fn($rule) => !empty($rule))->toArray();
-    }
-
-    public function checkExistingEnrollment(int $dateId, int $userId): bool
-    {
-        return $this->enrollmentRepository->checkExistsEnrollmentByDateAndUser($dateId, $userId);
     }
 
     public function getEnrollmentsForUser(int $id): LengthAwarePaginator

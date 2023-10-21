@@ -92,7 +92,7 @@ return [
         'list' => 'Seznam účastníků',
         'enrolled' => 'Přihlášen',
         'c_fields' => 'Vyplněné hodnoty',
-        'already_exists' => 'Pro tento termín již máte podanou přihlášku.',
+        'cannot_enroll' => 'Na tento termín se nemůžete přihlásit, jelikož nesplňujete kritéria přihlášení.',
         'my_enrollments' => 'Moje přihlášky',
         'no-enrollments' => 'Zatím nemáte žádné přihlášky.',
         'state' => [

@@ -92,7 +92,7 @@ return [
         'list' => 'Participants list',
         'enrolled' => 'Enrolled',
         'c_fields' => 'Custom fields',
-        'already_exists' => 'You are already enrolled for this date.',
+        'cannot_enroll' => 'You cannot enroll for this term as you do not meet the application criteria.',
         'my_enrollments' => 'My enrollments',
         'no-enrollments' => 'You do not have any enrollments',
         'state' => [

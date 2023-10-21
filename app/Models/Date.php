@@ -43,4 +43,9 @@ class Date extends Model
     {
         return $this->enrollments()->where('state', 1)->count();
     }
+
+    public function hasUserEnrolled(int $userId): bool
+    {
+        return $this->enrollments()->where('user_id', $userId)->first() !== null;
+    }
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\EnrollmentStates;
+use App\Models\Enrollment;
 use App\Services\DateFacade;
 use App\Services\EmailFacade;
 use App\Services\EnrollmentFacade;
@@ -21,17 +23,19 @@ class EnrollmentController extends Controller
     public function show(
         int $dateId,
         EventFacade $eventFacade,
-        EnrollmentFacade $enrollmentFacade,
+        DateFacade $dateFacade,
         UserFacade $userFacade
     ) {
-        $fields = $eventFacade->getEventCustomFields($dateId);
+        $user = $userFacade->getCurrentUser();
+        $date = $dateFacade->getDateById($dateId);
 
-        $existingEnrollment = $enrollmentFacade->checkExistingEnrollment($dateId, $userFacade->getCurrentUser()->id);
-        if ($existingEnrollment) {
-            Session::flash('message', __('app.enrollment.already_exists'));
+        if ($user->cannot('enroll', [Enrollment::class, $date])) {
+            Session::flash('message', __('app.enrollment.cannot_enroll'));
 
             return redirect()->route('events.index');
         }
+
+        $fields = $eventFacade->getEventCustomFields($dateId);
 
         return view('enrollment', [
             'dateId' => $dateId,
@@ -45,12 +49,18 @@ class EnrollmentController extends Controller
         EnrollmentFacade $enrollmentFacade,
         DateFacade $dateFacade,
         EmailFacade $emailFacade
-    ): JsonResponse {
+    ) {
+        $date = $dateFacade->getDateById($dateId);
+
+        if (auth()->user()->cannot('enroll', [Enrollment::class, $date])) {
+            Session::flash('message', __('app.enrollment.already_exists'));
+
+            return redirect()->route('events.index');
+        }
+
         try {
-            $date = $dateFacade->getDateById($dateId);
             $event = $date->load('event')->event;
             $eventFields = $event->c_fields;
-            $eventId = $event->id;
 
             $validator = Validator::make($request->get('data'),
                 $enrollmentFacade->getValidationRulesForTags($eventFields));
@@ -59,11 +69,10 @@ class EnrollmentController extends Controller
                 return response()->json(['errors' => $validator->errors()], 400);
             }
 
-            $enrollmentId = $enrollmentFacade->createEnrollment($dateId, $request);
+            $enrollment = $enrollmentFacade->createEnrollment($dateId, $request);
+            $emailFacade->sendUserEnrolledEmail($enrollment->id);
 
-            $emailFacade->sendUserEnrolledEmail($enrollmentId);
-
-            if ($date->getSignedCount() === $date->capacity) {
+            if ($date->getSignedCount() === $date->capacity && $enrollment->state === EnrollmentStates::SIGNED) {
                 $emailFacade->sendCapacityReachedEmail($date);
             }
 
