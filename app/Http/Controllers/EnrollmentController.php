@@ -11,7 +11,6 @@ use App\Services\EmailFacade;
 use App\Services\EnrollmentFacade;
 use App\Services\EventFacade;
 use App\Services\UserFacade;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;

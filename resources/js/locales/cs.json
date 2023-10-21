@@ -37,7 +37,8 @@
         "withdraw_time": "Čas odhlašování do",
         "show_participants": "Zobrazit účastníky",
         "participants_count": "Počet účastníků",
-        "no_participants": "Žádní účastnící"
+        "no_participants": "Žádní účastnící",
+        "upcoming": "Nadcházející termíny"
     },
     "tag": {
         "tag": "Vlastní pole",
@@ -111,7 +112,9 @@
         "add_collaborator": "Sdílet přístup k úpravám",
         "add_collaborator_hint": "Email uživatele, kterého chcete přizvat ke spolupráci",
         "collaborator_added": "Přístup úspěšně nastaven.",
-        "no_events": "Zatím nejsou vypsány žádné události."
+        "no_events": "Zatím nejsou vypsány žádné události.",
+        "first_date": "První termín",
+        "last_date": "Poslední termín"
     },
     "blacklist": {
         "blocked_until": "Blokace do",
@@ -142,6 +145,10 @@
         "3": "Smazáno"
     },
     "enrollment": {
+        "enroll" : "Přihlásit se",
+        "enroll_subscriber": "Přihlásit se jako náhradník",
+        "enrolled_count": "Přihlášeno",
+        "cant_enroll": "Na tento termín se nemůžete přihlásit",
         "enrollments": "Přihlášky",
         "xname": "Xname",
         "email": "Email",

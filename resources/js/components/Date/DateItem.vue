@@ -19,7 +19,7 @@
                                 >
                             </h5>
                             <p class="text-sm">
-                                <i class="fa fa-map-pin"></i>
+                                <i class="fa fa-map-pin mr-1"></i>
                                 <span class="text-black">{{
                                     date.location
                                 }}</span>
@@ -28,18 +28,21 @@
                         <div class="col-md-2">
                             <div class="row text-center">
                                 <span
-                                    >Přihlášeno:
-                                    {{
+                                    >{{ $t('enrollment.enrolled_count') }}: {{
                                         date.enrollments_count +
                                         '/' +
                                         date.capacity
                                     }}</span
                                 >
                                 <a
+                                    v-if="date.can_enroll"
                                     :href="APP_URL + '/enrollment/' + date.id"
                                     class="btn btn-primary"
-                                    >Přihlásit se</a
+                                    >{{ $t('enrollment.enroll') }}</a
                                 >
+                                <p v-else class="text-danger text-left">
+                                    {{ $t('enrollment.cant_enroll') }}
+                                </p>
                             </div>
                         </div>
                     </div>

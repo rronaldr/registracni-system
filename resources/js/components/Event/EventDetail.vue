@@ -21,7 +21,9 @@
                     >
                         <tbody>
                             <tr>
-                                <th scope="row">První termín:</th>
+                                <th scope="row">
+                                    {{ $t('event.first_date') }}:
+                                </th>
                                 <td>
                                     {{
                                         formatDate(props.event.date_start_cache)
@@ -29,13 +31,17 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">Poslední termín:</th>
+                                <th scope="row">
+                                    {{ $t('event.last_date') }}:
+                                </th>
                                 <td>
                                     {{ formatDate(props.event.date_end_cache) }}
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">Kontaktní osoba:</th>
+                                <th scope="row">
+                                    {{ $t('event.contact_person') }}:
+                                </th>
                                 <td>
                                     <a
                                         :href="

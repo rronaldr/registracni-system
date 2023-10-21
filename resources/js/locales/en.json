@@ -37,7 +37,8 @@
         "withdraw_time": "Time sign off to",
         "show_participants": "Show participants",
         "participants_count": "Number of participants",
-        "no_participants": "No participants"
+        "no_participants": "No participants",
+        "upcoming": "Upcoming dates"
     },
     "tag": {
         "tag": "Custom field",
@@ -110,7 +111,9 @@
         "add_collaborator": "Add event collaborator",
         "add_collaborator_hint": "Email of collaborator",
         "collaborator_added": "Access granted.",
-        "no_events": "There are no events listed yet."
+        "no_events": "There are no events listed yet.",
+        "first_date": "First date",
+        "last_date": "Last date"
     },
     "blacklist": {
         "blocked_until": "Blocked until",
@@ -141,6 +144,10 @@
         "3": "Deleted"
     },
     "enrollment": {
+        "enroll" : "Enroll",
+        "enroll_subscriber": "Enroll as substitute",
+        "enrolled_count": "Enrolled",
+        "cant_enroll": "You cannot enroll for this term",
         "enrollments": "Enrollments",
         "xname": "Xname",
         "email": "Email",
