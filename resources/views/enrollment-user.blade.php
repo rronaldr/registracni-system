@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="box-body">
-        @if(!isset($enrollments))
+        @if(!empty($enrollments))
             <p>{{ __('app.enrollment.no-enrollments') }}</p>
         @else
             <table width="100%" class="table table-hover" id="dataTables">
