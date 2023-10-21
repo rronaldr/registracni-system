@@ -7,11 +7,12 @@ namespace App\Services\Admin;
 use App\Enums\EnrollmentStates;
 use App\Helpers\DateFormatter;
 use App\Models\Date;
+use App\Models\Enrollment;
 use App\Repositories\DateRepository;
 use App\Repositories\EnrollmentRepository;
-use App\Repositories\EventRepository;
+use App\Repositories\UserRepository;
+use App\Services\EmailFacade;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 
@@ -20,11 +21,15 @@ class DateFacade
 
     private DateRepository $dateRepository;
     private EnrollmentRepository $enrollmentRepository;
+    private EmailFacade $emailFacade;
+    private UserRepository $userRepository;
 
-    public function __construct(DateRepository $dateRepository, EnrollmentRepository $enrollmentRepository)
+    public function __construct(DateRepository $dateRepository, EnrollmentRepository $enrollmentRepository, EmailFacade $emailFacade, UserRepository $userRepository)
     {
         $this->dateRepository = $dateRepository;
         $this->enrollmentRepository = $enrollmentRepository;
+        $this->emailFacade = $emailFacade;
+        $this->userRepository = $userRepository;
     }
 
     public function getEventWithStartAndEndDates(int $eventId): Collection
@@ -100,6 +105,8 @@ class DateFacade
         $enrollment = $this->enrollmentRepository->getById($id);
         $enrollment->state = EnrollmentStates::SIGNED_OFF;
         $enrollment->save();
+
+        $this->enrollSubstitutes($enrollment);
     }
 
     public function getDatesWithEnrollmentEnding(Carbon $date): Collection
@@ -134,5 +141,30 @@ class DateFacade
                 $data['enrollment_to_time']),
             'withdraw_end' => DateFormatter::getDatetimeFromDateAndTime($data['withdraw_date'], $data['withdraw_time']),
         ];
+    }
+
+    private function enrollSubstitutes(Enrollment $enrollment): void
+    {
+        $date = $enrollment->date;
+        $substitutesCount = $this->enrollmentRepository->getSubstituteCount($date->id);
+        if (!$date->substitute || $substitutesCount === 0) {
+            return;
+        }
+
+        $dayBeforeWithdrawEnd = Carbon::parse($date->withdraw_end)->subDay();
+
+        if ($dayBeforeWithdrawEnd < Carbon::now()) {
+            $userIds = $this->enrollmentRepository->getSubstituteUserIds($date->id);
+            $userEmails = $this->userRepository->getUsersEmailsAndLocaleByIds($userIds);
+            $this->emailFacade->sendFreeSpotNotificationToSubstitutes($date, $userEmails);
+
+            return;
+        }
+
+        $firstSubstituteEnrollment = $this->enrollmentRepository->getFirstSubstituteEnrolled($date->id);
+        $firstSubstituteEnrollment->state = EnrollmentStates::SIGNED;
+        $firstSubstituteEnrollment->save();
+
+        $this->emailFacade->sendFreeSpotNotificationToSubstitutes($date, $firstSubstituteEnrollment->user);
     }
 }
