@@ -39,6 +39,7 @@ class EnrollmentPolicy
         }
 
         return (!$date->hasUserEnrolled($user->id)
+            && $date->getSignedCount() < $date->capacity
             && $date->enrollment_start <= $now
             && $date->enrollment_end > $now
             && $isUserGroup)
