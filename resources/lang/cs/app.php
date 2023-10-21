@@ -158,6 +158,8 @@ return [
         'capacity_full_title' => 'Kapacita termínu naplněna',
         'capacity_full' => 'Kapacita na termínu :date u události :event byla naplněna.',
         'free_spot_title' => 'Volné místo na termínu, u kterého jste náhradníkem',
-        'free_spot' => 'Pro termín :date u události :event bylo uvolněné místo. Pokud se chcete přihlásit klikněte <a href=":link">zde</a>.'
+        'free_spot' => 'Pro termín :date u události :event bylo uvolněné místo. Pokud se chcete přihlásit klikněte <a href=":link">zde</a>.',
+        'substitute_signed_title' => 'Byli jste přihlášeni na termín',
+        'substitute_signed' => 'Byli jste přihlášeni na termín :date u události :event, jelikož jste se na tento termín přihlásili jako náhradník'
     ]
 ];

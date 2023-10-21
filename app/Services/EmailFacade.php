@@ -144,6 +144,17 @@ class EmailFacade
         });
     }
 
+    public function sendSubstituteEnrolled(Date $date, User $user) {
+        $event = $date->event;
+        $dateStart = Carbon::parse($date->date_start)->format('j.n.Y H:i');
+
+        $subject = __('app.notifications.substitute_signed_title', [], $user->locale);
+        $content = __('app.notifications.substitute_signed', ['date' => $dateStart, 'event' => $event->name], $user->locale);
+
+        Mail::to($user->email)
+            ->send(new DefaultMail($content, $subject));
+    }
+
     private function buildHtmlWithData(string $html, array $data, array $enrollmentFields): string
     {
         $tags = collect($enrollmentFields)->mapWithKeys(function ($tag) {

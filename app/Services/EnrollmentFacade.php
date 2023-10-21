@@ -119,7 +119,6 @@ class EnrollmentFacade
             return;
         }
 
-
         $dayBeforeWithdrawEnd = Carbon::parse($date->withdraw_end)->subDay();
 
         if ($dayBeforeWithdrawEnd < Carbon::now()) {
@@ -133,6 +132,8 @@ class EnrollmentFacade
         $firstSubstituteEnrollment = $this->enrollmentRepository->getFirstSubstituteEnrolled($date->id);
         $firstSubstituteEnrollment->state = EnrollmentStates::SIGNED;
         $firstSubstituteEnrollment->save();
+
+        $this->emailFacade->sendSubstituteEnrolled($date, $firstSubstituteEnrollment->user);
     }
 
 }

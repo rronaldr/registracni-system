@@ -45,6 +45,7 @@ class EnrollmentRepository
     {
         /** @var Enrollment $enrollment */
         $enrollment =  Enrollment::query()
+            ->with('user')
             ->where('date_id', $dateId)
             ->where('state', EnrollmentStates::SUBSTITUTE)
             ->orderBy('created_at')
