@@ -167,8 +167,12 @@
                 <BaseRadioGroup
                     v-model="event.type"
                     :options="dateTypeOptions"
+                    @change="handleEventTypeSwitch"
                 />
             </div>
+            <p v-if="eventTypeError" class="text-danger ml-2">
+                {{ $t('event.event_type_error') }}
+            </p>
         </div>
 
         <div class="row mb-3">
@@ -238,6 +242,7 @@
         <EditDateForm
             :dates="dates"
             :event-id="event.id"
+            :show-add-date="showAddDate"
             @get-dates="getEventDates"
         />
 
@@ -371,7 +376,7 @@
 </template>
 
 <script setup>
-import { inject, reactive, ref } from 'vue'
+import { inject, reactive, ref, watch } from 'vue'
 import axios from 'axios'
 import { useI18n } from 'vue-i18n'
 import FormButtons from '../Form/FormButtons.vue'
@@ -414,6 +419,8 @@ let errors = ref(null)
 let showCollabModal = ref(false)
 let showCollabMessage = ref(false)
 let collabEmail = ref(null)
+let eventTypeError = ref(false)
+let showAddDate = ref(true)
 
 getEventDates()
 getEventTags()
@@ -471,6 +478,25 @@ function addCollaboratorToEvent() {
             errors.value = e.response.data.errors
             window.scrollTo(0, 0)
         })
+}
+
+watch(
+    () => [event.type, dates.value.length],
+    () => {
+        showAddDate.value =
+            event.type === 1 || (event.type === 2 && dates.value.length === 0)
+    }
+)
+
+function handleEventTypeSwitch() {
+    if (event.type && dates.value.length > 1) {
+        event.type = 1
+        eventTypeError.value = true
+
+        setTimeout(() => {
+            eventTypeError.value = false
+        }, 3000)
+    }
 }
 
 async function createBlacklist() {

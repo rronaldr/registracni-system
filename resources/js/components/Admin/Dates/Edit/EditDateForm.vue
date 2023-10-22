@@ -17,6 +17,7 @@
                         </div>
                         <div class="col">
                             <button
+                                v-if="showAddDate"
                                 class="btn btn-sm btn-primary float-right"
                                 type="button"
                                 @click="showDateForm = true"
@@ -200,7 +201,8 @@ import axios from 'axios'
 const ADMIN_URL = inject('ADMIN_URL')
 const props = defineProps({
     dates: { type: Array, required: false, default: null },
-    eventId: { type: Number, required: true }
+    eventId: { type: Number, required: true },
+    showAddDate: { type: Boolean, required: true }
 })
 const emit = defineEmits(['getDates'])
 

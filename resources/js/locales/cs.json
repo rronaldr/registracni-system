@@ -114,7 +114,8 @@
         "collaborator_added": "Přístup úspěšně nastaven.",
         "no_events": "Zatím nejsou vypsány žádné události.",
         "first_date": "První termín",
-        "last_date": "Poslední termín"
+        "last_date": "Poslední termín",
+        "event_type_error": "Nelze změnit typ události, jelikož typ Navazující části jedné události, mohou mít vytvořený jen jeden termín."
     },
     "blacklist": {
         "blocked_until": "Blokace do",

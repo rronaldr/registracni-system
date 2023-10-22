@@ -94,8 +94,12 @@
                 <BaseRadioGroup
                     v-model="event.type"
                     :options="dateTypeOptions"
+                    @change="handleEventTypeSwitch"
                 />
             </div>
+            <p v-if="eventTypeError" class="text-danger ml-2">
+                {{ $t('event.event_type_error') }}
+            </p>
         </div>
 
         <div class="row mb-3">
@@ -172,7 +176,7 @@
         <div class="line"></div>
         <br />
 
-        <DateForm :dates="dates" />
+        <DateForm :dates="dates" :show-add-date="showAddDate" />
 
         <div class="line"></div>
         <br />
@@ -274,7 +278,7 @@
 </template>
 
 <script setup>
-import { inject, reactive, ref } from 'vue'
+import { inject, reactive, ref, watch } from 'vue'
 import FormButtons from '../Form/FormButtons.vue'
 import axios from 'axios'
 import BaseInput from '../Form/BaseInput.vue'
@@ -311,6 +315,8 @@ let tags = ref([])
 let dates = ref([])
 let templates = ref(null)
 let errors = ref(null)
+let eventTypeError = ref(false)
+let showAddDate = ref(true)
 
 getApprovedTemplates()
 
@@ -333,7 +339,6 @@ function submitEvent() {
             window.location.href = ADMIN_URL + '/events'
         })
         .catch((e) => {
-            console.log(e.response.data)
             errors.value = e.response.data.errors
             window.scrollTo(0, 0)
         })
@@ -345,6 +350,25 @@ function fillContactWithCurrentUser() {
             ? props.user.display_name
             : props.user.first_name + ' ' + props.user.last_name
     event.contact.email = props.user.email
+}
+
+watch(
+    () => [event.type, dates.value.length],
+    () => {
+        showAddDate.value =
+            event.type === 1 || (event.type === 2 && dates.value.length === 0)
+    }
+)
+
+function handleEventTypeSwitch() {
+    if (event.type && dates.value.length > 1) {
+        event.type = 1
+        eventTypeError.value = true
+
+        setTimeout(() => {
+            eventTypeError.value = false
+        }, 3000)
+    }
 }
 
 async function getApprovedTemplates() {

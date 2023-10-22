@@ -17,6 +17,7 @@
                         </div>
                         <div class="col">
                             <button
+                                v-if="showAddDate"
                                 class="btn btn-sm btn-primary float-right"
                                 type="button"
                                 @click="showDateForm = true"
@@ -197,7 +198,8 @@ import DateList from './DateList.vue'
 import { dateObject, mapLastDateObject } from '../../../utils/DataMapper'
 
 const props = defineProps({
-    dates: { type: Array, required: false, default: null }
+    dates: { type: Array, required: false, default: null },
+    showAddDate: { type: Boolean, required: true }
 })
 
 let showDateForm = ref(false)
