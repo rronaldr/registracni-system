@@ -1,4 +1,4 @@
-@extends('layouts.admin.main', ['title' => __('app.user.roles')])
+@extends('layouts.admin.main', ['title' => __('app.user.roles'), 'vue' => true])
 
 @section('content')
     <div class="row justify-content-center">

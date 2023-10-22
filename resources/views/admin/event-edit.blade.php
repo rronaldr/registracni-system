@@ -1,4 +1,4 @@
-@extends('layouts.admin.main', ['title' => __('app.event.edit')])
+@extends('layouts.admin.main', ['title' => __('app.event.edit'), 'vue' => true])
 
 @section('content')
     <div class="row">

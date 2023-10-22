@@ -154,7 +154,6 @@ class EventController extends Controller
 
         $csvHandle = fopen($filename, 'w');
         $data->each(function ($row) use ($csvHandle) {
-            $row['c_fields'] = json_encode($row['c_fields']);
             fputcsv($csvHandle, $row);
         });
 

@@ -2,13 +2,12 @@
 
 @include('layouts.admin.navbar')
 
-<main class="container mt-2 mb-8" id="vueApp">
+<main class="container mt-2 mb-8" @if(isset($vue) && $vue) id="vueApp" @endif>
     <h3 class="text-primary mb-2">{{ $title ?? '' }}</h3>
     @yield('content')
 </main>
 
 @include('layouts.admin.navbar-mobile')
-
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('storage/dist/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/datatables/datatables.min.js') }}"></script>

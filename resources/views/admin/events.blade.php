@@ -110,26 +110,27 @@
                             </button>
                         </div>
                         <div class="modal-body text-start">
-                            <table class="table table-responsive">
-                                <thead>
-                                <tr>
-                                    <th scope="col">{{ __('app.user.xname') }}</th>
-                                    <th scope="col">{{ __('app.user.email') }}</th>
-                                    <th scope="col">{{ __('app.enrollment.enrolled') }}</th>
-                                    <th scope="col">{{ __('app.enrollment.c_fields') }}</th>
-                                </tr>
-                                </thead>
-                                <tbody id="usersBody">
-                                </tbody>
-                            </table>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">{{ __('app.user.xname') }}</th>
+                                        <th scope="col">{{ __('app.user.email') }}</th>
+                                        <th scope="col">{{ __('app.enrollment.enrolled') }}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="usersBody">
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        @if(count($events) > 0)
+                        @if($events->isNotEmpty())
                             <div class="modal-footer">
-                                <a type="button" class="btn btn-secondary rounded-0"
-                                   href="{{ route('admin.events.users.export', ['id' => $event->id]) }}"><i
+                                <a type="button" class="btn btn-secondary rounded-0" id="export_users"
+                                   href="{{ route('admin.events.users.export', ['id' => 1]) }}"><i
                                             class="fas fa-file-export"></i> Exportovat</a>
-                                <a type="button" class="btn btn-secondary rounded-0"
-                                   href="{{ route('admin.events.users.export.email', ['id' => $event->id]) }}"><i
+                                <a type="button" class="btn btn-secondary rounded-0" id="export_emails"
+                                   href="{{ route('admin.events.users.export.email', ['id' => 1]) }}"><i
                                             class="fas fa-envelope"></i> Exportovat emaily</a>
                             </div>
                         @endif
@@ -158,17 +159,16 @@
                     rows.append('</tr>')
                 }
 
+                let currentUrl = window.location.origin
+                $('#export_users').attr('href', currentUrl+'/admin/events/'+ eventId +'/users/export')
+                $('#export_emails').attr('href', currentUrl+'/admin/events/'+ eventId +'/users/export-email')
+
                 $.each(data, function (key, val) {
-                    let tag = []
-                    $.each(val.c_fields, function (k, v) {
-                        tag.push(' ' + k + ': ' + v + ' ')
-                    })
                     rows.append('<tr id="user' + i + '"></tr>')
                     let row = $('#user' + i)
                     row.append('<td>' + val.xname + '</td>')
                     row.append('<td>' + val.email + '</td>')
                     row.append('<td>' + formatDate(val.enrolled) + '</td>')
-                    row.append('<td>' + tag.toString() + '</td>')
                     i++
                 })
             })

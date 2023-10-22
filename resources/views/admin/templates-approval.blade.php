@@ -57,7 +57,3 @@
     </div>
 
 @endsection
-
-@section('scripts')
-    <script src="{{ asset('js/admin/initiate-datatables.js') }}"></script>
-@endsection

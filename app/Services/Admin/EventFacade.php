@@ -105,7 +105,6 @@ class EventFacade
                 'id' => $enrollment->user->id,
                 'xname' => $enrollment->user->xname,
                 'email' => $enrollment->user->email,
-                'c_fields' => $this->tagFacade->getTagsWithLabelAndValue($enrollment),
                 'enrolled' => $enrollment->created_at,
             ]);
         }

@@ -1,4 +1,4 @@
-@extends('layouts.admin.main', ['title' => __('app.blacklist.global-blacklist')])
+@extends('layouts.admin.main', ['title' => __('app.blacklist.global-blacklist'), 'vue' => true])
 
 @section('content')
     <div class="row ">
