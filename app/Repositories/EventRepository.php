@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
+use App\Enums\EnrollmentStates;
 use App\Enums\Event\EventStatusEnum;
 use App\Models\Event;
 use Carbon\Carbon;
@@ -63,7 +64,9 @@ class EventRepository
         $event = Event::query()
             ->where('id', $id)
             ->with([
-                'dates' => fn($q) => $q->withCount('enrollments'),
+                'dates' => fn($q) => $q->withCount([
+                    'enrollments' => fn($q) => $q->where('state', EnrollmentStates::SIGNED)
+                ]),
                 'author:id,first_name,last_name,email'
             ])
             ->firstOrFail();
