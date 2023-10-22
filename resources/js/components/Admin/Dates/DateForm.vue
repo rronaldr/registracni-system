@@ -140,6 +140,7 @@
                                 v-model="date.enrollment_from"
                                 :label="$t('date.enrollment_from')"
                                 type="date"
+                                :required="true"
                             />
                         </div>
                         <div class="col">
@@ -147,6 +148,7 @@
                                 v-model="date.enrollment_from_time"
                                 :label="$t('date.enrollment_from')"
                                 type="time"
+                                :required="true"
                             />
                         </div>
                         <div class="col">
@@ -154,6 +156,7 @@
                                 v-model="date.enrollment_to"
                                 :label="$t('date.enrollment_to')"
                                 type="date"
+                                :required="true"
                             />
                         </div>
                         <div class="col">
@@ -161,6 +164,7 @@
                                 v-model="date.enrollment_to_time"
                                 :label="$t('date.enrollment_to_time')"
                                 type="time"
+                                :required="true"
                             />
                         </div>
                     </div>
@@ -170,6 +174,7 @@
                                 v-model="date.withdraw_date"
                                 :label="$t('date.withdraw_date')"
                                 type="date"
+                                :required="true"
                             />
                         </div>
                         <div class="col">
@@ -177,6 +182,7 @@
                                 v-model="date.withdraw_time"
                                 :label="$t('date.withdraw_time')"
                                 type="time"
+                                :required="true"
                             />
                         </div>
                     </div>

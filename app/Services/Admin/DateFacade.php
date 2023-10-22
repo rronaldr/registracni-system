@@ -123,6 +123,12 @@ class DateFacade
             'date.time_from' => 'required|date_format:H:i',
             'date.date_to' => 'required|date',
             'date.time_to' => 'required|date_format:H:i',
+            'date.enrollment_from' => 'required|date',
+            'date.enrollment_from_time' => 'required|date_format:H:i',
+            'date.enrollment_to' => 'required|date',
+            'date.enrollment_to_time' => 'required|date_format:H:i',
+            'date.withdraw_date' => 'required|date',
+            'date.withdraw_time' => 'required|date_format:H:i',
         ];
     }
 
