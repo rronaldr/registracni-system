@@ -44,8 +44,14 @@
             <a
                 type="button"
                 class="btn btn-outline-secondary btn-sm mr-1"
-                :href="ADMIN_URL + '/events/' + event.id + '/users/export'"
+                :href="ADMIN_URL + '/events/' + event.id + '/export'"
                 ><i class="fas fa-file-export"></i> {{ $t('event.export') }}</a
+            >
+            <a
+                type="button"
+                class="btn btn-outline-secondary btn-sm mr-1"
+                :href="ADMIN_URL + '/events/' + event.id + '/users/export'"
+            ><i class="fas fa-users"></i> {{ $t('event.export_users') }}</a
             >
             <a
                 type="button"

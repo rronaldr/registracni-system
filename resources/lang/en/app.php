@@ -10,6 +10,8 @@ return [
     'administration' => 'Administration',
     'homepage' => 'Homepage',
     '403-error-message' => 'You do not have sufficient permissions.',
+    'yes' => 'Yes',
+    'no' => 'No',
 
     'actions' => [
         'edit' => 'Edit',
@@ -59,13 +61,20 @@ return [
         'withdraw_end' => 'Withdraw until',
         'capacity' => 'Capacity',
         'from-to' => 'From-To',
+        'location' => 'Location'
     ],
     'event' => [
         'events' => 'Events',
         'status' => [
+            'status' => 'Status',
             '1' => 'Published',
             '2' => 'Draft',
             '3' => 'Deleted',
+        ],
+        'type' => [
+            'type' => 'Event type',
+            '1' => 'A recurring event',
+            '2' => 'Related parts of one event'
         ],
         'saved' => 'Event saved',
         'updated' => 'Event updated',
@@ -74,13 +83,27 @@ return [
         'create' => 'Create event',
         'edit' => 'Edit event',
         'name' => 'Title',
+        'subtitle' => 'Subtitle',
         'event-name' => 'Event title',
         'status-label' => 'Status',
         'participants' => 'Participants',
         'import' => 'Import',
         'show-dates' => 'See dates',
         'show-all-participants' => 'See all participants',
-        'delete-date-error' => 'You cannot delete this event. Participants are enrolled for the event.'
+        'delete-date-error' => 'You cannot delete this event. Participants are enrolled for the event.',
+        'calendar_id' => 'ID of event in calendar',
+        'contact_person' => 'Contact person',
+        'contact_email' => 'Contact email',
+        'event_blacklist' => 'Event blacklist',
+        'user_group' => [
+            'user_group' => 'User group',
+            '1' => 'Everyone',
+            '2' => 'Students',
+            '3' => 'Graduates',
+            '4' => 'Staff',
+            '5' => 'Students and graduates',
+        ],
+        'enums' => 'Enums'
     ],
     'email' => [
         'email' => 'Email',

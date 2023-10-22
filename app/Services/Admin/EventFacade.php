@@ -199,6 +199,11 @@ class EventFacade
         ]);
     }
 
+    public function getEventForExportById(int $id): Event
+    {
+        return $this->eventRepository->getEventForExportById($id);
+    }
+
     private function createEventFromRequest(array $event, ?array $customFields, ?Blacklist $blacklist): Event
     {
         return Event::create([

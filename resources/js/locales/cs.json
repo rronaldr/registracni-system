@@ -106,6 +106,7 @@
         "user_group_placeholder": "Vyberte kdo se může na událost přihlásit",
         "status": "Stav",
         "export": "Export",
+        "export_users": "Exportovat účastníky",
         "export_emails": "Exportovat emaily",
         "duplicate": "Duplikovat",
         "updated_by": "Naposledy upravil",

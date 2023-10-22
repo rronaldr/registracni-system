@@ -100,4 +100,19 @@ class EventRepository
         return $events;
     }
 
+    public function getEventForExportById(int $id): Event
+    {
+        /** @var \App\Models\Event $event */
+        $event = Event::query()
+            ->where('id', $id)
+            ->with('dates:event_id,location,capacity,date_start,date_end,enrollment_start,enrollment_end,withdraw_end')
+            ->select([
+                'id', 'name', 'subtitle', 'calendar_id', 'contact_person', 'contact_email', 'template_content', 'type',
+                'global_blacklist', 'event_blacklist', 'status', 'user_group'
+            ])
+            ->first();
+
+        return $event;
+    }
+
 }

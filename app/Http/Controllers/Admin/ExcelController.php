@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\EventExport;
 use App\Exports\UsersEmailExport;
 use App\Exports\UsersExport;
 use App\Http\Controllers\Controller;
@@ -22,11 +23,12 @@ class ExcelController extends Controller
         return Excel::download(new UsersEmailExport($id, $eventFacade), 'seznam_ucastniku_email.xlsx');
     }
     
-    public function exportEvents()
+    public function exportEvent(int $id, EventFacade $eventFacade)
     {
+        return Excel::download(new EventExport($id, $eventFacade), 'export_udalosti.xlsx', );
     }
 
-    public function importEvents()
+    public function importEvent()
     {
 
     }

@@ -10,6 +10,8 @@ return [
     'administration' => 'Administrace',
     'homepage' => 'Hlavní stránka',
     '403-error-message' => 'Nemáte dostatečné oprávnění.',
+    'yes' => 'Ano',
+    'no' => 'Ne',
 
     'actions' => [
         'edit' => 'Editovat',
@@ -59,13 +61,20 @@ return [
         'withdraw_end' => 'Odhlašování do',
         'capacity' => 'Kapacita',
         'from-to' => 'Od-Do',
+        'location' => 'Místnost'
     ],
     'event' => [
         'events' => 'Události',
         'status' => [
+            'status' => 'Stav',
             '1' => 'Publikováno',
             '2' => 'Koncept',
             '3' => 'Smazána',
+        ],
+        'type' => [
+            'type' => 'Typ události',
+            '1' => 'Opakovaná událost',
+            '2' => 'Navazující části jedné události'
         ],
         'saved' => 'Událost vytvořena',
         'updated' => 'Událost upravena',
@@ -74,13 +83,27 @@ return [
         'create' => 'Vytvořit událost',
         'edit' => 'Editace události',
         'name' => 'Název',
+        'subtitle' => 'Podtitulek',
         'event-name' => 'Název události',
         'status-label' => 'Stav',
         'participants' => 'Účastníci',
         'import' => 'Importovat',
         'show-dates' => 'Zobrazit termíny',
         'show-all-participants' => 'Zobrazit všechny účastníky',
-        'delete-date-error' => 'Nelze odstranit událost. Na události jsou přihlášeni účastníci.'
+        'delete-date-error' => 'Nelze odstranit událost. Na události jsou přihlášeni účastníci.',
+        'calendar_id' => 'ID události v kalendáři',
+        'contact_person' => 'Kontaktní osoba',
+        'contact_email' => 'Kontaktní email',
+        'event_blacklist' => 'Blacklist události',
+        'user_group' => [
+            'user_group' => 'Skupina uživatelů',
+            '1' => 'Všichni',
+            '2' => 'Studenti',
+            '3' => 'Absolventi',
+            '4' => 'Zaměstnanci',
+            '5' => 'Studenti a absolventi',
+        ],
+        'enums' => 'Číselník'
     ],
     'email' => [
         'email' => 'Email',
