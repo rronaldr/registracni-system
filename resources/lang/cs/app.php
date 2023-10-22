@@ -156,7 +156,7 @@ return [
         'enrollment_text' => 'Byli jste úspěšně registrováni na událost :event na termín :date.',
         'enrollment_tags' => 'Zde jsou vámi vyplněné údaje: :tags',
         'capacity_full_title' => 'Kapacita termínu naplněna',
-        'capacity_full' => 'Kapacita na termínu :date u události :event byla naplněna.',
+        'capacity_full' => 'Kapacita na termínu :date u události :event byla naplněna. Detaily včetně seznamu účastníku si můžete zobrazit <a href=":link">zde</a>',
         'free_spot_title' => 'Volné místo na termínu, u kterého jste náhradníkem',
         'free_spot' => 'Pro termín :date u události :event bylo uvolněné místo. Pokud se chcete přihlásit klikněte <a href=":link">zde</a>.',
         'substitute_signed_title' => 'Byli jste přihlášeni na termín',

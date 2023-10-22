@@ -120,9 +120,10 @@ class EmailFacade
         $event = $date->event;
         $author = $event->author;
         $dateStart = Carbon::parse($date->date_start)->format('j.n.Y H:i');
+        $link = route('admin.events.edit',['id' => $event->id]);
 
         $subject = __('app.notifications.capacity_full_title', [], $author->locale);
-        $content = __('app.notifications.capacity_full', ['date' => $dateStart, 'event' => $event->name], $author->locale);
+        $content = __('app.notifications.capacity_full', ['date' => $dateStart, 'event' => $event->name, 'link' => $link], $author->locale);
 
         Mail::to($author->email)
             ->send(new DefaultMail($content, $subject));

@@ -156,7 +156,7 @@ return [
         'enrollment_text' => 'You have been successfully enrolled for :event on termín :date.',
         'enrollment_tags' => '\n Here are the details you filled in. :tags',
         'capacity_full_title' => 'Term capacity filled',
-        'capacity_full' => 'The capacity on the date :date for the event :event has been filled.',
+        'capacity_full' => 'The capacity on the date :date for the event :event has been filled. Event details and a list of participants can be viewed <a href=":link">here</a>',
         'free_spot_title' => 'Free spot on a term you are registerd as a substitute',
         'free_spot' => 'There was a vacancy for the date :date at the event :event. If you want to sign up click <a href=":link">here</a>.',
         'substitute_signed_title' => 'You have been registered on an term',
