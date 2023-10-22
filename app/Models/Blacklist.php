@@ -26,4 +26,9 @@ class Blacklist extends Model
     {
         return $this->belongsToMany(User::class)->withTimestamps()->withPivot(['block_reason', 'blocked_until']);
     }
+
+    public function isUserOnBlacklist(int $userId): bool
+    {
+        return $this->users()->where('user_id', $userId)->exists();
+    }
 }

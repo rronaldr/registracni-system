@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Enums\EnrollmentStates;
 use App\Enums\Event\EventUserGroups;
 use App\Enums\Roles;
+use App\Models\Blacklist;
 use App\Models\Date;
 use App\Models\Enrollment;
 use App\Models\User;
@@ -19,8 +20,22 @@ class EnrollmentPolicy
     {
         $now = Carbon::now();
         $event = $date->event;
-
         $isUserGroup = false;
+        $isEventBlacklisted = false;
+        $isGlobalBlacklisted = false;
+
+        if ($event->event_blacklist) {
+            /** @var Blacklist $blacklist */
+            $blacklist = $event->blacklist;
+
+            $isEventBlacklisted = $blacklist->isUserOnBlacklist($user->id);
+        }
+
+        if ($event->global_blacklist) {
+            $blacklist = Blacklist::find(1);
+
+            $isGlobalBlacklisted = $blacklist->isUserOnBlacklist($user->id);
+        }
 
         switch($event->user_group) {
             case EventUserGroups::EVERYONE:
@@ -44,7 +59,9 @@ class EnrollmentPolicy
             && $date->getSignedCount() < $date->capacity
             && $date->enrollment_start <= $now
             && $date->enrollment_end > $now
-            && $isUserGroup)
+            && $isUserGroup
+            && !$isEventBlacklisted
+            && !$isGlobalBlacklisted)
             || $this->substituteEnroll($user, $date);
     }
 
