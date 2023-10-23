@@ -44,7 +44,7 @@ class EnrollmentFacade
         $enrollmentData = collect($request->get('data'))->values()->toArray();
         $state = EnrollmentStates::SIGNED;
 
-        if ($user->can('substituteEnroll', $date)
+        if ($user->cannot('enroll', [Enrollment::class, $date]) && $user->can('substituteEnroll', [Enrollment::class, $date])
         ) {
             $state = EnrollmentStates::SUBSTITUTE;
         }

@@ -48,7 +48,7 @@ class EmailFacade
 
         $defaultTagData = $this->buildEnrollmentEmailDefaultData($participant, $date, $event, $enrollment);
 
-        if ($event->template_id !== 0) {
+        if ($event->template_id !== 0 && !empty($event->template_content)) {
             $template = $this->templateFacade->getTemplateById($event->template_id);
             $subject = __('app.notifications.enrollment_title', [], $participant->locale);
 

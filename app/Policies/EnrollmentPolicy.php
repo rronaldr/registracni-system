@@ -55,14 +55,13 @@ class EnrollmentPolicy
                 break;
         }
 
-        return (!$date->hasUserEnrolled($user->id)
+        return !$date->hasUserEnrolled($user->id)
             && $date->getSignedCount() < $date->capacity
             && $date->enrollment_start <= $now
             && $date->enrollment_end > $now
             && $isUserGroup
             && !$isEventBlacklisted
-            && !$isGlobalBlacklisted)
-            || $this->substituteEnroll($user, $date);
+            && !$isGlobalBlacklisted;
     }
 
     public function substituteEnroll(User $user, Date $date): bool
