@@ -115,7 +115,6 @@ class EventController extends Controller
         }
 
         try {
-            dd('test');
             $eventFacade->deleteEvent($id);
         } catch (\Exception $e) {
             dump($e);
