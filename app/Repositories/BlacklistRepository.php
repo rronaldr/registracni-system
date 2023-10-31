@@ -6,6 +6,7 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use App\Models\Blacklist;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class BlacklistRepository
 {
@@ -42,5 +43,12 @@ class BlacklistRepository
         $hasUser = $userCount > 0 ? true : false;
 
         return $hasUser;
+    }
+
+    public function getBlacklistUsersPaginated(int $id): LengthAwarePaginator
+    {
+        $blacklist = $this->getBlacklistById($id);
+
+        return $blacklist->users()->paginate(2);
     }
 }

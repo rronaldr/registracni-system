@@ -8,6 +8,7 @@ use App\Models\Blacklist;
 use App\Repositories\BlacklistRepository;
 use App\Services\Admin\UserFacade;
 use Carbon\Carbon;
+use Illuminate\Pagination\LengthAwarePaginator;
 use function trim;
 
 class BlacklistFacade
@@ -31,6 +32,11 @@ class BlacklistFacade
     public function getBlacklistById(int $id): Blacklist
     {
         return $this->blacklistRepository->getBlacklistById($id);
+    }
+
+    public function getBlacklistUsersPaginated(int $id): LengthAwarePaginator
+    {
+        return $this->blacklistRepository->getBlacklistUsersPaginated($id);
     }
 
     public function checkUserOnBlacklist(Blacklist $blacklist, int $userId): bool

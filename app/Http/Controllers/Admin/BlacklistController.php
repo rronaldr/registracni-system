@@ -33,10 +33,9 @@ class BlacklistController extends Controller
 
     public function getBlacklistUsers(int $id, BlacklistFacade $blacklistFacade): JsonResponse
     {
-        $blacklist = $blacklistFacade->getBlacklistById($id);
-        $users = $blacklist->users()->get(['users.id', 'users.xname']);
+        $users = $blacklistFacade->getBlacklistUsersPaginated($id);
 
-        return response()->json(['users' => $users]);
+        return response()->json($users);
     }
 
     public function destroy(int $id, int $user, BlacklistFacade $blacklistFacade): JsonResponse
