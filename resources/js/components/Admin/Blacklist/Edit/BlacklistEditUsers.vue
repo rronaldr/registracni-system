@@ -32,12 +32,18 @@
                     />
                 </tbody>
             </table>
+
+            <Bootstrap4Pagination
+                :data="responseData"
+                @pagination-change-page="getUsers"
+            />
         </div>
     </div>
 </template>
 
 <script setup>
 import { inject, ref } from 'vue'
+import { Bootstrap4Pagination } from 'laravel-vue-pagination'
 import axios from 'axios'
 import BlacklistEditUser from './BlacklistEditUser.vue'
 
@@ -46,14 +52,16 @@ const props = defineProps({
 })
 const ADMIN_URL = inject('ADMIN_URL')
 let users = ref(null)
+let responseData = ref({})
 
 getUsers()
 
-async function getUsers() {
+async function getUsers(page = 1) {
     let response = await axios.get(
-        ADMIN_URL + '/blacklist/' + props.blacklistId + '/users'
+        ADMIN_URL + '/blacklist/' + props.blacklistId + `/users?page=${page}`
     )
-    users.value = response.data.users
+    responseData.value = response.data
+    users.value = response.data.data
 }
 
 defineExpose({
