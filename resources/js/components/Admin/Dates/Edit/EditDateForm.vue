@@ -36,6 +36,11 @@
                         @remove-date="removeDate"
                     />
                     <p v-else class="card-text">{{ $t('date.empty') }}</p>
+
+                    <Bootstrap4Pagination
+                        :data="datesResponse"
+                        @pagination-change-page="getEventDates"
+                    />
                 </div>
             </div>
 
@@ -201,20 +206,23 @@ import BaseInput from '../../Form/BaseInput.vue'
 import BaseCheckbox from '../../Form/BaseCheckbox.vue'
 import moment from 'moment/moment'
 import EditDateList from './EditDateList.vue'
-import { dateObject, mapLastDateObject } from '../../../../utils/DataMapper'
+import { dateObject, formatEventDates, mapLastDateObject } from '../../../../utils/DataMapper'
 import axios from 'axios'
+import { Bootstrap4Pagination } from 'laravel-vue-pagination'
 
 const ADMIN_URL = inject('ADMIN_URL')
 const props = defineProps({
-    dates: { type: Array, required: false, default: null },
     eventId: { type: Number, required: true },
     showAddDate: { type: Boolean, required: true }
 })
-const emit = defineEmits(['getDates'])
 
 let showDateForm = ref(false)
 let edit = false
+let dates = ref([])
+let datesResponse = ref({})
 let date = reactive(dateObject)
+
+getEventDates()
 
 async function addDate() {
     if (props.dates.length === 0) {
@@ -224,7 +232,7 @@ async function addDate() {
     edit ? await editDate() : await createDate()
 
     showDateForm.value = false
-    emit('getDates')
+    getEventDates()
     clearDateObject()
 }
 
@@ -232,7 +240,7 @@ async function removeDate(id, blockReason) {
     await axios.post(ADMIN_URL + '/dates/' + id + '/delete', {
         data: blockReason
     })
-    emit('getDates')
+    getEventDates()
 }
 
 async function createDate() {
@@ -288,9 +296,18 @@ function closeForm() {
 }
 
 function setLastDates() {
-    if (props.dates.length > 0) {
-        let lastDate = props.dates[props.dates.length - 1]
+    if (dates.value.length > 0) {
+        let lastDate = dates.value[dates.value.length - 1]
+        console.log(lastDate)
         mapLastDateObject(date, lastDate)
     }
+}
+
+async function getEventDates(page = 1) {
+    let response = await axios.get(
+        ADMIN_URL + '/dates/' + props.eventId + `?page=${page}`
+    )
+    datesResponse.value = response.data
+    dates.value = formatEventDates(response.data.data)
 }
 </script>

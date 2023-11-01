@@ -165,10 +165,13 @@ export const formatEventDates = function (dates) {
 export const formatEnrollments = function (data) {
     return data.enrollments.map(function (enrollment) {
         let user = enrollment.user
+        let customFields = null
 
-        let customFields = enrollment.c_fields.map(function (field) {
-            return `${field.label}: ${field.value}`
-        })
+        if (enrollment.c_fields !== null) {
+            customFields = enrollment.c_fields.map(function (field) {
+                return `${field.label}: ${field.value}`
+            })
+        }
 
         return {
             date_id: data.id,
@@ -180,7 +183,8 @@ export const formatEnrollments = function (data) {
                 'YYYY-MM-DD HH:mm:ss'
             ).format('D.M.YYYY HH:mm'),
             state: enrollment.state,
-            custom_fields: customFields.toString()
+            custom_fields:
+                customFields !== null ? customFields.toString() : null
         }
     })
 }

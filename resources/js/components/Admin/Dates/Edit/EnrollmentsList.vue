@@ -1,6 +1,6 @@
 <template>
     <div class="table-responsive">
-        <table class="table table table-striped">
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <td>{{ $t('enrollment.xname') }}</td>

@@ -49,6 +49,6 @@ class BlacklistRepository
     {
         $blacklist = $this->getBlacklistById($id);
 
-        return $blacklist->users()->paginate(2);
+        return $blacklist->users()->paginate(10);
     }
 }

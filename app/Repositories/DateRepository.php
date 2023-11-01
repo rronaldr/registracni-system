@@ -7,6 +7,7 @@ namespace App\Repositories;
 use App\Models\Date;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
 class DateRepository
@@ -47,13 +48,13 @@ class DateRepository
         return collect(['date_start' => $start->date_start, 'date_end' => $end->date_end]);
     }
 
-    public function getEventDates(int $id): Collection
+    public function getEventDates(int $id): LengthAwarePaginator
     {
         return Date::query()
             ->where('event_id', $id)
             ->orderBy('date_start')
             ->withCount('enrollments')
-            ->get();
+            ->paginate(10);
     }
 
     public function getDateEnrollments(int $id): Date

@@ -13,6 +13,7 @@ use App\Repositories\EnrollmentRepository;
 use App\Repositories\UserRepository;
 use App\Services\EmailFacade;
 use Carbon\Carbon;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
 
@@ -47,7 +48,7 @@ class DateFacade
         return $this->dateRepository->findFirstAndLastDateOfEvent($eventId);
     }
 
-    public function getEventDates(int $id): Collection
+    public function getEventDates(int $id): LengthAwarePaginator
     {
         return $this->dateRepository->getEventDates($id);
     }

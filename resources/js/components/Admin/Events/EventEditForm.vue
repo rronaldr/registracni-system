@@ -246,7 +246,6 @@
         <br />
 
         <EditDateForm
-            :dates="dates"
             :event-id="event.id"
             :show-add-date="showAddDate"
             @get-dates="getEventDates"
@@ -427,6 +426,7 @@ let showCollabMessage = ref(false)
 let collabEmail = ref(null)
 let eventTypeError = ref(false)
 let showAddDate = ref(true)
+let datesResponse = ref({})
 
 getEventDates()
 getEventTags()
@@ -519,9 +519,12 @@ async function getApprovedTemplates() {
     templates.value = response.data.templates
 }
 
-async function getEventDates() {
-    let response = await axios.get(ADMIN_URL + '/dates/' + props.event.id)
-    dates.value = formatEventDates(response.data.dates)
+async function getEventDates(page = 1) {
+    let response = await axios.get(
+        ADMIN_URL + '/dates/' + props.event.id + `?page=${page}`
+    )
+    datesResponse.value = response.data
+    dates.value = formatEventDates(response.data.data)
 }
 
 async function getEventTags() {

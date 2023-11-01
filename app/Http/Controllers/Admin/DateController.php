@@ -17,7 +17,7 @@ class DateController extends Controller
     {
         $dates = $dateFacade->getEventDates($id);
 
-        return response()->json(['dates' => $dates], 200);
+        return response()->json($dates, 200);
     }
 
     public function getDateEnrollments(int $id, DateFacade $dateFacade): JsonResponse

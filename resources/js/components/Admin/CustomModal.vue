@@ -8,7 +8,7 @@
         }"
         @click.self="$emit('close')"
     >
-        <div class="modal-container">
+        <div class="modal-container overflow-auto">
             <div class="modal-header">
                 <slot name="modal-header"></slot>
                 <button
@@ -59,6 +59,8 @@ defineProps({
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     transition: all 0.3s ease;
     min-width: 30%;
+    max-height: 100%;
+    overflow-y: auto;
 }
 
 .modal-header {
