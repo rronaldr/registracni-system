@@ -248,7 +248,7 @@
         <EditDateForm
             :event-id="event.id"
             :show-add-date="showAddDate"
-            @get-dates="getEventDates"
+            @set-dates="setDates"
         />
 
         <div class="line"></div>
@@ -394,7 +394,7 @@ import BlacklistEditPage from '../Blacklist/Edit/BlacklistEditPage.vue'
 import UserGroupSelect from './UserGroupSelect.vue'
 import EditDateForm from '../Dates/Edit/EditDateForm.vue'
 import EditTagForm from '../Tags/Edit/EditTagForm.vue'
-import { formatEventDates, editEventMap } from '../../../utils/DataMapper'
+import { editEventMap } from '../../../utils/DataMapper'
 import EventStatusSelect from './EventStatusSelect.vue'
 import { formatDate } from '../../../utils/DateFormat'
 import TemplateSelect from '../TemplateTags/TemplateSelect.vue'
@@ -426,9 +426,7 @@ let showCollabMessage = ref(false)
 let collabEmail = ref(null)
 let eventTypeError = ref(false)
 let showAddDate = ref(true)
-let datesResponse = ref({})
 
-getEventDates()
 getEventTags()
 getApprovedTemplates()
 
@@ -505,6 +503,10 @@ function handleEventTypeSwitch() {
     }
 }
 
+function setDates(childDates) {
+    dates.value = childDates
+}
+
 async function createBlacklist() {
     if (event.blacklist_id === null) {
         let response = await axios.post(
@@ -517,14 +519,6 @@ async function createBlacklist() {
 async function getApprovedTemplates() {
     let response = await axios.get(ADMIN_URL + '/templates/approved')
     templates.value = response.data.templates
-}
-
-async function getEventDates(page = 1) {
-    let response = await axios.get(
-        ADMIN_URL + '/dates/' + props.event.id + `?page=${page}`
-    )
-    datesResponse.value = response.data
-    dates.value = formatEventDates(response.data.data)
 }
 
 async function getEventTags() {

@@ -41,6 +41,9 @@ export const dateObject = {
 
 export const mapLastDateObject = function (date, lastDate) {
     date.id = lastDate.id + 1
+    date.name = lastDate.name
+    date.location = lastDate.location
+    date.capacity = lastDate.capacity
     date.date_from = lastDate.date_from
     date.time_from = lastDate.time_from
     date.date_to = lastDate.date_to

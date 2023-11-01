@@ -206,7 +206,11 @@ import BaseInput from '../../Form/BaseInput.vue'
 import BaseCheckbox from '../../Form/BaseCheckbox.vue'
 import moment from 'moment/moment'
 import EditDateList from './EditDateList.vue'
-import { dateObject, formatEventDates, mapLastDateObject } from '../../../../utils/DataMapper'
+import {
+    dateObject,
+    formatEventDates,
+    mapLastDateObject
+} from '../../../../utils/DataMapper'
 import axios from 'axios'
 import { Bootstrap4Pagination } from 'laravel-vue-pagination'
 
@@ -215,6 +219,7 @@ const props = defineProps({
     eventId: { type: Number, required: true },
     showAddDate: { type: Boolean, required: true }
 })
+const emit = defineEmits(['setDates'])
 
 let showDateForm = ref(false)
 let edit = false
@@ -225,7 +230,7 @@ let date = reactive(dateObject)
 getEventDates()
 
 async function addDate() {
-    if (props.dates.length === 0) {
+    if (dates.value.length === 0) {
         date.id = 1
     }
 
@@ -262,7 +267,7 @@ function setEditForm(id) {
     showDateForm.value = true
     edit = true
     date = Object.assign(date, {
-        ...props.dates.find((date) => date.id === id)
+        ...dates.value.find((date) => date.id === id)
     })
 }
 
@@ -298,7 +303,6 @@ function closeForm() {
 function setLastDates() {
     if (dates.value.length > 0) {
         let lastDate = dates.value[dates.value.length - 1]
-        console.log(lastDate)
         mapLastDateObject(date, lastDate)
     }
 }
@@ -309,5 +313,7 @@ async function getEventDates(page = 1) {
     )
     datesResponse.value = response.data
     dates.value = formatEventDates(response.data.data)
+
+    emit('setDates', dates.value)
 }
 </script>
