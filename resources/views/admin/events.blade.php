@@ -179,7 +179,10 @@
             let i = 1
             rows.empty()
             $.get('dates/' + parseInt(eventId) + '/event', function (data) {
-                $.each(data['dates'], function (key, val) {
+                let dates = data.data
+
+                $.each(dates, function (key, val) {
+                    console.log(val)
                     let capacity = val.capacity === -1 ? '∞' : val.capacity
 
                     rows.append('<tr id="date' + i + '"></tr>')
