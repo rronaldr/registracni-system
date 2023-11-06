@@ -115,7 +115,8 @@
         "no_events": "There are no events listed yet.",
         "first_date": "First date",
         "last_date": "Last date",
-        "event_type_error": "It is not possible to change the type of the event, because only one term can be created for this event type."
+        "event_type_error": "It is not possible to change the type of the event, because only one term can be created for this event type.",
+        "event_blacklist_hint": "Xname of the users you want to block"
     },
     "blacklist": {
         "blocked_until": "Blocked until",

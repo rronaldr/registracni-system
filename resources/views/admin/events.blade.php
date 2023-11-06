@@ -6,7 +6,8 @@
             <div class="col-12">
                 <a href="{{ route('admin.events.create') }}" class="btn btn-outline-success rounded-0 float-right mx-1"><span
                             class="fas fa-plus"></span> {{ __('app.event.create') }}</a>
-                <a href="{{ route('admin.events.create') }}"
+                <a href="#"
+                   data-toggle="modal" data-target="#importModal"
                    class="btn btn-outline-secondary rounded-0 float-right mx-1"><span
                             class="fas fa-file-import"></span> {{ __('app.event.import') }}</a>
             </div>
@@ -128,16 +129,46 @@
                             <div class="modal-footer">
                                 <a type="button" class="btn btn-secondary rounded-0" id="export_users"
                                    href="{{ route('admin.events.users.export', ['id' => 1]) }}"><i
-                                            class="fas fa-file-export"></i> Exportovat</a>
+                                            class="fas fa-file-export"></i> {{ __('app.event.export') }}</a>
                                 <a type="button" class="btn btn-secondary rounded-0" id="export_emails"
                                    href="{{ route('admin.events.users.export.email', ['id' => 1]) }}"><i
-                                            class="fas fa-envelope"></i> Exportovat emaily</a>
+                                            class="fas fa-envelope"></i> {{ __('app.event.export-emails') }}</a>
                             </div>
                         @endif
                     </div>
                 </div>
             </div>
             <!-- Custom users modal end -->
+
+            <!-- Import file upload modal start -->
+            <div class="modal fade" id="importModal" role="dialog" tabindex="-1">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{ __('app.event.import-file') }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="{{ route('admin.events.import') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="modal-body text-start">
+                                <input type="file" name="event_import">
+
+                                <p class="mt-2">
+                                    {{ __('app.event.import-template-hint') }}
+                                    <a href="{{ route('admin.events.import.template') }}">{{ __('app.event.import-template-download') }}</a>
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn rounded-0 btn-secondary"><i
+                                            class="fas fa-file-import"></i> {{ __('app.event.import') }}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Import file upload modal end -->
 
             {{ $events->links() }}
         </div>

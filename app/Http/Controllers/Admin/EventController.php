@@ -63,8 +63,8 @@ class EventController extends Controller
             Session::flash('message', __('app.event.saved'));
 
             return response()->json(null, 204);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
+        } catch (Throwable $e) {
+            return response()->json(['error' => [$e->getMessage()]], 400);
         }
     }
 

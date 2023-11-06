@@ -95,13 +95,72 @@ export const duplicateEventMap = function (event) {
         global_blacklist: Boolean(event.global_blacklist),
         event_blacklist: Boolean(event.event_blacklist),
         template: {
-            id: event.template_id,
-            content: event.template_content
+            id: event.template_id ?? null,
+            content: event.template_content ?? null
         },
-        blacklist_id: event.blacklist_id,
-        user_group: event.user_group,
-        user_id: event.user_id
+        blacklist_id: event.blacklist_id ?? null,
+        user_group: event.user_group ?? null,
+        user_id: event.user_id ?? null
     }
+}
+
+export const importDatesMap = function (dates) {
+    let id = 1
+
+    return dates.map(function (date) {
+        let dateTimeFormat = 'YYYY-MM-DD HH:mm:ss'
+        let dateFormat = 'YYYY-MM-DD'
+        let timeFormat = 'HH:mm'
+
+        let datetimeFrom =
+            date.date_start !== null
+                ? moment(date.date_start, dateTimeFormat)
+                : null
+        let datetimeTo =
+            date.date_end !== null
+                ? moment(date.date_end, dateTimeFormat)
+                : null
+        let enrollmentFrom =
+            date.enrollment_start !== null
+                ? moment(date.enrollment_start, dateTimeFormat)
+                : null
+        let enrollmentTo =
+            date.enrollment_end !== null
+                ? moment(date.enrollment_end, dateTimeFormat)
+                : null
+        let withdrawTo =
+            date.withdraw_end !== null
+                ? moment(date.withdraw_end, dateTimeFormat)
+                : null
+
+        return {
+            id: id++,
+            location: date.location,
+            capacity: date.capacity,
+            date_from:
+                datetimeFrom !== null ? datetimeFrom.format(dateFormat) : null,
+            time_from:
+                datetimeFrom !== null ? datetimeFrom.format(timeFormat) : null,
+            date_to: datetimeTo !== null ? datetimeTo.format(dateFormat) : null,
+            time_to: datetimeTo !== null ? datetimeTo.format(timeFormat) : null,
+            enrollment_from:
+                enrollmentFrom !== null
+                    ? enrollmentFrom.format(dateFormat)
+                    : null,
+            enrollment_from_time:
+                enrollmentFrom !== null
+                    ? enrollmentFrom.format(timeFormat)
+                    : null,
+            enrollment_to:
+                enrollmentTo !== null ? enrollmentTo.format(dateFormat) : null,
+            enrollment_to_time:
+                enrollmentTo !== null ? enrollmentTo.format(timeFormat) : null,
+            withdraw_date:
+                withdrawTo !== null ? withdrawTo.format(dateFormat) : null,
+            withdraw_time:
+                withdrawTo !== null ? withdrawTo.format(timeFormat) : null
+        }
+    })
 }
 
 export const formatEventDates = function (dates) {

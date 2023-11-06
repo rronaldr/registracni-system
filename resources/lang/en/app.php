@@ -88,6 +88,9 @@ return [
         'status-label' => 'Status',
         'participants' => 'Participants',
         'import' => 'Import',
+        'import-file' => 'Event import from .xls file',
+        'import-template-hint' => 'Here you can download a sample document for importing an event',
+        'import-template-download' => 'download sample.',
         'show-dates' => 'See dates',
         'show-all-participants' => 'See all participants',
         'delete-date-error' => 'You cannot delete this event. Participants are enrolled for the event.',
@@ -103,7 +106,9 @@ return [
             '4' => 'Staff',
             '5' => 'Students and graduates',
         ],
-        'enums' => 'Enums'
+        'enums' => 'Enums',
+        'export' => 'Export',
+        'export-emails' => 'Export emails'
     ],
     'email' => [
         'email' => 'Email',

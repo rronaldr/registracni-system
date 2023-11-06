@@ -9,7 +9,7 @@
             <button
                 :title="$t('app.edit')"
                 type="button"
-                class="btn-link text-info border-0 mx-1"
+                class="btn-link text-info border-0 mr-1"
                 @click="editItem"
             >
                 <i class="fas fa-edit"></i>

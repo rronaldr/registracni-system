@@ -290,7 +290,11 @@ import TemplateTags from '../TemplateTags/TemplateTags.vue'
 import DateForm from '../Dates/DateForm.vue'
 import TagForm from '../Tags/TagForm.vue'
 import UserGroupSelect from './UserGroupSelect.vue'
-import { duplicateEventMap, eventCreateObject } from '../../../utils/DataMapper'
+import {
+    duplicateEventMap,
+    eventCreateObject,
+    importDatesMap
+} from '../../../utils/DataMapper'
 import BaseCheckbox from '../Form/BaseCheckbox.vue'
 import TemplateSelect from '../TemplateTags/TemplateSelect.vue'
 import ErrorMessages from '../../ErrorMessages.vue'
@@ -298,7 +302,8 @@ import ErrorMessages from '../../ErrorMessages.vue'
 const ADMIN_URL = inject('ADMIN_URL')
 const props = defineProps({
     user: { type: Object, required: true },
-    event: { type: Object, required: false, default: null }
+    event: { type: Object, required: false, default: null },
+    dates: { type: Object, required: false, default: null }
 })
 
 const { t } = useI18n({})
@@ -311,18 +316,15 @@ let event =
     props.event == null
         ? reactive(eventCreateObject)
         : reactive(duplicateEventMap(props.event))
+
 let tags = ref([])
-let dates = ref([])
+let dates = props.dates == null ? ref([]) : ref(importDatesMap(props.dates))
 let templates = ref(null)
 let errors = ref(null)
 let eventTypeError = ref(false)
 let showAddDate = ref(true)
 
 getApprovedTemplates()
-
-if (props.event != null) {
-    getEventTags()
-}
 
 function submitEvent() {
     let csrf = document.getElementsByName('_token')[0].value
@@ -374,12 +376,5 @@ function handleEventTypeSwitch() {
 async function getApprovedTemplates() {
     let response = await axios.get(ADMIN_URL + '/templates/approved')
     templates.value = response.data.templates
-}
-
-async function getEventTags() {
-    let response = await axios.get(
-        ADMIN_URL + '/events/' + props.event.id + '/tags'
-    )
-    tags.value = response.data.tags
 }
 </script>

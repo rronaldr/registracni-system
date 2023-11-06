@@ -136,10 +136,10 @@ class DateFacade
     private function getDataAttributesMapping(array $data): array
     {
         return [
-            'name' => $data['name'],
+            'name' => $data['name'] ?? null,
             'location' => $data['location'],
-            'capacity' => !$data['unlimited_capacity'] ? $data['capacity'] : -1,
-            'substitute' => $data['substitute'],
+            'capacity' => !isset($data['unlimited_capacity']) || !$data['unlimited_capacity'] ? $data['capacity'] : -1,
+            'substitute' => $data['substitute'] ?? false,
             'date_start' => DateFormatter::getDatetimeFromDateAndTime($data['date_from'], $data['time_from']),
             'date_end' => DateFormatter::getDatetimeFromDateAndTime($data['date_to'], $data['time_to']),
             'enrollment_start' => DateFormatter::getDatetimeFromDateAndTime($data['enrollment_from'],

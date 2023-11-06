@@ -7,8 +7,14 @@ use App\Exports\EventExport;
 use App\Exports\UsersEmailExport;
 use App\Exports\UsersExport;
 use App\Http\Controllers\Controller;
+use App\Imports\EventImport;
 use App\Services\Admin\EventFacade;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ExcelController extends Controller
 {
@@ -28,8 +34,33 @@ class ExcelController extends Controller
         return Excel::download(new EventExport($id, $eventFacade), 'export_udalosti.xlsx', );
     }
 
-    public function importEvent()
+    public function importEvent(Request $request)
     {
+        try {
+            $request->validate([
+                'event_import' => 'required|mimes:xlsx',
+            ]);
 
+            $fileToImport = $request->file('event_import');
+            $import = new EventImport;
+            Excel::import($import, $fileToImport);
+
+            $event = $import->importedData->get('event');
+            $dates = $import->importedData->get('dates');
+
+            return view('admin.event-create', [
+                'event' => $event,
+                'dates' => $dates
+            ]);
+        } catch (ValidationException $e) {
+            Session::flash('message', $e->getMessage());
+
+            return redirect()->back();
+        }
+    }
+
+    public function downloadImportTemplate(): StreamedResponse
+    {
+        return Storage::disk('public')->download('dist/import_template.xlsx');
     }
 }
