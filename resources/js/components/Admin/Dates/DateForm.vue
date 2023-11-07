@@ -98,7 +98,7 @@
                         </div>
                     </div>
                     <div class="row g-2 mb-3">
-                        <div class="col-3">
+                        <div class="col-lg-3 col-sm-6">
                             <BaseInput
                                 v-model="date.date_from"
                                 :label="$t('date.date_from')"
@@ -107,7 +107,7 @@
                                 @change="updateDateTo"
                             />
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-3 col-sm-6">
                             <BaseInput
                                 v-model="date.time_from"
                                 :label="$t('date.time_from')"
@@ -117,7 +117,7 @@
                             />
                         </div>
 
-                        <div class="col-3">
+                        <div class="col-lg-3 col-sm-6">
                             <BaseInput
                                 v-model="date.date_to"
                                 :label="$t('date.date_to')"
@@ -125,7 +125,7 @@
                                 :required="true"
                             />
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-3 col-sm-6">
                             <BaseInput
                                 v-model="date.time_to"
                                 :label="$t('date.time_to')"

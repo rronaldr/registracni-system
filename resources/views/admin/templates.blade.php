@@ -22,7 +22,7 @@
             </div>
         @endif
 
-        <div class="box-body">
+        <div class="box-body table-responsive">
             <table width="100%" class="table table-hover" id="dataTables">
                 <thead>
                 <tr>

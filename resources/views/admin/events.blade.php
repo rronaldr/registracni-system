@@ -19,7 +19,7 @@
             </div>
         @endif
 
-        <div class="box-body">
+        <div class="box-body table-responsive">
             <table width="100%" class="table table-hover" id="dataTables">
                 <thead>
                 <tr>
@@ -127,12 +127,18 @@
                         </div>
                         @if($events->isNotEmpty())
                             <div class="modal-footer">
-                                <a type="button" class="btn btn-secondary rounded-0" id="export_users"
-                                   href="{{ route('admin.events.users.export', ['id' => 1]) }}"><i
-                                            class="fas fa-file-export"></i> {{ __('app.event.export') }}</a>
-                                <a type="button" class="btn btn-secondary rounded-0" id="export_emails"
-                                   href="{{ route('admin.events.users.export.email', ['id' => 1]) }}"><i
-                                            class="fas fa-envelope"></i> {{ __('app.event.export-emails') }}</a>
+                                <div class="row">
+                                    <div class="col">
+                                        <a type="button" class="btn btn-secondary rounded-0" id="export_users"
+                                           href="{{ route('admin.events.users.export', ['id' => 1]) }}"><i
+                                                    class="fas fa-file-export"></i> {{ __('app.event.export') }}</a>
+                                    </div>
+                                    <div class="col">
+                                        <a type="button" class="btn btn-secondary rounded-0" id="export_emails"
+                                           href="{{ route('admin.events.users.export.email', ['id' => 1]) }}"><i
+                                                    class="fas fa-envelope"></i> {{ __('app.event.export-emails') }}</a>
+                                    </div>
+                                </div>
                             </div>
                         @endif
                     </div>
