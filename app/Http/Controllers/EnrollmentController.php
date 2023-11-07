@@ -29,7 +29,7 @@ class EnrollmentController extends Controller
         $user = $userFacade->getCurrentUser();
         $date = $dateFacade->getDateById($dateId);
 
-        if ($user->cannot('enroll', [Enrollment::class, $date])) {
+        if ($user->cannot('enroll', [Enrollment::class, $date]) && $user->cannot('substituteEnroll', [Enrollment::class, $date]) ) {
             Session::flash('message', __('app.enrollment.cannot_enroll'));
 
             return redirect()->route('events.index');
@@ -52,7 +52,7 @@ class EnrollmentController extends Controller
     ) {
         $date = $dateFacade->getDateById($dateId);
 
-        if (auth()->user()->cannot('enroll', [Enrollment::class, $date])) {
+        if (auth()->user()->cannot('enroll', [Enrollment::class, $date]) && auth()->user()->cannot('substituteEnroll', [Enrollment::class, $date])) {
             Session::flash('message', __('app.enrollment.already_exists'));
 
             return redirect()->route('events.index');
@@ -75,6 +75,8 @@ class EnrollmentController extends Controller
             if ($date->getSignedCount() === $date->capacity && $enrollment->state === EnrollmentStates::SIGNED) {
                 $emailFacade->sendCapacityReachedEmail($date);
             }
+
+            Session::flash('message', __('app.enrollment.enrolled_message'));
 
             return response()->json(null, 204);
         } catch (Throwable $e) {

@@ -33,7 +33,7 @@ class EventController extends Controller
         if (auth()->check()) {
             $user = auth()->user();
             $event->dates = collect($event->dates)->map(function (Date $date) use ($user) {
-                $date->can_enroll = $user->can('enroll',[Enrollment::class, $date]);
+                $date->can_enroll = $user->can('enroll',[Enrollment::class, $date]) || $user->can('substituteEnroll', [Enrollment::class, $date]);
                 return $date;
             });
         }

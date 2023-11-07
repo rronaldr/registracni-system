@@ -120,6 +120,7 @@ return [
         'list' => 'Participants list',
         'enrolled' => 'Enrolled',
         'c_fields' => 'Custom fields',
+        'enrolled_message' => 'You have been successfully enrolled',
         'cannot_enroll' => 'You cannot enroll for this term as you do not meet the application criteria.',
         'my_enrollments' => 'My enrollments',
         'no-enrollments' => 'You do not have any enrollments',

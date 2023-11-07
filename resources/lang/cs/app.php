@@ -120,6 +120,7 @@ return [
         'list' => 'Seznam účastníků',
         'enrolled' => 'Přihlášen',
         'c_fields' => 'Vyplněné hodnoty',
+        'enrolled_message' => 'Byli jste úspěšně přihlášeni na termín',
         'cannot_enroll' => 'Na tento termín se nemůžete přihlásit, jelikož nesplňujete kritéria přihlášení.',
         'my_enrollments' => 'Moje přihlášky',
         'no-enrollments' => 'Zatím nemáte žádné přihlášky.',

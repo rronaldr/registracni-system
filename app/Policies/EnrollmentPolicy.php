@@ -56,7 +56,7 @@ class EnrollmentPolicy
         }
 
         return !$date->hasUserEnrolled($user->id)
-            && $date->getSignedCount() < $date->capacity
+            && ($date->getSignedCount() < $date->capacity || $date->capacity === -1)
             && $date->enrollment_start <= $now
             && $date->enrollment_end > $now
             && $isUserGroup
@@ -66,10 +66,13 @@ class EnrollmentPolicy
 
     public function substituteEnroll(User $user, Date $date): bool
     {
+        $now = Carbon::now();
+
         return $date->capacity !== -1
-            && $date->substitute === true
+            && (bool) $date->substitute === true
             && $date->getSignedCount() >= $date->capacity
-            && $date->enrollment_end >= Carbon::now()
+            && $date->enrollment_start <= $now
+            && $date->enrollment_end > $now
             && !$date->hasUserEnrolled($user->id);
     }
 
