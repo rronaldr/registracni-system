@@ -38,7 +38,7 @@ const props = defineProps({
 })
 
 async function revokeRole(id) {
-    await axios.post(ADMIN_URL + '/users/' + props.user_id + '/roles/revoke', {
+    await axios.post(ADMIN_URL + '/users/' + props.userId + '/roles/revoke', {
         role: id
     })
     emit('refreshRoles')

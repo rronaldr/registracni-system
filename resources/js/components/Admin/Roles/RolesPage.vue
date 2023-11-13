@@ -28,7 +28,7 @@
 
                 <UserRoleList
                     :user-id="user.id"
-                    :roles="roles"
+                    :roles="rolesUser"
                     @refresh-roles="refreshRoles"
                 />
             </div>
