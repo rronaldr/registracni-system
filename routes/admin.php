@@ -88,9 +88,9 @@ Route::middleware(['auth', 'can:admin-access'])->group(function () {
             [TemplateController::class, 'sendTest'])->name('admin.templates.send-test');
         Route::get('templates/approvals', [
             TemplateController::class, 'showApprovals'
-        ])->middleware('template-approve')->name('admin.templates.approvals');
+        ])->middleware('can:template-approve')->name('admin.templates.approvals');
         Route::post('templates/{id}/approve',
-            [TemplateController::class, 'approve'])->middleware('template-approve')->name('admin.templates.approve');
+            [TemplateController::class, 'approve'])->middleware('can:template-approve')->name('admin.templates.approve');
         Route::get('templates/{user}/show-user',
             [TemplateController::class, 'showAuthorTemplates'])->name('admin.templates.author');
     });
