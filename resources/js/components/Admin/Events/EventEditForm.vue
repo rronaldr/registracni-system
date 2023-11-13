@@ -31,7 +31,7 @@
             {{ $t('event.collaborator_added') }}
         </p>
     </div>
-    <ErrorMessages :errors="errors" />
+    <ErrorMessages v-if="errors" :errors="errors" />
 
     <div class="row mb-3 justify-content-right">
         <div class="col-12 text-right">
@@ -249,6 +249,7 @@
             :event-id="event.id"
             :show-add-date="showAddDate"
             @set-dates="setDates"
+            @show-error="showError"
         />
 
         <div class="line"></div>
@@ -446,6 +447,11 @@ function submitEvent() {
             errors.value = e.response.data.errors
             window.scrollTo(0, 0)
         })
+}
+
+function showError(error) {
+    errors.value = error
+    window.scrollTo(0, 0)
 }
 
 function fillContactWithCurrentUser() {

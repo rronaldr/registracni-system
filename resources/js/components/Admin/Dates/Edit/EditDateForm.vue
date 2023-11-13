@@ -219,7 +219,7 @@ const props = defineProps({
     eventId: { type: Number, required: true },
     showAddDate: { type: Boolean, required: true }
 })
-const emit = defineEmits(['setDates'])
+const emit = defineEmits(['setDates', 'showError'])
 
 let showDateForm = ref(false)
 let edit = false
@@ -249,17 +249,25 @@ async function removeDate(id, blockReason) {
 }
 
 async function createDate() {
-    await axios.post(ADMIN_URL + '/dates/' + props.eventId + '/create', {
-        date: date
-    })
+    await axios
+        .post(ADMIN_URL + '/dates/' + props.eventId + '/create', {
+            date: date
+        })
+        .catch((e) => {
+            emit('showError', e.response.data.errors)
+        })
 }
 
 async function editDate() {
     edit = false
 
-    await axios.put(ADMIN_URL + '/dates/' + date.id + '/update', {
-        date: date
-    })
+    await axios
+        .put(ADMIN_URL + '/dates/' + date.id + '/update', {
+            date: date
+        })
+        .catch((e) => {
+            emit('showError', e.response.data.errors)
+        })
 }
 
 function setEditForm(id) {
