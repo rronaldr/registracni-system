@@ -37,23 +37,7 @@ class EnrollmentPolicy
             $isGlobalBlacklisted = $blacklist->isUserOnBlacklist($user->id);
         }
 
-        switch($event->user_group) {
-            case EventUserGroups::EVERYONE:
-                $isUserGroup = true;
-                break;
-            case EventUserGroups::CURRENT_STUDENTS:
-                $isUserGroup = $user->hasRole(Roles::STUDENT);
-                break;
-            case EventUserGroups::GRADUATE:
-                $isUserGroup = !empty($user->absolvent_id);
-                break;
-            case EventUserGroups::STAFF:
-                $isUserGroup = $user->hasRole(Roles::STAFF) || !empty($user->pasword);
-                break;
-            case EventUserGroups::ALL_STUDENTS:
-                $isUserGroup = $user->hasRole(Roles::STUDENT) || !empty($user->absolvent_id);
-                break;
-        }
+        $isUserGroup = $this->checkUserBelongsToGroup($user, $event->user_group);
 
         return !$date->hasUserEnrolled($user->id)
             && ($date->getSignedCount() < $date->capacity || $date->capacity === -1)
@@ -67,12 +51,16 @@ class EnrollmentPolicy
     public function substituteEnroll(User $user, Date $date): bool
     {
         $now = Carbon::now();
+        $event = $date->event;
+
+        $isUserGroup = $this->checkUserBelongsToGroup($user, $event->user_group);
 
         return $date->capacity !== -1
             && (bool) $date->substitute === true
             && $date->getSignedCount() >= $date->capacity
             && $date->enrollment_start <= $now
             && $date->enrollment_end > $now
+            && $isUserGroup
             && !$date->hasUserEnrolled($user->id);
     }
 
@@ -86,5 +74,30 @@ class EnrollmentPolicy
         if ($user->hasRole(Roles::ADMIN)) {
             return true;
         }
+    }
+
+    private function checkUserBelongsToGroup(User $user, int $userGroup): bool
+    {
+        $belongsToUserGroup = false;
+
+        switch($userGroup) {
+            case EventUserGroups::EVERYONE:
+                $belongsToUserGroup = true;
+                break;
+            case EventUserGroups::CURRENT_STUDENTS:
+                $belongsToUserGroup = $user->hasRole(Roles::STUDENT);
+                break;
+            case EventUserGroups::GRADUATE:
+                $belongsToUserGroup = !empty($user->absolvent_id);
+                break;
+            case EventUserGroups::STAFF:
+                $belongsToUserGroup = $user->hasRole(Roles::STAFF);
+                break;
+            case EventUserGroups::ALL_STUDENTS:
+                $belongsToUserGroup = $user->hasRole(Roles::STUDENT) || !empty($user->absolvent_id);
+                break;
+        }
+
+        return $belongsToUserGroup;
     }
 }
