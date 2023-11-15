@@ -51,7 +51,7 @@ class UserFacade
             $user->removeRole(Roles::STUDENT);
         }
 
-        if ($user->hasRole(Roles::STAFF) && !Str::contains($user->entitlement, 'staff')) {
+        if ($user->hasRole(Roles::STAFF) && !Str::contains($user->entitlement, 'employee')) {
             $user->removeRole(Roles::STAFF);
         }
 
@@ -61,7 +61,7 @@ class UserFacade
                     case 'student':
                         $user->assignRole(Roles::STUDENT);
                         break;
-                    case 'staff':
+                    case 'employee':
                         $user->assignRole(Roles::STAFF);
                         break;
                 }
