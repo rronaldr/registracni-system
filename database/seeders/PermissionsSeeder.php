@@ -50,20 +50,47 @@ class PermissionsSeeder extends Seeder
         Permission::create(['name' => 'admin-access']); // access and login to admin panel
         Permission::create(['name' => 'user-access']); // ability to assign role to a certain user (only for admin)
 
+        $admin->syncPermissions([
+            'event-access',
+            'event-create',
+            'event-edit',
+            'event-delete',
+            'event-see-all',
+            'enrollment-signup',
+            'enrollment-sign-off',
+            'blacklist-access',
+            'blacklist-edit',
+            'blacklist-user-delete',
+            'template-access',
+            'template-create',
+            'template-edit',
+            'template-delete',
+            'template-see-all',
+            'template-delete',
+            'template-approve',
+            'admin-access',
+            'user-access'
+        ]);
+
         $editor->syncPermissions([
             'event-access',
             'event-create',
             'event-edit',
             'event-delete',
+            'event-see-all',
             'enrollment-signup',
             'enrollment-sign-off',
             'blacklist-access',
             'blacklist-edit',
+            'blacklist-user-delete',
             'template-access',
             'template-create',
             'template-edit',
             'template-delete',
-            'admin-access'
+            'template-see-all',
+            'template-delete',
+            'template-approve',
+            'admin-access',
         ]);
 
         $staff->syncPermissions([
