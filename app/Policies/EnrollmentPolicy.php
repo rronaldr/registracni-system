@@ -18,9 +18,8 @@ class EnrollmentPolicy
 
     public function enroll(User $user, Date $date): bool
     {
-        $now = Carbon::now();
+        $now = Carbon::now('CET');
         $event = $date->event;
-        $isUserGroup = false;
         $isEventBlacklisted = false;
         $isGlobalBlacklisted = false;
 
@@ -50,7 +49,7 @@ class EnrollmentPolicy
 
     public function substituteEnroll(User $user, Date $date): bool
     {
-        $now = Carbon::now();
+        $now = Carbon::now('CET');
         $event = $date->event;
 
         $isUserGroup = $this->checkUserBelongsToGroup($user, $event->user_group);
