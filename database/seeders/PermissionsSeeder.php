@@ -55,6 +55,8 @@ class PermissionsSeeder extends Seeder
             'event-create',
             'event-edit',
             'event-delete',
+            'enrollment-signup',
+            'enrollment-sign-off',
             'blacklist-access',
             'blacklist-edit',
             'template-access',
