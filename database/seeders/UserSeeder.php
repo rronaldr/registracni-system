@@ -20,8 +20,8 @@ class UserSeeder extends Seeder
             'xname' => 'rebr00',
             'first_name' => 'Ronald',
             'last_name' => 'Rebernigg',
-            'email' => 'ronald.rebernigg@gmail.com',
-            'password' => Hash::make('testtest'),
+            'email' => 'rebr00@vse.cz',
+            'password' => 'shibboleth'
         ]);
 
         DB::table('users')->insert([
@@ -29,6 +29,7 @@ class UserSeeder extends Seeder
             'first_name' => 'Stanislav',
             'last_name' => 'Vojíř',
             'email' => 'stanislav.vojir@vse.cz',
+            'password' => 'shibboleth'
         ]);
 
         for ($i = 0; $i < 5; $i++) {
