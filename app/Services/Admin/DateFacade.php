@@ -122,7 +122,7 @@ class DateFacade
             'date.capacity' => 'required_if:date.unlimited_capacity,==,false|sometimes:numeric',
             'date.date_from' => 'required|date',
             'date.time_from' => 'required|date_format:H:i',
-            'date.date_to' => 'required|date|after_or_equal:date.time_from',
+            'date.date_to' => 'required|date|after_or_equal:date.date_from',
             'date.time_to' => 'required|date_format:H:i',
             'date.enrollment_from' => 'required|date',
             'date.enrollment_from_time' => 'required|date_format:H:i',
