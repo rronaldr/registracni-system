@@ -35,9 +35,11 @@
                                 {{ __('app.auth.logout') }}
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin') }}">{{ __('app.administration') }}</a>
-                        </li>
+                        @can('admin-access')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin') }}">{{ __('app.administration') }}</a>
+                            </li>
+                        @endcan
                     @endguest
                 </ul>
             </div>
