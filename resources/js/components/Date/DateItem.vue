@@ -38,7 +38,7 @@
                                     v-if="date.can_enroll"
                                     :href="APP_URL + '/enrollment/' + date.id"
                                     class="btn btn-primary"
-                                    >{{ $t('enrollment.enroll') }}</a
+                                    >{{ enrollText }}</a
                                 >
                                 <p v-else class="text-danger text-left">
                                     {{ $t('enrollment.cant_enroll') }}
@@ -55,12 +55,19 @@
 <script setup>
 import moment from 'moment/moment'
 import { inject } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-defineProps({
+const { t } = useI18n({})
+let props = defineProps({
     date: { type: Object, required: true }
 })
 
 const APP_URL = inject('APP_URL')
+
+let enrollText =
+    props.date.enrollments_count < props.date.capacity
+        ? t('enrollment.enroll')
+        : t('enrollment.enroll_substitute')
 
 const formatDate = function (date) {
     if (date) {

@@ -149,7 +149,7 @@
     },
     "enrollment": {
         "enroll" : "Přihlásit se",
-        "enroll_subscriber": "Přihlásit se jako náhradník",
+        "enroll_substitute": "Přihlásit se jako náhradník",
         "enrolled_count": "Přihlášeno",
         "cant_enroll": "Na tento termín se nemůžete přihlásit",
         "enrollments": "Přihlášky",

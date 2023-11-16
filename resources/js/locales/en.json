@@ -148,7 +148,7 @@
     },
     "enrollment": {
         "enroll" : "Enroll",
-        "enroll_subscriber": "Enroll as substitute",
+        "enroll_substitute": "Enroll as substitute",
         "enrolled_count": "Enrolled",
         "cant_enroll": "You cannot enroll for this term",
         "enrollments": "Enrollments",
