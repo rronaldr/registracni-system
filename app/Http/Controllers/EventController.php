@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\Event\EventStatusEnum;
 use App\Models\Date;
 use App\Models\Enrollment;
 use App\Services\EventFacade;
@@ -26,9 +27,13 @@ class EventController extends Controller
         ]);
     }
 
-    public function show(int $id, EventFacade $eventFacade): view
+    public function show(int $id, EventFacade $eventFacade)
     {
         $event = $eventFacade->getEventByIdForDetailPage($id);
+
+        if (!isset($event) || $event->status !== EventStatusEnum::PUBLISHED) {
+            return redirect()->route('events.index');
+        }
 
         if (auth()->check()) {
             $user = auth()->user();
