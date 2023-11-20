@@ -88,7 +88,6 @@ class EnrollmentController extends Controller
 
             return response()->json(null, 204);
         } catch (Throwable $e) {
-            dump($e);
         }
     }
 
