@@ -25,7 +25,7 @@ return [
         'login' => 'Přihlásit se',
         'login-picker' => 'Výběr přihlášení',
         'login-error' => 'Nesprávné přihlašovací údaje',
-        'shibboleth' => 'Shibboleth',
+        'school' => 'Přihlášení školním účtem',
         'graduate-login' => 'Přihlášení pro absolventy',
         'external-login' => 'Přihlášení pro externisty',
         'password' => 'Heslo',

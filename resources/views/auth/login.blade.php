@@ -6,7 +6,7 @@
             <nav class="nav nav-tabs" id="login-tab" role="tablist">
                 <a class="nav-item nav-link active show" id="login-shibboleth-tab" data-toggle="tab"
                    href="#login-shibboleth" role="tab" aria-controls="login-shibboleth"
-                   aria-selected="true">{{ __('app.auth.shibboleth') }}</a>
+                   aria-selected="true">{{ __('app.auth.school') }}</a>
                 <a class="nav-item nav-link" id="login-local-tab" data-toggle="tab" href="#login-graduate" role="tab"
                    aria-controls="login-local" aria-selected="false">{{ __('app.auth.graduate-login') }}</a>
                 <a class="nav-item nav-link" id="login-local-tab" data-toggle="tab" href="#login-external" role="tab"

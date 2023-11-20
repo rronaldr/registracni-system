@@ -25,7 +25,7 @@ return [
         'login' => 'Login',
         'login-picker' => 'Choose login',
         'login-error' => 'Invalid login credentials',
-        'shibboleth' => 'Shibboleth',
+        'school' => 'Student or employee login',
         'graduate-login' => 'Login for graduates',
         'external-login' => 'External login',
         'password' => 'Password',
