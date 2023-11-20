@@ -8,6 +8,7 @@ use App\Enums\Roles;
 use App\Models\Blacklist;
 use App\Models\Date;
 use App\Models\Enrollment;
+use App\Models\Event;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -20,31 +21,16 @@ class EnrollmentPolicy
     {
         $now = Carbon::now('CET');
         $event = $date->event;
-        $isEventBlacklisted = false;
-        $isGlobalBlacklisted = false;
-
-        if ($event->event_blacklist) {
-            /** @var Blacklist $blacklist */
-            $blacklist = $event->blacklist;
-
-            $isEventBlacklisted = $blacklist->isUserOnBlacklist($user->id);
-        }
-
-        if ($event->global_blacklist) {
-            $blacklist = Blacklist::find(1);
-
-            $isGlobalBlacklisted = $blacklist->isUserOnBlacklist($user->id);
-        }
 
         $isUserGroup = $this->checkUserBelongsToGroup($user, $event->user_group);
+        $userBlacklisted = $this->checkUserIsOnBlacklist($user, $event);
 
         return !$date->hasUserEnrolled($user->id)
             && ($date->getSignedCount() < $date->capacity || $date->capacity === -1)
             && $date->enrollment_start <= $now
             && $date->enrollment_end > $now
             && $isUserGroup
-            && !$isEventBlacklisted
-            && !$isGlobalBlacklisted;
+            && !$userBlacklisted;
     }
 
     public function substituteEnroll(User $user, Date $date): bool
@@ -53,6 +39,7 @@ class EnrollmentPolicy
         $event = $date->event;
 
         $isUserGroup = $this->checkUserBelongsToGroup($user, $event->user_group);
+        $userBlacklisted = $this->checkUserIsOnBlacklist($user, $event);
 
         return $date->capacity !== -1
             && (bool) $date->substitute === true
@@ -60,7 +47,8 @@ class EnrollmentPolicy
             && $date->enrollment_start <= $now
             && $date->enrollment_end > $now
             && $isUserGroup
-            && !$date->hasUserEnrolled($user->id);
+            && !$date->hasUserEnrolled($user->id)
+            && !$userBlacklisted;
     }
 
     public function signOff(User $user, Enrollment $enrollment): bool
@@ -91,5 +79,26 @@ class EnrollmentPolicy
         }
 
         return $belongsToUserGroup;
+    }
+
+    private function checkUserIsOnBlacklist(User $user, Event $event): bool
+    {
+        $isEventBlacklisted = false;
+        $isGlobalBlacklisted = false;
+
+        if ($event->event_blacklist) {
+            /** @var Blacklist $blacklist */
+            $blacklist = $event->blacklist;
+
+            $isEventBlacklisted = $blacklist->isUserOnBlacklist($user->id);
+        }
+
+        if ($event->global_blacklist) {
+            $blacklist = Blacklist::find(1);
+
+            $isGlobalBlacklisted = $blacklist->isUserOnBlacklist($user->id);
+        }
+
+        return $isGlobalBlacklisted || $isEventBlacklisted;
     }
 }
