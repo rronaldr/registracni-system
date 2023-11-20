@@ -68,13 +68,6 @@ class EnrollmentPolicy
         return $enrollment->date->withdraw_end >= Carbon::now() && $enrollment->state !== EnrollmentStates::SIGNED_OFF;
     }
 
-    public function before(User $user)
-    {
-        if ($user->hasRole(Roles::ADMIN)) {
-            return true;
-        }
-    }
-
     private function checkUserBelongsToGroup(User $user, int $userGroup): bool
     {
         $belongsToUserGroup = false;

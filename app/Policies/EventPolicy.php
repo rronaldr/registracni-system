@@ -36,11 +36,4 @@ class EventPolicy
 
         return $event->enrollments_count === 0;
     }
-
-    public function before(User $user)
-    {
-        if ($user->hasRole(Roles::ADMIN)) {
-            return true;
-        }
-    }
 }
