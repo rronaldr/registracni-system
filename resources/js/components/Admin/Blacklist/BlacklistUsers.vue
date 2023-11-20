@@ -9,7 +9,7 @@
                             class="fas fa-info-circle"
                             data-toggle="tooltip"
                             data-placement="top"
-                            title="Zde je seznam uživatelů, kteří jsou na globálním blacklistu"
+                            :title="$t('blacklist.users_hint')"
                         ></i>
                     </h5>
                 </div>
