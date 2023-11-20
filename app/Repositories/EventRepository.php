@@ -42,7 +42,7 @@ class EventRepository
         /** @var \App\Models\Event $event */
         $event = Event::query()
             ->where('id', $eventId)
-            ->with('enrollments.user')
+            ->with(['enrollments' => fn($q) => $q->whereIn('state', [EnrollmentStates::SIGNED, EnrollmentStates::SUBSTITUTE]),'enrollments.user'])
             ->firstOrFail();
 
         return $event;
