@@ -49,7 +49,7 @@ class EventController extends Controller
 
     public function store(Request $request, EventFacade $eventFacade): JsonResponse
     {
-        $this->authorize('create', Event::class);
+        $this->authorize('event-create', Event::class);
 
         try {
             $validator = Validator::make($request->all(), $eventFacade->getEventCreateValidationRules());
