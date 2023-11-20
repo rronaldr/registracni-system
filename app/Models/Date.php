@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\EnrollmentStates;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -46,6 +47,7 @@ class Date extends Model
 
     public function hasUserEnrolled(int $userId): bool
     {
-        return $this->enrollments()->where('user_id', $userId)->first() !== null;
+        return $this->enrollments()->where('user_id', $userId)->whereIn('state',
+                [EnrollmentStates::SIGNED, EnrollmentStates::SUBSTITUTE])->first() !== null;
     }
 }
