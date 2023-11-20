@@ -17,12 +17,12 @@ class EventPolicy
     {
         $collaborations = $event->collaborators()->pluck('user_id');
 
-        return $user->id === $event->author->id || $collaborations->contains($user->id);
+        return $user->id === $event->author->id || $collaborations->contains($user->id) || $user->hasRole(Roles::ADMIN) || $user->hasRole(Roles::EDITOR);
     }
 
     public function create(User $user): bool
     {
-        return $user->hasAnyRole(Roles::STAFF, Roles::EDITOR);
+        return $user->hasAnyRole(Roles::STAFF, Roles::EDITOR, Roles::ADMIN);
     }
 
     public function delete(User $user, int $id): bool
