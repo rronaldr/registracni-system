@@ -78,7 +78,9 @@ class EventRepository
     {
         /** @var \App\Models\Event $event */
         $event = Event::query()
-            ->with(['dates' => fn($q) => $q->where('id', $dateId)])
+            ->whereHas('dates', function($q) use ($dateId) {
+                $q->where('id', $dateId);
+            })
             ->select('id', 'c_fields')
             ->first();
 
