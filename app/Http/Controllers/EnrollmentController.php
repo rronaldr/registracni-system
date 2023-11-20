@@ -68,11 +68,13 @@ class EnrollmentController extends Controller
             $event = $date->load('event')->event;
             $eventFields = $event->c_fields;
 
-            $validator = Validator::make($request->get('data'),
-                $enrollmentFacade->getValidationRulesForTags($eventFields));
+            if (!empty($request->get('data'))) {
+                $validator = Validator::make($request->get('data'),
+                    $enrollmentFacade->getValidationRulesForTags($eventFields));
 
-            if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()], 400);
+                if ($validator->fails()) {
+                    return response()->json(['errors' => $validator->errors()], 400);
+                }
             }
 
             $enrollment = $enrollmentFacade->createEnrollment($dateId, $request);
