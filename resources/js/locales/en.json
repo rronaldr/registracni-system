@@ -167,6 +167,7 @@
             "3": "Signed off"
         },
         "form_select_placeholder": "Select from options",
-        "gdpr_agree": "By enrolling for the event, I agree to <a href=\"{link}\" title=\"GDPR\">Privacy policy</a>"
+        "gdpr_agree": "By enrolling for the event, I agree to <a href=\"{link}\" title=\"GDPR\">privacy policy</a>",
+        "form": "Registration form"
     }
 }

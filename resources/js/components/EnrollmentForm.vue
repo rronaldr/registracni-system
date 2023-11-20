@@ -3,22 +3,13 @@
         <div class="form-container bg-white rounded shadow mt-4 py-2 px-4">
             <div class="row p-2">
                 <div class="col-12">
-                    <h3>Prihlaska na udalost</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing
-                        elit. Vivamus ac leo pretium faucibus. Nulla quis diam.
-                        Nullam feugiat, turpis at pulvinar vulputate, erat
-                        libero tristique tellus, nec bibendum odio risus sit
-                        amet ante. Lorem ipsum dolor sit amet, consectetuer
-                        adipiscing elit. Duis pulvinar. Sed ac dolor sit amet
-                        purus malesuada congue. Class aptent taciti sociosqu ad
-                        litora torquent per conubia nostra, per inceptos
-                        hymenaeos. Phasellus et lorem id felis nonummy placerat.
-                        Pellentesque habitant morbi tristique senectus et netus
-                        et malesuada fames ac turpis egestas. Duis bibendum,
-                        lectus ut viverra rhoncus, dolor nunc faucibus libero,
-                        eget facilisis enim ipsum id lacus.
-                    </p>
+                    <h3>{{ $t('enrollment.form') }}</h3>
+                    <h5>{{ props.info.event }}</h5>
+                    <sub>{{
+                        `${formatDate(props.info.date_start)} - ${formatDate(
+                            props.info.date_end
+                        )}`
+                    }}</sub>
                 </div>
             </div>
 
@@ -126,10 +117,12 @@ import BaseCheckbox from './Admin/Form/BaseCheckbox.vue'
 import BaseRadioGroup from './Admin/Form/BaseRadioGroup.vue'
 import BaseTextarea from './Admin/Form/BaseTextarea.vue'
 import ErrorMessages from './ErrorMessages.vue'
+import { formatDate } from '../utils/DateFormat'
 
 const props = defineProps({
     dateId: { type: Number, required: true },
     fields: { type: Array, required: true },
+    info: { type: Object, required: true },
     gdprLink: { type: URL, required: false, default: null }
 })
 const APP_URL = inject('APP_URL')

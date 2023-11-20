@@ -28,6 +28,11 @@ class EnrollmentController extends Controller
     ) {
         $user = $userFacade->getCurrentUser();
         $date = $dateFacade->getDateById($dateId);
+        $enrollmentInfo = collect([
+            'date_start' => $date->date_start,
+            'date_end' => $date->date_end,
+            'event' => $date->event->name
+            ]);
 
         if ($user->cannot('enroll', [Enrollment::class, $date]) && $user->cannot('substituteEnroll', [Enrollment::class, $date]) ) {
             Session::flash('message', __('app.enrollment.cannot_enroll'));
@@ -39,7 +44,8 @@ class EnrollmentController extends Controller
 
         return view('enrollment', [
             'dateId' => $dateId,
-            'fields' => collect($fields->c_fields)->sortBy('id')->values()
+            'fields' => collect($fields->c_fields)->sortBy('id')->values(),
+            'info' => $enrollmentInfo
         ]);
     }
 

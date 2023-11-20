@@ -1,7 +1,7 @@
 @include('layouts.header', ['title' => __('app.enrollment.enrollment_form')])
 <body class="bg-gray-500">
 <div class="content mt-3" id="vueApp">
-    <enrollment-form :date-id="{{ $dateId }}" :fields="{{ $fields }}"
+    <enrollment-form :date-id="{{ $dateId }}" :fields="{{ $fields }}" :info="{{ $info }}"
                 gdppr-link="{{ config('constants.gdpr_url') }}"></enrollment-form>
 </div>
 
