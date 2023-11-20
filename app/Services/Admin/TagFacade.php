@@ -54,7 +54,7 @@ class TagFacade
         $event = $this->eventRepository->getEventById($eventId);
         $remainingTags = $event->getTagsCollection()->filter(static fn($tag) => $tag['id'] !== $tagId);
         $event->c_fields = $remainingTags->values()->toArray();
-        $event->last_chagned_by = auth()->user()->id;
+        $event->last_changed_by = auth()->user()->id;
         $event->save();
     }
 
