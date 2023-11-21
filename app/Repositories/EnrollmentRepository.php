@@ -35,6 +35,7 @@ class EnrollmentRepository
     public function getEnrollmentsByUser(int $id): LengthAwarePaginator
     {
         return Enrollment::query()
+            ->has('date.event')
             ->with(['date:id,date_start,date_end,event_id,withdraw_end', 'date.event:id,name'])
             ->where('user_id', $id)
             ->orderBy('created_at')
