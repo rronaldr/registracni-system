@@ -4,17 +4,11 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Enums\Event\EventStatusEnum;
-use App\Models\Blacklist;
-use App\Models\Enrollment;
 use App\Models\Event;
 use App\Repositories\EventRepository;
 use App\Services\Admin\BlacklistFacade;
 use App\Services\Admin\DateFacade;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
 
 class EventFacade
 {
@@ -37,9 +31,9 @@ class EventFacade
         return $this->eventRepository->getEventByIdForDetailPage($id);
     }
 
-    public function getPublishedEventsWithDatesInMonth(Carbon $month): Collection
+    public function getPublishedEventsWithActiveDates(): LengthAwarePaginator
     {
-        return $this->eventRepository->getPublishedEventsWithDatesInMonth($month);
+        return $this->eventRepository->getPublishedEventsWithActiveDates();
     }
 
     public function getEventCustomFields(int $dateId): Event

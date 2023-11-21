@@ -83,6 +83,7 @@
         "info": "Event info",
         "tag_buttons": "Buttons to add custom fields to template",
         "name": "Title",
+        "event_name" : "Event title",
         "subtitle": "Subtitle",
         "calendar": "ID of event in event calendar or URL link",
         "contact_person": "Contact person",
@@ -116,7 +117,8 @@
         "first_date": "First date",
         "last_date": "Last date",
         "event_type_error": "It is not possible to change the type of the event, because only one term can be created for this event type.",
-        "event_blacklist_hint": "Xname of the users you want to block"
+        "event_blacklist_hint": "Xname of the users you want to block",
+        "can_register": "Can register"
     },
     "blacklist": {
         "blocked_until": "Blocked until",

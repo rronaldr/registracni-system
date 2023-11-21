@@ -1,40 +1,28 @@
 <template>
-    <div class="col-lg-4">
-        <div class="card card-margin">
-            <div class="card-body pt-0">
-                <div class="widget-49">
-                    <div class="widget-49-title-wrapper">
-                        <div class="widget-49-date-primary">
-                            <span class="widget-49-date-day">2</span>
-                            <span class="widget-49-date-month">čvc</span>
-                        </div>
-                        <div class="widget-49-meeting-info">
-                            <span class="widget-49-pro-title">RB 101</span>
-                            <span class="widget-49-meeting-time"
-                                >12:00 to 13.30 Hrs</span
-                            >
-                        </div>
-                    </div>
-                    <ol class="widget-49-meeting-points">
-                        <li class="widget-49-meeting-item">
-                            <span>{{ props.event.description }}</span>
-                        </li>
-                    </ol>
-                    <div class="widget-49-meeting-action">
-                        <a
-                            :href="APP_URL + '/events/' + event.id"
-                            class="btn btn-sm btn-flash-border-primary"
-                            >Více informací</a
-                        >
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <tr>
+        <td>
+            <a class="hover-reverse" :href="APP_URL + '/events/' + event.id">{{ props.event.name }}</a><br />
+            <small>{{ props.event.subtitle }}</small>
+        </td>
+        <td>
+            {{ formatDate(props.event.date_start_cache) }} -
+            {{ formatDate(props.event.date_end_cache) }}
+        </td>
+        <td>{{ props.event.contact_person }}</td>
+        <td>{{ $t('user_group.' + props.event.user_group) }}</td>
+        <td>
+            <a
+                :href="APP_URL + '/events/' + event.id"
+                class="btn btn-sm btn-primary"
+                >Zobrazit</a
+            >
+        </td>
+    </tr>
 </template>
 
 <script setup>
 import { inject } from 'vue'
+import { formatDate } from '../../utils/DateFormat'
 
 const props = defineProps({
     event: { type: Object, required: true }

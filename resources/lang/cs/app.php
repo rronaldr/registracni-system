@@ -65,6 +65,7 @@ return [
     ],
     'event' => [
         'events' => 'Události',
+        'events-offered' => 'Nabízené události',
         'status' => [
             'status' => 'Stav',
             '1' => 'Publikováno',

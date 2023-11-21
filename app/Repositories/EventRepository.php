@@ -8,7 +8,6 @@ use App\Enums\EnrollmentStates;
 use App\Enums\Event\EventStatusEnum;
 use App\Models\Event;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Collection as SupportCollection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -87,17 +86,16 @@ class EventRepository
         return $event;
     }
 
-    public function getPublishedEventsWithDatesInMonth(Carbon $month): Collection
+    public function getPublishedEventsWithActiveDates(): LengthAwarePaginator
     {
+        $now = Carbon::now('Europe/Prague');
+
         /** @var \App\Models\Event $event * */
         $events = Event::query()
-            ->with('dates', fn($q) => $q->whereBetween('date_start', [
-                $month->startOfMonth()->toDateString(),
-                $month->endOfMonth()->toDateString()
-            ]))
+            ->with('dates', fn($q) => $q->where('date_start', '>=', $now))
             ->where('status', EventStatusEnum::PUBLISHED)
             ->where('date_end_cache', '>=', Carbon::now())
-            ->get();
+            ->paginate(10);
 
         return $events;
     }

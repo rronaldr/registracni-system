@@ -1,4 +1,4 @@
-@extends('layouts.main', ['title' => __('app.event.events')])
+@extends('layouts.main', ['title' => __('app.event.events-offered')])
 
 @section('content')
     @if(Illuminate\Support\Facades\Session::has('message'))
@@ -7,5 +7,5 @@
         </div>
     @endif
 
-    <event-list :events="{{ $events }}"></event-list>
+    <event-list></event-list>
 @endsection

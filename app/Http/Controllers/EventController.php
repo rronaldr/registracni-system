@@ -9,22 +9,23 @@ use App\Models\Date;
 use App\Models\Enrollment;
 use App\Services\EventFacade;
 use App\Services\UserFacade;
-use Carbon\Carbon;
 use Illuminate\View\View;
 
 class EventController extends Controller
 {
 
-    public function index(EventFacade $eventFacade, UserFacade $userFacade): view
+    public function index(UserFacade $userFacade): view
     {
         $userFacade->assignRolesToUserFromEntitlements();
 
-        $date = Carbon::now()->startOfMonth();
-        $events = $eventFacade->getPublishedEventsWithDatesInMonth($date);
+        return view('events');
+    }
 
-        return view('events', [
-            'events' => $events
-        ]);
+    public function getEvents(EventFacade $eventFacade)
+    {
+        $events = $eventFacade->getPublishedEventsWithActiveDates();
+
+        return response()->json($events);
     }
 
     public function show(int $id, EventFacade $eventFacade)

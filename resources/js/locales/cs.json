@@ -83,6 +83,7 @@
         "info": "Informace o události",
         "tag_buttons": "Tlačítka pro přidání vlastních polí do šablony",
         "name": "Název",
+        "event_name" : "Název události",
         "subtitle": "Upřesnění názvu",
         "calendar": "ID události v kalendáři VŠE nebo odkaz na událost",
         "contact_person": "Kontaktní osoba",
@@ -117,7 +118,8 @@
         "first_date": "První termín",
         "last_date": "Poslední termín",
         "event_type_error": "Nelze změnit typ události, jelikož typ Navazující části jedné události, mohou mít vytvořený jen jeden termín.",
-        "event_blacklist_hint": "Xname uživatelů, které chcete zablokovat"
+        "event_blacklist_hint": "Xname uživatelů, které chcete zablokovat",
+        "can_register": "Mohou se přihlásit"
     },
     "blacklist": {
         "blocked_until": "Blokace do",

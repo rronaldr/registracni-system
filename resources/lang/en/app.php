@@ -65,6 +65,7 @@ return [
     ],
     'event' => [
         'events' => 'Events',
+        'events-offered' => 'Offered events',
         'status' => [
             'status' => 'Status',
             '1' => 'Published',
