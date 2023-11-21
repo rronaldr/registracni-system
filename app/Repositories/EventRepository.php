@@ -59,15 +59,12 @@ class EventRepository
 
     public function getEventByIdForDetailPage(int $id)
     {
+        $now = Carbon::now('Europe/Prague');
+
         /** @var \App\Models\Event $event */
         $event = Event::query()
             ->where('id', $id)
-            ->with([
-                'dates' => fn($q) => $q->withCount([
-                    'enrollments' => fn($q) => $q->where('state', EnrollmentStates::SIGNED)
-                ]),
-                'author:id,first_name,last_name,email'
-            ])
+            ->with('author:id,first_name,last_name,email')
             ->firstOrFail();
 
         return $event;
@@ -92,9 +89,9 @@ class EventRepository
 
         /** @var \App\Models\Event $event * */
         $events = Event::query()
-            ->with('dates', fn($q) => $q->where('date_start', '>=', $now))
             ->where('status', EventStatusEnum::PUBLISHED)
             ->where('date_end_cache', '>=', Carbon::now())
+            ->orderBy('date_start_cache')
             ->paginate(10);
 
         return $events;

@@ -1,5 +1,5 @@
-@extends('layouts.main', ['title' => __('app.event.detail')])
+@extends('layouts.main')
 
 @section('content')
-    <event-detail :event="{{ $event }}"></event-detail>
+    <event-detail :event="{{ $event }}" :has-user="{{ (int) auth()->check() }}"></event-detail>
 @endsection

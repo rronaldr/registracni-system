@@ -27,6 +27,7 @@ Route::namespace('Admin')
 Route::get('/', [EventController::class, 'index'])->name('events.index');
 Route::get('/events', [EventController::class, 'getEvents'])->name('events.get');
 Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show');
+Route::get('/events/{id}/dates', [EventController::class, 'getEventActiveDates'])->name('events.get.dates');
 
 // Event routes
 

@@ -13,17 +13,11 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class EventFacade
 {
     private EventRepository $eventRepository;
-    private DateFacade $dateFacade;
-    private BlacklistFacade $blacklistFacade;
 
     public function __construct(
-        EventRepository $eventRepository,
-        DateFacade $dateFacade,
-        BlacklistFacade $blacklistFacade
+        EventRepository $eventRepository
     ) {
         $this->eventRepository = $eventRepository;
-        $this->dateFacade = $dateFacade;
-        $this->blacklistFacade = $blacklistFacade;
     }
 
     public function getEventByIdForDetailPage(int $id): Event

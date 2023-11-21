@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Models\Date;
 use App\Repositories\DateRepository;
 use App\Repositories\EnrollmentRepository;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class DateFacade
 {
@@ -21,5 +22,10 @@ class DateFacade
     public function getDateById(int $id): Date
     {
         return $this->dateRepository->getDateById($id);
+    }
+
+    public function getActiveEventDates(int $eventId): ?LengthAwarePaginator
+    {
+        return $this->dateRepository->getActiveEventDates($eventId);
     }
 }

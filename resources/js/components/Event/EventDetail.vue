@@ -1,5 +1,17 @@
 <template>
-    <div id="calendar-content" class="container bg-white py-4 px-2 h-auto">
+    <div id="calendar-content" class="container bg-white px-2 h-auto">
+        <div class="container p-xl-0">
+            <header class="row align-items-end pt-lg-2">
+                <div class="col">
+                    <div class="mb-2">
+                        <a href="/" class="font-weight-bold hover-reverse"
+                            ><span class="icon icon-arrow-left"></span
+                            >&nbsp;&nbsp;Přehled všech událostí</a
+                        >
+                    </div>
+                </div>
+            </header>
+        </div>
         <section class="event-detail">
             <div class="row">
                 <div class="col-lg-8">
@@ -21,7 +33,7 @@
                     >
                         <tbody>
                             <tr>
-                                <th scope="row">
+                                <th class="pl-0">
                                     {{ $t('event.first_date') }}:
                                 </th>
                                 <td>
@@ -31,7 +43,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">
+                                <th class="pl-0">
                                     {{ $t('event.last_date') }}:
                                 </th>
                                 <td>
@@ -39,7 +51,20 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">
+                                <th class="pl-0">
+                                    {{ $t('event.can_register') }}:
+                                </th>
+                                <td>
+                                    {{
+                                        $t(
+                                            'user_group.' +
+                                                props.event.user_group
+                                        )
+                                    }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="pl-0">
                                     {{ $t('event.contact_person') }}:
                                 </th>
                                 <td>
@@ -47,12 +72,7 @@
                                         :href="
                                             'mailto:' + props.event.author.email
                                         "
-                                    >
-                                        {{
-                                            props.event.author.first_name +
-                                            ' ' +
-                                            props.event.author.last_name
-                                        }}
+                                        >{{ props.event.contact_person }}
                                     </a>
                                 </td>
                             </tr>
@@ -67,70 +87,12 @@
                             alt="Alumni Homecoming VŠE"
                         />
                     </div>
-
-                    <div class="mb-4 event-share-links">
-                        <div class="btn-group mr-1">
-                            <button
-                                type="button"
-                                data-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                                class="btn btn-outline-primary border-0 px-1 mt-1 dropdown-toggle rounded-0 text-left"
-                            >
-                                <i class="fa fa-calendar mr-1"></i>Přidat do
-                                kalendáře
-                            </button>
-                            <div class="dropdown-menu">
-                                <a
-                                    href="/event/ical?date=4701&amp;period=202310"
-                                    class="dropdown-item"
-                                    ><i class="icon icon-calendar mr-1"></i>
-                                    Kalendářová událost (iCal)</a
-                                >
-                                <a
-                                    href="/event/add-to-google-calendar?date=4701&amp;period=202310"
-                                    class="dropdown-item"
-                                    target="_blank"
-                                    ><i class="icon icon-google mr-1"></i>
-                                    Google Kalendář</a
-                                >
-                            </div>
-                        </div>
-                        <div class="btn-group">
-                            <button
-                                type="button"
-                                data-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                                class="btn btn-outline-primary border-0 px-1 mt-1 dropdown-toggle rounded-0 text-left"
-                            >
-                                <i class="fa fa-share mr-1"></i> Sdílet...
-                            </button>
-                            <div class="dropdown-menu">
-                                <a
-                                    href="/event/share?network=facebook&amp;date=4701&amp;period=202310"
-                                    class="dropdown-item"
-                                    target="_blank"
-                                    ><i class="icon icon-facebook mr-1"></i
-                                    >Facebook</a
-                                >
-                                <a
-                                    href="/event/share?network=twitter&amp;date=4701&amp;period=202310"
-                                    class="dropdown-item"
-                                    target="_blank"
-                                    ><i class="icon icon-twitter mr-1"></i>
-                                    Twitter</a
-                                >
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
-            <p class="text-center">{{ props.event.description }}</p>
         </section>
     </div>
 
-    <DateList :dates="event.dates" />
+    <DateList :event-id="event.id" :has-user="hasUser" />
 </template>
 
 <script setup>
@@ -138,6 +100,7 @@ import { formatDate } from '../../utils/DateFormat'
 import DateList from '../Date/DateList.vue'
 
 const props = defineProps({
-    event: { type: Object, required: true }
+    event: { type: Object, required: true },
+    hasUser: { type: Number, required: true }
 })
 </script>

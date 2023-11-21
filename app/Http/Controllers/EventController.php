@@ -7,8 +7,10 @@ namespace App\Http\Controllers;
 use App\Enums\Event\EventStatusEnum;
 use App\Models\Date;
 use App\Models\Enrollment;
+use App\Services\DateFacade;
 use App\Services\EventFacade;
 use App\Services\UserFacade;
+use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 
 class EventController extends Controller
@@ -21,7 +23,7 @@ class EventController extends Controller
         return view('events');
     }
 
-    public function getEvents(EventFacade $eventFacade)
+    public function getEvents(EventFacade $eventFacade): JsonResponse
     {
         $events = $eventFacade->getPublishedEventsWithActiveDates();
 
@@ -47,5 +49,12 @@ class EventController extends Controller
         return view('event-detail', [
             'event' => $event
         ]);
+    }
+
+    public function getEventActiveDates(int $id, DateFacade $dateFacade): JsonResponse
+    {
+        $dates = $dateFacade->getActiveEventDates($id);
+
+        return response()->json($dates);
     }
 }

@@ -9,7 +9,8 @@
         "show-hint": "Zobrazit nápovědu",
         "author": "Autor",
         "created_at": "Vytvořeno",
-        "updated_at": "Naposledy upraveno"
+        "updated_at": "Naposledy upraveno",
+        "app_login": "Přihlásit se do systému"
     },
     "email": {
         "email": "Email"
@@ -38,7 +39,10 @@
         "show_participants": "Zobrazit účastníky",
         "participants_count": "Počet účastníků",
         "no_participants": "Žádní účastnící",
-        "upcoming": "Nadcházející termíny"
+        "upcoming": "Nadcházející termíny",
+        "no_dates": "Pro událost nejsou žádné nadcházející termíny",
+        "registration": "Registrace",
+        "withdraw_to": "Odhlašování do"
     },
     "tag": {
         "tag": "Vlastní pole",
