@@ -90,7 +90,7 @@ class EventRepository
         /** @var \App\Models\Event $event * */
         $events = Event::query()
             ->where('status', EventStatusEnum::PUBLISHED)
-            ->where('date_end_cache', '>=', Carbon::now())
+            ->where('date_end_cache', '>=', $now)
             ->orderBy('date_start_cache')
             ->paginate(10);
 
