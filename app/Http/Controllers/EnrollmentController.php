@@ -138,12 +138,8 @@ class EnrollmentController extends Controller
         DateFacade $dateFacade,
         UserFacade $userFacade
     ) {
-        dd($dateId);
+//        Session::flush();
         $user = $userFacade->getCurrentUser();
-
-        if (!$user) {
-            return redirect()->route('iframe.login');
-        }
 
         $date = $dateFacade->getDateById($dateId);
         $enrollmentInfo = collect([
@@ -152,11 +148,11 @@ class EnrollmentController extends Controller
             'event' => $date->event->name
         ]);
 
-        if ($user->cannot('enroll', [Enrollment::class, $date]) && $user->cannot('substituteEnroll', [Enrollment::class, $date]) ) {
-            Session::flash('message', __('app.enrollment.cannot_enroll'));
-
-            return redirect()->route('events.index');
-        }
+//        if ($user->cannot('enroll', [Enrollment::class, $date]) && $user->cannot('substituteEnroll', [Enrollment::class, $date]) ) {
+//            Session::flash('message', __('app.enrollment.cannot_enroll'));
+//
+//            return redirect()->route('events.index');
+//        }
 
         $fields = $eventFacade->getEventCustomFields($dateId);
 

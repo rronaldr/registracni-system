@@ -59,7 +59,7 @@ Route::get('/locale/get', [LanguageController::class, 'getLocale'])->name('local
 Route::get('/date/{id}/enroll/{email}', [EnrollmentController::class, 'signSubstituteByEmail'])->name('date.enroll.email');
 
 // Iframe routes
-Route::get('/external/login', [LoginController::class, 'iframeIndex'])->name('iframe.login');
+Route::get('/external/login', [LoginController::class, 'iframeIndex'])->name('iframe.login.index');
 
 Route::get('/external/enrollment/{id}', [EnrollmentController::class, 'iframeShow'])->middleware('iframe')->name('iframe.enrollment');
 //Route::post('/external/enrollment/{id]', [EnrollmentController::class, 'iframeShow'])->middleware('iframe');

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate;
+use Illuminate\Support\Facades\Session;
 
 class IframeAuth extends Authenticate
 {
@@ -14,9 +15,11 @@ class IframeAuth extends Authenticate
      */
     protected function redirectTo($request)
     {
-        dd($request->getPathInfo());
+        redirect()->setIntendedUrl(url($request->getPathInfo()));
+        Session::put('iframe', true);
+
         if (!$request->expectsJson()) {
-            return route('iframe.login');
+            return route('iframe.login.index');
         }
     }
 }

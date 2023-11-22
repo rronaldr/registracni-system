@@ -11,14 +11,22 @@ use App\Services\DateFacade;
 use App\Services\EventFacade;
 use App\Services\UserFacade;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
 class EventController extends Controller
 {
 
-    public function index(UserFacade $userFacade): view
+    public function index(UserFacade $userFacade)
     {
         $userFacade->assignRolesToUserFromEntitlements();
+
+        if (Session::has('iframe') && Session::get('iframe') === true) {
+            return redirect()->intended();
+        }
+
+//        dd(Session::all());
 
         return view('events');
     }
