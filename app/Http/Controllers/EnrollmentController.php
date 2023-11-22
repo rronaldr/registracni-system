@@ -131,4 +131,39 @@ class EnrollmentController extends Controller
 
         return redirect()->route('events.index');
     }
+
+    public function iframeShow(
+        int $dateId,
+        EventFacade $eventFacade,
+        DateFacade $dateFacade,
+        UserFacade $userFacade
+    ) {
+        dd($dateId);
+        $user = $userFacade->getCurrentUser();
+
+        if (!$user) {
+            return redirect()->route('iframe.login');
+        }
+
+        $date = $dateFacade->getDateById($dateId);
+        $enrollmentInfo = collect([
+            'date_start' => $date->date_start,
+            'date_end' => $date->date_end,
+            'event' => $date->event->name
+        ]);
+
+        if ($user->cannot('enroll', [Enrollment::class, $date]) && $user->cannot('substituteEnroll', [Enrollment::class, $date]) ) {
+            Session::flash('message', __('app.enrollment.cannot_enroll'));
+
+            return redirect()->route('events.index');
+        }
+
+        $fields = $eventFacade->getEventCustomFields($dateId);
+
+        return view('enrollment', [
+            'dateId' => $dateId,
+            'fields' => collect($fields->c_fields)->sortBy('id')->values(),
+            'info' => $enrollmentInfo
+        ]);
+    }
 }

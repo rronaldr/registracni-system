@@ -48,7 +48,6 @@ Route::get('/login', [LoginController::class, 'index'])->name('login.index');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/login/shibboleth', [LoginController::class, 'shibbolethLogin'])->name('login.shibboleth');
 Route::get('/login/graduate', [LoginController::class, 'graduateLogin'])->name('login.graduate');
-Route::get('/login/external', [LoginController::class, 'externalLogin'])->name('login.external');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/logout/external', [LoginController::class, 'logoutExternal'])->name('logout.external');
 Route::get('/register', [RegisterController::class, 'index'])->name('register.index');
@@ -58,3 +57,9 @@ Route::post('/register', [RegisterController::class, 'register'])->name('registe
 Route::get('/{locale}', [LanguageController::class, 'setLocale'])->name('locale');
 Route::get('/locale/get', [LanguageController::class, 'getLocale'])->name('locale.get');
 Route::get('/date/{id}/enroll/{email}', [EnrollmentController::class, 'signSubstituteByEmail'])->name('date.enroll.email');
+
+// Iframe routes
+Route::get('/external/login', [LoginController::class, 'iframeIndex'])->name('iframe.login');
+
+Route::get('/external/enrollment/{id}', [EnrollmentController::class, 'iframeShow'])->middleware('iframe')->name('iframe.enrollment');
+//Route::post('/external/enrollment/{id]', [EnrollmentController::class, 'iframeShow'])->middleware('iframe');
