@@ -60,6 +60,4 @@ Route::get('/date/{id}/enroll/{email}', [EnrollmentController::class, 'signSubst
 
 // Iframe routes
 Route::get('/external/login', [LoginController::class, 'iframeIndex'])->name('iframe.login.index');
-
 Route::get('/external/enrollment/{id}', [EnrollmentController::class, 'iframeShow'])->middleware('iframe')->name('iframe.enrollment');
-//Route::post('/external/enrollment/{id]', [EnrollmentController::class, 'iframeShow'])->middleware('iframe');
