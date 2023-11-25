@@ -138,7 +138,6 @@ class EnrollmentController extends Controller
         DateFacade $dateFacade,
         UserFacade $userFacade
     ) {
-//        Session::flush();
         $user = $userFacade->getCurrentUser();
 
         $date = $dateFacade->getDateById($dateId);
@@ -147,19 +146,19 @@ class EnrollmentController extends Controller
             'date_end' => $date->date_end,
             'event' => $date->event->name
         ]);
+        $canEnroll = true;
 
-//        if ($user->cannot('enroll', [Enrollment::class, $date]) && $user->cannot('substituteEnroll', [Enrollment::class, $date]) ) {
-//            Session::flash('message', __('app.enrollment.cannot_enroll'));
-//
-//            return redirect()->route('events.index');
-//        }
+        if ($user->cannot('enroll', [Enrollment::class, $date]) && $user->cannot('substituteEnroll', [Enrollment::class, $date]) ) {
+            $canEnroll = false;
+        }
 
         $fields = $eventFacade->getEventCustomFields($dateId);
 
-        return view('enrollment', [
+        return view('enrollment-iframe', [
             'dateId' => $dateId,
             'fields' => collect($fields->c_fields)->sortBy('id')->values(),
-            'info' => $enrollmentInfo
+            'info' => $enrollmentInfo,
+            'canEnroll' => $canEnroll
         ]);
     }
 }

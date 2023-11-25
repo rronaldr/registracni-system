@@ -23,10 +23,10 @@ class EventController extends Controller
         $userFacade->assignRolesToUserFromEntitlements();
 
         if (Session::has('iframe') && Session::get('iframe') === true) {
+            Session::forget('iframe');
+
             return redirect()->intended();
         }
-
-//        dd(Session::all());
 
         return view('events');
     }

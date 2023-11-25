@@ -23,6 +23,14 @@
                 <i class="fas fa-users"></i>
             </button>
             <button
+                :title="$t('date.copy')"
+                type="button"
+                class="btn-link text-info border-0 mr-1"
+                @click="copyIframe"
+            >
+                <i class="fas fa-copy"></i>
+            </button>
+            <button
                 :title="$t('app.edit')"
                 type="button"
                 class="btn-link text-info border-0 mr-1"
@@ -34,7 +42,11 @@
                 :title="$t('app.delete')"
                 type="button"
                 class="btn-link text-danger border-0"
-                @click="date.enrollments_count > 0 ? showModal = true : removeItem(null)"
+                @click="
+                    date.enrollments_count > 0
+                        ? (showModal = true)
+                        : removeItem(null)
+                "
             >
                 <i class="fas fa-trash"></i>
             </button>
@@ -74,11 +86,12 @@
 
 <script setup>
 import moment from 'moment'
-import { computed, ref } from 'vue'
+import { computed, inject, ref } from 'vue'
 import SubmitButton from '../../Form/SubmitButton.vue'
 import CustomModal from '../../CustomModal.vue'
 import BaseInput from '../../Form/BaseInput.vue'
 
+const APP_URL = inject('APP_URL')
 const emit = defineEmits(['showEnrollments', 'editDate', 'removeDate'])
 const props = defineProps({
     date: { type: Object, required: true }
@@ -109,5 +122,10 @@ function editItem() {
 
 function removeItem(blockReason) {
     emit('removeDate', props.date.id, blockReason)
+}
+
+function copyIframe() {
+    let iframeUrl = `<iframe src="${APP_URL}/external/enrollment/${props.date.id}" width="800" height="600" frameborder="0"></iframe>`
+    navigator.clipboard.writeText(iframeUrl)
 }
 </script>
