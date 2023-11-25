@@ -125,13 +125,13 @@ const props = defineProps({
     canEnroll: { type: Number, required: true },
     gdprLink: { type: URL, required: false, default: null }
 })
-props.canEnroll = Boolean(props.canEnroll)
+let enroll = Boolean(props.canEnroll)
 
 const APP_URL = inject('APP_URL')
 let form = reactive({})
 let errors = ref(null)
-let showForm = ref(props.canEnroll)
-let formMessage = !props.canEnroll
+let showForm = ref(enroll)
+let formMessage = !enroll
     ? ref(t('enrollment.cannot_enroll'))
     : ref(t('enrollment.enroll_success'))
 
