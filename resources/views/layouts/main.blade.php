@@ -3,7 +3,7 @@
 @include('layouts.navbar')
 
 <main class="container mt-2 mb-8" id="vueApp">
-    <h3 class="text-primary mb-2">{{ $title ?? '' }}</h3>
+    <h3 class="text-primary mb-2">@if(isset($hideTitle) && !$hideTitle) {{ $title ?? '' }} @endif</h3>
     @yield('content')
 </main>
 
