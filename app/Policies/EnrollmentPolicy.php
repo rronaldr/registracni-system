@@ -27,8 +27,8 @@ class EnrollmentPolicy
 
         return !$date->hasUserEnrolled($user->id)
             && ($date->getSignedCount() < $date->capacity || $date->capacity === -1)
-            && $date->enrollment_start <= $now
-            && $date->enrollment_end > $now
+            && $date->enrollment_start < $now
+            && $date->enrollment_end >= $now
             && $isUserGroup
             && !$userBlacklisted;
     }
@@ -44,8 +44,8 @@ class EnrollmentPolicy
         return $date->capacity !== -1
             && (bool) $date->substitute === true
             && $date->getSignedCount() >= $date->capacity
-            && $date->enrollment_start <= $now
-            && $date->enrollment_end > $now
+            && $date->enrollment_start < $now
+            && $date->enrollment_end >= $now
             && $isUserGroup
             && !$date->hasUserEnrolled($user->id)
             && !$userBlacklisted;

@@ -86,8 +86,7 @@ class DateRepository
         return Date::query()
             ->where('event_id', $eventId)
             ->withCount(['enrollments' => fn($q) => $q->where('state', EnrollmentStates::SIGNED)])
-            ->where('date_start', '>=', $now)
-            ->where('enrollment_start', '>=', $now)
+            ->where('enrollment_end', '>=', $now)
             ->paginate(5);
     }
 }
