@@ -43,7 +43,7 @@ class UserFacade
     {
         $user = $this->getCurrentUser();
 
-        if ($user === null || $user->shibboleth_id === null) {
+        if ($user === null) {
             return;
         }
 
@@ -55,17 +55,45 @@ class UserFacade
             $user->removeRole(Roles::STAFF);
         }
 
-        collect(explode(';', $user->entitlement))
-            ->each(function (string $entitlement) use ($user): void {
-                switch ($entitlement) {
-                    case 'student':
-                        $user->assignRole(Roles::STUDENT);
-                        break;
-                    case 'employee':
-                        $user->assignRole(Roles::STAFF);
-                        break;
-                }
-            });
+        // Assign role to alumni
+        if ($user->absolvent_id !== null) {
+            $user->assignRole(Roles::STUDENT);
+        }
+
+        // Assign role based on shibboleth entitlement
+        if ($user->shibboleth_id !== null) {
+            collect(explode(';', $user->entitlement))
+                ->each(function (string $entitlement) use ($user): void {
+                    switch ($entitlement) {
+                        case 'student':
+                            $user->assignRole(Roles::STUDENT);
+                            break;
+                        case 'employee':
+                            $user->assignRole(Roles::STAFF);
+                            break;
+                    }
+                });
+        }
+
+    }
+
+    public function getOrCreateAlumni(Collection $userData): User
+    {
+        $user = $this->userRepository->findUserByAlumniId($userData->get('id'));
+
+        if ($user !== null) {
+            return $user;
+        }
+
+        $user = new User();
+        $user->absolvent_id = $userData->get('id');
+        $user->first_name = $userData->get('firstname');
+        $user->last_name = $userData->get('lastname');
+        $user->display_name = $userData->get('fullname');
+        $user->email = $userData->get('email');
+        $user->save();
+
+        return $user;
     }
 
 }

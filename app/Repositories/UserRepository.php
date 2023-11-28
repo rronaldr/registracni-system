@@ -62,6 +62,14 @@ class UserRepository
         return $user;
     }
 
+    public function findUserByAlumniId(int $id): ?User
+    {
+        /** @var User $user */
+        $user = User::query()->where('absolvent_id', $id)->first();
+
+        return $user;
+    }
+
     public function getUsersEmailsAndLocaleByIds(array $userIds): Collection
     {
         return User::query()

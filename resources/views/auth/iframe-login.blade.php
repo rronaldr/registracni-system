@@ -50,7 +50,7 @@
                          aria-labelledby="login-shibboleth-tab">
                         <p class="mt-3 mb-2">{{ __('app.auth.graduate-hint') }}</p>
                         <div class="my-2">
-                            <a href="{{ route('login.graduate') }}" class="btn btn-primary py-1 px-2"
+                            <a href="{{ route('login.alumni') }}" class="btn btn-primary py-1 px-2"
                                role="button">{{ __('app.auth.login') }}</a>
                         </div>
                     </div>

@@ -47,7 +47,8 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/login', [LoginController::class, 'index'])->name('login.index');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/login/shibboleth', [LoginController::class, 'shibbolethLogin'])->name('login.shibboleth');
-Route::get('/login/graduate', [LoginController::class, 'graduateLogin'])->name('login.graduate');
+Route::get('/login/alumni', [LoginController::class, 'alumniLogin'])->name('login.alumni');
+Route::get('/login/alumni/process', [LoginController::class, 'processAlumniLogin'])->name('login.alumni.process');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/logout/external', [LoginController::class, 'logoutExternal'])->name('logout.external');
 Route::get('/register', [RegisterController::class, 'index'])->name('register.index');
