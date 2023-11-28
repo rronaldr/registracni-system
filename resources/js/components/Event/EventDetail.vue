@@ -91,8 +91,12 @@
                     </div>
                 </div>
             </div>
-            <div v-if="calendarData.description != null" class="row">
-                {{ calendarData.description }}
+            <div class="row">
+                <div
+                    v-if="calendarData.description != null"
+                    class="col-lg-12"
+                    v-html="calendarData.description"
+                ></div>
             </div>
         </section>
     </div>
