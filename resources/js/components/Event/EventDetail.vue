@@ -6,7 +6,7 @@
                     <div class="mb-2">
                         <a href="/" class="font-weight-bold hover-reverse"
                             ><span class="icon icon-arrow-left"></span
-                            >&nbsp;&nbsp;Přehled všech událostí</a
+                            >&nbsp;&nbsp;{{ $t('event.overview') }}</a
                         >
                     </div>
                 </div>
@@ -79,15 +79,20 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-lg-5 col-xl-4 pl-lg-0">
+                <div
+                    v-if="calendarData.thumbnail != null"
+                    class="col-lg-5 col-xl-4 pl-lg-0"
+                >
                     <div class="text-center mb-1 event-detail-image">
                         <img
                             class="mw-100 mx-auto"
-                            src="https://picsum.photos/450/300"
-                            alt="Alumni Homecoming VŠE"
+                            :src="calendarData.thumbnail"
                         />
                     </div>
                 </div>
+            </div>
+            <div v-if="calendarData.description != null" class="row">
+                {{ calendarData.description }}
             </div>
         </section>
     </div>
@@ -98,9 +103,25 @@
 <script setup>
 import { formatDate } from '../../utils/DateFormat'
 import DateList from '../Date/DateList.vue'
+import axios from 'axios'
+import { reactive } from 'vue'
 
 const props = defineProps({
     event: { type: Object, required: true },
     hasUser: { type: Number, required: true }
 })
+let calendarData = reactive({ description: null, thumbnail: null })
+
+getCalendarData()
+
+async function getCalendarData() {
+    let response = await axios.get(
+        `https://kalendar.vse.cz/api/event/${props.event.calendar_id}`
+    )
+
+    console.log(response.data)
+
+    calendarData.description = response.data.text
+    calendarData.thumbnail = response.data.image
+}
 </script>

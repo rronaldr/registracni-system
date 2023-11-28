@@ -124,7 +124,8 @@
         "last_date": "Poslední termín",
         "event_type_error": "Nelze změnit typ události, jelikož typ Navazující části jedné události, mohou mít vytvořený jen jeden termín.",
         "event_blacklist_hint": "Xname uživatelů, které chcete zablokovat",
-        "can_register": "Mohou se přihlásit"
+        "can_register": "Mohou se přihlásit",
+        "overview": "Přehled všech událostí"
     },
     "blacklist": {
         "blocked_until": "Blokace do",
