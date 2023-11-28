@@ -123,8 +123,6 @@ async function getCalendarData() {
         `https://kalendar.vse.cz/api/event/${props.event.calendar_id}`
     )
 
-    console.log(response.data)
-
     calendarData.description = response.data.text
     calendarData.thumbnail = response.data.image
 }
