@@ -21,17 +21,17 @@ class ExcelController extends Controller
 
     public function exportUsers(int $id, EventFacade $eventFacade)
     {
-        return Excel::download(new UsersExport($id, $eventFacade), 'seznam_ucastniku.xlsx');
+        return Excel::download(new UsersExport($id, $eventFacade), 'seznam_ucastniku.xls');
     }
 
     public function exportUsersEmail(int $id, EventFacade $eventFacade)
     {
-        return Excel::download(new UsersEmailExport($id, $eventFacade), 'seznam_ucastniku_email.xlsx');
+        return Excel::download(new UsersEmailExport($id, $eventFacade), 'seznam_ucastniku_email.xls');
     }
     
     public function exportEvent(int $id, EventFacade $eventFacade)
     {
-        return Excel::download(new EventExport($id, $eventFacade), 'export_udalosti.xlsx', );
+        return Excel::download(new EventExport($id, $eventFacade), 'export_udalosti.xls', );
     }
 
     public function importEvent(Request $request)
@@ -61,6 +61,6 @@ class ExcelController extends Controller
 
     public function downloadImportTemplate(): StreamedResponse
     {
-        return Storage::disk('public')->download('dist/import_template.xlsx');
+        return Storage::disk('public')->download('dist/import_template.xls');
     }
 }
