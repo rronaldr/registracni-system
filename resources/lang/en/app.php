@@ -149,7 +149,7 @@ return [
         'email' => 'Email',
         'xname' => 'Xname',
         'users' => 'Users',
-        'roles' => 'User role role'
+        'roles' => 'User role'
     ],
     'templates' => [
         'template' => 'Template',
