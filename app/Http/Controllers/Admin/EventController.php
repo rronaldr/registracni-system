@@ -15,6 +15,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
@@ -25,6 +26,7 @@ class EventController extends Controller
 {
     public function index(EventFacade $eventFacade, UserFacade $userFacade): View
     {
+        Artisan::call('view:clear');
         $user = $userFacade->getCurrentUser();
 
         if ($user->can('event-see-all')) {

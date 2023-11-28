@@ -15,15 +15,16 @@ Route::middleware(['auth', 'can:admin-access'])->group(function () {
     Route::middleware('can:blacklist-access')->group(function () {
         Route::get('/blacklist', [BlacklistController::class, 'index'])->name('admin.blacklist');
         Route::post('/blacklist/store', [BlacklistController::class, 'store'])->name('admin.blacklist.store');
-        Route::get('/blacklist/{id}/users', [
-            BlacklistController::class, 'getBlacklistUsers'
-        ])->middleware('can:event-edit')->name('admin.blacklist.users');
-        Route::put('/blacklist/{id}',
-            [BlacklistController::class, 'update'])->middleware('can:event-edit')->name('admin.blacklist.update');
-        Route::delete('/blacklist/{id}/{user}', [
-            BlacklistController::class, 'destroy'
-        ])->middleware('can:blacklist-user-delete')->name('admin.blacklist.destroy');
     });
+
+    Route::get('/blacklist/{id}/users', [
+        BlacklistController::class, 'getBlacklistUsers'
+    ])->middleware('can:event-edit')->name('admin.blacklist.users');
+    Route::put('/blacklist/{id}',
+        [BlacklistController::class, 'update'])->middleware('can:event-edit')->name('admin.blacklist.update');
+    Route::delete('/blacklist/{id}/{user}', [
+        BlacklistController::class, 'destroy'
+    ])->middleware('can:event-edit')->name('admin.blacklist.destroy');
 
     // Date routes
     Route::get('/dates/{id}', [DateController::class, 'getEventDates'])->name('admin.dates');
