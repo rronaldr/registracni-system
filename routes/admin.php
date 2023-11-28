@@ -17,9 +17,9 @@ Route::middleware(['auth', 'can:admin-access'])->group(function () {
         Route::post('/blacklist/store', [BlacklistController::class, 'store'])->name('admin.blacklist.store');
         Route::get('/blacklist/{id}/users', [
             BlacklistController::class, 'getBlacklistUsers'
-        ])->middleware('can:blacklist-edit')->name('admin.blacklist.users');
+        ])->middleware('can:event-edit')->name('admin.blacklist.users');
         Route::put('/blacklist/{id}',
-            [BlacklistController::class, 'update'])->middleware('can:blacklist-edit')->name('admin.blacklist.update');
+            [BlacklistController::class, 'update'])->middleware('can:event-edit')->name('admin.blacklist.update');
         Route::delete('/blacklist/{id}/{user}', [
             BlacklistController::class, 'destroy'
         ])->middleware('can:blacklist-user-delete')->name('admin.blacklist.destroy');
