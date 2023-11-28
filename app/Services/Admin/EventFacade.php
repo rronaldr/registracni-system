@@ -230,7 +230,7 @@ class EventFacade
         return [
             'name' => $data['name'],
             'subtitle' => $data['subtitle'],
-            'calendar_id' => is_int($data['calendar_id']) ? $data['calendar_id'] : $this->parseCalendarEventId($data['calendar_id']),
+            'calendar_id' => is_int((int) $data['calendar_id']) ? $data['calendar_id'] : $this->parseCalendarEventId($data['calendar_id']),
             'contact_person' => $data['contact']['person'],
             'contact_email' => $data['contact']['email'],
             'type' => $data['type'],
@@ -246,7 +246,7 @@ class EventFacade
 
     private function parseCalendarEventId($calendar): ?int
     {
-        $pattern = '/\bdate=([0-9]{4})\b/';
+        $pattern = '/\bevent=([0-9]{4})\b/';
 
         if (preg_match($pattern, $calendar, $matches)) {
             $dateParam = $matches[1]; // The date parameter value will be in $matches[1]
