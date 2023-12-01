@@ -241,6 +241,7 @@ export const formatEnrollments = function (data) {
             enrollment_id: enrollment.id,
             xname: user.xname,
             email: user.email,
+            name: user.first_name + ' ' + user.last_name,
             enrolled: moment(
                 enrollment.created_at,
                 'YYYY-MM-DD HH:mm:ss'

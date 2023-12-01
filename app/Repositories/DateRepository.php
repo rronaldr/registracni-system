@@ -65,7 +65,7 @@ class DateRepository
             ->where('id', $id)
             ->with([
                 'enrollments' => fn($q) => $q->select('id', 'date_id', 'user_id', 'state', 'c_fields', 'created_at'),
-                'enrollments.user' => fn($q) => $q->select('id', 'xname', 'email')
+                'enrollments.user' => fn($q) => $q->select('id', 'xname', 'email', 'first_name', 'last_name')
             ])
             ->first();
 

@@ -150,7 +150,8 @@
         "assign_role": "Přiřaďte roli",
         "not_found": "Uživatel nenalezen",
         "user_no_roles": "Uživatel nemá přidělenou žádnou roli",
-        "role_name": "Role přiřazené uživateli"
+        "role_name": "Role přiřazené uživateli",
+        "name": "Jméno"
     },
     "user_group": {
         "1": "Všichni",

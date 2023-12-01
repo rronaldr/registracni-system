@@ -1,13 +1,12 @@
 <template>
-    <div class="table-responsive">
+    <div class="table-responsive overflow-scroll">
         <table class="table table-striped">
             <thead>
                 <tr>
                     <td>{{ $t('enrollment.xname') }}</td>
                     <td>{{ $t('enrollment.email') }}</td>
                     <td>{{ $t('enrollment.enrolled') }}</td>
-                    <td>{{ $t('enrollment.state') }}</td>
-                    <td>{{ $t('enrollment.c_fields') }}</td>
+                    <td>{{ $t('user.name') }}</td>
                     <td></td>
                 </tr>
             </thead>

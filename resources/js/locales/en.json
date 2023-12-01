@@ -149,7 +149,8 @@
         "assign_role": "Assign a role",
         "not_found": "User not found",
         "user_no_roles": "User has no role assigned",
-        "role_name": "Roles assigned to user"
+        "role_name": "Roles assigned to user",
+        "name": "Name"
     },
     "user_group": {
         "1": "Everyone",

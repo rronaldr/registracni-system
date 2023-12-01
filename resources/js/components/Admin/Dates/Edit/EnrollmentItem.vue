@@ -3,8 +3,7 @@
         <td>{{ enrollment.xname }}</td>
         <td>{{ enrollment.email }}</td>
         <td>{{ enrollment.enrolled }}</td>
-        <td>{{ $t('enrollment.statuses.' + enrollment.state) }}</td>
-        <td>{{ enrollment.custom_fields }}</td>
+        <td>{{ enrollment.name }}</td>
         <td>
             <button
                 v-if="enrollment.state !== 3"
