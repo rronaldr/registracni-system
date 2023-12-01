@@ -48,6 +48,8 @@ return [
         'block_reason' => 'Důvod blokace',
         'blocked_until' => 'Blokace do',
         'global-blacklist' => 'Globální blacklist',
+        'global-blacklist-users' => 'Uživatelé na globálním blacklistu',
+        'no_users' => 'Na globálním blacklistu nejsou žádní uživatelé',
     ],
     'date' => [
         'date' => 'Termín',
@@ -144,6 +146,7 @@ return [
         'default' => 'Výchozí hodnota',
     ],
     'user' => [
+        'name' => 'Jméno',
         'first_name' => 'Jméno',
         'last_name' => 'Příjmení',
         'email' => 'Email',

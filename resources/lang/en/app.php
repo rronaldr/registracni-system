@@ -48,6 +48,8 @@ return [
         'block_reason' => 'Block reason',
         'blocked_until' => 'Blocked until',
         'global-blacklist' => 'Global blacklist',
+        'global-blacklist-users' => 'Global blacklist users',
+        'no_users' => 'There are no users on the global blacklist',
     ],
     'date' => [
         'date' => 'Date',
@@ -144,6 +146,7 @@ return [
         'default' => 'Default value',
     ],
     'user' => [
+        'name' => 'Name',
         'first_name' => 'First name',
         'last_name' => 'Surname',
         'email' => 'Email',

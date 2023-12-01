@@ -51,7 +51,7 @@
                 type="button"
                 class="btn btn-outline-secondary btn-sm mr-1"
                 :href="ADMIN_URL + '/events/' + event.id + '/users/export'"
-            ><i class="fas fa-users"></i> {{ $t('event.export_users') }}</a
+                ><i class="fas fa-users"></i> {{ $t('event.export_users') }}</a
             >
             <a
                 type="button"
@@ -185,8 +185,16 @@
 
         <div class="row mb-3">
             <label class="col-sm-2"
-                >{{ $t('event.global_blacklist') }}<br
-            /></label>
+            >{{ $t('event.global_blacklist') }}
+                <span
+                    v-html="
+                        $t('blacklist.global_users_link', {
+                            link: `${ADMIN_URL}/blacklist/users/global`
+                        })
+                    "
+                ></span
+                ><br
+                /></label>
             <div class="col-sm-10">
                 <BaseCheckbox
                     v-model="event.global_blacklist"
@@ -425,7 +433,6 @@ import UserGroupSelect from './UserGroupSelect.vue'
 import EditDateForm from '../Dates/Edit/EditDateForm.vue'
 import EditTagForm from '../Tags/Edit/EditTagForm.vue'
 import { editEventMap } from '../../../utils/DataMapper'
-import EventStatusSelect from './EventStatusSelect.vue'
 import { formatDate } from '../../../utils/DateFormat'
 import TemplateSelect from '../TemplateTags/TemplateSelect.vue'
 import SubmitButton from '../Form/SubmitButton.vue'

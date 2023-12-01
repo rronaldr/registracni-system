@@ -141,7 +141,8 @@
         "users": "Xname uživatelů",
         "users_on_blacklist": "Uživatele na blacklistu",
         "users_hint": "Zde je seznam uživatelů, kteří jsou na globálním blacklistu",
-        "no_users": "Žádní uživatelé na blacklistu"
+        "no_users": "Žádní uživatelé na blacklistu",
+        "global_users_link": "<a href=\"{link}\" target=\"_blank\" title=\"GlobalBlacklist\">(seznam uživatelů)</a>"
     },
     "user": {
         "xname": "Xname",

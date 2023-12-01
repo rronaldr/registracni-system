@@ -26,6 +26,8 @@ Route::middleware(['auth', 'can:admin-access'])->group(function () {
         BlacklistController::class, 'destroy'
     ])->middleware('can:event-edit')->name('admin.blacklist.destroy');
 
+    Route::get('/blacklist/users/global', [BlacklistController::class, 'showGlobalUsers'])->name('admin.blacklist.global.users');
+
     // Date routes
     Route::get('/dates/{id}', [DateController::class, 'getEventDates'])->name('admin.dates');
     Route::post('/dates/{id}/create', [DateController::class, 'store'])->name('admin.dates.store');

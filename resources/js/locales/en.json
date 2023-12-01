@@ -140,7 +140,8 @@
         "users": "Xname of users",
         "users_on_blacklist": "Users on blacklist",
         "users_hint": "Here is the list of users who are on the global blacklist",
-        "no_users": "No users on blacklist"
+        "no_users": "No users on blacklist",
+        "global_users_link": "<a href=\"{link}\" target=\"_blank\" title=\"GlobalBlacklist\">(list of users)</a>"
     },
     "user": {
         "xname": "Xname",

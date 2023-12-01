@@ -49,4 +49,14 @@ class BlacklistController extends Controller
         }
 
     }
+
+    public function showGlobalUsers(BlacklistFacade $blacklistFacade): view
+    {
+        $blacklist = $blacklistFacade->getGlobalBlacklist();
+        $users = $blacklistFacade->getBlacklistUsersPaginated($blacklist->id);
+
+        return view('admin.blacklist-global-users', [
+            'users' => $users
+        ]);
+    }
 }

@@ -112,7 +112,15 @@
 
         <div class="row mb-3">
             <label class="col-sm-2"
-                >{{ $t('event.global_blacklist') }}<br
+                >{{ $t('event.global_blacklist') }}
+                <span
+                    v-html="
+                        $t('blacklist.global_users_link', {
+                            link: `${ADMIN_URL}/blacklist/users/global`
+                        })
+                    "
+                ></span
+                ><br
             /></label>
             <div class="col-sm-10">
                 <BaseCheckbox
