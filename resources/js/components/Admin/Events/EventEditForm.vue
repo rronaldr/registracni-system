@@ -158,12 +158,6 @@
             </div>
         </div>
 
-        <div class="row mb-3">
-            <div class="col">
-                <EventStatusSelect v-model="event.status" />
-            </div>
-        </div>
-
         <div class="line"></div>
         <br />
 
