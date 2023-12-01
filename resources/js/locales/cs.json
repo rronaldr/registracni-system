@@ -43,7 +43,10 @@
         "no_dates": "Pro událost nejsou žádné nadcházející termíny",
         "registration": "Registrace",
         "withdraw_to": "Odhlašování do",
-        "copy": "Zkopírovat odkaz pro vložení na web"
+        "copy": "Zkopírovat odkaz pro vložení na web",
+        "save": "Uložit termín",
+        "online": "Online forma",
+        "form": "Forma"
     },
     "tag": {
         "tag": "Vlastní pole",
@@ -86,14 +89,14 @@
     },
     "event": {
         "info": "Informace o události",
-        "tag_buttons": "Tlačítka pro přidání vlastních polí do šablony",
+        "tag_buttons": "Tlačítka pro přidání vlastních polí do notifikace",
         "name": "Název",
         "event_name" : "Název události",
         "subtitle": "Upřesnění názvu",
         "calendar": "ID události v kalendáři VŠE nebo odkaz na událost",
         "contact_person": "Kontaktní osoba",
         "contact_email": "Kontaktní email",
-        "fill_user_contact": "Vyplnit údaje",
+        "fill_user_contact": "Vyplnit moje údaje",
         "external_login": "Povolit registraci na událost externistům",
         "notifications": "Povolit notifikace (přihlášení na událost, plná kapacita atd.)",
         "settings": "Nastavení události",
@@ -106,8 +109,12 @@
         "enable_event_blacklist": "Zapnout vlastní blacklist pro událost",
         "blacklist_modal_title": "Jak přidat uživatele na blacklist?",
         "blacklist_modal_text": "Jednotlivé xname uživatelů oddělete čárkou, středníkem nebo novým řádkem.",
+        "calendar_modal_title": "K čemu slouží propojení události z Kalendáře VŠE?",
+        "calendar_modal_text": "Díky propojení ID události z Kalendáře VŠE, bude v registračním systému zobrazen náhledový obrázek a popisek v detailu u událost jako v kalendáři.",
         "template": "Šablona",
         "template_content": "Obsah šablony",
+        "registration_notification": "Notifikace o registraci",
+        "notification_text": "Text notifikace",
         "user_group": "Skupina uživatelů",
         "user_group_placeholder": "Vyberte kdo se může na událost přihlásit",
         "status": "Stav",
@@ -125,7 +132,8 @@
         "event_type_error": "Nelze změnit typ události, jelikož typ Navazující části jedné události, mohou mít vytvořený jen jeden termín.",
         "event_blacklist_hint": "Xname uživatelů, které chcete zablokovat",
         "can_register": "Mohou se přihlásit",
-        "overview": "Přehled všech událostí"
+        "overview": "Přehled všech událostí",
+        "save_publish": "Uložit a publikovat"
     },
     "blacklist": {
         "blocked_until": "Blokace do",

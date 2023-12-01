@@ -32,6 +32,14 @@
 
         <div class="row mb-3">
             <div class="col">
+                <a
+                    class="link-secondary float-end"
+                    data-toggle="modal"
+                    data-target="#calendarModal"
+                >
+                    <i class="fas fa-info-circle"></i>
+                    {{ $t('app.show-hint') }} </a
+                ><br />
                 <BaseInput
                     v-model="event.calendar_id"
                     :label="$t('event.calendar')"
@@ -42,7 +50,7 @@
         </div>
 
         <div class="row mb-3">
-            <div class="col-lg-5 col-sm-6">
+            <div class="col-lg-4 col-sm-6">
                 <BaseInput
                     v-model="event.contact.person"
                     :label="$t('event.contact_person')"
@@ -51,7 +59,7 @@
                     :required="true"
                 />
             </div>
-            <div class="col-lg-5 col-sm-6">
+            <div class="col-lg-4 col-sm-6">
                 <BaseInput
                     v-model="event.contact.email"
                     :label="$t('event.contact_email')"
@@ -61,7 +69,7 @@
                 />
             </div>
 
-            <div class="col-lg-2 col-sm-12 d-flex flex-column">
+            <div class="col-lg-4 col-sm-12 d-flex flex-column mt-1">
                 <button
                     v-show="
                         event.contact.person === null ||
@@ -173,6 +181,33 @@
         </div>
         <!-- Custom blacklist modal end -->
 
+        <!-- Custom calendar id modal start -->
+        <div id="calendarModal" class="modal fade" role="dialog" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            {{ $t('event.calendar_modal_title') }}
+                        </h5>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-start">
+                        <p>
+                            {{ $t('event.calendar_modal_text') }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Custom calendar id end -->
+
         <div class="line"></div>
         <br />
 
@@ -228,7 +263,7 @@
                                     aria-expanded="false"
                                     aria-controls="collapseTwo"
                                 >
-                                    {{ $t('event.template') }}
+                                    {{ $t('event.registration_notification') }}
                                 </button>
                             </h5>
                         </div>
@@ -259,7 +294,7 @@
                                             for="subtitle"
                                             class="form-label"
                                             >{{
-                                                $t('event.template_content')
+                                                $t('event.notification_text')
                                             }}</label
                                         >
                                         <TinyEditor
@@ -273,13 +308,26 @@
                 </div>
             </div>
         </div>
-        <FormButtons :route="ADMIN_URL + '/events'" />
+        <div class="mb-3 row">
+            <div class="col">
+                <BackButton :route="ADMIN_URL + '/events'" />
+            </div>
+            <div class="col text-right">
+                <SubmitButton />
+                <button
+                    type="button"
+                    class="btn btn-outline-primary mx-1 mb-2 text-center"
+                    @click="submitEvent(true)"
+                >
+                    <i class="fas fa-save"></i> {{ $t('event.save_publish') }}
+                </button>
+            </div>
+        </div>
     </form>
 </template>
 
 <script setup>
 import { inject, reactive, ref, watch } from 'vue'
-import FormButtons from '../Form/FormButtons.vue'
 import axios from 'axios'
 import BaseInput from '../Form/BaseInput.vue'
 import BaseTextarea from '../Form/BaseTextarea.vue'
@@ -298,6 +346,8 @@ import {
 import BaseCheckbox from '../Form/BaseCheckbox.vue'
 import TemplateSelect from '../TemplateTags/TemplateSelect.vue'
 import ErrorMessages from '../../ErrorMessages.vue'
+import BackButton from '../Form/BackButton.vue'
+import SubmitButton from '../Form/SubmitButton.vue'
 
 const ADMIN_URL = inject('ADMIN_URL')
 const props = defineProps({
@@ -326,10 +376,11 @@ let showAddDate = ref(true)
 
 getApprovedTemplates()
 
-function submitEvent() {
+function submitEvent(publish = false) {
     let csrf = document.getElementsByName('_token')[0].value
     let data = {
         event: event,
+        publish: publish,
         dates: dates.value,
         tags: tags.value,
         _token: csrf

@@ -68,6 +68,7 @@
                     <div class="row g-2 mb-3">
                         <div class="col-6">
                             <BaseInput
+                                v-if="!date.online"
                                 v-model="date.location"
                                 :label="$t('date.location')"
                                 type="text"
@@ -98,6 +99,13 @@
                                     id="substitute"
                                     v-model="date.substitute"
                                     :label="$t('date.substitute')"
+                                />
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <BaseCheckbox
+                                    id="online"
+                                    v-model="date.online"
+                                    :label="$t('date.online')"
                                 />
                             </div>
                         </div>

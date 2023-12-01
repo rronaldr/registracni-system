@@ -12,7 +12,11 @@
                     >
                 </h5>
                 <p class="text-sm">
-                    <span class="font-weight-bold">Místnost:</span>
+                    <span class="font-weight-bold">{{
+                        date.location === 'online'
+                            ? $t('date.form')
+                            : $t('date.location')
+                    }}</span>
                     {{ date.location }}
                 </p>
             </div>

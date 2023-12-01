@@ -105,6 +105,14 @@
 
         <div class="row mb-3">
             <div class="col">
+                <a
+                    class="link-secondary float-end"
+                    data-toggle="modal"
+                    data-target="#calendarModal"
+                >
+                    <i class="fas fa-info-circle"></i>
+                    {{ $t('app.show-hint') }} </a
+                ><br />
                 <BaseInput
                     v-model="event.calendar_id"
                     :label="$t('event.calendar')"
@@ -236,6 +244,33 @@
         </div>
         <!-- Custom blacklist modal end -->
 
+        <!-- Custom calendar id modal start -->
+        <div id="calendarModal" class="modal fade" role="dialog" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            {{ $t('event.calendar_modal_title') }}
+                        </h5>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-start">
+                        <p>
+                            {{ $t('event.calendar_modal_text') }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Custom calendar id end -->
+
         <div class="line"></div>
         <br />
 
@@ -299,7 +334,7 @@
                                     aria-expanded="false"
                                     aria-controls="collapseTwo"
                                 >
-                                    {{ $t('event.template') }}
+                                    {{ $t('event.registration_notification') }}
                                 </button>
                             </h5>
                         </div>
@@ -330,7 +365,7 @@
                                             for="subtitle"
                                             class="form-label"
                                             >{{
-                                                $t('event.template_content')
+                                                $t('event.notification_text')
                                             }}</label
                                         >
                                         <TinyEditor

@@ -130,6 +130,7 @@ class DateFacade
             'date.enrollment_to_time' => 'required|date_format:H:i',
             'date.withdraw_date' => 'required|date',
             'date.withdraw_time' => 'required|date_format:H:i',
+            'date.online' => 'boolean'
         ];
     }
 
@@ -137,7 +138,7 @@ class DateFacade
     {
         return [
             'name' => $data['name'] ?? null,
-            'location' => $data['location'],
+            'location' => $data['online'] ? 'online' : $data['location'],
             'capacity' => !isset($data['unlimited_capacity']) || !$data['unlimited_capacity'] ? $data['capacity'] : -1,
             'substitute' => $data['substitute'] ?? false,
             'date_start' => DateFormatter::getDatetimeFromDateAndTime($data['date_from'], $data['time_from']),

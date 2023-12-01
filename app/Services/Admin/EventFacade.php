@@ -35,6 +35,7 @@ class EventFacade
     {
         $data = $request->all();
         $eventData = $data['event'];
+        $publish = $data['publish'];
         $dates = !empty($data['dates']) ? $data['dates'] : null;
         $tags = !empty($data['tags']) ? $data['tags'] : null;
         $blacklist = $eventData['event_blacklist']
@@ -46,7 +47,7 @@ class EventFacade
             $this->blacklistFacade->addUsersToBlacklist($blacklist->id, $blacklistUsers);
         }
 
-        $event = $this->createEventFromRequest($eventData, $tags, $blacklist);
+        $event = $this->createEventFromRequest($eventData, $publish, $tags, $blacklist);
 
         if (isset($dates)) {
             $this->dateFacade->createDatesFromEvent($dates, $event->id);
@@ -143,7 +144,7 @@ class EventFacade
             'event.contact.person' => 'required|string',
             'event.contact.email' => 'required|email',
             'dates' => 'required|array',
-            'dates.*.location' => 'required|string',
+            'dates.*.location' => 'sometimes:string|required_if:dates.*.online,==,false',
             'dates.*.capacity' => 'required_if:dates.*.unlimited_capacity,==,false|sometimes:numeric',
             'dates.*.date_from' => 'required|date',
             'dates.*.time_from' => 'required|date_format:H:i',
@@ -204,7 +205,7 @@ class EventFacade
         return $this->eventRepository->getEventForExportById($id);
     }
 
-    private function createEventFromRequest(array $event, ?array $customFields, ?Blacklist $blacklist): Event
+    private function createEventFromRequest(array $event, bool $publish, ?array $customFields, ?Blacklist $blacklist): Event
     {
         return Event::create([
             'blacklist_id' => $blacklist->id ?? null,
@@ -221,7 +222,7 @@ class EventFacade
             'user_group' => (int) $event['user_group'],
             'c_fields' => $customFields ?? null,
             'user_id' => auth()->user()->id,
-            'status' => EventStatusEnum::DRAFT,
+            'status' => $publish ? EventStatusEnum::PUBLISHED : EventStatusEnum::DRAFT,
         ]);
     }
 

@@ -43,7 +43,10 @@
         "no_dates": "There are currently no dates for this event",
         "registration": "Enrollment",
         "withdraw_to": "Withdraw until",
-        "copy": "Copy link to paste on web"
+        "copy": "Copy link to paste on web",
+        "save": "Save date",
+        "online": "Online form",
+        "form": "Form"
     },
     "tag": {
         "tag": "Custom field",
@@ -86,14 +89,14 @@
     },
     "event": {
         "info": "Event info",
-        "tag_buttons": "Buttons to add custom fields to template",
+        "tag_buttons": "Buttons to add custom fields to notification",
         "name": "Title",
         "event_name" : "Event title",
         "subtitle": "Subtitle",
         "calendar": "ID of event in event calendar or URL link",
         "contact_person": "Contact person",
         "contact_email": "Contact email",
-        "fill_user_contact": "Fill data",
+        "fill_user_contact": "Fill my data",
         "external_login": "Allow external users to enroll",
         "settings": "Event settings",
         "type": "Event type",
@@ -105,8 +108,12 @@
         "enable_event_blacklist": "Enable event blacklist",
         "blacklist_modal_title": "How to add users to blacklist?",
         "blacklist_modal_text": "Separate each user xname with a comma, semicolon or newline.",
+        "calendar_modal_title": "What is the purpose of linking events from the VŠE Calendar?",
+        "calendar_modal_text": "By linking the event ID from the VŠE Calendar, the registration system will display a preview image and caption in the event detail as in the calendar.",
         "template": "Template",
         "template_content": "Template content",
+        "registration_notification": "Registration notification",
+        "notification_text": "Notification text",
         "user_group": "User group",
         "user_group_placeholder": "Select which group of users can participate",
         "status": "Status",
@@ -124,7 +131,8 @@
         "event_type_error": "It is not possible to change the type of the event, because only one term can be created for this event type.",
         "event_blacklist_hint": "Xname of the users you want to block",
         "can_register": "Can register",
-        "overview": "Event overview"
+        "overview": "Event overview",
+        "save_publish": "Save and publish"
     },
     "blacklist": {
         "blocked_until": "Blocked until",

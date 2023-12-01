@@ -3,7 +3,12 @@
         <div v-if="dates != null && dates.length > 0" class="row">
             <h2 class="px-2">{{ $t('date.upcoming') }}</h2>
             <div class="col-lg-12 mb-2">
-                <DateItem v-for="date in dates" :key="date.id" :date="date" :has-user="hasUser" />
+                <DateItem
+                    v-for="date in dates"
+                    :key="date.id"
+                    :date="date"
+                    :has-user="hasUser"
+                />
 
                 <Bootstrap4Pagination
                     :data="paginationData"

@@ -26,6 +26,7 @@ export const dateObject = {
     capacity: null,
     unlimited_capacity: false,
     substitute: false,
+    online: false,
     date_from: null,
     time_from: null,
     date_to: null,
