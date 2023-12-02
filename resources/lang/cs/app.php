@@ -94,6 +94,7 @@ return [
         'import-file' => 'Import události z .xls souboru',
         'import-template-hint' => 'Zde si můžete stáhnout vzorový dokument pro import události',
         'import-template-download' => 'stáhnout vzor.',
+        'imported' => 'Událost byla naimportována. Prosím zkontrolujte údaje a dokončete proces vytváření události.',
         'show-dates' => 'Zobrazit termíny',
         'show-all-participants' => 'Zobrazit všechny účastníky',
         'delete-date-error' => 'Nelze odstranit událost. Na události jsou přihlášeni účastníci.',

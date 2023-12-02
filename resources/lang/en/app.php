@@ -94,6 +94,7 @@ return [
         'import-file' => 'Event import from .xls file',
         'import-template-hint' => 'Here you can download a sample document for importing an event',
         'import-template-download' => 'download sample.',
+        'imported' => 'The event has been imported. Please check the data and complete the event creation process.',
         'show-dates' => 'See dates',
         'show-all-participants' => 'See all participants',
         'delete-date-error' => 'You cannot delete this event. Participants are enrolled for the event.',

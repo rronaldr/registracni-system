@@ -61,6 +61,8 @@ class ExcelController extends Controller
             $event = $import->importedData->get('event');
             $dates = $import->importedData->get('dates');
 
+            Session::flash('message', __('app.event.imported'));
+
             return view('admin.event-create', [
                 'event' => $event,
                 'dates' => $dates
