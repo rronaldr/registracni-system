@@ -191,6 +191,7 @@
         "cannot_enroll": "You cannot register for this event.",
         "enroll_success": "You were registered for the event.",
         "send": "Send registration",
-        "sign_off": "Sign off"
+        "sign_off": "Sign off",
+        "show_fields": "Show filled values"
     }
 }

@@ -192,6 +192,7 @@
         "cannot_enroll": "Na tuto událost se nemůžete přihlásit.",
         "enroll_success": "Byli jste přihlášeni na událost.",
         "send": "Odeslat registraci",
-        "sign_off": "Odhlásit se"
+        "sign_off": "Odhlásit se",
+        "show_fields": "Zobrazit vyplněné hodnoty"
     }
 }

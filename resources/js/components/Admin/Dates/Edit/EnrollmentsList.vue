@@ -27,7 +27,7 @@ import EnrollmentItem from './EnrollmentItem.vue'
 
 const emit = defineEmits(['signOut'])
 defineProps({
-    enrollments: { type: Array, required: true }
+    enrollments: { type: [Array, null], required: true }
 })
 
 function signOut(dateId, enrollmentId, blockReason) {

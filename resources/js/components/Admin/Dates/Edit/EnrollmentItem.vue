@@ -6,6 +6,14 @@
         <td>{{ enrollment.name }}</td>
         <td>
             <button
+                type="button"
+                :title="$t('enrollment.show_fields')"
+                class="btn-link text-primary border-0 mr-1"
+                @click="showCustomFields = !showCustomFields"
+            >
+                <i class="fas fa-tags"></i>
+            </button>
+            <button
                 v-if="enrollment.state !== 3"
                 :title="$t('enrollment.sign_out')"
                 type="button"
@@ -16,6 +24,9 @@
             </button>
         </td>
     </tr>
+    <div v-if="showCustomFields" class="font-weight-bold">
+        {{ enrollment.custom_fields }}
+    </div>
 
     <Teleport to="body">
         <CustomModal :show="showModal" @close="showModal = false">
@@ -39,7 +50,7 @@
                                 }}</small>
                             </p>
 
-                            <SubmitButton />
+                            <SubmitButton label="enrollment.sign_out" />
                         </form>
                     </div>
                 </div>
@@ -60,6 +71,7 @@ const props = defineProps({
 })
 let showModal = ref(false)
 let blockReason = ref(null)
+let showCustomFields = ref(false)
 
 function removeItem() {
     showModal.value = false

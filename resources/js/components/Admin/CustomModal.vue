@@ -62,7 +62,7 @@ defineProps({
     background-color: #fff;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     transition: all 0.3s ease;
-    min-width: 30%;
+    min-width: 50%;
     max-height: 100%;
     overflow-y: auto;
 }

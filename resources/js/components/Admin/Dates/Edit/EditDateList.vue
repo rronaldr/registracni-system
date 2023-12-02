@@ -38,6 +38,7 @@
             </template>
             <template #modal-footer>
                 <a
+                    v-if="enrollments != null"
                     type="button"
                     class="btn btn-outline-secondary btn-sm mr-1"
                     :href="
@@ -50,6 +51,7 @@
                     {{ $t('event.export_users') }}</a
                 >
                 <a
+                    v-if="enrollments != null"
                     type="button"
                     class="btn btn-outline-secondary btn-sm mr-1"
                     :href="
