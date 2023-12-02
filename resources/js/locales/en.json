@@ -192,6 +192,7 @@
         "enroll_success": "You were registered for the event.",
         "send": "Send registration",
         "sign_off": "Sign off",
-        "show_fields": "Show filled values"
+        "show_fields": "Show filled values",
+        "search_user": "Search user"
     }
 }

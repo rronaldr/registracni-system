@@ -227,29 +227,35 @@ export const formatEventDates = function (dates) {
 }
 
 export const formatEnrollments = function (data) {
-    return data.enrollments.map(function (enrollment) {
-        let user = enrollment.user
-        let customFields = null
+    return data.enrollments
+        .map(function (enrollment) {
+            if (enrollment.user == null) {
+                return null
+            }
 
-        if (enrollment.c_fields !== null) {
-            customFields = enrollment.c_fields.map(function (field) {
-                return `${field.label}: ${field.value}`
-            })
-        }
+            let user = enrollment.user
+            let customFields = null
 
-        return {
-            date_id: data.id,
-            enrollment_id: enrollment.id,
-            xname: user.xname,
-            email: user.email,
-            name: user.first_name + ' ' + user.last_name,
-            enrolled: moment(
-                enrollment.created_at,
-                'YYYY-MM-DD HH:mm:ss'
-            ).format('D.M.YYYY HH:mm'),
-            state: enrollment.state,
-            custom_fields:
-                customFields !== null ? customFields.toString() : null
-        }
-    })
+            if (enrollment.c_fields !== null) {
+                customFields = enrollment.c_fields.map(function (field) {
+                    return `${field.label}: ${field.value}`
+                })
+            }
+
+            return {
+                date_id: data.id,
+                enrollment_id: enrollment.id,
+                xname: user.xname,
+                email: user.email,
+                name: user.first_name + ' ' + user.last_name,
+                enrolled: moment(
+                    enrollment.created_at,
+                    'YYYY-MM-DD HH:mm:ss'
+                ).format('D.M.YYYY HH:mm'),
+                state: enrollment.state,
+                custom_fields:
+                    customFields !== null ? customFields.toString() : null
+            }
+        })
+        .filter((enrollment) => enrollment != null)
 }

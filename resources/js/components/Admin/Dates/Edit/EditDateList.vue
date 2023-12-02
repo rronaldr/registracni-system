@@ -33,12 +33,13 @@
             <template #modal-body>
                 <EnrollmentsList
                     :enrollments="enrollments"
+                    :date-id="dateId"
                     @sign-out="signOut"
+                    @search="getEnrollmentsForDate"
                 />
             </template>
-            <template #modal-footer>
+            <template v-if="enrollments != null && enrollments.length > 0" #modal-footer>
                 <a
-                    v-if="enrollments != null"
                     type="button"
                     class="btn btn-outline-secondary btn-sm mr-1"
                     :href="
@@ -51,7 +52,6 @@
                     {{ $t('event.export_users') }}</a
                 >
                 <a
-                    v-if="enrollments != null"
                     type="button"
                     class="btn btn-outline-secondary btn-sm mr-1"
                     :href="
@@ -83,6 +83,7 @@ defineProps({
 })
 let showModal = ref(false)
 let enrollments = ref(null)
+let dateId = ref(null)
 
 function editDate(id) {
     emit('editDate', id)
@@ -99,9 +100,13 @@ function signOut(dateId, enrollmentId, blockReason) {
     getEnrollmentsForDate(dateId)
 }
 
-async function getEnrollmentsForDate(id) {
+async function getEnrollmentsForDate(id, search = null) {
     showModal.value = true
-    let response = await axios.get(ADMIN_URL + '/dates/' + id + '/enrollments')
-    enrollments.value = formatEnrollments(response.data)
+    let response = await axios.get(
+        `${ADMIN_URL}/dates/${id}/enrollments${search ? `/${search}` : '/'}`
+    )
+    enrollments.value = formatEnrollments(response.data.enrollments)
+    dateId.value = response.data.date_id
+
 }
 </script>

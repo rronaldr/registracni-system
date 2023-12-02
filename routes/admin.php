@@ -34,7 +34,7 @@ Route::middleware(['auth', 'can:admin-access'])->group(function () {
     Route::put('/dates/{id}/update', [DateController::class, 'update'])->name('admin.dates.update');
     Route::post('/dates/{id}/delete', [DateController::class, 'destroy'])->name('admin.dates.destroy');
     Route::get('/dates/{id}/event', [DateController::class, 'getEventDates'])->name('admin.events.dates');
-    Route::get('/dates/{id}/enrollments',
+    Route::get('/dates/{id}/enrollments/{search?}',
         [DateController::class, 'getDateEnrollments'])->name('admin.dates.enrollments');
     Route::post('/dates/enrollments/{id}/signoff',
         [DateController::class, 'signOffEnrollmentUser'])->name('admin.dates.enrollments.signoff');

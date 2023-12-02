@@ -193,6 +193,7 @@
         "enroll_success": "Byli jste přihlášeni na událost.",
         "send": "Odeslat registraci",
         "sign_off": "Odhlásit se",
-        "show_fields": "Zobrazit vyplněné hodnoty"
+        "show_fields": "Zobrazit vyplněné hodnoty",
+        "search_user": "Vyhledat uživatele"
     }
 }

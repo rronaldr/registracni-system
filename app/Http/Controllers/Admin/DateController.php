@@ -20,11 +20,14 @@ class DateController extends Controller
         return response()->json($dates, 200);
     }
 
-    public function getDateEnrollments(int $id, DateFacade $dateFacade): JsonResponse
+    public function getDateEnrollments(int $id, ?string $search = null, DateFacade $dateFacade): JsonResponse
     {
-        $enrollments = $dateFacade->getDateEnrollments($id);
+        $enrollments = $dateFacade->getDateEnrollments($id, $search);
 
-        return response()->json($enrollments, 200);
+        return response()->json([
+            'enrollments' => $enrollments,
+            'date_id' => $id
+        ], 200);
     }
 
     public function store(int $id, Request $request, DateFacade $dateFacade, EventFacade $eventFacade): JsonResponse

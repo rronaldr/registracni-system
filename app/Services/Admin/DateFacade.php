@@ -96,9 +96,9 @@ class DateFacade
             });
     }
 
-    public function getDateEnrollments(int $id): Date
+    public function getDateEnrollments(int $id, ?string $search): Date
     {
-        return $this->dateRepository->getDateEnrollments($id);
+        return $this->dateRepository->getDateEnrollments($id, $search);
     }
 
     public function signOffUser(int $id): void
