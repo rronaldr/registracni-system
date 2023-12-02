@@ -200,7 +200,7 @@
                         </div>
                     </div>
 
-                    <SubmitButton />
+                    <SubmitButton label="date.save" />
                 </div>
             </form>
         </div>
