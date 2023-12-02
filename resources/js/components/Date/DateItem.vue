@@ -41,6 +41,8 @@
                         >{{ $t('enrollment.enrolled_count') }}:
                         {{ date.enrollments_count + '/' + date.capacity }}</span
                     >
+                </div>
+                <div class="row text-center">
                     <a
                         v-if="date.can_enroll"
                         :href="APP_URL + '/enrollment/' + date.id"
@@ -52,7 +54,7 @@
                         :href="APP_URL + '/login'"
                         class="btn btn-sm btn-primary"
                     >
-                        {{ $t('app.app_login') }}
+                        {{ $t('enrollment.enroll') }}
                     </a>
                     <p v-else class="text-danger text-left">
                         {{ $t('enrollment.cant_enroll') }}
