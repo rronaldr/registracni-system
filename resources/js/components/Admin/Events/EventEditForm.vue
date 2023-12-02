@@ -33,46 +33,6 @@
     </div>
     <ErrorMessages v-if="errors" :errors="errors" />
 
-    <div class="row mb-3 justify-content-right">
-        <div class="col-12 text-right">
-            <a
-                type="button"
-                class="btn btn-outline-secondary btn-sm mr-1"
-                :href="ADMIN_URL + '/events/' + event.id + '/duplicate'"
-                ><i class="fas fa-copy"></i> {{ $t('event.duplicate') }}</a
-            >
-            <a
-                type="button"
-                class="btn btn-outline-secondary btn-sm mr-1"
-                :href="ADMIN_URL + '/events/' + event.id + '/export'"
-                ><i class="fas fa-file-export"></i> {{ $t('event.export') }}</a
-            >
-            <a
-                type="button"
-                class="btn btn-outline-secondary btn-sm mr-1"
-                :href="ADMIN_URL + '/events/' + event.id + '/users/export'"
-                ><i class="fas fa-users"></i> {{ $t('event.export_users') }}</a
-            >
-            <a
-                type="button"
-                class="btn btn-outline-secondary btn-sm mr-1"
-                :href="
-                    ADMIN_URL + '/events/' + event.id + '/users/export-email'
-                "
-                ><i class="fas fa-envelope"></i>
-                {{ $t('event.export_emails') }}</a
-            >
-            <button
-                type="button"
-                class="btn btn-outline-success btn-sm mr-1"
-                @click="showCollabModal = true"
-            >
-                <i class="fas fa-user-plus"></i>
-                {{ $t('event.add_collaborator') }}
-            </button>
-        </div>
-    </div>
-
     <form
         method="post"
         enctype="multipart/form-data"

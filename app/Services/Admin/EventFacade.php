@@ -205,6 +205,13 @@ class EventFacade
         return $this->eventRepository->getEventForExportById($id);
     }
 
+    public function changeEventStatus(int $eventId, int $status): void
+    {
+        $event = $this->getEventById($eventId);
+        $event->status = $status;
+        $event->save();
+    }
+
     private function createEventFromRequest(array $event, bool $publish, ?array $customFields, ?Blacklist $blacklist): Event
     {
         return Event::create([

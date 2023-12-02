@@ -10,7 +10,8 @@
         "author": "Author",
         "created_at": "Created at",
         "updated_at": "Updated at",
-        "app_login": "Login to system"
+        "app_login": "Login to system",
+        "not_set": "Not set"
     },
     "email": {
         "email": "Email"
@@ -95,6 +96,7 @@
         "event_name" : "Event title",
         "subtitle": "Subtitle",
         "calendar": "ID of event in event calendar or URL link",
+        "calendar_id": "Calendar event ID",
         "contact_person": "Contact person",
         "contact_email": "Contact email",
         "fill_user_contact": "Fill my data",
@@ -133,7 +135,9 @@
         "event_blacklist_hint": "Xname of the users you want to block",
         "can_register": "Can register",
         "overview": "Event overview",
-        "save_publish": "Save and publish"
+        "save_publish": "Save and publish",
+        "change_concept": "Change event status to concept",
+        "publish_event": "Publish event"
     },
     "blacklist": {
         "blocked_until": "Blocked until",

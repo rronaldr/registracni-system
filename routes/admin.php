@@ -49,6 +49,7 @@ Route::middleware(['auth', 'can:admin-access'])->group(function () {
             [EventController::class, 'create'])->middleware('can:event-create')->name('admin.events.create');
         Route::post('/events/store',
             [EventController::class, 'store'])->middleware('can:event-create')->name('admin.events.store');
+        Route::get('/events/{id}/detail', [EventController::class, 'detail'])->name('admin.events.detail');
         Route::get('/events/{id}/edit',
             [EventController::class, 'edit'])->middleware('can:event-edit')->name('admin.events.edit');
         Route::put('/events/{id}/update',
@@ -71,6 +72,7 @@ Route::middleware(['auth', 'can:admin-access'])->group(function () {
             EventController::class, 'destroyEventTag'
         ])->middleware('can:event-delete')->name('admin.events.tags.delete');
         Route::post('/events/{id}/collaborate', [EventController::class, 'addEventCollaborator'])->name('admin.events.collaborate');
+        Route::post('/events/{id}/status', [EventController::class, 'changeEventStatus'])->name('admin.events.status');
     });
 
     // Template routes

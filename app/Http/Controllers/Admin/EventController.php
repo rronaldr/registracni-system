@@ -70,7 +70,23 @@ class EventController extends Controller
         }
     }
 
-    public function edit(string $id, EventFacade $eventFacade, UserFacade $userFacade)
+    public function detail(string $id, EventFacade $eventFacade, UserFacade $userFacade): view
+    {
+        $event = $eventFacade->getEventById((int) $id);
+        $event->load('author');
+
+        $user = $event->last_changed_by === null
+            ? null :
+            $userFacade->getUserById($event->last_changed_by)->getFullname();
+
+        return view('admin.event-detail', [
+            'event' => $event,
+            'last_changed' => $user ?? null,
+            'can_view' => auth()->user()->can('view', $event)
+        ]);
+    }
+
+    public function edit(string $id, EventFacade $eventFacade, UserFacade $userFacade): view
     {
         $event = $eventFacade->getEventById((int) $id);
         $event->load('author');
@@ -238,6 +254,21 @@ class EventController extends Controller
         } catch (\Exception $e) {
             return response()->json(['errors' => $e->getMessage()], 400);
         }
+    }
+
+    public function changeEventStatus(int $id, Request $request, EventFacade $eventFacade): JsonResponse
+    {
+        $validator = Validator::make($request->get('data'), [
+            'status' => 'required|numeric'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        $eventFacade->changeEventStatus($id, $request->get('data')['status']);
+
+        return response()->json(null, 204);
     }
 
 }

@@ -57,7 +57,7 @@ class DateRepository
             ->paginate(10);
     }
 
-    public function getDateEnrollments(int $id, ?string $search): Date
+    public function getDateEnrollments(int $id, ?string $search = null): Date
     {
         /** @var Date $date */
         $date = Date::query()

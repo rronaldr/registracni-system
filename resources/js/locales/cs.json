@@ -10,7 +10,8 @@
         "author": "Autor",
         "created_at": "Vytvořeno",
         "updated_at": "Naposledy upraveno",
-        "app_login": "Přihlásit se do systému"
+        "app_login": "Přihlásit se do systému",
+        "not_set": "Nenastaveno"
     },
     "email": {
         "email": "Email"
@@ -95,6 +96,7 @@
         "event_name" : "Název události",
         "subtitle": "Upřesnění názvu",
         "calendar": "ID události v kalendáři VŠE nebo odkaz na událost",
+        "calendar_id": "ID události v kalendáři",
         "contact_person": "Kontaktní osoba",
         "contact_email": "Kontaktní email",
         "fill_user_contact": "Vyplnit moje údaje",
@@ -134,7 +136,11 @@
         "event_blacklist_hint": "Xname uživatelů, které chcete zablokovat",
         "can_register": "Mohou se přihlásit",
         "overview": "Přehled všech událostí",
-        "save_publish": "Uložit a publikovat"
+        "save_publish": "Uložit a publikovat",
+        "enabled": "Zapnut",
+        "disabled": "Vypnut",
+        "change_concept": "Změnit stav události na koncept",
+        "publish_event": "Publikovat událost"
     },
     "blacklist": {
         "blocked_until": "Blokace do",

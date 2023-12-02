@@ -35,7 +35,7 @@
                 <tbody>
                 @foreach($events as $event)
                     <tr>
-                        <td><a href="{{ route('admin.events.edit', ['id' => $event->id]) }}"
+                        <td><a href="{{ route('admin.events.detail', ['id' => $event->id]) }}"
                                class="link-primary">{{ $event->name }}</a></td>
                         <td>
                             <span class="fa fa-circle @if($event->status === 1) text-success @else text-secondary @endif"></span> {{ __('app.event.status.'.$event->status) }}
@@ -55,9 +55,11 @@
                             </a>
                         </td>
                         <td class="text-right">
-                            <a href="{{ route('admin.events.edit', ['id' => $event->id]) }}" class="text-primary px-1"
+                            <a href="{{ route('admin.events.detail', ['id' => $event->id]) }}" class="text-primary mr-1"
+                               title="{{__('app.event.detail')}}"><i class="fas fa-eye"></i></a>
+                            <a href="{{ route('admin.events.edit', ['id' => $event->id]) }}" class="text-primary mr-1"
                                title="{{__('app.actions.edit')}}"><i class="fas fa-pen"></i></a>
-                            <a href="{{ route('admin.events.duplicate', ['id' => $event->id]) }}" class="text-info px-1"
+                            <a href="{{ route('admin.events.duplicate', ['id' => $event->id]) }}" class="text-info mr-1"
                                title="{{__('app.actions.duplicate')}}"><i class="fas fa-copy"></i></a>
                             <form class="d-inline" action="{{ route('admin.events.destroy', ['id' => $event->id]) }}"
                                   method="post">
