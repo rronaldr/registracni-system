@@ -84,4 +84,15 @@ class EnrollmentRepository
 
         return $enrollment;
     }
+
+    public function getEnrollmentByDateAndUser(int $dateId, int $userId): ?Enrollment
+    {
+        /** @var Enrollment $enrollment */
+        $enrollment = Enrollment::query()
+            ->where('date_id', $dateId)
+            ->where('user_id', $userId)
+            ->first();
+
+        return $enrollment;
+    }
 }

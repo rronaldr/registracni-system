@@ -36,7 +36,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/enrollment/{date_id}', [EnrollmentController::class, 'show'])->name('enrollment.show');
     Route::post('/enrollment/{date_id}', [EnrollmentController::class, 'store'])->name('enrollment.store');
     Route::get('/enrollment/user/{id}', [EnrollmentController::class, 'getUserEnrollments'])->name('enrollment.user');
-    Route::post('/enrollment/{id}/signoff', [EnrollmentController::class, 'signOff'])->name('enrollment.user.singoff');
+    Route::post('/enrollment/{id}/signoff', [EnrollmentController::class, 'signOff'])->name('enrollment.user.signoff');
+    Route::post('/enrollment/{id}/signoff/json', [EnrollmentController::class, 'signOffJson'])->name('enrollment.user.signoff.json');
 
     Route::get('/change-password', [UserController::class, 'changePassword'])->name('auth.change-password');
     Route::post('/change-password', [UserController::class, 'storeChangedPassword'])->name('auth.change-password.store');

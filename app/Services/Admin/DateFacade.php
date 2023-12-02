@@ -130,7 +130,7 @@ class DateFacade
             'date.enrollment_to_time' => 'required|date_format:H:i',
             'date.withdraw_date' => 'required|date',
             'date.withdraw_time' => 'required|date_format:H:i',
-            'date.online' => 'boolean'
+            'date.online' => 'boolean|sometimes'
         ];
     }
 

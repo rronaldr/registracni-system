@@ -46,7 +46,8 @@
         "copy": "Zkopírovat odkaz pro vložení na web",
         "save": "Uložit termín",
         "online": "Online forma",
-        "form": "Forma"
+        "form": "Forma",
+        "unlimited_registration": "Neomezená kapacita termínu"
     },
     "tag": {
         "tag": "Vlastní pole",
@@ -189,6 +190,8 @@
         "gdpr_agree": "Registrací na událost souhlasím se <a href=\"{link}\" title=\"GDPR\">zásadami zpracování osobních údajů</a>",
         "form": "Registrační formulář",
         "cannot_enroll": "Na tuto událost se nemůžete přihlásit.",
-        "enroll_success": "Byli jste přihlášeni na událost."
+        "enroll_success": "Byli jste přihlášeni na událost.",
+        "send": "Odeslat registraci",
+        "sign_off": "Odhlásit se"
     }
 }

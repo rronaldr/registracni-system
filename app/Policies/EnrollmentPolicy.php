@@ -53,7 +53,7 @@ class EnrollmentPolicy
 
     public function signOff(User $user, Enrollment $enrollment): bool
     {
-        return $enrollment->date->withdraw_end >= Carbon::now() && $enrollment->state !== EnrollmentStates::SIGNED_OFF;
+        return $enrollment->date->withdraw_end >= Carbon::now();
     }
 
     private function checkUserBelongsToGroup(User $user, int $userGroup): bool

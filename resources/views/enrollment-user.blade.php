@@ -31,7 +31,7 @@
                         <td>{{ __('app.enrollment.state.'.$enrollment->state) }}</td>
                         <td>
                             @can('signOff', $enrollment)
-                                <form method="POST" action="{{ route('enrollment.user.singoff', $enrollment->id) }}">
+                                <form method="POST" action="{{ route('enrollment.user.signoff', $enrollment->id) }}">
                                     @csrf
                                     <button class="btn-link border-0 pe-auto" type="submit">{{ __('app.enrollment.sign-out') }}</button>
                                 </form>

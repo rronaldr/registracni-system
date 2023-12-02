@@ -46,7 +46,8 @@
         "copy": "Copy link to paste on web",
         "save": "Save date",
         "online": "Online form",
-        "form": "Form"
+        "form": "Form",
+        "unlimited_registration": "Unlimited capacity"
     },
     "tag": {
         "tag": "Custom field",
@@ -188,6 +189,8 @@
         "gdpr_agree": "By enrolling for the event, I agree to <a href=\"{link}\" title=\"GDPR\">privacy policy</a>",
         "form": "Registration form",
         "cannot_enroll": "You cannot register for this event.",
-        "enroll_success": "You were registered for the event."
+        "enroll_success": "You were registered for the event.",
+        "send": "Send registration",
+        "sign_off": "Sign off"
     }
 }

@@ -37,16 +37,19 @@
             </div>
             <div class="col-md-2">
                 <div class="row text-center">
-                    <span
-                        >{{ $t('enrollment.enrolled_count') }}:
-                        {{ date.enrollments_count + '/' + date.capacity }}</span
-                    >
+                    <div v-if="date.capacity === -1">
+                        {{ $t('date.unlimited_registration') }}
+                    </div>
+                    <div v-else>
+                        {{ $t('enrollment.enrolled_count') }}:
+                        {{ date.enrollments_count + '/' + date.capacity }}
+                    </div>
                 </div>
-                <div class="row text-center">
+                <div class="row">
                     <a
                         v-if="date.can_enroll"
                         :href="APP_URL + '/enrollment/' + date.id"
-                        class="btn btn-primary"
+                        class="btn btn-sm btn-primary"
                         >{{ enrollText }}</a
                     >
                     <a
@@ -56,6 +59,15 @@
                     >
                         {{ $t('enrollment.enroll') }}
                     </a>
+                    <button
+                        v-else-if="
+                            date.can_sign_off != null && date.can_sign_off
+                        "
+                        class="btn btn-primary btn-sm"
+                        @click="signOffUser()"
+                    >
+                        {{ $t('enrollment.sign_off') }}
+                    </button>
                     <p v-else class="text-danger text-left">
                         {{ $t('enrollment.cant_enroll') }}
                     </p>
@@ -69,6 +81,7 @@
 import moment from 'moment/moment'
 import { inject } from 'vue'
 import { useI18n } from 'vue-i18n'
+import axios from 'axios'
 
 const { t } = useI18n({})
 let props = defineProps({
@@ -79,6 +92,7 @@ let props = defineProps({
 const APP_URL = inject('APP_URL')
 
 let enrollText =
+    props.date.capacity === -1 ||
     props.date.enrollments_count < props.date.capacity
         ? t('enrollment.enroll')
         : t('enrollment.enroll_substitute')
@@ -86,6 +100,17 @@ let enrollText =
 const formatDate = function (date) {
     if (date) {
         return moment(String(date)).format('DD.MM.YYYY HH:mm')
+    }
+}
+
+async function signOffUser() {
+    if (props.date.enrollment_id != null) {
+        let enrollmentId = props.date.enrollment_id
+        await axios
+            .post(`${APP_URL}/enrollment/${enrollmentId}/signoff/json`)
+            .then(() => {
+                location.reload()
+            })
     }
 }
 </script>

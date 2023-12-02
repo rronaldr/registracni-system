@@ -11,6 +11,7 @@ use App\Services\EmailFacade;
 use App\Services\EnrollmentFacade;
 use App\Services\EventFacade;
 use App\Services\UserFacade;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -31,7 +32,8 @@ class EnrollmentController extends Controller
         $enrollmentInfo = collect([
             'date_start' => $date->date_start,
             'date_end' => $date->date_end,
-            'event' => $date->event->name
+            'event' => $date->event->name,
+            'event_id' => $date->event->id
             ]);
 
         if ($user->cannot('enroll', [Enrollment::class, $date]) && $user->cannot('substituteEnroll', [Enrollment::class, $date]) ) {
@@ -115,6 +117,23 @@ class EnrollmentController extends Controller
         Session::flash('message', __('app.enrollment.signed-off'));
 
         return redirect()->back();
+    }
+
+    public function signOffJson(int $id, EnrollmentFacade $enrollmentFacade): JsonResponse
+    {
+        $enrollment = $enrollmentFacade->getEnrollmentById($id);
+
+        if (auth()->user()->cannot('signOff',$enrollment)){
+            Session::flash('message', __('app.enrollment.sign-off-error'));
+
+            return response()->json(null, 400);
+        }
+
+        Session::flash('message', __('app.enrollment.signed-off'));
+
+        $enrollmentFacade->signOffUser($enrollment);
+
+        return response()->json(null, 204);
     }
 
     public function signSubstituteByEmail(int $id, string $email, EnrollmentFacade $enrollmentFacade): RedirectResponse

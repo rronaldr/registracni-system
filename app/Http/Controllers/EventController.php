@@ -55,8 +55,18 @@ class EventController extends Controller
 
         if (auth()->check()) {
             $user = auth()->user();
+
             $dates->getCollection()->transform(function (Date $date) use ($user) {
-                $date->can_enroll = $user->can('enroll',[Enrollment::class, $date]) || $user->can('substituteEnroll', [Enrollment::class, $date]);
+                $enrollment = $enrollment = $date->enrollments()->where('user_id', $user->id)->first();
+                $date->can_enroll = $user->can('enroll', [Enrollment::class, $date]) || $user->can('substituteEnroll',
+                        [Enrollment::class, $date]);
+
+                if ($enrollment !== null) {
+                    $date->can_sign_off = $date->hasUserEnrolled($user->id) && $user->can('signOff',
+                            [$enrollment]);
+                    $date->enrollment_id = $enrollment->id;
+                }
+
                 return $date;
             });
         }

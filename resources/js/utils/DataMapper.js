@@ -220,7 +220,8 @@ export const formatEventDates = function (dates) {
             withdraw_date:
                 withdrawTo !== null ? withdrawTo.format(dateFormat) : null,
             withdraw_time:
-                withdrawTo !== null ? withdrawTo.format(timeFormat) : null
+                withdrawTo !== null ? withdrawTo.format(timeFormat) : null,
+            online: date.location === 'online'
         }
     })
 }

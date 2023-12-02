@@ -49,12 +49,21 @@ class EnrollmentFacade
             $state = EnrollmentStates::SUBSTITUTE;
         }
 
-        $enrollment = Enrollment::create([
-            'user_id' => $user->id,
-            'date_id' => $date->id,
-            'state' => $state,
-            'c_fields' => $enrollmentData
-        ]);
+        if ($this->checkEnrollmentExists($dateId, $user->id)) {
+            $enrollment = $this->enrollmentRepository->getEnrollmentByDateAndUser($dateId, $user->id);
+            $enrollment->update([
+                'state' => $state,
+                'c_fields' => $enrollmentData
+            ]);
+            $enrollment->refresh();
+        } else {
+            $enrollment = Enrollment::create([
+                'user_id' => $user->id,
+                'date_id' => $date->id,
+                'state' => $state,
+                'c_fields' => $enrollmentData
+            ]);
+        }
 
         return $enrollment;
     }
@@ -134,6 +143,13 @@ class EnrollmentFacade
         $firstSubstituteEnrollment->save();
 
         $this->emailFacade->sendSubstituteEnrolled($date, $firstSubstituteEnrollment->user);
+    }
+
+    private function checkEnrollmentExists(int $dateId, int $userId): bool
+    {
+        $enrollment = $this->enrollmentRepository->getEnrollmentByDateAndUser($dateId, $userId);
+
+        return $enrollment !== null;
     }
 
 }

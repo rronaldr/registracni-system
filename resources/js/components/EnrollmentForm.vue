@@ -1,6 +1,6 @@
 <template>
-    <div class="container-fluid w-50">
-        <div class="form-container bg-white rounded shadow mt-4 py-2 px-4">
+    <div class="container-fluid w-75">
+        <div class="form-container bg-white shadow mt-4 py-2 px-4">
             <div class="row p-2">
                 <div class="col-12">
                     <h3>{{ $t('enrollment.form') }}</h3>
@@ -97,9 +97,14 @@
                                     })
                                 "
                             ></p>
-                            <button class="btn btn-primary" type="submit">
-                                {{ $t('app.submit') }}
-                            </button>
+                            <div class="px-1">
+                                <span class="mr-1">
+                                    <BackButton
+                                        :route="`${APP_URL}/events/${info.event_id}`"
+                                    />
+                                </span>
+                                <SubmitButton label="enrollment.send" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -118,6 +123,8 @@ import BaseRadioGroup from './Admin/Form/BaseRadioGroup.vue'
 import BaseTextarea from './Admin/Form/BaseTextarea.vue'
 import ErrorMessages from './ErrorMessages.vue'
 import { formatDate } from '../utils/DateFormat'
+import SubmitButton from './Admin/Form/SubmitButton.vue'
+import BackButton from './Admin/Form/BackButton.vue'
 
 const props = defineProps({
     dateId: { type: Number, required: true },

@@ -116,7 +116,9 @@ const props = defineProps({
 })
 let calendarData = reactive({ description: null, thumbnail: null })
 
-getCalendarData()
+if (props.event.calendar_id != null) {
+    getCalendarData()
+}
 
 async function getCalendarData() {
     let response = await axios.get(
