@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
 class EventImport implements ToCollection
@@ -16,7 +17,7 @@ class EventImport implements ToCollection
         $this->importedData->put('event', $eventData);
 
         // Imported excel format dates start
-        $dates = $rows->slice(9);
+        $dates = $rows->slice(5);
 
         if($dates->isNotEmpty()) {
             $formattedDates = $dates->map(function (Collection $date) {
@@ -29,6 +30,8 @@ class EventImport implements ToCollection
 
     private function mapEventKeys(Collection $eventData): Collection
     {
+        $eventData = $this->transformEventData($eventData);
+
         return collect([
             'name' => $eventData[0],
             'subtitle' => $eventData[1],
@@ -36,11 +39,27 @@ class EventImport implements ToCollection
             'contact_person' => $eventData[3],
             'contact_email' => $eventData[4],
             'type' => $eventData[5],
-            'status' => $eventData[6],
-            'global_blacklist' => $eventData[7],
-            'event_blacklist' => $eventData[8],
-            'user_group' => $eventData[9],
+            'global_blacklist' => $eventData[6],
+            'event_blacklist' => $eventData[7],
+            'user_group' => $eventData[8],
         ]);
+    }
+
+    private function transformEventData(Collection $eventData): Collection
+    {
+        return $eventData->map(function ($data, int $key) {
+            // Event type and user group
+            if (in_array($key, [5,8])) {
+                return (int) Str::substr($data, 0, 1);
+            }
+            // Blacklists
+            if (in_array($key, [6,7])) {
+                $bool = Str::substr($data, 0, 1);
+                return $bool === 'Y';
+            }
+
+            return $data;
+        });
     }
 
     private function mapDatesKeys(Collection $dateData): array

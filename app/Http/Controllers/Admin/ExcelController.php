@@ -51,7 +51,7 @@ class ExcelController extends Controller
     {
         try {
             $request->validate([
-                'event_import' => 'required|mimes:xlsx',
+                'event_import' => 'required|mimes:xls',
             ]);
 
             $fileToImport = $request->file('event_import');
