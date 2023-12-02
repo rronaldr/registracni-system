@@ -134,6 +134,24 @@ class DateFacade
         ];
     }
 
+    public function getDateUsersForExport(int $id): Collection
+    {
+        $date = $this->dateRepository->getDateEnrollments($id);
+        $dateUsersList = collect();
+
+        $date->enrollments()->each(function (Enrollment $enrollment) use($dateUsersList) {
+            $dateUsersList->push([
+                'id' => $enrollment->user->id,
+                'xname' => $enrollment->user->xname,
+                'email' => $enrollment->user->email,
+                'enrolled' => $enrollment->created_at,
+                'name' => $enrollment->user->getFullname()
+            ]);
+        });
+
+        return $dateUsersList;
+    }
+
     private function getDataAttributesMapping(array $data): array
     {
         return [

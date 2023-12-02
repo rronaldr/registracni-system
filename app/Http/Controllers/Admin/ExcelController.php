@@ -3,11 +3,14 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\DateUsersEmailExport;
+use App\Exports\DateUsersExport;
 use App\Exports\EventExport;
 use App\Exports\UsersEmailExport;
 use App\Exports\UsersExport;
 use App\Http\Controllers\Controller;
 use App\Imports\EventImport;
+use App\Services\Admin\DateFacade;
 use App\Services\Admin\EventFacade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -27,6 +30,16 @@ class ExcelController extends Controller
     public function exportUsersEmail(int $id, EventFacade $eventFacade)
     {
         return Excel::download(new UsersEmailExport($id, $eventFacade), 'seznam_ucastniku_email.xls');
+    }
+
+    public function exportDateUsers(int $id, DateFacade $dateFacade)
+    {
+        return Excel::download(new DateUsersExport($id, $dateFacade), 'seznam_ucastniku.xls');
+    }
+
+    public function exportDateUsersEmail(int $id, DateFacade $dateFacade)
+    {
+        return Excel::download(new DateUsersEmailExport($id, $dateFacade), 'seznam_ucastniku_email.xls');
     }
     
     public function exportEvent(int $id, EventFacade $eventFacade)

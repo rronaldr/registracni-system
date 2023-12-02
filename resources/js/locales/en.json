@@ -118,7 +118,7 @@
         "user_group": "User group",
         "user_group_placeholder": "Select which group of users can participate",
         "status": "Status",
-        "export": "Export",
+        "export": "Export event",
         "export_users": "Export users",
         "export_emails": "Export emails",
         "duplicate": "Duplicate",

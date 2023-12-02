@@ -36,6 +36,32 @@
                     @sign-out="signOut"
                 />
             </template>
+            <template #modal-footer>
+                <a
+                    type="button"
+                    class="btn btn-outline-secondary btn-sm mr-1"
+                    :href="
+                        ADMIN_URL +
+                        '/dates/' +
+                        enrollments[0].date_id +
+                        '/users/export'
+                    "
+                    ><i class="fas fa-users"></i>
+                    {{ $t('event.export_users') }}</a
+                >
+                <a
+                    type="button"
+                    class="btn btn-outline-secondary btn-sm mr-1"
+                    :href="
+                        ADMIN_URL +
+                        '/dates/' +
+                        enrollments[0].date_id +
+                        '/users/export-email'
+                    "
+                    ><i class="fas fa-envelope"></i>
+                    {{ $t('event.export_emails') }}</a
+                >
+            </template>
         </CustomModal>
     </Teleport>
 </template>

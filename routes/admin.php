@@ -118,6 +118,10 @@ Route::middleware(['auth', 'can:admin-access'])->group(function () {
         [ExcelController::class, 'exportUsers'])->name('admin.events.users.export');
     Route::get('/events/{id}/users/export-email',
         [ExcelController::class, 'exportUsersEmail'])->name('admin.events.users.export.email');
+    Route::get('/dates/{id}/users/export',
+        [ExcelController::class, 'exportDateUsers'])->name('admin.dates.users.export');
+    Route::get('/dates/{id}/users/export-email',
+        [ExcelController::class, 'exportDateUsersEmail'])->name('admin.dates.users.export.email');
     Route::get('/events/{id}/export', [ExcelController::class, 'exportEvent'])->name('admin.events.export');
     Route::post('/events/import', [ExcelController::class, 'importEvent'])->name('admin.events.import');
     Route::get('/events/import/template', [ExcelController::class, 'downloadImportTemplate'])->name('admin.events.import.template');
