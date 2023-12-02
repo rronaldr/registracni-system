@@ -146,40 +146,6 @@ class EventController extends Controller
         }
     }
 
-    public function exportEventUsers(int $id, EventFacade $eventFacade): BinaryFileResponse
-    {
-        /** @todo rewrite into ExportFacade and Excel */
-        $data = $eventFacade->getEventEnrollmentsAndUsers($id);
-
-        $filename = public_path('seznam_ucastniku.csv');
-
-        $csvHandle = fopen($filename, 'w');
-        $data->each(function ($row) use ($csvHandle) {
-            fputcsv($csvHandle, $row);
-        });
-
-        fclose($csvHandle);
-
-        return response()->download($filename, 'seznam_ucastniku.csv', ['Content-Type' => 'text/csv']);
-    }
-
-    public function exportEventUsersEmails(int $id, EventFacade $eventFacade): BinaryFileResponse
-    {
-        /** @todo rewrite into ExportFacade and Excel */
-        $data = $eventFacade->getEventUsersEmail($id);
-
-        $filename = public_path('seznam_ucastniku_email.csv');
-
-        $csvHandle = fopen($filename, 'w');
-        $data->each(function ($row) use ($csvHandle) {
-            fputcsv($csvHandle, $row);
-        });
-
-        fclose($csvHandle);
-
-        return response()->download($filename, 'seznam_ucastniku_email.csv', ['Content-Type' => 'text/csv']);
-    }
-
     public function getEventTags(int $id, EventFacade $eventFacade): JsonResponse
     {
         $event = $eventFacade->getEventById($id);
