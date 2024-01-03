@@ -19,6 +19,7 @@ import EventDetail from './components/Event/EventDetail'
 import EnrollmentForm from './components/EnrollmentForm.vue'
 import EnrollmentIframeForm from './components/EnrollmentIframeForm.vue'
 import EventDetailAdmin from './components/Admin/Events/EventDetailAdmin.vue'
+import EventIframe from './components/EventIframe.vue'
 
 const i18n = createI18n({
     locale: 'cs',
@@ -37,6 +38,7 @@ const app = createApp({
         EventList,
         EventDetailAdmin,
         EventDetail,
+        EventIframe,
         EnrollmentForm,
         EnrollmentIframeForm,
         RolesPage

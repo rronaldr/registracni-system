@@ -95,7 +95,7 @@ class LoginController extends Controller
         return redirect('/shibboleth-logout');
     }
 
-    public function iframeIndex(): View
+    public function iframeLogin(): View
     {
         return view('auth.iframe-login');
     }

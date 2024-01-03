@@ -23,13 +23,11 @@ Route::namespace('Admin')
     ->prefix('admin')
     ->group(__DIR__.'/admin.php');
 
-// Date routes
+// Event routes
 Route::get('/', [EventController::class, 'index'])->name('events.index');
 Route::get('/events', [EventController::class, 'getEvents'])->name('events.get');
 Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show');
 Route::get('/events/{id}/dates', [EventController::class, 'getEventActiveDates'])->name('events.get.dates');
-
-// Event routes
 
 // Form routes
 Route::middleware(['auth'])->group(function () {
@@ -42,7 +40,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/change-password', [UserController::class, 'changePassword'])->name('auth.change-password');
     Route::post('/change-password', [UserController::class, 'storeChangedPassword'])->name('auth.change-password.store');
 });
-
 
 // Auth routes
 Route::get('/login', [LoginController::class, 'index'])->name('login.index');
@@ -61,5 +58,6 @@ Route::get('/locale/get', [LanguageController::class, 'getLocale'])->name('local
 Route::get('/date/{id}/enroll/{email}', [EnrollmentController::class, 'signSubstituteByEmail'])->name('date.enroll.email');
 
 // Iframe routes
-Route::get('/external/login', [LoginController::class, 'iframeIndex'])->name('iframe.login.index');
+Route::get('/external/{id}', [EventController::class, 'showIframeDates'])->name('iframe.event');
+Route::get('/external/auth/login', [LoginController::class, 'iframeLogin'])->name('iframe.login.index');
 Route::get('/external/enrollment/{id}', [EnrollmentController::class, 'iframeShow'])->middleware('iframe')->name('iframe.enrollment');

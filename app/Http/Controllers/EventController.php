@@ -10,6 +10,7 @@ use App\Models\Enrollment;
 use App\Services\DateFacade;
 use App\Services\EventFacade;
 use App\Services\UserFacade;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Session;
 
@@ -49,6 +50,15 @@ class EventController extends Controller
         ]);
     }
 
+    public function showIframeDates(string $id, EventFacade $eventFacade): View
+    {
+        $event = $eventFacade->getEventById(3);
+
+        return view('event-iframe',[
+            'event' => $event
+        ]);
+    }
+
     public function getEventActiveDates(int $id, DateFacade $dateFacade): JsonResponse
     {
         $dates = $dateFacade->getActiveEventDates($id);
@@ -57,7 +67,7 @@ class EventController extends Controller
             $user = auth()->user();
 
             $dates->getCollection()->transform(function (Date $date) use ($user) {
-                $enrollment = $enrollment = $date->enrollments()->where('user_id', $user->id)->first();
+                $enrollment = $date->enrollments()->where('user_id', $user->id)->first();
                 $date->can_enroll = $user->can('enroll', [Enrollment::class, $date]) || $user->can('substituteEnroll',
                         [Enrollment::class, $date]);
 

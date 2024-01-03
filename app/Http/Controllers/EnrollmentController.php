@@ -163,7 +163,8 @@ class EnrollmentController extends Controller
         $enrollmentInfo = collect([
             'date_start' => $date->date_start,
             'date_end' => $date->date_end,
-            'event' => $date->event->name
+            'event' => $date->event->name,
+            'event_id' => $date->event->id
         ]);
         $canEnroll = true;
 

@@ -2,6 +2,7 @@
     <div class="bg-white rounded shadow px-1 pt-0 pb-2 m-0">
         <div class="row p-2">
             <div class="col-12">
+                <a :href="APP_URL + `/external/${props.info.event_id}`">{{ $t('app.back') }}</a>
                 <h3>{{ $t('enrollment.form') }}</h3>
                 <h5>{{ props.info.event }}</h5>
                 <sub>{{
