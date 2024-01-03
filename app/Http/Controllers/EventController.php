@@ -50,9 +50,9 @@ class EventController extends Controller
         ]);
     }
 
-    public function showIframeDates(string $id, EventFacade $eventFacade): View
+    public function showIframeDates(int $id, EventFacade $eventFacade): View
     {
-        $event = $eventFacade->getEventById(3);
+        $event = $eventFacade->getEventById($id);
 
         return view('event-iframe',[
             'event' => $event

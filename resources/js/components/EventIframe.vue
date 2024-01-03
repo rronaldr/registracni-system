@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white rounded shadow px-1 pt-0 pb-2 m-0">
+    <div class="bg-white shadow px-1 pt-0 pb-2 m-0">
         <div class="row p-2">
             <div class="col-12">
                 <h3>{{ $t('event.event_name') }}: {{ event.name }}</h3>
