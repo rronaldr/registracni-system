@@ -22,14 +22,6 @@
             >
                 <i class="fas fa-users"></i>
             </button>
-            <button
-                :title="$t('date.copy')"
-                type="button"
-                class="btn-link text-info border-0 mr-1"
-                @click="copyIframe"
-            >
-                <i class="fas fa-copy"></i>
-            </button>
         </td>
     </tr>
 </template>
@@ -60,10 +52,5 @@ const formattedDuration = computed(() => {
 
 function showEnrollments() {
     emit('showEnrollments', props.date.id)
-}
-
-function copyIframe() {
-    let iframeUrl = `<iframe src="${APP_URL}/external/enrollment/${props.date.id}" width="800" height="600" frameborder="0"></iframe>`
-    navigator.clipboard.writeText(iframeUrl)
 }
 </script>

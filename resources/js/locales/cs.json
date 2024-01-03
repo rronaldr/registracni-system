@@ -140,7 +140,8 @@
         "enabled": "Zapnut",
         "disabled": "Vypnut",
         "change_concept": "Změnit stav události na koncept",
-        "publish_event": "Publikovat událost"
+        "publish_event": "Publikovat událost",
+        "copy_shortcode": "Zkopírovat URL pro vložení"
     },
     "blacklist": {
         "blocked_until": "Blokace do",

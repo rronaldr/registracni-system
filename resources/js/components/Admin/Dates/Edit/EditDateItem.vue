@@ -23,14 +23,6 @@
                 <i class="fas fa-users"></i>
             </button>
             <button
-                :title="$t('date.copy')"
-                type="button"
-                class="btn-link text-info border-0 mr-1"
-                @click="copyIframe"
-            >
-                <i class="fas fa-copy"></i>
-            </button>
-            <button
                 :title="$t('app.edit')"
                 type="button"
                 class="btn-link text-info border-0 mr-1"
@@ -122,10 +114,5 @@ function editItem() {
 
 function removeItem(blockReason) {
     emit('removeDate', props.date.id, blockReason)
-}
-
-function copyIframe() {
-    let iframeUrl = `<iframe src="${APP_URL}/external/enrollment/${props.date.id}" width="800" height="600" frameborder="0"></iframe>`
-    navigator.clipboard.writeText(iframeUrl)
 }
 </script>

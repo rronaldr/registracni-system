@@ -137,7 +137,8 @@
         "overview": "Event overview",
         "save_publish": "Save and publish",
         "change_concept": "Change event status to concept",
-        "publish_event": "Publish event"
+        "publish_event": "Publish event",
+        "copy_shortcode": "Copy shortcode"
     },
     "blacklist": {
         "blocked_until": "Blocked until",

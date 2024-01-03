@@ -29,9 +29,16 @@
                 {{ $t('event.export_emails') }}</a
             >
             <button
+                type="button"
+                class="btn btn-outline-secondary btn-sm mr-1"
+                @click="copyIframe"
+            >
+                <i class="fas fa-copy"></i> {{ $t('event.copy_shortcode') }}
+            </button>
+            <button
                 v-if="canViewEvent"
                 type="button"
-                class="btn btn-outline-success btn-sm mr-1"
+                class="btn btn-outline-success btn-sm mr-1 mt-md-1"
                 @click="showCollabModal = true"
             >
                 <i class="fas fa-user-plus"></i>
@@ -286,6 +293,7 @@ import { formatEventDates } from '../../../utils/DataMapper'
 import DateDetailList from '../Dates/Detail/DateDetailList.vue'
 import TagDetailList from '../Tags/Detail/TagDetailList.vue'
 
+const APP_URL = inject('APP_URL')
 const ADMIN_URL = inject('ADMIN_URL')
 const props = defineProps({
     event: { type: Object, required: true },
@@ -358,5 +366,10 @@ async function getEventTags() {
         ADMIN_URL + '/events/' + props.event.id + '/tags'
     )
     tags.value = response.data.tags
+}
+
+function copyIframe() {
+    let iframeUrl = `[iframe src="${APP_URL}/external/${props.event.id}" width="800" height="600"]`
+    navigator.clipboard.writeText(iframeUrl)
 }
 </script>

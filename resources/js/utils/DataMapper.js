@@ -193,6 +193,7 @@ export const formatEventDates = function (dates) {
 
         return {
             id: date.id,
+            event_id: date.event_id,
             location: date.location,
             substitute: Boolean(date.substitute),
             capacity: date.capacity,
