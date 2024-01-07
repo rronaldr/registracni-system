@@ -1,5 +1,6 @@
 @include('layouts.header', ['title' => __('app.enrollment.enrollment_form')])
-<body class="bg-gray-500">
+@include('layouts.iframe.navbar')
+
 <div class="content mt-3" id="vueApp">
     <enrollment-iframe-form :date-id="{{ $dateId }}" :fields="{{ $fields }}" :info="{{ $info }}" :can-enroll="{{ (int) $canEnroll }}"
                      gdppr-link="{{ config('constants.gdpr_url') }}"></enrollment-iframe-form>
