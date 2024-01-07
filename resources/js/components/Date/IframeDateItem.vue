@@ -1,6 +1,6 @@
 <template>
-    <div class="card px-1 mx-2">
-        <div class="row align-items-center">
+    <div class="card">
+        <div class="row px-1 mx-1 mb-1 align-items-center">
             <div class="col-md-9 mb-sm-0 pt-1 align-self-start">
                 <h5>
                     <span>
