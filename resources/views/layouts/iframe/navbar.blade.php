@@ -18,13 +18,11 @@
                             <i class="icon icon-user"></i> <span>{{ auth()->user()->getFullname() }}</span>
                         </p>
                     </li>
-                    @can('admin-access')
-                        <li class="nav-item">
-                            <a class="nav-link"
-                               href="@if(isset(auth()->user()->xname)) {{ route('logout') }} @else {{ route('logout.external') }}@endif"
-                            >{{ __('app.auth.logout') }}</a>
-                        </li>
-                    @endcan
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="@if(isset(auth()->user()->xname)) {{ route('logout') }} @else {{ route('logout.external') }}@endif"
+                        >{{ __('app.auth.logout') }}</a>
+                    </li>
                 @endguest
             </ul>
         </nav>
