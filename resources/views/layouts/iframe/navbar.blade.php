@@ -20,7 +20,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
-                           href="@if(isset(auth()->user()->xname)) {{ route('logout') }} @else {{ route('logout.external') }}@endif"
+                           href="@if(isset(auth()->user()->xname)) {{ route('iframe.logout') }} @else {{ route('iframe.logout') }}@endif"
                         >{{ __('app.auth.logout') }}</a>
                     </li>
                 @endguest

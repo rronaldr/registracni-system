@@ -99,4 +99,11 @@ class LoginController extends Controller
     {
         return view('auth.iframe-login');
     }
+
+    public function iframeLogout(): RedirectResponse
+    {
+        Auth::logout();
+
+        return redirect()->back();
+    }
 }
