@@ -44,6 +44,7 @@
                     <a
                         v-else-if="hasUser === 0"
                         :href="APP_URL + '/external/enrollment/' + date.id"
+                        target="_blank"
                         class="btn btn-sm btn-primary"
                     >
                         {{ $t('app.app_login') }}
