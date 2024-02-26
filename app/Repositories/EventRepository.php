@@ -59,8 +59,6 @@ class EventRepository
 
     public function getEventByIdForDetailPage(int $id)
     {
-        $now = Carbon::now('Europe/Prague');
-
         /** @var \App\Models\Event $event */
         $event = Event::query()
             ->where('id', $id)
@@ -107,6 +105,16 @@ class EventRepository
                 'id', 'name', 'subtitle', 'calendar_id', 'contact_person', 'contact_email', 'type',
                 'global_blacklist', 'event_blacklist', 'user_group'
             ])
+            ->first();
+
+        return $event;
+    }
+
+    public function getEventByCalendarId(int $id): ?Event
+    {
+        /** @var \App\Models\Event $event */
+        $event = Event::query()
+            ->where('calendar_id', $id)
             ->first();
 
         return $event;

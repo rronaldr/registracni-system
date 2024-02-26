@@ -96,4 +96,13 @@ class DateRepository
             ->where('enrollment_end', '>=', $now)
             ->paginate(5);
     }
+
+    public function getDatesByEventId(int $eventId): Collection
+    {
+        $dates = Date::query()
+            ->where('event_id', $eventId)
+            ->get();
+
+        return $dates;
+    }
 }
