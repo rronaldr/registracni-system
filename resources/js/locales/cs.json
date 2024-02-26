@@ -87,7 +87,8 @@
     },
     "template": {
         "select": "Vyberte šablonu z nabídky",
-        "default": "Výchozí šablona"
+        "default": "Výchozí šablona",
+        "default_hint": "Při zvolení výchozí šablony notifikace o registraci, bude účastníkovi doručen email se základními informacemi o události a výpisem vyplněných hodnot (pokud jsou nastaveny)."
     },
     "event": {
         "info": "Informace o události",

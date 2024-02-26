@@ -87,7 +87,8 @@
     },
     "template": {
         "select": "Select template",
-        "default": "Default template"
+        "default": "Default template",
+        "default_hint": "When the default registration notification template is selected, the subscriber will receive an email with basic event information and a list of completed values (if set)."
     },
     "event": {
         "info": "Event info",

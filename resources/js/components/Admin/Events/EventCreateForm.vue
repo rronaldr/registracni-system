@@ -292,23 +292,31 @@
                                         />
                                     </div>
                                 </div>
-                                <TemplateTags :tags="tags" />
-                                <div
-                                    v-if="event.template.id !== 1"
-                                    class="row mb-3"
-                                >
-                                    <div class="col">
-                                        <label
-                                            for="subtitle"
-                                            class="form-label"
-                                            >{{
-                                                $t('event.notification_text')
-                                            }}</label
-                                        >
-                                        <TinyEditor
-                                            v-model="event.template.content"
-                                        />
+                                <div v-if="parseInt(event.template.id) !== 0">
+                                    <TemplateTags :tags="tags" />
+                                    <div class="row mb-3">
+                                        <div class="col">
+                                            <label
+                                                for="subtitle"
+                                                class="form-label"
+                                                >{{
+                                                    $t(
+                                                        'event.notification_text'
+                                                    )
+                                                }}</label
+                                            >
+                                            <TinyEditor
+                                                v-model="event.template.content"
+                                            />
+                                        </div>
                                     </div>
+                                </div>
+                                <div
+                                    v-else
+                                    class="alert alert-info"
+                                    role="alert"
+                                >
+                                    {{ $t('template.default_hint') }}
                                 </div>
                             </div>
                         </div>
