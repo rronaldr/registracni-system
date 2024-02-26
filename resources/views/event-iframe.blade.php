@@ -2,6 +2,12 @@
 @include('layouts.iframe.navbar')
 
 <div class="content mt-3" id="vueApp">
+    @if(Illuminate\Support\Facades\Session::has('message'))
+        <div id="messageAlert" class="alert alert-secondary m-2">
+            {{ Illuminate\Support\Facades\Session::get('message') }}
+        </div>
+    @endif
+
     <event-iframe :event="{{ $event }}" :has-user="{{ (int) auth()->check() }}"></event-iframe>
 </div>
 

@@ -2,7 +2,9 @@
     <div class="bg-white rounded shadow px-1 pt-0 pb-2 m-0">
         <div class="row p-2">
             <div class="col-12">
-                <a :href="APP_URL + `/external/${props.info.event_id}`">{{ $t('app.back') }}</a>
+                <a :href="APP_URL + `/external/${props.info.event_id}`">{{
+                    $t('app.back')
+                }}</a>
                 <h3>{{ $t('enrollment.form') }}</h3>
                 <h5>{{ props.info.event }}</h5>
                 <sub>{{
@@ -100,8 +102,10 @@
                 </div>
             </div>
         </form>
-        <div v-else class="bg-light mx-2 my-1 p-1">
-            <span class="font-weight-bold">{{ formMessage }}</span>
+        <div v-if="!enroll" class="bg-light mx-2 my-1 p-1">
+            <span class="font-weight-bold">{{
+                $t('enrollment.cannot_enroll')
+            }}</span>
         </div>
     </div>
 </template>
@@ -132,9 +136,6 @@ const APP_URL = inject('APP_URL')
 let form = reactive({})
 let errors = ref(null)
 let showForm = ref(enroll)
-let formMessage = !enroll
-    ? ref(t('enrollment.cannot_enroll'))
-    : ref(t('enrollment.enroll_success'))
 
 createFormBinding()
 function createFormBinding() {
@@ -174,7 +175,8 @@ async function submitEnrollment() {
         .then((response) => {
             if (response.status === 204) {
                 showForm.value = false
-                formMessage.value = t('enrollment.enroll_success')
+                window.location.href =
+                    APP_URL + '/external/' + props.info.event_id
             }
         })
         .catch((e) => {
