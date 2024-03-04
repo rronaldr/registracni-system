@@ -12,6 +12,7 @@ return [
     '403-error-message' => 'You do not have sufficient permissions.',
     'yes' => 'Yes',
     'no' => 'No',
+    'gdpr-terms' => 'Data protection and GDPR',
 
     'actions' => [
         'edit' => 'Edit',

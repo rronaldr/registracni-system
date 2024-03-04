@@ -45,8 +45,8 @@ const app = createApp({
     }
 })
 
-const APP_URL = 'http://localhost'
-const ADMIN_URL = 'http://localhost/admin'
+const APP_URL = 'http://127.0.0.1:8080'
+const ADMIN_URL = 'http://127.0.0.1:8080/admin'
 
 function loadLocale() {
     return axios

@@ -12,6 +12,7 @@ return [
     '403-error-message' => 'Nemáte dostatečné oprávnění.',
     'yes' => 'Ano',
     'no' => 'Ne',
+    'gdpr-terms' => 'Ochrana osobních údajů a GDPR',
 
     'actions' => [
         'edit' => 'Editovat',
