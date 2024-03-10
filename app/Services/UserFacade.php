@@ -85,6 +85,19 @@ class UserFacade
             return $user;
         }
 
+        $existingUserWithSameEmail = $this->userRepository->getUserByEmail($userData->get('email'));
+
+        // Merge alumni user by email, if already exists as external user
+        if ($existingUserWithSameEmail !== null) {
+            $existingUserWithSameEmail->absolvent_id = $userData->get('id');
+            $existingUserWithSameEmail->first_name = $userData->get('firstname');
+            $existingUserWithSameEmail->last_name = $userData->get('lastname');
+            $existingUserWithSameEmail->display_name = $userData->get('fullname');
+            $existingUserWithSameEmail->save();
+
+            return $existingUserWithSameEmail;
+        }
+
         $user = new User();
         $user->absolvent_id = $userData->get('id');
         $user->first_name = $userData->get('firstname');
