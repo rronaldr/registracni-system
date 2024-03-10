@@ -24,7 +24,7 @@ class EventController extends Controller
         if (Session::has('iframe') && Session::get('iframe') === true) {
             Session::forget('iframe');
 
-            return redirect()->intended();
+            return redirect()->route('iframe.login.success');
         }
 
         return view('events');
