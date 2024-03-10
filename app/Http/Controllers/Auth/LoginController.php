@@ -106,4 +106,9 @@ class LoginController extends Controller
 
         return redirect()->back();
     }
+
+    public function iframeLoginSuccess(): View
+    {
+        return view('auth.iframe-login-success');
+    }
 }

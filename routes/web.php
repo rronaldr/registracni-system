@@ -61,4 +61,5 @@ Route::get('/date/{id}/enroll/{email}', [EnrollmentController::class, 'signSubst
 Route::get('/external/{id}', [EventController::class, 'showIframeDates'])->name('iframe.event');
 Route::get('/external/auth/login', [LoginController::class, 'iframeLogin'])->name('iframe.login.index');
 Route::get('/external/auth/logout', [LoginController::class, 'iframeLogout'])->name('iframe.logout');
+Route::get('/external/auth/login-success', [LoginController::class, 'iframeLoginSuccess'])->middleware('iframe')->name('iframe.login.success');
 Route::get('/external/enrollment/{id}', [EnrollmentController::class, 'iframeShow'])->middleware('iframe')->name('iframe.enrollment');

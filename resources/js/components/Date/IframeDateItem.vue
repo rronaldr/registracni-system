@@ -53,9 +53,8 @@
                     >
                     <a
                         v-else-if="hasUser === 0"
-                        :href="APP_URL + '/external/enrollment/' + date.id"
-                        target="_blank"
-                        class="btn btn-sm btn-primary"
+                        class="btn btn-sm btn-primary text-white"
+                        @click="openLoginPopup"
                     >
                         {{ $t('app.app_login') }}
                     </a>
@@ -79,7 +78,7 @@
 
 <script setup>
 import moment from 'moment/moment'
-import { inject } from 'vue'
+import { inject, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import axios from 'axios'
 
@@ -101,6 +100,28 @@ const formatDate = function (date) {
     if (date) {
         return moment(String(date)).format('DD.MM.YYYY HH:mm')
     }
+}
+
+const openLoginPopup = () => {
+    const popup = window.open(
+        `${APP_URL}/external/enrollment/${props.date.id}`,
+        '_blank',
+        'width=800,height=600'
+    )
+
+    const handleMessage = (event) => {
+        if (event.data === 'loginSuccess') {
+            popup.close()
+            location.reload()
+        }
+    }
+    addEventListener('message', handleMessage)
+
+    onMounted(() => {
+        return () => {
+            removeEventListener('message', handleMessage)
+        }
+    })
 }
 
 async function signOffUser() {
