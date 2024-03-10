@@ -14,7 +14,7 @@
                     @endif
                 @else
                     <li class="nav-item nav-item-light">
-                        <p class="text-white">
+                        <p class="nav-link text-white">
                             <i class="icon icon-user"></i> <span>{{ auth()->user()->getFullname() }}</span>
                         </p>
                     </li>

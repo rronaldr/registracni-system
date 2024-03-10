@@ -1,5 +1,15 @@
 <template>
-    <div class="card">
+    <div
+        :style="{
+            opacity:
+                Boolean(hasUser) &&
+                date.can_sign_off != null &&
+                date.can_sign_off
+                    ? '70%'
+                    : '100%'
+        }"
+        class="card"
+    >
         <div class="row px-1 mx-1 mb-1 align-items-center">
             <div class="col-md-9 mb-sm-0 pt-1 align-self-start">
                 <h5>
