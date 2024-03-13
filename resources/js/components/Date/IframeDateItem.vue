@@ -104,22 +104,11 @@ const formatDate = function (date) {
 
 const openLoginPopup = () => {
     window.open(
-        `${APP_URL}/external/enrollment/${props.date.id}`,
+        `${APP_URL}/external/auth/login`,
         '_blank',
         'width=800,height=600,status=0,toolbar=0'
     )
 }
-
-window.addEventListener(
-    'message',
-    function (event) {
-        console.log(event)
-        if (event.data === 'loginSuccess') {
-            window.location.reload()
-        }
-    },
-    false
-)
 
 async function signOffUser() {
     if (props.date.enrollment_id != null) {

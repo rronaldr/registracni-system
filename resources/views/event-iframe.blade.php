@@ -20,6 +20,16 @@
 
         window.open('/external/auth/login','_blank','width=800,height=600,status=0,toolbar=0');
     });
+
+    window.addEventListener(
+        'message',
+        function (event) {
+            if (event.data === 'loginSuccess') {
+                window.location.reload()
+            }
+        },
+        false
+    )
 </script>
 
 </html>

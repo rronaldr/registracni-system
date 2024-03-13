@@ -5,7 +5,7 @@
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
 <script>
-    window.opener.postMessage('loginSuccess','*');
+    window.opener.postMessage('loginSuccess');
     window.close()
 </script>
 
