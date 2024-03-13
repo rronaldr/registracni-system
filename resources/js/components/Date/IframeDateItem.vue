@@ -78,7 +78,7 @@
 
 <script setup>
 import moment from 'moment/moment'
-import { inject, onMounted } from 'vue'
+import { inject } from 'vue'
 import { useI18n } from 'vue-i18n'
 import axios from 'axios'
 
@@ -103,26 +103,23 @@ const formatDate = function (date) {
 }
 
 const openLoginPopup = () => {
-    const popup = window.open(
+    window.open(
         `${APP_URL}/external/enrollment/${props.date.id}`,
         '_blank',
-        'width=800,height=600'
+        'width=800,height=600,status=0,toolbar=0'
     )
-
-    const handleMessage = (event) => {
-        if (event.data === 'loginSuccess') {
-            popup.close()
-            location.reload()
-        }
-    }
-    addEventListener('message', handleMessage)
-
-    onMounted(() => {
-        return () => {
-            removeEventListener('message', handleMessage)
-        }
-    })
 }
+
+window.addEventListener(
+    'message',
+    function (event) {
+        console.log(event)
+        if (event.data === 'loginSuccess') {
+            window.location.reload()
+        }
+    },
+    false
+)
 
 async function signOffUser() {
     if (props.date.enrollment_id != null) {

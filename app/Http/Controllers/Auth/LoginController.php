@@ -97,6 +97,8 @@ class LoginController extends Controller
 
     public function iframeLogin(): View
     {
+        Session::put('iframe', true);
+
         return view('auth.iframe-login');
     }
 

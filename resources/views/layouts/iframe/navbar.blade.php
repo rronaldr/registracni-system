@@ -6,7 +6,7 @@
                 @guest()
                     @if (Route::has('login'))
                         <li class="nav-item nav-item-light">
-                            <a class="nav-link" target="_blank" href="{{ route('iframe.login.index') }}">
+                            <a class="nav-link" id="iframeLoginLink">
                                 <i class="icon icon-user"></i>
                                 {{ __('app.auth.login') }}
                             </a>

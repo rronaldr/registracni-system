@@ -13,6 +13,13 @@
 
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-@yield('scripts')
+<script>
+    document.getElementById('iframeLoginLink').addEventListener('click',function(e){
+        e.preventDefault();
+        e.stopPropagation();
+
+        window.open('/external/auth/login','_blank','width=800,height=600,status=0,toolbar=0');
+    });
+</script>
 
 </html>
