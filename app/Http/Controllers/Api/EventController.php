@@ -17,19 +17,28 @@ use Throwable;
 class EventController extends Controller
 {
 
-    public function getEventDates(int $id, EventFacade $eventFacade, DateRepository $dateRepository): JsonResponse
+    public function getEventDates(int $id, Request $request, EventFacade $eventFacade, DateRepository $dateRepository): JsonResponse
     {
-        /** @var \App\Models\Event $event */
-        $event = $eventFacade->getEventByCalendarId($id);
-        $event = $event ?? $eventFacade->getEventById($id);
+        try {
+            if ($request->has('type') && in_array($request->get('type'), ['calendar', 'id'])) {
+                /** @var \App\Models\Event $event */
+                $event = $request->get('type') === 'calendar'
+                    ? $eventFacade->getEventByCalendarId($id)
+                    : $eventFacade->getEventById($id);
+            } else {
+                /** @var \App\Models\Event $event */
+                $event = $eventFacade->getEventById($id);
+            }
 
-        $dates = $dateRepository->getDatesByEventId($event->id)->transform(function (Date $date) {
-            $date->enrolled_count = $date->getSignedCount();
+            $dates = $dateRepository->getDatesByEventId($event->id)->transform(function (Date $date) {
+                $date->enrolled_count = $date->getSignedCount();
 
-            return $date;
-        });
-
-        return response()->json(['dates' => $dates]);
+                return $date;
+            });
+            return response()->json(['dates' => $dates]);
+        } catch (Throwable $e) {
+            return response()->json(['error' => $e->getMessage(), 404]);
+        }
     }
 
     public function store(Request $request, EventFacade $eventFacade): JsonResponse
