@@ -41,9 +41,9 @@ class EventController extends Controller
                 return response()->json(['errors' => $validator->errors()], 400);
             }
 
-            $eventFacade->createEvent($validator->validated());
+            $id = $eventFacade->createEvent($validator->validated());
 
-            return response()->json(['success' => true]);
+            return response()->json(['id' => $id]);
         } catch (InvalidXnameUser $e) {
             return response()->json(['error' => 'user with this xname doesnt exist'], 400);
         } catch (Throwable $e) {

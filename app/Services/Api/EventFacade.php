@@ -28,7 +28,7 @@ class EventFacade
         $this->dateFacade = $dateFacade;
     }
 
-    public function createEvent(array $data): void
+    public function createEvent(array $data): int
     {
         $user = $this->userRepository->getByXname($data['event']['user']['xname']);
 
@@ -46,6 +46,8 @@ class EventFacade
         }
 
         $this->setEventDateCache($event->id);
+
+        return $event->id;
     }
 
     public function setEventDateCache(int $id): void
