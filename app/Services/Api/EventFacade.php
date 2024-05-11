@@ -7,6 +7,7 @@ namespace App\Services\Api;
 use App\Enums\Event\EventStatusEnum;
 use App\Exceptions\InvalidXnameUser;
 use App\Models\Event;
+use App\Models\User;
 use App\Repositories\EventRepository;
 use App\Repositories\UserRepository;
 use Carbon\Carbon;
@@ -30,7 +31,7 @@ class EventFacade
 
     public function createEvent(array $data): int
     {
-        $user = $this->userRepository->getByXname($data['event']['user']['xname']);
+        $user = $this->userRepository->getUserById($data['event']['user']['id']);
 
         if ($user === null) {
             throw new InvalidXnameUser;
@@ -39,7 +40,7 @@ class EventFacade
         $eventData = $data['event'];
         $dates = !empty($data['event']['dates']) ? $data['event']['dates'] : null;
 
-        $event = $this->createEventFromData($eventData, $user->id);
+        $event = $this->createEventFromData($eventData, $user);
 
         if (isset($dates)) {
             $this->dateFacade->createDatesFromEvent($dates, $event->id);
@@ -80,9 +81,7 @@ class EventFacade
             'event.subtitle' => 'string',
             'event.type' => 'required|numeric',
             'event.user_group' => 'required|numeric',
-            'event.user.xname' => 'required|string',
-            'event.user.name' => 'required|string',
-            'event.user.email' => 'required|email',
+            'event.user.id' => 'required|numeric',
             'event.calendar_id' => 'sometimes|numeric',
             'event.global_blacklist' => 'required|boolean',
             'event.dates' => 'required|array',
@@ -97,18 +96,18 @@ class EventFacade
         ];
     }
 
-    private function createEventFromData(array $event, int $userId): Event
+    private function createEventFromData(array $event, User $user): Event
     {
         return Event::create([
             'blacklist_id' => null,
             'subtitle' => $event['subtitle'],
             'calendar_id' => is_int($event['calendar_id']) ? $event['calendar_id'] : null,
-            'contact_person' => $event['user']['name'],
-            'contact_email' => $event['user']['email'],
+            'contact_person' => $user->getFullname(),
+            'contact_email' => $user->email,
             'type' => $event['type'],
             'global_blacklist' => $event['global_blacklist'],
             'user_group' => (int) $event['user_group'],
-            'user_id' => $userId,
+            'user_id' => $user->id,
             'name' => $event['name'],
             'c_fields' => null,
             'event_blacklist' => false,
