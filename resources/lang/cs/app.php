@@ -113,7 +113,8 @@ return [
         ],
         'enums' => 'Číselník',
         'export' => 'Exportovat',
-        'export-emails' => 'Exportovat emaily'
+        'export-emails' => 'Exportovat emaily',
+        'no-active-dates' => 'Pro tuto událost nejsou žádné volné termíny.',
     ],
     'email' => [
         'email' => 'Email',

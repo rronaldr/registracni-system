@@ -53,9 +53,13 @@ class EventController extends Controller
     public function showIframeDates(int $id, EventFacade $eventFacade): View
     {
         $event = $eventFacade->getEventById($id);
+        $activeDates = $event->dates()->where('dates.enrollment_start', '<', now())
+            ->where('dates.enrollment_end', '>', now())
+            ->count();
 
         return view('event-iframe',[
-            'event' => $event
+            'event' => $event,
+            'activeDates' => $activeDates
         ]);
     }
 

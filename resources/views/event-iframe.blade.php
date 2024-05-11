@@ -8,7 +8,11 @@
         </div>
     @endif
 
-    <event-iframe :event="{{ $event }}" :has-user="{{ (int) auth()->check() }}"></event-iframe>
+    @if($activeDates > 0)
+        <event-iframe :event="{{ $event }}" :has-user="{{ (int) auth()->check() }}"></event-iframe>
+    @else
+        <p>{{__('app.event.no-active-dates')}}</p>
+    @endif
 </div>
 
 <script src="{{ asset('js/app.js') }}"></script>

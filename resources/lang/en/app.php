@@ -113,7 +113,8 @@ return [
         ],
         'enums' => 'Enums',
         'export' => 'Export',
-        'export-emails' => 'Export emails'
+        'export-emails' => 'Export emails',
+        'no-active-dates' => 'There are no active dates to sign in for this event.',
     ],
     'email' => [
         'email' => 'Email',
