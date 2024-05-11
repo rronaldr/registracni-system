@@ -37,7 +37,7 @@ class EventFacade
         }
 
         $eventData = $data['event'];
-        $dates = !empty($data['dates']) ? $data['dates'] : null;
+        $dates = !empty($data['event']['dates']) ? $data['event']['dates'] : null;
 
         $event = $this->createEventFromData($eventData, $user->id);
 
@@ -85,15 +85,15 @@ class EventFacade
             'event.user.email' => 'required|email',
             'event.calendar_id' => 'sometimes|numeric',
             'event.global_blacklist' => 'required|boolean',
-            'dates' => 'required|array',
-            'dates.*.location' => 'sometimes|string|required_if:dates.*.online,==,false',
-            'dates.*.unlimited_capacity' => 'required|boolean',
-            'dates.*.capacity' => 'required_if:dates.*.unlimited_capacity,==,false|sometimes|numeric',
-            'dates.*.date_start' => 'required|date_format:Y-m-d H:i',
-            'dates.*.date_end' => 'required|date_format:Y-m-d H:i',
-            'dates.*.enrollment_start' => 'required|date_format:Y-m-d H:i',
-            'dates.*.enrollment_end' => 'required|date_format:Y-m-d H:i',
-            'dates.*.withdraw_end' => 'required|date_format:Y-m-d H:i',
+            'event.dates' => 'required|array',
+            'event.dates.*.location' => 'sometimes|string|required_if:dates.*.online,==,false',
+            'event.dates.*.unlimited_capacity' => 'required|boolean',
+            'event.dates.*.capacity' => 'required_if:dates.*.unlimited_capacity,==,false|sometimes|numeric',
+            'event.dates.*.date_start' => 'required|date_format:Y-m-d H:i',
+            'event.dates.*.date_end' => 'required|date_format:Y-m-d H:i',
+            'event.dates.*.enrollment_start' => 'required|date_format:Y-m-d H:i',
+            'event.dates.*.enrollment_end' => 'required|date_format:Y-m-d H:i',
+            'event.dates.*.withdraw_end' => 'required|date_format:Y-m-d H:i',
         ];
     }
 
