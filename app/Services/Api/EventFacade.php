@@ -92,7 +92,7 @@ class EventFacade
             'event.dates.*.date_end' => 'required|date_format:Y-m-d H:i',
             'event.dates.*.enrollment_start' => 'required|date_format:Y-m-d H:i',
             'event.dates.*.enrollment_end' => 'required|date_format:Y-m-d H:i',
-            'event.dates.*.withdraw_end' => 'required|date_format:Y-m-d H:i',
+            'event.dates.*.withdraw_end' => 'sometimes|date_format:Y-m-d H:i',
         ];
     }
 
