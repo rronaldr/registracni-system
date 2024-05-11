@@ -15,7 +15,7 @@ class CreateApiKeysTable extends Migration
     {
         Schema::create('api_keys', function (Blueprint $table) {
             $table->id();
-            $table->string('key');
+            $table->string('api_key');
             $table->string('note');
             $table->timestamps();
         });
