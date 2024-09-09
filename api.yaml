@@ -1,0 +1,279 @@
+openapi: 3.0.3
+info:
+  title: VŠE Registrační systém API
+  description: |-
+    Dokumentace pro API registračního systému VŠE.
+    API je dostupné na adrese [https://registrace.vse.cz/](https://registrace.vse.cz/api/)
+    
+    Odkaz na web
+    - [Registrační systém](https://registrace.vse.cz/)
+
+    Autentizace probíhá pomocí přidání API klíče. Do headeru je nutné přidat **X-API-KEY** s hodnotou API klíče, bez toho není možné používat API.
+  
+  version: "1.0"
+tags:
+  - name: event
+    description: Everything about your Pets
+paths:
+  /{eventId}/dates:
+    get:
+      tags:
+        - event
+      summary: Get event dates
+      parameters:
+        - name: eventId
+          in: path
+          description: 'Internal event ID.'
+          required: true
+          schema:
+            type: integer
+        - name: type
+          description: 'Values of [**calendar**, **id**] to set eventId type (using type=calendar, will result into searching for event by calendarId instead of internal database id)'
+          schema: 
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dates'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Dates'
+        '404':
+          description: No query results for model
+  /event/store:
+    post:
+      tags:
+        - event
+      summary: Create new event
+      requestBody:
+        description: Create new event with author and dates
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Event'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Event'
+        required: true
+      responses:
+        '200':
+          description: return id of created event
+        '400':
+          description: user with this xname doesn't exist
+components:
+  schemas:
+    Dates:
+      type: object
+      properties:
+        dates:
+          type: array
+          items:
+            $ref: '#/components/schemas/Date'
+      xml:
+        name: order
+    Event:
+      type: object
+      required:
+        - event
+        - dates
+      properties:
+        event:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventData'
+      xml:
+        name: order
+    EventData:
+      type: object
+      required: 
+        - name
+        - type
+        - user_group
+        - user_id
+        - global_blacklist
+        - dates
+      properties:
+        name:
+          type: string
+          example: 'API event'
+        subtitle:
+          type: string
+          example: 'Event subtitle'
+        type:
+          type: integer
+          description: 'EventType Enum'
+          example: 100000
+        user_group:
+          type: integer
+          description: 'UserGroup Enum'
+          example: 1
+        user_id:
+          type: integer
+          example: 100000
+        calendar_id:
+          type: integer
+          description: 'Id of event in kalendar.vse.cz'
+          example: 12
+        global_blacklist:
+          type: boolean
+          description: 'set true to use global blacklist'
+          example: true
+        dates:
+          type: array
+          items: 
+            $ref: '#/components/schemas/EventDate'
+      xml:
+        name: event
+    Date:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        event_id:
+          type: integer
+          description: 'id of parent event'
+          example: 1
+        location:
+          type: string
+          example: 'SB 112'
+        date_start:
+          type: string
+          example: '2024-02-20 12:00:00'
+        date_end:
+          type: string
+          example: '2024-02-22 13:30:00'
+        capacity:
+          type: integer
+          description: 'dates maximum capacity'
+          example: 20
+        enrollment_start:
+          type: string
+          example: '2023-11-16 00:45:00'
+        enrollment_end:
+          type: string
+          example: '2024-02-23 00:00:00'
+        withdraw_end:
+          type: string
+          example: '2024-02-24 00:00:00'
+        name:
+          type: string
+          nullable: true
+          example: null
+        substitute:
+          type: boolean
+          example: 1
+        created_at:
+          type: string
+          description: 'id of parent event'
+          nullable: true
+          example: null
+        updated_at:
+          type: string
+          description: 'id of parent event'
+          example: '2024-02-21T15:05:05.000000Z'
+        deleted_at:
+          type: string
+          nullable: true
+          description: 'if not null, then date is deleted'
+          example: null
+        enrolled_count:
+          type: integer
+          description: 'count of total enrolled users'
+          example: 10
+      xml:
+        name: date
+    EventDate:
+      type: object
+      required:
+        - unlimited_capacity
+        - date_start
+        - date_end
+        - enrollment_start
+        - enrollment_end
+      properties:
+        location:
+          type: string
+          description: 'required if online is false'
+          example: 'SB 112'
+        online:
+          type: boolean
+          example: false
+        unlimited_capacity:
+          type: boolean
+          example: true
+        capacity:
+          type: integer
+          description: 'dates maximum capacity, required if unlimited capacity is false'
+          example: 20
+        date_start:
+          type: string
+          description: 'datetime Y-m-d H:i'
+          example: '2024-02-20 12:00:00'
+        date_end:
+          type: string
+          description: 'datetime Y-m-d H:i'
+          example: '2024-02-22 13:30:00'
+        enrollment_start:
+          type: string
+          description: 'datetime Y-m-d H:i'
+          example: '2023-11-16 00:45:00'
+        enrollment_end:
+          type: string
+          description: 'datetime Y-m-d H:i'
+          example: '2024-02-23 00:00:00'
+        withdraw_end:
+          type: string
+          description: 'datetime Y-m-d H:i'
+          example: '2024-02-24 00:00:00'
+      xml:
+        name: date
+    UserGroupENUM:
+      type: object
+      properties:
+        EVERYONE:
+          type: integer
+          example: 1
+        CURRENT_STUDENTS:
+          type: integer
+          example: 2
+        GRADUATE:
+          type: integer
+          example: 3
+        STAFF:
+          type: integer
+          example: 4
+        ALL_STUDENTS:
+          type: integer
+          description: 'group 2 + 3'
+          example: 5
+      xml:
+        name: order
+    EventTypeENUM:
+      type: integer
+      enum:
+        - MULTIPLE = 1
+        - SERIES = 2
+      xml:
+        name: order
+  requestBodies:
+    Event:
+      description: Pet object that needs to be added to the store
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Event'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Event'
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
