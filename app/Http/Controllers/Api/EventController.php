@@ -37,7 +37,7 @@ class EventController extends Controller
             });
             return response()->json(['dates' => $dates]);
         } catch (Throwable $e) {
-            return response()->json(['error' => $e->getMessage(), 404]);
+            return response()->json(['error' => $e->getMessage()], 404);
         }
     }
 
